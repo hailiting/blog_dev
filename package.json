@@ -1,0 +1,17 @@
+{
+  "name": "myblog",
+  "version": "1.0.0",
+  "description": "'# hello vuepress'",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "markdown-it": "^8.4.1",
+    "markdown-it-anchor": "^4.0.0",
+    "markdown-it-table-of-contents": "^0.3.3"
+  }
+}
