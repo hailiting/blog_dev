@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>浏览器行为与HTTP协议 | hailiting Blog</title>
+    <meta name="description" content="hailiting Blog">
+    
+    
+    <link rel="preload" href="/hai_blog/assets/css/8.styles.734561ce.css" as="style"><link rel="preload" href="/hai_blog/assets/js/app.14397a1e.js" as="script"><link rel="preload" href="/hai_blog/assets/js/7.4b4e15b5.js" as="script"><link rel="prefetch" href="/hai_blog/assets/js/5.445791d8.js"><link rel="prefetch" href="/hai_blog/assets/js/1.d6c66772.js"><link rel="prefetch" href="/hai_blog/assets/js/2.c453f8d4.js"><link rel="prefetch" href="/hai_blog/assets/js/3.6d8438f6.js"><link rel="prefetch" href="/hai_blog/assets/js/4.34be4f33.js"><link rel="prefetch" href="/hai_blog/assets/js/0.13ac061a.js"><link rel="prefetch" href="/hai_blog/assets/js/6.4049e85c.js">
+    <link rel="stylesheet" href="/hai_blog/assets/css/8.styles.734561ce.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/hai_blog/" class="home-link router-link-active"><!----><span class="site-name">
+      hailiting Blog
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><!----></div></header><div class="sidebar-mask"></div><div class="sidebar"><!----><ul class="sidebar-links"><li><a href="/hai_blog/" class="sidebar-link">Home</a></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>JavaScript</span><span class="arrow right"></span></p><!----></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>notes</span><span class="arrow right"></span></p><!----></div></li></ul></div><div class="page"><div class="content"><h4 id="浏览器行为与http协议"><a href="#浏览器行为与http协议" aria-hidden="true" class="header-anchor">#</a> 浏览器行为与HTTP协议</h4><h6 id="处理流程"><a href="#处理流程" aria-hidden="true" class="header-anchor">#</a> 处理流程</h6><p>1，输入网址并回车  -&gt;
+2，路过本地电脑防火墙   -&gt;
+3，到达DNS SERVVER,解析域名,找到服务器地址 -&gt;
+4，通过多个路由   -&gt;
+5，找到服务器IP地址，并找到所托管的服务器（HOSTING SERVER）-&gt;
+6，服务器访问地址，客户端回答地址，服务器询问账号密码，客户端给账号和密码（不给也是一种给），服务器给于相对应的响应页面  -&gt;
+7，跋山涉水通过多个路由   -&gt;
+8，把返回的页面呈现给用户</p><h6 id="什么是http协议"><a href="#什么是http协议" aria-hidden="true" class="header-anchor">#</a> 什么是HTTP协议</h6><ul><li>HTTP协议是超文本传输协议，从www浏览器传输到本地浏览器的一种传输协议，网站是基于HTTP协议的，例如网站的图片、css、js等都是基于HTTP协议进行传输的。</li><li>HTTP协议是由从客户机到服务器的请求（resquest）和从服务器到客户机的响应（response）进行约束和规范的。</li></ul><h6 id="tcp-ip协议栈"><a href="#tcp-ip协议栈" aria-hidden="true" class="header-anchor">#</a> TCP/IP协议栈</h6><p>栈： 数据结构一种，看到栈，首先想到分层</p><p>1，应用层
+为用户提供所需要的各种服务，例如：HTTP,FTP,DNS,SMTP等
+2，传输层
+为应用层实现提供端到端的通信功能，保证数据包的顺序传送及数据的完整性。该层定义了两个主要协议：TCP(传输控制协议)和UDP(用户数据报协议)
+3，网络层
+主要解决主机到主机的通信问题。IP协议是网际互联层最主要的协议
+4，网络接口层
+负责监视数据在主机和网络之间的交换</p><h6 id="http基础"><a href="#http基础" aria-hidden="true" class="header-anchor">#</a> HTTP基础</h6><ul><li>目前应用的版本是 HTTP1.1</li><li>HTTP默认端口号是 80</li><li>HTTPS默认的端口号为 443</li></ul><h6 id="http的工作过程"><a href="#http的工作过程" aria-hidden="true" class="header-anchor">#</a> HTTP的工作过程</h6><p>一次HTTP操作称为一个事物，其工作过程可分为四步：
+1）首先客户机与服务器需要建立连接。只要单击某个超级链接，HTTP的工作开始了。
+2）建立链接后，客户机发送一个请求给服务器，请求方式的格式为：统一资源标识符（URL）、协议版本号，后边是MIME信息包括请求修饰符、客户机信息和可能的内容。
+3）服务器连接到请求后，给予相应的响应信息，其格式为一个状态行，包括信息协议版本号、一个功能或错误的代码，后边是MIME信息包括服务器信息、实体信息和可能的内容。
+4）客户端接收服务器所返回的信息通过浏览器显示在用户的显示屏上，然后客户端与服务器断开连接。
+如果在以上过程中的某一步出现错误，那么生产错误的信息将返回到客户端，有显示屏输出。对于用户来说，这些过程是由HTTP自己完成的，用户只要用鼠标点击，等待信息显示就可以了。</p><h6 id="请求与响应"><a href="#请求与响应" aria-hidden="true" class="header-anchor">#</a> 请求与响应</h6><ul><li>HTTP请求组成： 请求行、消息报头、请求正文</li><li>HTTP响应组成： 状态行、消息报头、响应正文</li><li>请求行组成： 以一个方法符合开头，后面跟着请求的URL和协议的版本</li><li>状态行组成： 服务器HTTP协议的版本，服务器发回的响应状态码和状态码的文本描述</li></ul><h6 id="请求方法"><a href="#请求方法" aria-hidden="true" class="header-anchor">#</a> 请求方法</h6><ul><li>GET: 请求获取Request-URL说标识的资源</li><li>POST: 在Request-url所标识的资源后附加新的数据</li><li>HEAD： 请求获取由Request-URL所标识的资源的响应消息报头</li><li>PUT: 请求服务器储存一个资源，并用Request-URL作为其标识</li><li>DELECTE: 请求服务器删除Request-URL所标识的资源</li><li>TRACE: 请求服务器回送收到的请求信息，主要用于测试或诊断</li><li>CONNECT: 保留进来使用</li><li>OPTIONS: 请求查询服务器的性能，或者查询与资源相关的选项和需求</li></ul><h6 id="http状态码"><a href="#http状态码" aria-hidden="true" class="header-anchor">#</a> HTTP状态码</h6><ul><li>状态码由三位数组成，第一个数字定义了响应的类别，且有五种可能取值：</li><li>1xx: 指示信息 -- 表示请求已接收，继续处理</li><li>2xx: 成功 -- 表示请求已被成功接收、理解、接受</li><li>3xx: 重定向 -- 要完成请求必须进行更进一步的操作</li><li>4xx: 客户端错误 -- 请求有语法错误或请求无法实现</li><li>5xx: 服务器端错误 -- 服务器未能实现合法请求</li></ul><h6 id="常用的请求报头"><a href="#常用的请求报头" aria-hidden="true" class="header-anchor">#</a> 常用的请求报头</h6><ul><li>Accept请求报头域用于指定客户端接受到哪些类型的信息。
+eg: Accept: image/gif,Accept: text/htmlAccept-Charset请求报头域用于指定客户端接受的字符集。
+Accept-Encoding: Accept-Encoding请求报头域类似于Accept，但它是用于指定可接受的内容编码</li><li>Accept-Language请求报头域主要用于证明客户端有权查看某个资源。</li></ul><p>名词解释：
+1，DNS(Domain Name System,域名系统)，万维网上作为域名和IP地址相互映射的一个分布式数据库，能够使用更方便的访问互联网，而不用去记住能够被机器直接读取IP数串。通过域名，最终得到该域名对应的IP地址的过程叫做域名解析（或主机名解析）。DNS协议运行在UDP协议上，使用端口号53。在人RFC文档中RFC 2181对DNS有规范说明，RFC 2136对DNS的动态更新进行说明，RFC 2308对DNS查询的反向缓存进行说明。</p></div><div class="page-edit"><!----><!----></div><!----></div></div></div>
+    <script src="/hai_blog/assets/js/7.4b4e15b5.js" defer></script><script src="/hai_blog/assets/js/app.14397a1e.js" defer></script>
+  </body>
+</html>
