@@ -7,19 +7,6 @@ module.exports = {
     description: 'hailiting Blog',
     base: '/hai_blog/',
     themeConfig: {
-        // 添加导航栏
-        // nav:[
-        //  {
-        //    text:'主页',link:'/',
-        //  },
-        //  {
-        //    text:'note',
-        //    items:[
-        //        {text:'one',link:'/notes/one'},
-        //    {text:'two',link:'/notes/two'}
-        //    ]
-        //  }
-        // ],
         sidebar: [
             '/',
             {
