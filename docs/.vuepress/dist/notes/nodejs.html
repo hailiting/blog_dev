@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>NodeJS基础 | hailiting Blog</title>
+    <meta name="description" content="hailiting Blog">
+    
+    
+    <link rel="preload" href="/hai_blog/assets/css/12.styles.b89cdbfb.css" as="style"><link rel="preload" href="/hai_blog/assets/js/app.baa25a8e.js" as="script"><link rel="preload" href="/hai_blog/assets/js/2.de28bf07.js" as="script"><link rel="prefetch" href="/hai_blog/assets/js/7.104529b6.js"><link rel="prefetch" href="/hai_blog/assets/js/1.b4ded722.js"><link rel="prefetch" href="/hai_blog/assets/js/3.35945d85.js"><link rel="prefetch" href="/hai_blog/assets/js/4.f2a64fdf.js"><link rel="prefetch" href="/hai_blog/assets/js/5.e3639e5a.js"><link rel="prefetch" href="/hai_blog/assets/js/6.53b7e643.js"><link rel="prefetch" href="/hai_blog/assets/js/0.decbf858.js"><link rel="prefetch" href="/hai_blog/assets/js/8.3b5fd8e2.js"><link rel="prefetch" href="/hai_blog/assets/js/9.b1d2fb69.js"><link rel="prefetch" href="/hai_blog/assets/js/10.69d75153.js"><link rel="prefetch" href="/hai_blog/assets/js/11.bbd61bf0.js">
+    <link rel="stylesheet" href="/hai_blog/assets/css/12.styles.b89cdbfb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/hai_blog/" class="home-link router-link-active"><!----><span class="site-name">
+      hailiting Blog
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><!----></div></header><div class="sidebar-mask"></div><div class="sidebar"><!----><ul class="sidebar-links"><li><a href="/hai_blog/" class="sidebar-link">HTTP协议那些事</a></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>JavaScript</span><span class="arrow right"></span></p><!----></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading open"><span>notes</span><span class="arrow down"></span></p><ul class="sidebar-group-items"><li><a href="/hai_blog/notes/nodejs.html" class="active sidebar-link">NodeJS基础</a></li><li><a href="/hai_blog/notes/express.html" class="sidebar-link">Express基础</a></li></ul></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>dataStructure</span><span class="arrow right"></span></p><!----></div></li></ul></div><div class="page"><div class="content"><h1 id="nodejs基础"><a href="#nodejs基础" aria-hidden="true" class="header-anchor">#</a> NodeJS基础</h1><h4 id="node-js的本质是一个javascript的解析器"><a href="#node-js的本质是一个javascript的解析器" aria-hidden="true" class="header-anchor">#</a> Node.js的本质是一个JavaScript的解析器</h4><h4 id="node-js是javascript的运行环境"><a href="#node-js是javascript的运行环境" aria-hidden="true" class="header-anchor">#</a> Node.js是JavaScript的运行环境</h4><h4 id="node-js是服务器程序"><a href="#node-js是服务器程序" aria-hidden="true" class="header-anchor">#</a> Node.js是服务器程序</h4><h4 id="node-js本身是使用v8引擎"><a href="#node-js本身是使用v8引擎" aria-hidden="true" class="header-anchor">#</a> Node.js本身是使用v8引擎</h4><h4 id="node不是web服务器"><a href="#node不是web服务器" aria-hidden="true" class="header-anchor">#</a> Node不是web服务器</h4><p>=》通过高性能的Web服务
+=》IO性能强大（IO端口，网络的请求和反馈）
+优势：</p><h5 id="处理大流量数据"><a href="#处理大流量数据" aria-hidden="true" class="header-anchor">#</a> 处理大流量数据</h5><h5 id="适合实时交互的应用"><a href="#适合实时交互的应用" aria-hidden="true" class="header-anchor">#</a> 适合实时交互的应用</h5><h5 id="完美支持对象数据库（moddb）"><a href="#完美支持对象数据库（moddb）" aria-hidden="true" class="header-anchor">#</a> 完美支持对象数据库（moddb）</h5><h5 id="异步处理大量并发连接"><a href="#异步处理大量并发连接" aria-hidden="true" class="header-anchor">#</a> 异步处理大量并发连接</h5><h6 id="hello-world"><a href="#hello-world" aria-hidden="true" class="header-anchor">#</a> Hello World!</h6><div class="language- extra-class"><pre class="language-text"><code>var http = require('http');
+http.createServer(function(req,res){
+  // 定义http头
+  res.writeHead(200,{'Content-Type':'text/plan'});
+
+  // 发送相应数据
+  res.end('Hello World!\n');
+}).listen(8000);
+
+// 服务运行后输出的一行信息
+console.log('server is ok')
+</code></pre></div><h4 id="回调"><a href="#回调" aria-hidden="true" class="header-anchor">#</a> 回调</h4><h5 id="函数调用方式分为三类：同步调用，回调，异步调用"><a href="#函数调用方式分为三类：同步调用，回调，异步调用" aria-hidden="true" class="header-anchor">#</a> 函数调用方式分为三类：同步调用，回调，异步调用</h5><h5 id="回调是一种双向调用模式"><a href="#回调是一种双向调用模式" aria-hidden="true" class="header-anchor">#</a> 回调是一种双向调用模式</h5><h4 id="阻塞与非阻塞"><a href="#阻塞与非阻塞" aria-hidden="true" class="header-anchor">#</a> 阻塞与非阻塞</h4><h5 id="阻塞与非阻塞关注的是程序在等待调用结果（信息，返回值）时的状态"><a href="#阻塞与非阻塞关注的是程序在等待调用结果（信息，返回值）时的状态" aria-hidden="true" class="header-anchor">#</a> 阻塞与非阻塞关注的是程序在等待调用结果（信息，返回值）时的状态</h5><h5 id="阻塞是做不完不准回来"><a href="#阻塞是做不完不准回来" aria-hidden="true" class="header-anchor">#</a> 阻塞是做不完不准回来</h5><h5 id="非阻塞是你先做，我先看看有没有其他事情可以做，完了吗告诉我一声"><a href="#非阻塞是你先做，我先看看有没有其他事情可以做，完了吗告诉我一声" aria-hidden="true" class="header-anchor">#</a> 非阻塞是你先做，我先看看有没有其他事情可以做，完了吗告诉我一声</h5><div class="language- extra-class"><pre class="language-text"><code>// 同步调用
+var fs = require('fs');
+var numbers = fs.readFileSync('numbers.txt');
+// 阻塞 Sync()
+console.log(numbers.toString());
+
+// 非阻塞
+var fs = require('fs');
+var numbers = fs.readFile('numbers.txt',function(err,data){
+  // dosthing;
+  console.log(err,data)
+});
+</code></pre></div><h4 id="nodejs事件驱动"><a href="#nodejs事件驱动" aria-hidden="true" class="header-anchor">#</a> nodejs事件驱动</h4><h5 id="nodejs是单进程单线程的应用程序，通过回调实现异步调用"><a href="#nodejs是单进程单线程的应用程序，通过回调实现异步调用" aria-hidden="true" class="header-anchor">#</a> nodejs是单进程单线程的应用程序，通过回调实现异步调用</h5><h6 id="非阻塞式i-o-事件驱动io"><a href="#非阻塞式i-o-事件驱动io" aria-hidden="true" class="header-anchor">#</a> 非阻塞式I/O 事件驱动IO</h6><pre><code>                                        |------------&gt;|
+</code></pre><p>引入events -&gt; EventEmitters(事件发射器) -&gt; events(事件队列)|  Event Loop  | -&gt; {Event Handlers(事件处理程序)}
+| (事件循环)   |
+|&lt;------------|</p><div class="language- extra-class"><pre class="language-text"><code>// 引入Event模块，并创建eventsEmitter对象
+var events = require('events');
+var eventEmitter = new events.EventEmitter();
+// 绑定事件处理函数
+var connctHandler = function connected(){
+  console.log('connected被调用了!');
+}
+// 完成事件绑定
+eventEmitter.on('connection',connctHandler);
+// 触发事件
+eventEmitter.emit('connection');
+console.log('程序执行完毕')
+</code></pre></div><h4 id="node-js模块化"><a href="#node-js模块化" aria-hidden="true" class="header-anchor">#</a> Node.js模块化</h4><h5 id="模块是node-js应用程序基本组成部分，文件和模块是一一对应的，一个模块就是一个node-js文件"><a href="#模块是node-js应用程序基本组成部分，文件和模块是一一对应的，一个模块就是一个node-js文件" aria-hidden="true" class="header-anchor">#</a> 模块是Node.js应用程序基本组成部分，文件和模块是一一对应的，一个模块就是一个Node.js文件</h5><h5 id="node-js中存在4类模块（原生模块和3种文件模块）"><a href="#node-js中存在4类模块（原生模块和3种文件模块）" aria-hidden="true" class="header-anchor">#</a> Node.js中存在4类模块（原生模块和3种文件模块）</h5><div class="language- extra-class"><pre class="language-text"><code>// main.js
+// node.js默认后缀为.js
+var hello = require('./hello');
+hello.world();
+
+// hello.js
+exports.world = function(){
+  console.log('hello world');
+}
+</code></pre></div><h6 id="nodejs模块的加载方式"><a href="#nodejs模块的加载方式" aria-hidden="true" class="header-anchor">#</a> Nodejs模块的加载方式</h6><p>####### 从文件模块缓存中加载
+####### 从原生模块加载
+####### 从文件加载</p><h4 id="nodejs-函数"><a href="#nodejs-函数" aria-hidden="true" class="header-anchor">#</a> Nodejs 函数</h4><div class="language- extra-class"><pre class="language-text"><code>function say(word){
+  console.log(word);
+}
+function execute(someFunction,value){
+  someFunction(value);
+}
+execute(say,'hello')
+execute(function(world){console.log('this is'+world)},'aaa')
+
+// 同样功能，不同的实现方式
+// 匿名函数
+var http = require('http');
+http.createServer(function(req,res){
+	res.writeHead(200,{'Content-Type':'text/plain'});
+	res.write('hello world');
+	res.end()
+}).listen(8000);
+
+// 回调函数
+var http = require('http');
+function onReq(req,res){
+	res.writeHead(200,{'Content-Type':'text/plain'});
+	res.write('asa');
+	res.end();
+}
+http.createServer(onReq).listen(3000)
+</code></pre></div><h4 id="nodejs路由"><a href="#nodejs路由" aria-hidden="true" class="header-anchor">#</a> Nodejs路由</h4><div class="language- extra-class"><pre class="language-text"><code>//  server.js
+'use strict'
+var http = require('http');
+var url = require('url');
+function start(route){
+	function onRequest(req,res){
+		// url.parse(string).query 
+		// querystring=&gt;post的参数
+		// query =&gt;get的参数
+		// url.parse(string).pathname
+		var pathname = url.parse(req.url).pathname;
+		route(pathname,res);
+	}
+	http.createServer(onRequest).listen(3000);
+	// console.log('server has started.');
+}
+exports.start = start;
+
+//   router.js
+function route(pathname, res) {
+    if (pathname === &quot;/&quot;) {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.write('Hell World');
+        res.end();
+    }else if(pathname === '/index/data' ){
+    	res.end('index');
+    }else{
+    	res.end('404');
+    }
+}
+exports.route = route;
+
+
+// index.js
+var server = require('./server');
+var router = require('./router');
+server.start(router.route);
+</code></pre></div><h4 id="nodejs-get-post-请求"><a href="#nodejs-get-post-请求" aria-hidden="true" class="header-anchor">#</a> Nodejs GET/POST 请求</h4><p>###GET请求=》url模块里的parse</p><div class="language- extra-class"><pre class="language-text"><code>var http = require('http');
+var url = require('url');
+var util = require('util');
+http.createServer(function(req,res){
+  res.writeHead(200,{'content-type','text/plain;charset=utf-8'});
+  // url.parse(req.url,true) =&gt; url后缀+参数   url.parse(req.url,true).query =&gt;请求参数
+  res.end(util.inspect(url.parse(req.url,true)))
+}).listen(3000)
+</code></pre></div><h6 id="post"><a href="#post" aria-hidden="true" class="header-anchor">#</a> post</h6><p>######### nodejs默认不会解析请求体，需要手动来做</p><div class="language- extra-class"><pre class="language-text"><code>// 基本语法结构说明
+var http = require('http');
+var querystring = require('querystring');
+http.createServer(function(req,res){
+  // 定义一个post用于暂存请求体的信息
+  var post = '';
+  // 通过req的data事件来监听函数，每当接受到请求体的数据，就会累加到post里
+  req.on('data',function(chunk){
+    post += chunk;
+  })
+  // 在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回
+  req.on('end',function(){
+    post = querystring.parsr(post);
+    res.end(util.inspect(post));
+  })
+}).listen(3000)
+
+// ep
+var http = require('http');
+var querystring = require('querystring');
+var postHTML =
+    '&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;菜鸟教程 Node.js 实例&lt;/title&gt;&lt;/head&gt;' +
+    '&lt;body&gt;' +
+    '&lt;form method=&quot;post&quot;&gt;' +
+    '网站名： &lt;input name=&quot;name&quot;&gt;&lt;br&gt;' +
+    '网站 URL： &lt;input name=&quot;url&quot;&gt;&lt;br&gt;' +
+    '&lt;input type=&quot;submit&quot;&gt;' +
+    '&lt;/form&gt;' +
+    '&lt;/body&gt;&lt;/html&gt;';
+http.createServer(function(req, res) {
+    var body = '';
+    req.on('data', function(chunk) {
+        body += chunk;
+    })
+    req.on('end', function() {
+        body = querystring.parse(body);
+        res.writeHead(200, { 'Content-type': 'text/html;charset=utf8' });
+        res.writeHead(200, {'Content-Type': 'text/html; charset=utf8'});
+        if (body.name &amp;&amp; body.url) {
+            // 输出提交的数据
+            res.write('网络名：' + body.name);
+            res.write('&lt;br&gt;');
+            res.write('网站url：' + body.url);
+        } else {
+            res.write(postHTML);
+        }
+    	res.end();
+    })
+}).listen(3000);
+</code></pre></div><h4 id="nodejs全局对象"><a href="#nodejs全局对象" aria-hidden="true" class="header-anchor">#</a> nodejs全局对象</h4><h5 id="nodejs的全局变量是global-浏览器的请求变量是window"><a href="#nodejs的全局变量是global-浏览器的请求变量是window" aria-hidden="true" class="header-anchor">#</a> nodejs的全局变量是global,浏览器的请求变量是window</h5><div class="language- extra-class"><pre class="language-text"><code>// 输出全局变量 __filename 的值（如果在模块中，返回的是模块文件的路径，如果在当前执行的脚本里，返回的是文件所在路径的绝对路径）
+console.log(__filename)
+
+// process  用于描述nodejs进程状态的对象 ***
+</code></pre></div><h4 id="nodejs文件系统"><a href="#nodejs文件系统" aria-hidden="true" class="header-anchor">#</a> nodejs文件系统</h4><h5 id="文件模块的方法都有异步和同步"><a href="#文件模块的方法都有异步和同步" aria-hidden="true" class="header-anchor">#</a> 文件模块的方法都有异步和同步</h5><div class="language- extra-class"><pre class="language-text"><code>var fs = require('fs');
+// fs.readFile()
+// 异步读取
+fs.readFile('input.txt',function(err,data){
+  if(err){
+    return console.log(err);
+  }
+  console.log('异步读取：'+data.toString());
+})
+// 同步读取
+var data = fs.readFileSync('input.txt');
+console.log('同步读取：'+ data.toString());
+console.log('程序执行完毕');
+
+// fs.open(path,flags[,mode],callback)   
+// path: 文件的路径   
+// flags文件打开的行为
+// mode 设置文件模式（权限），文件创建默认权限为0666（可读，可写
+// callback 回调，带有两个参数 callback(err,fd)
+// 打开文件
+var fs = require('fs');
+console.log('to be open file')
+fs.open('input.txt','r+',function(err,fd){
+  if(err){
+    return console.log(err)
+  }
+  console.log('the file is opened')
+})
+
+// fs.stat(path,callback) // callback(err,stats)  stats 是 fs.Stats 对象
+// 获取文件信息
+var fs = require('fs');
+fs.stat('input.txt',function(err,stats){
+  if(err){
+    return console.log(err);
+  }
+  console.log(stats)
+  console.log(stats.isFile());
+  console.log(stats.isDirectory());
+})
+
+// fs.writeFile(file,data[,options],callback)
+</code></pre></div><h4 id="nodejs-常用工具-util"><a href="#nodejs-常用工具-util" aria-hidden="true" class="header-anchor">#</a> nodejs 常用工具 =&gt; util</h4><div class="language- extra-class"><pre class="language-text"><code>// util.inherits
+var util = require('util');
+function Base(){
+  this.name = 'base';
+  this.base = 1232;
+  this.sayHello = function(){
+    console.log('hello'+this.name);
+  };
+}
+Base.prototype.showName = function(){
+  console.log(this.name);
+}
+function Sub(){
+  this.name = 'sub';
+}
+util.inherits(Sub,Base);   // Sub仅仅继承了Base原型中的函数
+var objSub = new Sub();
+objSub.showName();	
+// objSub.sayHello(); err  找不到构造函数里的内容	
+var objBase=new Base();
+objBase.sayHello();
+objBase.showName();
+
+// util.inspect  =&gt;将任意东西转换成字符串
+var util = require('util');
+function Person(){
+  this.name = 'sadf';
+  this.toString = function(){
+    return this.name
+  }
+}
+var obj = new Person();
+console.log(util.inspect(obj));
+console.log(util.inspect(obj,true))
+
+// 检测数据类型 =》返回值为true or false
+util.isArray(object);
+util.isRegExp(object);
+util.isDate(object);
+util.isError(object);
+</code></pre></div></div><div class="page-edit"><!----><!----></div><div class="page-nav"><p class="inner"><span class="prev">
+        ← <a href="/hai_blog/JavaScript/two.html" class="prev">
+          创建对象的几种方式
+        </a></span><span class="next"><a href="/hai_blog/notes/express.html">
+          Express基础
+        </a> →
+      </span></p></div></div></div></div>
+    <script src="/hai_blog/assets/js/2.de28bf07.js" defer></script><script src="/hai_blog/assets/js/app.baa25a8e.js" defer></script>
+  </body>
+</html>
