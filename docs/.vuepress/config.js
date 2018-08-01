@@ -21,8 +21,15 @@ module.exports = {
                 title: 'notes',
                 collapsable: true,
                 children: [
-                    '/notes/one',
-                    '/notes/two',
+                    '/notes/nodejs',
+                    '/notes/express',
+                ]
+            },
+            {
+                title: 'dataStructure',
+                collapsable: true,
+                children: [
+                    '/dataStructure/one'
                 ]
             }
         ]

@@ -3,23 +3,139 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>444 | hailiting Blog</title>
+    <title>创建对象的几种方式 | hailiting Blog</title>
     <meta name="description" content="hailiting Blog">
     
     
-    <link rel="preload" href="/hai_blog/assets/css/8.styles.734561ce.css" as="style"><link rel="preload" href="/hai_blog/assets/js/app.ccdf7577.js" as="script"><link rel="preload" href="/hai_blog/assets/js/4.34be4f33.js" as="script"><link rel="prefetch" href="/hai_blog/assets/js/5.3f204265.js"><link rel="prefetch" href="/hai_blog/assets/js/1.d6c66772.js"><link rel="prefetch" href="/hai_blog/assets/js/2.c453f8d4.js"><link rel="prefetch" href="/hai_blog/assets/js/3.bba0ea45.js"><link rel="prefetch" href="/hai_blog/assets/js/0.13ac061a.js"><link rel="prefetch" href="/hai_blog/assets/js/6.4049e85c.js"><link rel="prefetch" href="/hai_blog/assets/js/7.4b4e15b5.js">
-    <link rel="stylesheet" href="/hai_blog/assets/css/8.styles.734561ce.css">
+    <link rel="preload" href="/hai_blog/assets/css/8.styles.5a43d484.css" as="style"><link rel="preload" href="/hai_blog/assets/js/app.65be9592.js" as="script"><link rel="preload" href="/hai_blog/assets/js/4.8c47ef40.js" as="script"><link rel="prefetch" href="/hai_blog/assets/js/5.f5244d46.js"><link rel="prefetch" href="/hai_blog/assets/js/1.e4558b2a.js"><link rel="prefetch" href="/hai_blog/assets/js/2.11ff5e02.js"><link rel="prefetch" href="/hai_blog/assets/js/3.8a54da65.js"><link rel="prefetch" href="/hai_blog/assets/js/0.e39f68c2.js"><link rel="prefetch" href="/hai_blog/assets/js/6.488fff55.js"><link rel="prefetch" href="/hai_blog/assets/js/7.4dcc83fb.js">
+    <link rel="stylesheet" href="/hai_blog/assets/css/8.styles.5a43d484.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/hai_blog/" class="home-link router-link-active"><!----><span class="site-name">
       hailiting Blog
-    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><!----></div></header><div class="sidebar-mask"></div><div class="sidebar"><!----><ul class="sidebar-links"><li><a href="/hai_blog/" class="sidebar-link">HTTP协议那些事</a></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading open"><span>JavaScript</span><span class="arrow down"></span></p><ul class="sidebar-group-items"><li><a href="/hai_blog/JavaScript/one.html" class="sidebar-link">从原型到原型链</a></li><li><a href="/hai_blog/JavaScript/two.html" class="active sidebar-link">444</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/hai_blog/JavaScript/two.html#_444" class="sidebar-link">444</a></li></ul></li></ul></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>notes</span><span class="arrow right"></span></p><!----></div></li></ul></div><div class="page"><div class="content"><h2 id="_444"><a href="#_444" aria-hidden="true" class="header-anchor">#</a> 444</h2></div><div class="page-edit"><!----><!----></div><div class="page-nav"><p class="inner"><span class="prev">
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><!----></div></header><div class="sidebar-mask"></div><div class="sidebar"><!----><ul class="sidebar-links"><li><a href="/hai_blog/" class="sidebar-link">HTTP协议那些事</a></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading open"><span>JavaScript</span><span class="arrow down"></span></p><ul class="sidebar-group-items"><li><a href="/hai_blog/JavaScript/one.html" class="sidebar-link">从原型到原型链</a></li><li><a href="/hai_blog/JavaScript/two.html" class="active sidebar-link">创建对象的几种方式</a><ul class="sidebar-sub-headers"></ul></li></ul></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>notes</span><span class="arrow right"></span></p><!----></div></li></ul></div><div class="page"><div class="content"><h3 id="创建对象的几种方式"><a href="#创建对象的几种方式" aria-hidden="true" class="header-anchor">#</a> 创建对象的几种方式</h3><h5 id="javascript-中的所有事物都是对象：字符串、数值、数组、函数"><a href="#javascript-中的所有事物都是对象：字符串、数值、数组、函数" aria-hidden="true" class="header-anchor">#</a> JavaScript 中的所有事物都是对象：字符串、数值、数组、函数......</h5><h5 id="此外，javascript允许自定义对象"><a href="#此外，javascript允许自定义对象" aria-hidden="true" class="header-anchor">#</a> 此外，JavaScript允许自定义对象</h5><h5 id="javascript-对象"><a href="#javascript-对象" aria-hidden="true" class="header-anchor">#</a> JavaScript 对象</h5><p>JavaScript 提供多个内建的对象，比如String,Date,Array等等
+对象是带有属性和方法的特殊数据类型</p><h4 id="_1，工厂模式"><a href="#_1，工厂模式" aria-hidden="true" class="header-anchor">#</a> 1，工厂模式</h4><div class="language- extra-class"><pre class="language-text"><code>function createPerson(name,age,job){
+  var o = new Object();
+  o.name = name;
+  o.age = age;
+  o.job = job;
+  o.sayName = function(){
+    console.log(this);
+    console.log(this.name);
+  }
+  return o;
+}
+var person01 = createPerson(&quot;nasha&quot;,25,&quot;doc&quot;)
+person01.sayName();
+console.log(person01 instanceof creatPerson) // ERR
+ //  this 指向的是 {o产生的对象 }
+// nasha
+</code></pre></div><p>弊端：没有解决对象的识别问题，即怎么知道一个对象的类型</p><h4 id="_2，构造函数模式"><a href="#_2，构造函数模式" aria-hidden="true" class="header-anchor">#</a> 2，构造函数模式</h4><div class="language- extra-class"><pre class="language-text"><code>function Person(name,age,job){
+  this.name = name;
+  this.age = age;
+  this.job = job;
+  this.sayName = function(){
+    console.log(this) // Person
+    console.log(this.name) //bbb|| aaa
+  }
+}
+var person01 = new Person(&quot;aaa&quot;,20,&quot;doc&quot;)
+var person02 = new Person(&quot;bbb&quot;,30,&quot;teacher&quot;)
+console.log(person01 instanceof Person) // true
+console.log(person01 instanceof Object) // true
+console.log(person01.sayName())
+// Person{...}
+// aa
+</code></pre></div><p>与工厂模式相比：
+1，没有显式的创建对象
+2，直接将属性和方法赋值给了this对象
+3，没有return语句
+要创建person的实例，必须使用new操作符，以这种方式调用构造函数实际上会经历4个步骤
+1，创建一个新的对象
+2，将构造函数的作用域赋值给新对象
+3，执行构造函数里的代码
+4，返回新的对象</p><h4 id="创建自定义的构造函数可以将它的实际标识为一种特定的类型。"><a href="#创建自定义的构造函数可以将它的实际标识为一种特定的类型。" aria-hidden="true" class="header-anchor">#</a> 创建自定义的构造函数可以将它的实际标识为一种特定的类型。</h4><p>缺点：
+1，每个方法都有在每个实例上重新创新一遍；
+2，person01和person02都有一个sayName()的方法，但两个方法不是同一个Function实例。即不同实例上同名函数是不相等的，创建两个完成相同任务的function是不必要的，而且还有this对象在，不需要执行代码前就把函数绑定在特定对象上，这样，上面的函数就可以写成</p><div class="language- extra-class"><pre class="language-text"><code>function Person(name,age,job){
+  this.name = name;
+  this.age = age;
+  this.job = job;
+  this.sayname= sayname;
+}
+function sayname(){
+  console.log(this);
+  // do sth
+}
+</code></pre></div><p>把sayname属性设置成全局的sayname函数，这样，由于sayname包含的是一个指向函数的指针，因此person01与person02对象就共享了同一个函数。
+但是，如果有很多方法，那么就定义了很多全局函数，自定义的引用类型无封装可言，为了解决上述问题，就引入了原型模式。</p><h3 id="_3，原型模式"><a href="#_3，原型模式" aria-hidden="true" class="header-anchor">#</a> 3，原型模式</h3><p>每创建一个对象都有prototype属性（null除外），这个属性是一个指针，指向一个对象，而这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。
+使用原型对象的好处是可以让所有对象实例共享它所包含的属性和方法。</p><div class="language- extra-class"><pre class="language-text"><code>function Person() {};
+Person.prototype.name = &quot;bigbang&quot;;
+Person.prototype.job = &quot;dosth&quot;;
+Person.prototype.age = 25;
+Person.prototype.sayname = function() {
+    console.log(this.name);
+}
+var person01 = new Person();
+</code></pre></div><p>方法 isPrototypeOf()确定实例和原型之间的关联</p><div class="language- extra-class"><pre class="language-text"><code>console.log(Person.prototype.isPrototypeOf(person01)); // true
+</code></pre></div><p>Object.getPrototypeOf()返回的是[[prototype]]的值；</p><div class="language- extra-class"><pre class="language-text"><code>console.log(Object.getPrototypeOf(person01))
+console.log(Object.getPrototypeOf(person01) === Person.prototype) // true
+</code></pre></div><p>hasOwnProperty()方法可以检测一个属性是存在于一个实例中，还是存在原型中的。true为属性存在于实例中。</p><div class="language- extra-class"><pre class="language-text"><code>console.log(person01.hasOwnProperty(&quot;name&quot;)); // false
+</code></pre></div><p>更常见的做法是用一个包含所有属性和方法的对象字面量来重写整个原型对象，并重设constructor属性</p><div class="language- extra-class"><pre class="language-text"><code>function Person(){}
+Person.prototype = {
+  name:&quot;...&quot;,
+  age: 24,
+  job:&quot;sadf&quot;,
+  sayname: function(){
+    ...
+  }
+};
+Object.defineProperty(Person.prototype,&quot;constructor&quot;,{
+  enumerable: false,
+  value: Person
+})
+</code></pre></div><h4 id="原型与in操作符"><a href="#原型与in操作符" aria-hidden="true" class="header-anchor">#</a> 原型与in操作符</h4><p>有两种方法使用in操作符：单独使用和for-in中循环使用。
+使用for-in循环，返回的是所有能够通过对象访问的，可枚举的属性。包括实例中的属性，也包括存在于属性中的属性。</p><div class="language- extra-class"><pre class="language-text"><code>var person = {
+  toString: function(){
+    return &quot;My Object&quot;  
+  }
+}
+for(var prop in person){
+  if(prop == &quot;toString&quot;){
+    console.log('get it')
+  }
+}
+</code></pre></div><p>原型对象的缺点：
+1，省略了构造函数传递初始化参数这一环节，结果所有实例在默认情况下都将获取到相同的属性值，这不是最大问题，最大问题是由其共享本性所决定的。
+2，对于包含基本值的属性，可以在实例上添加同名属性隐藏原型中的属性，然后，对于包含引用数据类型的值来说，会导致问题。</p><h3 id="_4，组合使用构造函数模式和原型模式"><a href="#_4，组合使用构造函数模式和原型模式" aria-hidden="true" class="header-anchor">#</a> 4，组合使用构造函数模式和原型模式</h3><h5 id="构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。所以每个实例都会有自己的一份实例属性副本，但同时共享着对方法的引用，最大限度的节省了内存，同时支持向构造函数传递参数。"><a href="#构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。所以每个实例都会有自己的一份实例属性副本，但同时共享着对方法的引用，最大限度的节省了内存，同时支持向构造函数传递参数。" aria-hidden="true" class="header-anchor">#</a> 构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。所以每个实例都会有自己的一份实例属性副本，但同时共享着对方法的引用，最大限度的节省了内存，同时支持向构造函数传递参数。</h5><div class="language- extra-class"><pre class="language-text"><code>function Person(name,age,job){
+  this.name = name;
+  this.age = age;
+  this.job = job;
+  this.friends = ['a','b'];
+}
+Person.prototype = {
+  constructor: Person,
+  sayName: function(){
+    console.log(this,this.name)
+  }
+}
+var person01 = new Person(...)
+</code></pre></div><h3 id="_5，动态原型模式"><a href="#_5，动态原型模式" aria-hidden="true" class="header-anchor">#</a> 5，动态原型模式</h3><div class="language- extra-class"><pre class="language-text"><code>function Person(name,age,job){
+  this.name = name;
+  this.age = age;
+  this.job = job;
+  if(typeof this.sayName != &quot;function&quot;){
+    Person.prototype.sayName = function(){
+      console.log(this,this.name)
+    }
+  }
+}
+</code></pre></div><p>这段代码只会在初次调用构造函数的时候才执行。这里对原型所做的修改，能够立即在所有实例中得到反映。</p><h3 id="_6，object-create"><a href="#_6，object-create" aria-hidden="true" class="header-anchor">#</a> 6，Object.create()</h3><p>ES5定义了一个名为Object.create()的方法，它创建了一个新对象，其中第一个参数是这个对象的原型，第二个参数对对象属性的进一步描述。</p><h3 id="_7，寄生构造函数模式"><a href="#_7，寄生构造函数模式" aria-hidden="true" class="header-anchor">#</a> 7，寄生构造函数模式</h3><h3 id="_8，稳妥构造函数模式"><a href="#_8，稳妥构造函数模式" aria-hidden="true" class="header-anchor">#</a> 8，稳妥构造函数模式</h3></div><div class="page-edit"><!----><!----></div><div class="page-nav"><p class="inner"><span class="prev">
         ← <a href="/hai_blog/JavaScript/one.html" class="prev">
           从原型到原型链
         </a></span><span class="next"><a href="/hai_blog/notes/one.html">
           HTTP协议那些事
         </a> →
       </span></p></div></div></div></div>
-    <script src="/hai_blog/assets/js/4.34be4f33.js" defer></script><script src="/hai_blog/assets/js/app.ccdf7577.js" defer></script>
+    <script src="/hai_blog/assets/js/4.8c47ef40.js" defer></script><script src="/hai_blog/assets/js/app.65be9592.js" defer></script>
   </body>
 </html>
