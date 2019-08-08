@@ -35,7 +35,10 @@ module.exports = {
                 collapsable: true,
                 children:[
                     '/ECMAScript/one',
-                    '/ECMAScript/two'
+                    '/ECMAScript/two',
+                    '/ECMAScript/JS基础',
+                    '/ECMAScript/Generator',
+                    '/ECMAScript/Array对象方法',
                 ]
             },
             {
@@ -57,7 +60,8 @@ module.exports = {
                 title: '算法与数据结构',
                 collapsable: true,
                 children: [
-                    '/算法与数据结构/one'
+                    '/算法与数据结构/one',
+                    '/算法与数据结构/js基础算法题'
                 ]
             },
             {
@@ -99,14 +103,15 @@ module.exports = {
                 title: 'Flutter',
                 collapsable: true,
                 children: [
-                    '/Flutter/express'
+                    '/Flutter/开发环境搭建'
                 ]
             },
             {
                 title: 'ReactNative',
                 collapsable: true,
                 children: [
-                    '/ReactNative/express'
+                    '/ReactNative/ke01',
+                    '/ReactNative/常见问题'
                 ]
             },
             
