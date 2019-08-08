@@ -13,7 +13,7 @@ module.exports = {
                 title: '计算机服务基础',
                 collapsable: true,
                 children: [
-                    '/计算机服务基础/express'
+                    '/计算机服务基础/nginx下载_安装_部署'
                 ]
             },
             {
@@ -72,10 +72,10 @@ module.exports = {
                 ]
             },
             {
-                title: '前端框架',
+                title: 'React',
                 collapsable: true,
                 children: [
-                    '/前端框架/express',
+                    '/React/UmiJS_路由',
                 ]
             },
             {
