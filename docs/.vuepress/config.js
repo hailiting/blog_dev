@@ -39,6 +39,7 @@ module.exports = {
                     '/ECMAScript/JS基础',
                     '/ECMAScript/Generator',
                     '/ECMAScript/Array对象方法',
+                    '/ECMAScript/JS_AES加密',
                 ]
             },
             {
@@ -104,7 +105,8 @@ module.exports = {
                 collapsable: true,
                 children: [
                     '/Flutter/开发环境搭建',
-                    '/Flutter/Dart基础',
+                    '/Flutter/Dart基本数据类型',
+                    '/Flutter/Dart类Class_继承_多态',
                 ]
             },
             {

@@ -1,13 +1,13 @@
-# Dart基础
+# Dart基本数据类型
 ## 概述
-1，Dart 是强类型语言，静态类型（如：Java, c#等）
-2，面向对象的语言，OOP（如：Python, C++, Objective-C, Java, Kotliin, Swift, C#, Ruby与PHP等）
-3，JIT & AOT
+1，Dart 是强类型语言，静态类型（如：Java, c#等）          
+2，面向对象的语言，OOP（如：Python, C++, Objective-C, Java, Kotliin, Swift, C#, Ruby与PHP等）            
+3，JIT & AOT         
 * JIT: 即时编译，开发期间，更快编译，更快的重载
 * AOT: 事前编译，release期间，更快更流畅
 ## 知识体系
 ### 常用数据类型
-快速新建dart文结构  ``stfuk`` =》 ``new stateful widge``;
+快速新建dart文结构  ``stfuk`` =》 ``new stateful widge``;            
 按 ``option`` + ``enter`` 选择要引入的依赖；
 #### 数字  num int double
 ~~~
@@ -147,23 +147,4 @@ _tips(){
     print(o1); 
 }
 ~~~
-### 面向对象（OOP）
-#### 封装、继承、多态
-#### 类
-##### 对象
-##### 变量
-##### 方法
-###### 构造方法
-标准构造方法，初始化列表，命名构造方法，工厂构造方法，命名工厂构造方法
-###### 实例方法
-###### setters 和 getters
-###### 静态方法
-### 函数/方法
-### 泛型
-### 异步
-### 编程技巧
-### 一些学习网站
-https://www.dartlang.org
-https://dart.dev/guides/language/language-tour
-https://dart.goodev.org/guides/language/language-tour
 
