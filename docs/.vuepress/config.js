@@ -97,7 +97,7 @@ module.exports = {
                 title: '工程化',
                 collapsable: true,
                 children: [
-                    '/工程化/express'
+                    '/工程化/Mac中git_ssh配置'
                 ]
             },
             {
@@ -105,8 +105,10 @@ module.exports = {
                 collapsable: true,
                 children: [
                     '/Flutter/开发环境搭建',
-                    '/Flutter/Dart基本数据类型',
-                    '/Flutter/Dart类Class_继承_多态',
+                    '/Flutter/Dart基础_基本数据类型',
+                    '/Flutter/Dart基础_变量',
+                    '/Flutter/Dart类Class_继承_多态(一)',
+                    '/Flutter/Dart类Class_继承_多态(二)',
                 ]
             },
             {

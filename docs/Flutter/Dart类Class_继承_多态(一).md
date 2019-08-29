@@ -1,4 +1,4 @@
-# Dart类Class_继承_多态 
+# Dart类Class_继承_多态(一)
 ## 一：类的声明与使用
 ### 1，声明一个Person类
 在``lib/Person.dart`` 声明一个Person class:
@@ -108,7 +108,8 @@ p5.newName = 'sadfsdaf';
 print(p5.info);
 ~~~
 ### 7，初始化构造列表
-初始化构造函数可以默认初始化一个值，不过单个class上没有实际意义
+初始化构造函数可以默认初始化一个值，不过单个class上没有实际意义                  
+在子类上初始化列表
 ~~~
 String defaultCountry;
 Person(String name, int age, [int sex = 1]):defaultCountry = 'CN'{
@@ -116,6 +117,24 @@ Person(String name, int age, [int sex = 1]):defaultCountry = 'CN'{
     this.age = age;
     this.sex = sex;
 }
+
+class Children extends Person{
+    String _family;
+    int country;
+    String name;
+    // 在子类构造器方法体之前，可以初始化实例变量
+    Person(this._family, String name, int age, {this.country = 'China'})
+    :
+    name = '$_family.$country',
+    // 如果父类没有默认（无参）的构造方法，则需要在初始化列表中调用父类的构造方法进行初始化
+    super(name,age){
+        // 类的方法体（不是必须的）
+        print(name,age);
+    };
+}
+
+
+
 
 Person p6 = new Person('postbird', 20);
 print(p6.defaultCountry);
@@ -132,6 +151,7 @@ Person(this.name, this.age, [this.sex]);
 class Person {
     static String name;
     int age;
+
     static void setName(String name){
         Person.name = name;
         // this.age = 20; // err,静态方法只能访问静态属性
@@ -198,6 +218,7 @@ void main(){
 class Animal {
     String name;
     int age;
+    // 标准构造方法
     Animal(this.name,this.age);
     void speak(){}
     void printInfo(){
@@ -209,7 +230,8 @@ class Animal {
 }
 class Dog extends Animal {
     String nickName;
-    Dog(String name, int age, [String nickName]): super(name, age);
+    Dog(String name, int age, [String nickName]): super(name, age); // 完成父类初始化，才能开始子类的初始化
+
     @override
     void speak(){
         this.parentPrint();
