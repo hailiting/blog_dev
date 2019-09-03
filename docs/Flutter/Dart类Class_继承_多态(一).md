@@ -91,6 +91,8 @@ p3.getInfo();
 ### 6，getter和setter
 getter和setter可以最大程度简化值的获取或者格式化以及设置
 ~~~
+String get school=>_school;
+// stu1.school = '987';
 get info{
     return 'My name is ${name}, my age is ${age}, and i am a ${sex == 1?'man':'woman'}';
 }

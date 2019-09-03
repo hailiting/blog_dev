@@ -75,7 +75,9 @@ _listType(){
     for(var o in list){
       print(o);
     }
+    // 匿名函数 (){}
     list.forEach((e){
+      print(list.indexOf(i).toString());
       print(e);
     });
 //    // list.removeXx, insert, sublist, indexOf 等

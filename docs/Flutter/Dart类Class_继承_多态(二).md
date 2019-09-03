@@ -7,6 +7,7 @@ class ImmutablePoint {
     final num y;
     const ImmutablePoint(this.x,this.y);
     static final ImmutablePoint origin = const ImmutablePoint(0,0);
+    // static 静态关键字
 }
 ~~~
 ## 命名构造函数

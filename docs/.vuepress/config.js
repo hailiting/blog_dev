@@ -33,19 +33,20 @@ module.exports = {
             {
                 title: 'ECMAScript',
                 collapsable: true,
-                children:[
+                children: [
                     '/ECMAScript/one',
                     '/ECMAScript/two',
                     '/ECMAScript/JS基础',
                     '/ECMAScript/Generator',
                     '/ECMAScript/Array对象方法',
                     '/ECMAScript/JS_AES加密',
+                    '/ECMAScript/JS图片压缩'
                 ]
             },
             {
                 title: 'TypeScript',
                 collapsable: true,
-                children:[
+                children: [
                     '/TypeScript/TypeScript基础',
                 ]
             },
@@ -106,9 +107,13 @@ module.exports = {
                 children: [
                     '/Flutter/开发环境搭建',
                     '/Flutter/Dart基础_基本数据类型',
+                    '/Flutter/Dart基础_泛型',
+                    '/Flutter/Dart基础_Mixin',
                     '/Flutter/Dart基础_变量',
                     '/Flutter/Dart类Class_继承_多态(一)',
                     '/Flutter/Dart类Class_继承_多态(二)',
+                    '/Flutter/Dart基础_抽象类和抽象方法_接口',
+                    '/Flutter/Dart基础_最佳实践',
                 ]
             },
             {
@@ -117,10 +122,11 @@ module.exports = {
                 children: [
                     '/ReactNative/ke01',
                     '/ReactNative/常见问题',
-                    '/ReactNative/RN和h5交互'
+                    '/ReactNative/RN和h5交互',
+                    '/ReactNative/键盘挡住输入框问题',
                 ]
             },
-            
+
         ]
 
     }
