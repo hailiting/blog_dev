@@ -78,6 +78,7 @@ module.exports = {
                 collapsable: true,
                 children: [
                     '/React/UmiJS_路由',
+                    '/React/React_Hooks使用详解'
                 ]
             },
             {
@@ -105,6 +106,7 @@ module.exports = {
                 title: 'Flutter',
                 collapsable: true,
                 children: [
+                    '/Flutter/Flutter基础知识十讲',
                     '/Flutter/开发环境搭建',
                     '/Flutter/Dart基础_基本数据类型',
                     '/Flutter/Dart基础_泛型',
@@ -114,6 +116,8 @@ module.exports = {
                     '/Flutter/Dart类Class_继承_多态(二)',
                     '/Flutter/Dart基础_抽象类和抽象方法_接口',
                     '/Flutter/Dart基础_最佳实践',
+                    '/Flutter/Flutter加载本地图片',
+                    '/Flutter/Dart基础_异常处理',
                 ]
             },
             {

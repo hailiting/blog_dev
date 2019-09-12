@@ -176,3 +176,217 @@ class Circle{
     Circle(this.radius);
 }
 ~~~
+### 省略局部变量的类型
+显式的定义局部变量类型会制造视觉噪音
+~~~
+// good
+Map<int, List<Person>> groundByZip(Iterable<Person> people){
+    var peopleByZip = <int, List<Person>>{};
+    for(var person in people){
+        peopleByZip.putIfAbsent(person.zip, ()=><Person>[]);
+        peopleByZip[person.zip].add(person);
+    }
+    return peopleByZip;
+}
+// bed
+Map<int,List<Person>> groupByZip(Iterable<Person> people){
+    Map<int, List<Person>> peopleByZip = <int, List<Person>>{};
+    for(Person person in people){
+        peopleByZip.putIfAbsent(person.zip, ()=><Person>[]);
+        peopleByZip[person.zip].add(person);
+    }
+    return peopleByZip;
+}
+~~~
+## 成员
+在Dart中，对象的成员可以是方法(函数)或(实例变量)。
+### 不要创建不必要的getter和setter
+~~~
+// good
+class Box{
+    var contents;
+}
+// bad
+class Box{
+    var _contents;
+    get contents => _contents;
+    set contents(value){
+        _contents = value;
+    }
+}
+~~~
+### 使用``final``关键字来限制只读属性
+~~~
+// good
+class Box{
+    final contents = [];
+}
+// bad
+class Box{
+    var _contents;
+    get contents => _contents;
+}
+~~~
+### 用``=>``来实现只有一个单一返回语句的函数
+~~~
+get width => right - left;
+bool ready(num time) => minTime == null || minTime <= time;
+containsValue(String value) => getValues().contains(value);
+~~~
+多行代码尽可能使用普通花括号函数体并使用明显的return语句。
+### 不要使用``this.``，除非遇到了变量冲突的情况
+只有当局部变量和成员变量名称一样的时候，才需要使用``this.``来访问成员变量。
+~~~
+class Box{
+    var value;
+    void clear(){
+        update(null);
+    }
+    void update(value){
+        this.value = value;
+    }
+}
+~~~
+注意：构造函数参数在初始化列表中从来不会出现参数冲突的情况
+~~~
+class Box extends BaseBox{
+    var value;
+    Box(value)
+        : value = value,
+        super(value)
+        {}
+}
+~~~
+### 要尽可能的在定义变量的时候初始化其值
+~~~
+class Folder{
+    final String name;
+    final List<Document> contents=[];
+    Folder(this.name);
+    Folder.temp():name = 'temporary';
+}
+~~~
+对于变量取值依赖构造函数参数以及不同的构造函数取值也不一样的情况，不适用这条实践。
+## 构造函数
+### 尽可能的使用初始化形式
+~~~
+class Point{
+    num x,y;
+    // 这里位于构造函数参数之前的``this.``语法称为初始化形式
+    Point(this.x,this.y);
+}
+~~~
+### 不要在初始化形式上定义类型
+~~~
+// good
+class Point{
+    int x, y;
+    Point(this.x, this.y);
+}
+// bad
+class Point{
+    int x, y;
+    Point(int this.x, int this.y);
+}
+~~~
+### 要用``;``来替代函数体的构造函数{}
+~~~
+class Point{
+    int x,y;
+    Point(this.x,this.y); // bad  Point(this.x, this.y){}
+}
+~~~
+### 要把``super()``调用放到构造函数初始化列表之后调用
+~~~
+View(Style style,List children)
+    :_children = children,
+    super(style){}
+~~~
+## 异常处理
+### 避免使用没有on语句的catch
+### 不要默默的丢弃该异常信息，记录并显示给用户，或重新抛出
+### 使用rethrow来重新抛出捕获的异常
+~~~
+try{
+    somethingRisky();
+} catch(e){
+    if(!canHandle(e)) rethrow;
+    handle(e);
+}
+~~~
+## 异步
+### 使用``async/await``，而不是直接使用底层的特性
+~~~
+// good
+Future<bool> doAsyncComputation() async{
+    try{
+        var result = await longRunningCalculation();
+        return verifyResult(result.summary);
+    } catch(e){
+        log.error(e);
+        return false;
+    }
+}
+// bad
+Funture<bool> doAsyncComputation(){
+    return longRunningCalulation().then((result){
+        return verifyReult(result.summary);
+    }).catchError((e){
+        log.error(e);
+        return new Future.value(false);
+    })
+}
+~~~
+### 不要在没有有用效果的情况下使用``async``
+~~~
+// good
+Future afterTwoThings(Future first, second){
+    return Future.wait([first,second]);
+}
+// bad
+Future afterTwpThings(Future first, second) async{
+    return Future.wait([first, second]);
+}
+~~~
+1，使用了await
+~~~
+Future usesAwait(Future later) async{
+    print(await later);
+}
+~~~
+2，抛出一个异常(asymc throw比 return new Future.error(...)更简短)
+~~~ 
+Future asyncError() async{
+    throw 'Error';
+}
+~~~
+3，返回一个值
+~~~
+Future asyncValue() async{
+    return 'value';
+}
+~~~
+### 考虑用高阶函数来转换事件流
+### 避免直接使用Completer
+~~~
+// bad
+Future<bool> fileContainsBear(String path){
+    var completer = new Completer<bool>();
+    new File(path).readAsString().then((contents){
+        completer.complete(contents.contains('bear'));
+    })
+    return completer.future;
+}
+// good
+Future<bool> fileContainsBear(String path) async{
+    var contents = await new File(path).readAsString();
+    return contents.contains('bear');
+}
+// or
+Futurn<bool> fileContainsBear(String path){
+    return new File(path).readAsString().then((contents){
+        return contents.contains('bear');
+    })
+}
+~~~
+
