@@ -34,8 +34,9 @@ module.exports = {
                 title: 'ECMAScript',
                 collapsable: true,
                 children: [
-                    '/ECMAScript/one',
-                    '/ECMAScript/two',
+                    '/ECMAScript/JS从原型到原型链',
+                    '/ECMAScript/JS理论基础（1）',
+                    '/ECMAScript/JS_api(一)',
                     '/ECMAScript/JS基础',
                     '/ECMAScript/Generator',
                     '/ECMAScript/Array对象方法',
@@ -48,6 +49,8 @@ module.exports = {
                 collapsable: true,
                 children: [
                     '/TypeScript/TypeScript基础',
+                    '/TypeScript/枚举Enum',
+                    
                 ]
             },
             {
