@@ -456,7 +456,16 @@ children: <Widget>[
 ],
 ~~~
 ## 9，如何导入和使用Flutter的资源文件
-参考 ``Flutter加载本地图片``
+1，在``pubspec.yaml``里配置
+2，在dark文件使用
+~~~
+Image(
+    width: 100,
+    height: 100,
+    image: AssetImage('images/avatar.png'),
+)
+~~~
+
 ## 10，如何打开第三方应用
 ~~~
 // pubspec.yaml
@@ -489,4 +498,74 @@ _openMap() async{
     }
 }
 ~~~
+## 11, Flutter页面生命周期实战指南
+### StatelessWidget只有createElement, build两个生命周期方法
+### StatefullWidget生命周期
+#### 1，初始化时期
+createState, initState
+#### 2，更新期间
+didChangeDependencies, build, didUpdateWidget
+#### 3，销毁期
+deactivate, dispose
+~~~
+// staful + enter 快速搭建一个dart结构文件
+// 引入依赖  option+enter
+import 'package:flutter/material.dart';
+class WidgetLifecycle extends StatefulWidget {
+    @override
+    _WidgetLifecycleState createState()=> _WidgetLifecycleState();
+}
+class _WidgetLifecycleStateState extends State<WidgetLifecycleState> {
+  int _count = 0;
+  @override
+  // 做初始化工作(channel初始化，监听器的初始化等)
+  void initState(){
+    print('-----initState----');
+    super.initState();
+  }
+  // 当依赖的state对象改变时会调用
+  // 1, 在initState()之后立即调用
+  // 2, 如果StatefullWidgets依赖于InheritedWidget，那么当前State所依赖的InheritedWidget中的变量改变时会再次调用
+  @override
+  void didChangeDependencies(){
+    print('----didChangeDependencies----');
+    super.didChangeDependencies();
+  }
+  // 在didChangeDependencies()之后立即调用；
+  // 另外在调用setState后也会再次调用该方法；
+  @override
+  Widget build(BuildContext context){
+    print('----build----');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter页面生命周期'),
+        leading: BackButton(),
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            RaisedButton(
+              onPressed: (){
+                setState((){
+                  _count += 1;
+                });
+              },
+              child: Text(
+                "点我",
+                style: TextStyle(fontSize: 26),
+              ),
+            ),
+            Text(_count.toString()),
+          ],
+        ),
+      ),
+    );
+  }
+  // command + n  重写方法  搜索到想重写的方法
+
+}
+~~~
+## 12, Flutter应用的生命周期
+## 13, 修改Flutter应用的主题
+## 14, 自定义字体
 ## 【实战】拍照App开发
