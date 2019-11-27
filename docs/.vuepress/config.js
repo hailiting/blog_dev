@@ -116,10 +116,12 @@ module.exports = {
                     '/Flutter/Dart基础_泛型',
                     '/Flutter/Dart基础_Mixin',
                     '/Flutter/Dart基础_变量',
+                    '/Flutter/Dart基础_最佳实践',
                     '/Flutter/Dart类Class_继承_多态(一)',
                     '/Flutter/Dart类Class_继承_多态(二)',
                     '/Flutter/Dart基础_抽象类和抽象方法_接口',
-                    '/Flutter/Dart基础_最佳实践',
+                    '/Flutter/Flutter基础_生命周期',
+                    '/Flutter/Flutter基础_GestureDestector',
                     '/Flutter/Flutter加载本地图片',
                     '/Flutter/Dart基础_异常处理',
                 ]

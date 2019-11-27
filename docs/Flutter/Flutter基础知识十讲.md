@@ -508,7 +508,7 @@ didChangeDependencies, build, didUpdateWidget
 #### 3，销毁期
 deactivate, dispose
 ~~~
-// staful + enter 快速搭建一个dart结构文件
+// stful + enter 快速搭建一个dart结构文件
 // 引入依赖  option+enter
 import 'package:flutter/material.dart';
 class WidgetLifecycle extends StatefulWidget {
@@ -562,10 +562,475 @@ class _WidgetLifecycleStateState extends State<WidgetLifecycleState> {
     );
   }
   // command + n  重写方法  搜索到想重写的方法
-
+  // 很少使用，当父组件需要重新绘制的时候才调用
+  void didUpdateWidget(WidgetLifecycle oldWidget){
+      print('--------didUpdateWidget------');
+      super.didiUpdateWidget(oldWidget);
+      // if(oldWidget.xxx != widget.xxx) ....
+  }
+  // 很少使用，当组件被移除时调用在dispose之前调用
+  @override
+  void deactivate(){
+      print('----------deactivate---------');
+      super.deactivate();
+  }
+  // 常用，组件被销毁时调用
+  // 通常在该方法中执行一些资源的释放：监听器的卸载，channel的销毁等
+  @override
+  void dispose(){
+    print('----dispose----');
+    super.dispose();
+  }
 }
 ~~~
 ## 12, Flutter应用的生命周期
+~~~
+// 用WidgetsBindingObserver来获取Flutter应用维度的生命周期
+import 'package:flutter/material.dart';
+class AppLifeCycle extends StatefulWidget{
+    @override
+    _AppLifeCycleState createState()=>_AppLifeCycleState();
+}
+class _AppLifeCycleState extends State<AppLifeCycle> with WidgetsBindingObserver{
+    @override
+    void initState(){
+        WidgetsBinding.instance.addObserver(this);
+        super.initState();
+    }
+    @override
+    Widget build(BuildContext context){
+        return Scaffold(
+            appBar: AppBar(
+                title: Text('Flutter应用生命周期'),
+                leading: BackButton(),
+            ),
+            body: Container(
+                child: Text('Flutter应用生命周期'),
+            )
+        );
+    }
+    @override
+    void didChangeAppLifecycleState(AppLifecycleState state){
+        super.didChangeAppLifecyclesState(state);
+        print('state = $state'); 
+        if(state == AppLifecycleState.paused){
+          print('App进入后台');
+        } else if(state ==AppLifecycleState.resumed){
+          print('App进入前台');
+        } else if(state == AppLifecycleState.inactive){
+          // 不常用：应用处于非活动状态，并且未接收到用户输入时调用，比如： 打电话
+        } else if(state == AppLifecycleState.suspending){
+          // 不常用，ios不会触发，应用被挂起的时候触发
+        }
+    }
+    @override
+    void dispose(){
+        WidgetsBinding.instance.removeObserver(this);
+        super.dispose();
+    }
+}
+~~~
 ## 13, 修改Flutter应用的主题
+~~~
+// 用 StatefullWidget, 而不是StatelessWidget
+// 申请一个所有主题变量 
+Brightness _brightness = Brightness.light;  // Brightness.dark
+@overrider
+Widget build(BuildContext context){
+    return MaterialApp(
+        title: 'Flutter Dome',
+        theme: ThemeDate(
+            brightness: _brightness,
+            primarySwatch: Colors.blue,
+        ),
+        home: Scaffold(
+            appBar: AppBar(
+                title: Text('...'),
+            )
+            body: Column(...)
+        )
+    )
+}
+~~~
+
 ## 14, 自定义字体
+### 1，下载字体
+### 2，在根目录创建fonts文件，并把.ttf文件放进去
+### 3，修改``pubspec.yaml``文件，注册字体
+~~~
+font: 
+    family: RubikMonoOne
+    fonts: 
+        asset: fonts/RubikMonoOne-Regular.ttf 
+~~~
+### 4.1，全局应用
+~~~
+// main.dart
+...
+Widget build(BuildContext context){
+    return MaterialApp(
+        title: ...,
+        theme: ThemeData(
+            fontFamily: 'RubikMonoOne',
+            ...
+        )
+    )
+}
+...
+~~~
+### 4.2，部分页面应用
+~~~
+...
+child: Text("切换主题abc", style: TextStyle(fontFamily: 'RubikMonoOne'),),
+...
+~~~
+### 5，pubspec.yaml下 有一个``Packages get``,点击运行
 ## 【实战】拍照App开发
+### 1，新建dart文件``photo_app_page.dart``
+~~~
+// stf
+import 'package:flutter/material.dart';
+
+class PhotoApp extends StatefulWidget {
+  @override
+  _PhotoAppState createState() => _PhotoAppState();
+}
+
+class _PhotoAppState extends State<PhotoApp> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('photo app'),
+        leading: GestureDetector(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back),
+        ),
+      ),
+      body: Container(
+        child: Text("三生三世"),
+      ),
+    );
+  }
+}
+~~~
+### 2，``flutter``图片插件 ``image_picker``
+flutter插件官网地址 ``https://pub.dartlang.org/packages/``
+#### 2.1 添加依赖到``pubspec.yaml``
+~~~
+dependncies: 
+    image_picker: ^0.5.2
+~~~
+#### 2.2 下载  ``flutter pub get``
+#### 2.3 导入  
+~~~
+import 'package:image_picker/image_picker.dart';
+~~~
+### 3，兼容androidX
+#### 3.1 ``android/gradle/wrapper/gradle-wrapper.properties``里distributionUrl配置
+~~~
+distributionUrl=https\://services.gradle.org/distributions/gradle-4.10.2-all.zip:
+~~~
+#### 3.2 ``android/build.gradle``
+~~~
+dependencies{
+    // 原来的
+    classpath 'com.android.tools.build:gradle:3.2.1'
+    // 改为
+    classpath 'com.android.tools.build.gradle:3.3.0'
+}
+~~~
+#### 3.3 ``android/gradle.properties``
+~~~
+// 添加
+android.enableJetifier=true
+android.useAndroidX=true
+~~~
+#### 3.4 ``android/app/build.gradle``
+``compileSdkVersion`` >=28                                      
+``targetSdkVersion`` >=28
+#### 3.5 ``android/app/build.gradle``
+~~~
+// 原来的
+testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+// 替换为
+testInstrumentationRunner "androidx.text.runner.AndroidJUnitRunner"
+
+
+
+// 原来的 在 dependencies {下
+androidTestImplementation 'com.android.support.test:runner:1.0.2'
+androidTestImplementation 'com.android.support.test.espresso.espresso-core:3.0.2'
+// 改为
+androidTestImplementation 'androidx.test:runner:1.1.1'
+androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+~~~
+### 4，配置ios项
+~~~
+// ios/Runner/info.plist
+<true/>
+<key>NSCameraUsageDescription</key>
+<string>在这里配置相机的使用</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>在这里配置录音的使用</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>在这里配置相册的使用</string>
+~~~
+### 5，测试是否OK
+~~~
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+class PhotoApp extends StatefulWidget {
+  @override
+  _PhotoAppState createState() => _PhotoAppState();
+}
+
+class _PhotoAppState extends State<PhotoApp> {
+  File _image;
+
+  Future getImage() async {
+    print('12333');
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      _image = image;
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('photo app'),
+        leading: GestureDetector(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back),
+        ),
+      ),
+      body: Center(
+        child: _image == null
+            ? Text('No image selected.')
+            : Image.file(_image),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: getImage,
+        tooltip: 'Pick Image',
+        child: Icon(Icons.add_a_photo),
+      ),
+    );
+  }
+}
+~~~
+### 6，最终实现
+~~~
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+class PhotoApp extends StatefulWidget {
+  @override
+  _PhotoAppState createState() => _PhotoAppState();
+}
+
+class _PhotoAppState extends State<PhotoApp> {
+  List<File> _images = [];
+
+  Future getImage(bool isTokenPhonto) async {
+    print("1111");
+    Navigator.pop(context);
+    var image = await ImagePicker.pickImage(source: isTokenPhonto? ImageSource.camera:ImageSource.gallery);
+    if(image != null){
+      setState(() {
+        _images.add(image);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('photo app'),
+        leading: GestureDetector(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back),
+        ),
+      ),
+      body: Center(
+        child: Wrap(
+          spacing: 5,
+          runSpacing: 5,
+          children: _genImages(),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _pickImage,
+        tooltip: '选择图片',
+        child: Icon(Icons.add_a_photo),
+      ),
+    );
+  }
+  _pickImage(){
+    showModalBottomSheet(context: context,  builder: (context)=>Container(
+      height: 160,
+      child: Column(
+        children: <Widget>[
+          _item('拍照', true),
+          _item('从相册选择', false),
+        ],
+      )
+    ));
+  }
+
+  _item(String title, bool isTokenPhonto) {
+    return GestureDetector(
+      child: ListTile(
+        leading: Icon(isTokenPhonto?Icons.camera_alt: Icons.photo_library),
+        title: Text(title),
+        onTap: ()=>getImage(isTokenPhonto),
+      ),
+    );
+  }
+
+  _genImages() {
+    return _images.map((file){
+      return Stack(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: Image.file(file,width: 120,height: 90,fit: BoxFit.fill,),
+          ),
+          Positioned(
+            right: 5, top: 5,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _images.remove(file);
+                });
+              },
+              child:  ClipOval(
+                child: Container(
+                  padding: EdgeInsets.all(3),
+                  decoration: BoxDecoration(color: Colors.black54),
+                  child: Icon(Icons.close, size: 18,color: Colors.white,),
+                ),
+              ),
+            ),
+          )
+        ],
+      );
+    }).toList();
+  }
+}
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+class PhotoApp extends StatefulWidget {
+  @override
+  _PhotoAppState createState() => _PhotoAppState();
+}
+
+class _PhotoAppState extends State<PhotoApp> {
+  List<File> _images = [];
+
+  Future getImage(bool isTokenPhonto) async {
+    print("1111");
+    Navigator.pop(context);
+    var image = await ImagePicker.pickImage(source: isTokenPhonto? ImageSource.camera:ImageSource.gallery);
+    if(image != null){
+      setState(() {
+        _images.add(image);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('photo app'),
+        leading: GestureDetector(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back),
+        ),
+      ),
+      body: Center(
+        child: Wrap(
+          spacing: 5,
+          runSpacing: 5,
+          children: _genImages(),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _pickImage,
+        tooltip: '选择图片',
+        child: Icon(Icons.add_a_photo),
+      ),
+    );
+  }
+  _pickImage(){
+    showModalBottomSheet(context: context,  builder: (context)=>Container(
+      height: 160,
+      child: Column(
+        children: <Widget>[
+          _item('拍照', true),
+          _item('从相册选择', false),
+        ],
+      )
+    ));
+  }
+
+  _item(String title, bool isTokenPhonto) {
+    return GestureDetector(
+      child: ListTile(
+        leading: Icon(isTokenPhonto?Icons.camera_alt: Icons.photo_library),
+        title: Text(title),
+        onTap: ()=>getImage(isTokenPhonto),
+      ),
+    );
+  }
+
+  _genImages() {
+    return _images.map((file){
+      return Stack(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: Image.file(file,width: 120,height: 90,fit: BoxFit.fill,),
+          ),
+          Positioned(
+            right: 5, top: 5,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _images.remove(file);
+                });
+              },
+              child:  ClipOval(
+                child: Container(
+                  padding: EdgeInsets.all(3),
+                  decoration: BoxDecoration(color: Colors.black54),
+                  child: Icon(Icons.close, size: 18,color: Colors.white,),
+                ),
+              ),
+            ),
+          )
+        ],
+      );
+    }).toList();
+  }
+}
+~~~
