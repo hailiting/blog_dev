@@ -181,6 +181,7 @@ class _StatefulGroupState extends State<StatefullGroup> {
           body: _currentIndex==0?
             // 下拉刷新组件
             RefreshIndicator(
+              // ListView兼容了苹果的刘海
               child: ListView(
                 children: <Widget>[
                   Text("list"),
@@ -312,7 +313,7 @@ Flow
 #### Flexible => Expanded
 ~~~
 children: <Widget>[
-    //元素叠加
+    //元素叠加 前面的会被后面的盖住
     Stack(
         children: <Widget>[
             Image.network(

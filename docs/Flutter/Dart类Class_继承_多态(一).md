@@ -203,15 +203,6 @@ void main(){
         ..printInfo();
 }
 ~~~
-
-
-
-
-
-
-
-
-
 ## extends 继承
 子类继承父类使用``extends``关键字，                         
 重写方法要加``@override``注释，便于协作                         

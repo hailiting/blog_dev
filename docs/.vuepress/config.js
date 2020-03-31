@@ -124,6 +124,10 @@ module.exports = {
                     '/Flutter/Flutter基础_GestureDestector',
                     '/Flutter/Flutter加载本地图片',
                     '/Flutter/Dart基础_异常处理',
+                    '/Flutter/如何构建Flutter实例项目',
+                    '/Flutter/图片控件开发',
+                    '/Flutter/动画Animation开发指南',
+                    '/Flutter/Flutter调试技巧',
                 ]
             },
             {

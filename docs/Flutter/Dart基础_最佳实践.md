@@ -25,7 +25,6 @@ raiseAlarm(
 // good
 'Hi, $name!'
 "Wear your wildest $decade's outfit."
-'Wear your wildest ${decade}s Outfit.'
 // bad
 'Hi, ${name}!'
 "Wear your wildest ${decade}'s outfit."
