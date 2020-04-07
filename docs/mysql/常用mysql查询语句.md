@@ -135,7 +135,8 @@ insert触发触发语句，返回一个值。
 ### 3，删除触发器
 ``DROP TRIGGER trig;``
 
-## 一些例子
+## 一些例子‘=
+### 1，新建表
 ~~~
 CREATE TABLE db_name(
     id bigint(100) NOT NULL AUTO_INCREMENT COMMENT '自增长',
@@ -153,3 +154,5 @@ CREATE TABLE db_name(
     PRIMARY KEY('id')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci ROW_FORMAT=DYNAMIC;
 ~~~
+### 2，排序
+``SELECT * FROM `article` order by c_time desc`` 取最新一条数据

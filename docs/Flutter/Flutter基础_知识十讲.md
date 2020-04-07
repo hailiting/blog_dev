@@ -686,6 +686,106 @@ child: Text("切换主题abc", style: TextStyle(fontFamily: 'RubikMonoOne'),),
 ...
 ~~~
 ### 5，pubspec.yaml下 有一个``Packages get``,点击运行
+## 15，修改应用名称
+android
+~~~
+- flutterdome
+  - android
+    - app
+      - src 
+       - main
+        -AndroidManifest.xml
+          <application
+            ...
+            android:label="ABCdome"
+            ...
+          >
+~~~
+ios
+~~~
+- flutterdome
+  - ios
+    - Runner
+      - info.plist
+        ...
+        <string>6.0</string>
+	      <key>CFBundleName</key>
+        <string>ABCdome</string>
+        ...
+~~~
+## 16，修改应用图标
+android
+~~~
+// 放icon图标的文件地址
+domename/android/app/src/main/res/mipmap-hdpi 
+// domename/android/app/src/main AndroidManifest.xml
+...
+android:icon="@mipmap/icon_logo"
+...
+~~~
+ios
+~~~
+// 放icon图标的文件地址
+domename/ios/Runner/Assets.xcassets/AppIcon.appiconset
+Icon-App-20*20@1x.png
+~~~
+## 17，Flutter打包
+### android
+#### 17.1  生成key
+17.1.1 通过命令
+``keytool -genkey -v -keystore D:/key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias key``
+17.1.2 AndroidStudio自带功能生成
+``Generate signed bundle/APK...`` 
+#### 17.2, 配置key
+在android目录下新建文件“key.properties”，填写内容如下
+~~~
+storePassword=密匙库口令
+keyPassword=key密匙口令
+keyAlias=key别名
+storeFile=路径
+~~~
+#### 17.3, 配置build.gradle
+1，在app目录里的build.gradle里
+~~~
+...
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+android{
+  ...
+}
+~~~
+2, 在android里加入signingConfigs和替换buildTypes
+~~~
+signingConfigs {
+  release{
+    keyAlias keystoreProperties['keyAlias']
+    keyPassword keystoreProperties['keyPassword']
+    storeFile file(keystoreProperties['storeFile'])
+    storePassword keystoreProperties['storePassword']
+  }
+}
+buildTypes {
+  release {
+    // 替换成 release
+    signingConfig signingConfigs.release
+  }
+}
+~~~
+#### 17.4, 生成apk
+在项目跟目录``flutter build apk``;
+最后生成的apk在项目目录的``build/app/outputs/apk``里
+### ios
+1，申请钥匙串、申请证书
+2，注册Bundle ID
+3，添加测试设备
+4，配置证书
+5，打包ipa，
+6，应用发布
+~~~
+1，配置的bundle id应该与应用的bundle id一致
+2，证书分为开发证书和发布证书，发布证书配置时，发布到app store的选择 "App Store"，发布到fir.im或蒲公英等三方分发网站的选择'Ad hoc'
+~~~
 ## 【实战】拍照App开发
 ### 1，新建dart文件``photo_app_page.dart``
 ~~~
