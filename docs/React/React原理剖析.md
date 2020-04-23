@@ -1,5 +1,12 @@
 # React原理剖析
-## 虚拟Dom
+* react核心api
+* 探究setState
+* 探究diff算法
+
+
+
+
+
 ## CreateElement手写
 ## Component源码手写
 ## Render手写
