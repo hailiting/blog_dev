@@ -10,6 +10,12 @@ src
   |    |-kLine
   |        |-index.js   // socket 订阅历史
 ~~~
+## 常见问题
+~~~
+// 设置图标价格精度
+const e = chart.priceFormatter();
+e.format = (v) => new bigNumber(v).toFixed(1, 1);
+~~~
 ## 方法一： npm trader-view
 ~~~
 import {TradingView, Datafeed } from "trader-view";
@@ -118,6 +124,7 @@ this.widget = new TradingView({
     backgroundColor: "#fff",
     foregroundColor: "#fff",
   },
+  // 禁用自带的一些功能
   disabled_features: [
     "left_toolbar",
     "volume_force_overlay",
@@ -139,8 +146,12 @@ this.widget = new TradingView({
     "header_compare",
     "header_interval_dialog_button",
     "header_screenshot",
-    "header_symbol_search",
-    "header_undo_redo",
+    "header_symbol_search", // 头部搜索
+    "header_widget_dom_node", // 隐藏头部组件
+    "source_selection_markers", // 禁用系列和指示器的选择标记
+    "header_indicators", // 图标指标
+    "adaptive_logo", // 移动端隐藏logo
+    "header_undo_redo", // 撤销返回
     "show_hide_button_in_legend",
     "show_interval_dialog_on_key_press",
     "snapshot_trading_drawings",
@@ -185,7 +196,7 @@ export const getOverrides = (theme) => {
     white: {
       up: "#1dc6ac",
       down: "#e8506c",
-      bg: "rgba(0, 0, 0, 0)",
+      bg: "rgba(255, 255, 255, 0)",
       grid: "#EDF1F7",
       cross: "#CAD1E7",
       border: "#EDF1F7",
@@ -279,6 +290,7 @@ export const getOverrides = (theme) => {
 };
 ~~~
 #### 设置图表背景 
+
 ~~~
 // chardingView.css
 table.chart-markup-table {
@@ -842,10 +854,10 @@ export default class Kline extends React.Component {
         "timeframes_toolbar",
         "compare_symbol",
         "go_to_date",
-        "header_chart_type",
+        "header_chart_type", // k线样式
         "header_compare",
         "header_interval_dialog_button",
-        "header_screenshot",
+        "header_screenshot", // 截图
         "header_symbol_search",
         "header_undo_redo",
         "show_hide_button_in_legend",
@@ -1257,8 +1269,10 @@ export default class Kline extends React.Component {
         // foregroundColor: "#fff"
       },
       disabled_features: [
+        "header_fullscreen_button", // 全屏
+        "property_pages",  // 禁用所有属性页
         "left_toolbar",
-        "volume_force_overlay",
+        "volume_force_overlay",  // 防止重叠
         "create_volume_indicator_by_default",
         "create_volume_indicator_by_default_once",
         "format_button_in_legend",
@@ -1268,14 +1282,13 @@ export default class Kline extends React.Component {
         "save_chart_properties_to_local_storage",
         "main_series_scale_menu",
         "show_logo_on_all_charts",
-        "header_settings",
-        "timeframes_toolbar",
+        "header_settings",  // 设置
+        "timeframes_toolbar", // 下面的时间
         "chart_property_page_background",
-        "timeframes_toolbar",
         "compare_symbol",
         "go_to_date",
         "header_chart_type",
-        "header_compare",
+        "header_compare", // 图标对比
         "header_interval_dialog_button",
         "header_screenshot",
         "header_symbol_search",
@@ -1287,7 +1300,7 @@ export default class Kline extends React.Component {
         "border_around_the_chart",
         "remove_library_container_border",
         "header_saveload",
-        "header_resolutions",
+        "header_resolutions", // 头部时间s
       ],
       overrides: getOverrides("white"),
       studies_overrides: {
