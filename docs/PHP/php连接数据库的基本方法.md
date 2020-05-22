@@ -1,4 +1,5 @@
-# php中mysql_connnect与mysqli的区别
+# php连接数据库的基本方法
+都是PHP连接数据库的方法
 ## 对象化
 ~~~
 $host = 'locahost'; // url 不要加端口，要单独指定
