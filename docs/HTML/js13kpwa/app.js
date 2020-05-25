@@ -23,19 +23,26 @@ for (var i = 0; i < games.length; i++) {
 	content += entry;
 };
 document.getElementById('content').innerHTML = content;
-
 // registering service worker
 if ("serviceWorker" in navigator) {
-	navigator.serviceWorker.register("/pwa-examples/js13kpwa/sw.js");
+	navigator.serviceWorker.register("/js13kpwa/sw.js");
 }
 // requesting permission for Notifications after clicking on the button
 var button = document.getElementById("notifications");
 button.addEventListener("click", function (e) {
-	Notification.requestPermission().then(function (result) {
-		if (result === "granted") {
-			randomNotification();
-		}
-	})
+	// Notification.permission: default(未做出选择) || granted(用户授权了) || denied(用户拒绝了)
+	if (!("Notification" in window)) {
+		alert("浏览器不支持")
+		return;
+	} else if (Notification.permission === "granted") {
+		randomNotification();
+	} else if (Notification.permission !== "denied") {
+		Notification.requestPermission().then(function (result) {
+			if (result === "granted") {
+				randomNotification();
+			}
+		})
+	}
 })
 function randomNotification() {
 	var randomItem = Math.floor(Math.random() * games.length);
@@ -44,10 +51,13 @@ function randomNotification() {
 	var notifImg = "data/img/" + games[randomItem].slug + ".jpg";
 	var options = {
 		body: notifBody,
-		icon: notifImg
+		icon: notifImg,
+		dir: "auto", // auto(自动) ltr(从左到右) rtl(从右到左)
+		lang: "zh",
+		tag: "testTag", // 赋予通知ID，以便对通知进行刷新、替换或移除
 	}
 	var notif = new Notification(notifTitle, options);
-	setTimeout(randomNotification, 30000);
+	setTimeout(randomNotification, 3000);
 };
 var imagesToLoad = document.querySelectorAll("img[data-src]");
 var loadImages = function (image) {
