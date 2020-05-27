@@ -7,7 +7,9 @@
 需要的文件夹地址
 1 ``/etc/hosts``里的hosts文件;
 ~~~
-127.0.0.1 zerg.cn # used by Apach
+// 我xampp 80 端口不在local下，所有设置在ip下
+# 127.0.0.1 zerg.cn # used by Apach
+192.168.xx.x zerg.cn 
 ~~~
 2 ``xampp``文件夹里的  ``etc/httpd.conf``;
 ~~~
