@@ -1,0 +1,23 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../../../backstop_data/bitmaps_reference/backstop_default_BackstopJS_Homepage_0_document_0_web.png",
+        "test": "../../../backstop_data/bitmaps_test/20200604-140407/backstop_default_BackstopJS_Homepage_0_document_0_web.png",
+        "selector": "document",
+        "fileName": "backstop_default_BackstopJS_Homepage_0_document_0_web.png",
+        "label": "BackstopJS Homepage",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "https://www.zgnext.com/web/#/contract/home",
+        "referenceUrl": "",
+        "expect": 0,
+        "viewportLabel": "web",
+        "error": "Reference file not found /Users/hailiting/Desktop/testDome/backstop_data/bitmaps_reference/backstop_default_BackstopJS_Homepage_0_document_0_web.png"
+      },
+      "status": "fail"
+    }
+  ],
+  "id": "backstop_default"
+}

@@ -1,0 +1,23 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../../../backstop_data/bitmaps_reference/home.png",
+        "test": "../../../backstop_data/bitmaps_test/20200604-140246/home.png",
+        "selector": "document",
+        "fileName": "home.png",
+        "label": "BackstopJS Homepage",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "https://www.zgnext.com/web/#/contract/home",
+        "referenceUrl": "",
+        "expect": 0,
+        "viewportLabel": "web",
+        "error": "Reference file not found /Users/hailiting/Desktop/testDome/backstop_data/bitmaps_reference/home.png"
+      },
+      "status": "fail"
+    }
+  ],
+  "id": "backstop_default"
+}

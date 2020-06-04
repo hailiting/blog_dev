@@ -1,0 +1,103 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2020-06-04T07:38:00.317Z",
+    "end": "2020-06-04T07:38:00.354Z",
+    "duration": 37,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "a2623212-5971-4c06-baf3-0ca9b6c5a635",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "9d464f86-0ba3-4bb6-ac1e-818925d2cad3",
+          "title": "后台接口测试",
+          "fullFile": "/Users/hailiting/Desktop/testDome/service/router.spec.js",
+          "file": "/service/router.spec.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "test接口测试",
+              "fullTitle": "后台接口测试 test接口测试",
+              "timedOut": false,
+              "duration": 32,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "axios.get(\"http://localhost:3100/test\")\n  .then(function (response) {\n    console.log(response.data.data)\n    expect(response.status).to.equal(200);\n    if (response.data.data == \"ok message111\") {\n      done();\n    } else {\n      done(new Error(\"数据不符合预期\"));\n    }\n  }).catch(function (error) {\n    done(error);\n  })",
+              "err": {},
+              "uuid": "91be4717-6662-4b55-a064-66888c0c4996",
+              "parentUUID": "9d464f86-0ba3-4bb6-ac1e-818925d2cad3",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "91be4717-6662-4b55-a064-66888c0c4996"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 32,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.1.1"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "./docs/mochawesome-report",
+        "reportFilename": "mochawesome-report"
+      },
+      "version": "5.1.0"
+    }
+  }
+}
