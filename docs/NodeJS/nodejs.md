@@ -164,7 +164,7 @@ var router = require('./router');
 server.start(router.route);
 ~~~
 #### Nodejs GET/POST 请求
-###GET请求=》url模块里的parse
+### GET请求=》url模块里的parse
 ~~~
 var http = require('http');
 var url = require('url');

@@ -90,6 +90,11 @@ http://webdriver.io webdriver i/o
 
 
 ## 具体实践
+
+短点 
+1，karma集成webpack
+2，selenium-webdriver 的具体实现
+
 ### karma 单元测试
 1，安装karma环境
 ~~~
