@@ -11,7 +11,8 @@
     "unit": "karma start",
     "e2e": "node ./e2e/npmjs.spec.js",
     "ui": "backstop test",
-    "test": "npm run unit"
+    "test": "npm run unit",
+    "nightwatch": "nightwatch --tag google"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
+    "chromedriver": "^83.0.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "babel-plugin-react-transform": "^3.0.0",

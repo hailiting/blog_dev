@@ -10,6 +10,7 @@ brew install nginx
 #### 3，启动 Nginx
 ~~~
 sudo  /usr/local/Cellar/nginx/1.15.8/bin/nginx  -c /usr/local/etc/nginx/nginx.conf
+sudo nginx  -c /usr/local/etc/nginx/nginx.conf
 ~~~
 ####  常见错误 
 ##### 配置文件地址
@@ -85,13 +86,13 @@ ip addr 获取到ip地址
 
 #### 10,学习nginx配置
 ~~~
-# 开启进程数 <=CPU数
+# 开启进程数 <=CPU核数
 worker_processes 1;
 
 # 错误日志保存位置
 error_log logs/error.log;
-error_log logs/error.log notice;
-error_log logs/error.log info;
+error_log logs/error.log notice; # 警告
+error_log logs/error.log info; # 基本信息
 
 # 进程号保存文件
 # pid logs/nginx.pid;
@@ -100,11 +101,68 @@ error_log logs/error.log info;
 events{
   worker_connections 1024;
 }
-
+<!-- --------------- -->
 http{
+  include mine.types;
+  default_type application/octet-stream;
+  # log_format main '$remote_addr - $remote_user [$time_local] "$request"'
+  #                 '$status $body_bytes_sent "$http_referer"'
+  #                 '"$http_user_agent" "$http_x_forwarded_for"';
+  #access_log logs/access.log main;
+  sendfile on;
+  #tcp_nopush on;
+  keepalive_timeout 65;
+  #gzip on;
+  server {
+    listen 8080;
+    server_name localhost;
+    #charset koi8-r;
+    #access_log logs/host.access.log main;
+    location /{
+      root html; # html 文件夹
+      index index.htmml index.htm
+    }
+    #error_page 404 /404.html; #控制出错
+    #redirect server error pages to the static page /50x.html
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html{
+      root html;
+    }
+    #proxy the PHP scripts to Apache listening on 127.0.0.1:80
+    #location ~ \.php${
+    # proxy_pass http://127.0.0.1;
+    #}
+    #pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #location ~ \.php$ {
+    #  root html;
+    #  fastcgi_pass 127.0.0.1:9000;
+    #  fastcgi_index index.php;
+    #  fastcgi_param SCRIPT_FILENAME /scripts$fastcgi_script_name;
+    #  include fastcgi_params;
+    #}
+    #deny access to .htaccess files, if Apache's document root
+    #concurs with nginx's one
+    #location ~/\.ht{
+    #  deny all;
+    #}
+  }
+  #server{
+  #  listen 8000;
+  #  listen somename:8080;
+  #  server_name somename alias another.alias;
+  #  location / {
+  #}
+  }
+}
+<!-- --------------- -->
+http{
+  # 开启gzip
+  # gzip on;
+  # 开启etag
+  # etag on;
   #监听端口，默认是80端口  
   listen       80;  
-  #监听域名  
+  #监听域名
   server_name  localhost;  
 
   #charset koi8-r;  

@@ -2,6 +2,14 @@
 ## async创建一个异步函数，await只能在异步函数的代码块中工作
 ## 基本用法
 ~~~
+// 查询二级文章分类
+static async get_category(ctx){   // async声明这是一个async函数
+  const data = await CategoryModel.find();  // await获取异步结果
+  if(!data) return ctx.error({msg: "暂无数据"});
+  return ctx.success({data});
+}
+~~~
+~~~
 var hello = async () => {
   let response = await new Promise((resolve) => {
     setTimeout(() => resolve("aaaa"), 2000)

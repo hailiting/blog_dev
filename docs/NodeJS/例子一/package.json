@@ -1,0 +1,38 @@
+{
+  "name": "koa2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "babel": "babel test -d test && babel rest -d rest && babel app.es6 -o app.js",
+    "start": "node app.js",
+    "test": "node_modules/.bin/mocha test/server.js",
+    "e2e": "node test/e2e.js",
+    "unit": "karma start"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "co": "^4.6.0",
+    "jasmine-core": "^3.5.0",
+    "karma": "^5.0.9",
+    "karma-jasmine": "^3.3.1",
+    "koa": "^2.12.0",
+    "koa-simple-router": "^0.2.0",
+    "koa-static": "^5.0.0",
+    "koa-swig": "^2.2.1",
+    "mocha": "^8.0.1",
+    "path": "^0.12.7",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5",
+    "selenium-webdriver": "^4.0.0-alpha.7",
+    "supertest": "^4.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/preset-env": "^7.10.2"
+  }
+}

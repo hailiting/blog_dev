@@ -47,7 +47,7 @@ Macaca 国产（阿里）
 ### 自动化单元测试
 karma自动化runner集成PhantomJS无刷新
 ~~~
-npm install -g karma
+npm install karma --save-dev
 npm install karma-cli --save-dev
 npm install karma-chrome-launcher --save-dev
 npm install karma-phantomjs-launcher --save-dev
@@ -55,6 +55,25 @@ npm install karma-mocha --save-dev
 npm install karma-chai --save-dev
 npm install karma-coverage --save-dev【报告和测试覆盖率检查】
 [coverageReporter: {type:"html", dir:"coverage/"}]
+~~~
+~~~
+"karma": "^1.4.1",
+"chai": "^4.1.2",
+"cross-env": "^5.0.1",
+"karma-coverage": "^1.1.1",
+"karma-mocha": "^1.3.0",
+"karma-phantomjs-launcher": "^1.0.2",
+"karma-phantomjs-shim": "^1.4.0",
+"karma-sinon-chai": "^1.3.1",
+"karma-sourcemap-loader": "^0.3.7",
+"karma-spec-reporter": "0.0.31",
+"karma-webpack": "^2.0.2",
+"mocha": "^3.2.0",
+"sinon": "^4.0.0",
+"sinon-chai": "^2.8.0",
+"inject-loader": "^3.0.0",
+"babel-plugin-istanbul": "^4.1.1",
+"phantomjs-prebuilt": "^2.1.14",
 ~~~
 ## 性能测试
 - 面向切面编程AOP无侵入式

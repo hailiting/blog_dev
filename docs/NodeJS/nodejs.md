@@ -1,4 +1,76 @@
-# NodeJS基础
+# NodeJS
+
+## 如何阅读
+### 第一步，在本地跑起来测试用例
+* git clone https://github.com/nodejs/node.git
+* cd node
+* ./configure && make
+* make install
+* make test
+### 第二步，分层
+* 纯JavaScript写的核心模块【lib】
+* 带NativeBinding的JavaScript核心模块 【lib】
+* C++文件 【src】
+
+#### node 代码分支
+* branch name: fix/gh-{num}
+* commit message: "module name: description"
+* test/parallel/test-*.js
+
+### 前后端分离及登录验证
+~~~
+web app 小程序 【token/cookie/session】
+  view层
+    | 接口
+  业务层「biz business 业务逻辑层」 -> session「登录状态等」 「权限通知」
+    |                            -> redis 「会话共享」
+    | 接口
+    |
+  base层「数据库操作，文件上传等基础模块」
+~~~
+### cookie
+1, cookie是服务端初始化的
+2, 服务端和客户端都可以修改 
+3,「httpOnly 浏览器不容许js操作，只能浏览器自己可以操作」
+
+### 多层架构
+表现层User Interface layer (web components)
+业务逻辑层BLL (Business Logic Layer) =》干活
+数据访问层工厂类 DALFactory (Data access layer factory)
+数据访问接口层 IDAL (Interface Data access layer)
+数据访问接口层 DLL (Data access layer) =》 给干活逻辑封装
+数据访问SqlServer封装层 (SQL server data access layer) =》封装数据库接口去访问数据库
+数据库集群 
+
+~~~
+- BLL 实现业务逻辑
+- controllers  暴露接口
+  import xxx from "../BLL/xxxBLL"
+  xxxController
+  _server.get("/link", xxxController)
+- DAL 逻辑数据库，实现真实的用户场景 【不做数据库操作】
+- DBUtility
+  - MysqlDbHelper 【数据库操作工具类】
+- Config 一些常量
+- Models 数据库的一些映射
+   module.exports = function(db,cb){
+     db.define("xxx", {
+       id: {
+         type: "serial",
+         key: true
+       },
+       xxx: String
+     })
+   }
+- app.js
+~~~
+AOP 切面层
+#### JavaWeb
+* jsp 指令元素（import）jsp动作元素
+* jsp内置对象 （session, request, response)
+* javabean对象 可重用组件化思想
+* el表达式和jstl标签``<x:if>``
+
 #### Node.js的本质是一个JavaScript的解析器
 #### Node.js是JavaScript的运行环境
 #### Node.js是服务器程序

@@ -1,0 +1,16 @@
+<!-- 继承layout的index.html -->
+
+{% extends 'layout.html' %}
+
+{% block title %}My Page{% endblock %}
+
+{% block head %}
+{% parent %}
+<link rel="stylesheet" href="/css/index.css">
+{% endblock %}
+
+{% block content %}
+<h1 id="ThumbUpNumber">-</h1>
+<button id="BtnThumbUp">点赞</button>
+<script src="/scripts/index.js"></script>
+{% endblock %}
