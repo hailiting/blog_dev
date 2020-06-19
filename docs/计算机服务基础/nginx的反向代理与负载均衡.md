@@ -32,9 +32,11 @@ brew search nginx / brew install nginx
 10,服务器端的nginx地址
 11, ``nginx -t``是否生效 
 12, 端口号被占用处理
+// grep node 筛选出含node字眼的进程
 ps aux | grep node  // 那个程序在运行 第二位为 pid  然后kill -9 pid
 ps -ef | grep node // nginx
 lsof -i tcp:8081  // 端口
+// kill -9 [-9 发一个强制任务的信号-顽固的进程，内核亲自去杀， kill 发一个停止进程的信号]
 kill -9 pid
 ssh 用户名@地址
 scp course-map.json root@ip地址:/路径 [scp 文件 name@ipaddress:/path]

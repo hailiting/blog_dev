@@ -93,6 +93,8 @@ yum install nginx
 nginx
 # killall -9 nginx 杀掉端口号
 # 如果客户端不能访问服务器的Ip，多半是服务器的防火墙没关 systemctl stop firewalld
+/usr/share/nginx/html 资源加载地址
+/etc/nginx/nginx.conf 配置地址
 ~~~
 
 ## 常用命令
@@ -126,3 +128,40 @@ systemctl disable mariadb #禁止自动启动
   ``ip address show``
 ### 命令行下载命令curl、wget【yum 包管理】
 
+### 帮助文档
+~~~
+man systemctl | 你想了解的命令
+键盘Q 为退出   空格为下一页
+~~~
+### Ctrl+s 挂起 【 不想挂起 Ctrl+P 】
+
+### Linux免密登录 【自动化测试需要】
+
+#### 配置免密登录步骤
+The authenticity of host '192.168.2.171 (192.168.2.171)' can't be established.
+ECDSA key fingerprint is SHA256:sRLieO5eoLGh65/l+HUDSTP0qF46V5n5JLrg+fcqrFI.
+
+tip: 本地电脑可以做多个免密配置
+
+serverA: 192.168.2.151   mac
+
+serverB: 192.168.2.171  centos
+
+1. 生成密钥对
+  * ssh-keygen -t rsa -C "你自己的名称" -f "你自己的名称_rsa"
+2. 上传配置公钥
+  * 上传公钥到服务器对应账号的home路劲下的.ssh/中
+    - ssh-copy-id -i "公钥文件名" 用户名@服务器ip或域名
+    - 配置公钥文件访问权限为600
+3. 配置本地私钥
+  * 把第一步生成的私钥复制到你的home目录下的.ssh/路径下
+  * 配置你的私钥文件访问权限为600
+  * chmod 600 你的私钥文件名
+4. 免密登录功能的本地配置文件
+  * 编辑自己home目录的.ssh/路径下的config文件
+  * 配置config文件的访问权限为644
+
+
+scp 【两个电脑之间复制】
+scp ./name root@xxxx:/home/zhangsan
+scp -r ./目录明 root@xxxx:/home/zhangsan
