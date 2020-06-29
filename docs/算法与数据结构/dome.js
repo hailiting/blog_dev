@@ -1,5 +1,23 @@
 /**
- * 长度最小的子数组
+ * 215. 数组中的第K个最大元素
+ * 在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var findKthLargest = function (nums, k) {
+  const bol = nums instanceof Array && nums.length;
+  if (bol) {
+    const numsCopy = nums.sort((a, b) => b - a);
+    return numsCopy[k - 1];
+  }
+};
+
+// const nums = [3, 2, 1, 5, 6, 4], k = 2; // 5
+// const nums = [3, 2, 3, 1, 2, 4, 5, 5, 6], k = 4; // 4
+// console.log(findKthLargest(nums, k))
+/**
+ * 209. 长度最小的子数组
  * 给定一个含有 n 个正整数的数组和一个正整数 s ，
  * 找出该数组中满足其和 ≥ s 的长度最小的连续子数组，
  * 并返回其长度。如果不存在符合条件的连续子数组，返回 0。
@@ -12,25 +30,30 @@
  * @return {number}
  */
 var minSubArrayLen = function (s, nums) {
-  const bol = nums instanceof Array && nums.filter(v => +v > 0 && +v % 1 === 0).length === nums.length && nums.length && s > 0 && s % 1 === 0;
-  let i = 0, sum = 0, minLength = Number.MAX_SAFE_INTEGER;
-  if (bol) {
+  if (nums.length) {
+    const MaxNumber = Number.MAX_SAFE_INTEGER;
+    let i = 0, sum = 0, aum = MaxNumber;
     for (let j = 0; j < nums.length; j++) {
-      sum += nums[j];
+      sum += nums[j]
       while (sum >= s) {
-        minLength = Math.min(minLength, j - i + 1);
+        console.log(i, j)
+        aum = Math.min(aum, j - i + 1);
         sum -= nums[i++]
       }
     }
+    if (aum !== MaxNumber) {
+      return aum;
+    }
   }
-  return minLength === Number.MAX_SAFE_INTEGER ? 0 : minLength;
+  return 0;
 }
-const s = 11, nums = [5, 2, 5];
-console.log(minSubArrayLen(s, nums))
+// const s = 7, nums = [2, 3, 1, 2, 4, 3];
+// console.log(minSubArrayLen(s, nums))
 
 
 
 /**
+ * 16. 最接近的三数之和
  * 给定一个包括 n 个整数的数组 nums 和 一个目标值 target。
  * 找出 nums 中的三个整数，使得它们的和与 target 最接近。
  * 返回这三个数的和。假定每组输入只存在唯一答案。
@@ -41,34 +64,41 @@ console.log(minSubArrayLen(s, nums))
  * @return {number}
  */
 var threeSumClosest = function (nums, target) {
-  // 判断nums是数组，并且有3+ 整数 (/(^[1-9]\d*$)/.test(v) 
-  const bol = nums instanceof Array && nums.filter(v => +v % 1 === 0).length >= 3 && !isNaN(target);
+  const bol = nums instanceof Array && nums.length && nums.filter(v => v % 1 === 0).length >= 3 && target % 1 === 0;
   if (bol) {
-    const numsCopy = nums.filter(v => +v % 1 === 0).map(v => +v);
-    let sumArr = []
-    for (let i = 0; i < numsCopy.length; i++) {
-      for (let j = i + 1; j < (numsCopy.length); j++) {
-        for (let k = j + 1; k < (numsCopy.length); k++) {
-          sumArr.push(numsCopy[i] + numsCopy[j] + numsCopy[k])
+    let sum = Number.MAX_SAFE_INTEGER, sub = Number.MAX_SAFE_INTEGER, j = 0, k = 0;
+    for (let i = 0; i < nums.length - 2; i++) {
+      while (i + 2 < nums.length) {
+        j = i + 1;
+        while (j < nums.length) {
+          k = j + 1;
+          while (k < nums.length) {
+            const sum02 = nums[i] + nums[j] + nums[k];
+            const sub02 = Math.abs(sum02 - target);
+            // console.log(sum02, i, j, k)
+            if (sub02 === 0) {
+              return sum02;
+            }
+            if (sub >= sub02) {
+              sum = sum02;
+              sub = sub02;
+            };
+            k++;
+          }
+          j++;
         }
+        i++
       }
     }
-    let val = '', key = '';
-    for (let i = 0; i < sumArr.length; i++) {
-      const p = Math.abs(sumArr[i] - target)
-      if (p === 0) {
-        key = sumArr[i];
-        break;
-      }
-      if (val) {
-        if (p <= val) val = p, key = sumArr[i];
-      } else {
-        val = p;
-        key = sumArr[i];
-      }
-    }
-    return key;
+    return sum === Number.MAX_SAFE_INTEGER ? 0 : sum;
   }
 };
-// threeSumClosest([1, 1, -1, -1, 3], -1)
+// const target = 1, nums = [0, 2, 1, -3]; // 0
+// const target = 1, nums = [-1, 2, 1, -4]; // 2
+// const target = -100, nums = [1, 1, 1, 0];   // 2
+// const target = -1, nums = [1, 1, -1, -1, 3]; // -1
+// const nums = [-7, -71, -7, -13, 45, 46, -50, 83, -29, -72, 9, 32, -74, 81, 68, 92, -31, 28, -46, -86, -70, 31, -62, -20, -56, 97, -41, 21, 81, 17, -14, 56, 69, 16, 25, -38, 65, -48, 15, 16, -25, 68, -41, 46, -56, -2, -3, 82, 8, 19, -32, 62, 92, -56, -9, 43, 50, 100, 66, -45, 41, -24, -4, 83, -36, 79, 24, 97, 82, 89, -56, -91, 75, -64, -68, 96, -55, -52, -58, -37, 68, 27, 89, -40, -42, 94, -92, -70, 40, 74, 75, -15, 54, -54, 0, 4, -39, 93, 88, -31, -26, 93, 8, -85, -62, 89, -93, 98, 4, -58, 8, 5, -93, 7, 30, -75, 63, 41, 62, -52, 49, 93, -11, 87, 7, 52, 5, -96, -56, 43, -41, -75, -16, 73, 6, 35, -32, 62, -50, -57, -25, 5, -32, 94, -70, 6, 19, -12, 63, -47, 76, -57, 41, -49, -33, -15, -81, 55, 88, 67, -51, 100, -19, -39, 62, 84, -100, 78, -24, 31, -32, -83, 33, -25, 86, 9, -30, -40, 52, 64, -30, -17, 19, -69, -89, -67, -79, -100, -53]
+// const target = 157   // 157
+// threeSumClosest(nums, target)
+// console.log(threeSumClosest(nums, target))
 
