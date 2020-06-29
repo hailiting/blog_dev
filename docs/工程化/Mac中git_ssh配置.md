@@ -3,6 +3,11 @@
 打开Terminal终端
 #### 1， cd ~/.ssh 进入ssh目录
 如果没有，则说明没生成过 
+如果有  说明可以直接用
+~~~
+// 直接拷贝 粘贴到git网页里是ssh就好
+cat id_rsa.pub
+~~~
 ## 二，重新配置
 #### 1，配置账户
 ``git config --global user.name 'account name'`` =>用户名，建议英文或拼音                       

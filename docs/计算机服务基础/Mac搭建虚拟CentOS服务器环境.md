@@ -1,8 +1,8 @@
 # Mac搭建虚拟CentOS服务器环境
 ## 安装CentOS
 ### 1 VirtualBox和CentOS下载地址
-VirtualBox[https://www.virtualbox.org/wiki/Downloads]
-CentOS[https://www.centos.org/download/]
+[VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+[CentOS](https://www.centos.org/download/)
 
 ##### CentOS三种镜像文件的区别：
 * DVDISO: 标准安装版，一般这个就可以
@@ -138,8 +138,38 @@ man systemctl | 你想了解的命令
 ### Linux免密登录 【自动化测试需要】
 
 #### 配置免密登录步骤
-The authenticity of host '192.168.2.171 (192.168.2.171)' can't be established.
-ECDSA key fingerprint is SHA256:sRLieO5eoLGh65/l+HUDSTP0qF46V5n5JLrg+fcqrFI.
+[参考](https://blog.csdn.net/axing2015/article/details/83754785)
+##### mac打开|关闭远程远程登录
+~~~
+# 开
+sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+# 关
+sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+# 查看状态 【如果没开则什么也没打印】
+sudo launchctl list | grep ssh
+~~~
+##### Linux上启动ssh服务
+~~~
+# 查看状态
+systemctl status sshd
+# 打开
+systemctl start sshd
+# 关闭
+systemctl stop sshd
+~~~
+##### serverA免密登录serverB流程
+1. 在serverA上生成一对密钥
+  - ssh-keygen ssh-keygen -t rsa -C "你自己的名称" -f "你自己的名称_rsa"【可直接ssh-keygen】
+2. 将公钥拷贝到serverB, 并重命名为 authorized_keys
+  - scp ~/.ssh/xx_rsa.pub user@ip[name]:~/.ssh/ 【serverA】
+  - cat ~/.ssh/xx_rsa.pub >> ~/.ssh/authorized_keys 【serverB】
+  - chmod 700 ~/.ssh/ 【all】
+  - chmod 600 ~/.ssh/authorized_keys 【all】
+3. serverA向serverB发送一个连接请求，信息包括用户名、ip
+  - ssh root@ip[name]
+4. serverB接收到请求，会从authorized_keys中查找是否有相同的用户名、IP，如果有ServerB会随机生成一个字符串，然后使用公钥进行加密，在发送给ServerA
+5. serverA接收到serverB发来的信息后，会使用私钥进行解密，然后将解密后的字符串发送给serverB
+6. serverB接收到serverA发来的信息后，会给先前生成的字符串进行对比，如果一致，就可以免密登录了。
 
 tip: 本地电脑可以做多个免密配置
 
