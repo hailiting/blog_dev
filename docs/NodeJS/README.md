@@ -14,3 +14,6 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash 
 
 * I/O是昂贵的，分布式I/O是更安贵的
 * NodeJS适用于IO密集型不适用CPU密集型
+
+
+

@@ -17,7 +17,7 @@ React可以使用自定义钩子，也可以用默认提供的钩子。
 * useContext()
 * useReducer()
 * useEffect()
-
+* useRef()
 
 ## useState() 状态钩子
 ~~~
@@ -209,5 +209,82 @@ const Person = ({personId})=>{
         <p>Height: {person.height}</p>
         <p>Mass: {person.mass}</p>
     </div>
+}
+~~~
+
+## useRef() 跨渲染周期 保存数据
+### 一般用法
+~~~
+import React, {useState, useEffect, useMemo, useRef} from "react";
+export default function App(props){
+    const [count, setCount] = useState(0);
+    const doubleCount = useMemo(()=>{
+        return 2*count;
+    }, [count]);
+    // useRef 创建couterRef对象
+    const couterRef = useRef();
+    useEffect(()=>{
+        document.title = `the value is ${count}`;
+        console.log(couterRef.current);
+    }, [count]);
+    return (
+        <>
+        // 把couterRef赋值给button
+        // couterRef.current 就可以访问到当前button DOM对象
+        <button ref={couterRef} onClick={()=>{setCount(count+1)}}>Count: {count}, {doubleCount}</button>
+        </>
+    )
+}
+~~~
+### ``useRef``横跨渲染周期存储数据，并且对它的修改不会引起组件渲染
+~~~
+import React, {useState, useEffect, useMemo, useRef} from "react";
+
+export default function App(props){
+    const [count, setCount] = useState(0);
+    const doubleCount = useMemo(()=>{
+        return 3*count
+    }, [count]);
+    const timerID = useRef();
+    useEffect(()=>{
+        timerID.current = setInterval(()=>{
+            setCount(count=>count+1)
+        }, 1000)
+    }, []);
+    useEffect(()=>{
+        if(count>10){
+            clearInterval(timerID.current);
+        }
+    });
+    return (
+        <>
+        <button onClick={()=>{setCount(count+1)}}> Count: {count}, double: {doubleCount} </button>
+        </>
+    )
+}
+~~~
+### 用useRef 解决setTimeout指向state旧值，找到state指向的最新值
+tips: React的state指向的内容是不可变的，每次state的更新都是指向变了，并不是释放，只有原来指向的对象没有其他引用的时候，才会被释放。
+setTimeout || setInterval是闭包函数，所以取的依然是原来的state指向，而不是新指向。
+~~~
+function Example(){
+    const [count,setCount] = useState(0);
+    let ref = useRef();
+    ref.current = count;
+    let timer= null;
+    function handleAlertClick(){
+        if(timer){
+            clearInterval(timer)
+        }
+        timer = setInterval(()=>{
+            console.log("此时的count: ",ref.current)
+        }, 3000)
+    }
+    return (
+        <>
+            <button onClick={()=>{setCount(count+1)}}>clickme</button>
+            <button onClick={handleAlertClick}> show count</button>
+        </>
+    )
 }
 ~~~

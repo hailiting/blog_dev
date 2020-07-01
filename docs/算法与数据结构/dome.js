@@ -1,4 +1,29 @@
 /**
+ * 09. 用两个栈实现队列
+ * 用两个栈实现一个队列。
+ * 队列的声明如下，请实现它的两个函数 appendTail 和 deleteHead ，
+ * 在队列尾部插入整数 
+ * 在队列头部删除整数的功能。
+ * (若队列中没有元素，deleteHead 操作返回 -1 )
+ */
+class CQueue {
+  constructor() {
+    this.stack1 = [];
+    this.stack2 = [];
+  }
+  appendTail(value) {
+    this.stack1.push(value);
+  }
+  deleteHead() {
+    if (this.stack2.length) return this.stack2.pop();
+    while (this.stack1.length) {
+      // 一直往stack2加，直到stack1 length 为0,此时stack2的最后一个元素的为stack1的第一个元素
+      this.stack2.push(this.stack1.pop());
+    }
+    return this.stack2.pop() || -1;
+  }
+}
+/**
  * 215. 数组中的第K个最大元素
  * 在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
  * @param {number[]} nums
