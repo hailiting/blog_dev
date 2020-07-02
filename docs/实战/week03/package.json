@@ -1,0 +1,55 @@
+{
+  "name": "week03",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm run dev && glup && nodemon build/app.js",
+    "dev": "better-npm-run dev",
+    "prod": "better-npm-run prod"
+  },
+  "betterScripts": {
+    "dev": {
+      "command": "webpack --watch --progress --colors",
+      "env": {
+        "NODE_ENV": "dev"
+      }
+    },
+    "prod": {
+      "command": "webpack --progress --colors",
+      "env": {
+        "NODE_ENV": "prod"
+      }
+    }
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.10.3",
+    "jquery": "^3.5.1",
+    "koa": "^2.12.0",
+    "koa-simple-router": "^0.2.0",
+    "koa-static": "^5.0.0",
+    "koa-swig": "^2.2.1",
+    "request-promise": "^4.2.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/plugin-transform-runtime": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "better-npm-run": "^0.1.1",
+    "css-loader": "^3.6.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "node-sass": "^4.14.1",
+    "nodemon": "^2.0.4",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-livereload-plugin": "^2.3.0"
+  }
+}
