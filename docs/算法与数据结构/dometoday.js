@@ -1,73 +1,51 @@
 /**
- * 718. 最长重复子数组
- * 给两个整数数组 A 和 B ，
- * 返回两个数组中[公共的]、[长度最长]的[子数组的长度]。
- * @param {number[]} A
- * @param {number[]} B
+ * 栈
+ * 378. 有序矩阵中第K小的元素
+ * 给定一个 n x n 矩阵，其中每行和每列元素均按升序排序，找到矩阵中第 k 小的元素。
+ * 请注意，它是排序后的第 k 小元素，而不是第 k 个不同的元素。
+ * @param {number[][]} matrix
+ * @param {number} k
  * @return {number}
  */
-const findLength = (A, B) => {
-  const m = A.length;
-  const n = B.length;
-  const dp = new Array(m + 1);
-  for (let i = 0; i <= m; i++) {
-    dp[i] = new Array(n + 1).fill(0);
-  }                                 // 初始化二维数组dp，每一项都是0
-  let res = 0;
-  for (let i = 1; i <= m; i++) {    // base case的情况，初始化时已包括了
-    for (let j = 1; j <= n; j++) {
-      if (A[i - 1] == B[j - 1]) {
-        dp[i][j] = dp[i - 1][j - 1] + 1;
-      }                             // A[i-1]!=B[j-1]的情况，初始化时已包括了
-      res = Math.max(dp[i][j], res);
+var kthSmallest = function (matrix, k) {
+  let arr = []
+  for (let i in matrix) {
+    for (let k in matrix[i]) {
+      arr.push(matrix[i][k])
     }
   }
-  return res;
+  arr = arr.sort((a, b) => a - b)
+  console.log({ arr, k })
+  return arr[k - 1]
 };
 
-// var findLength = function (A, B) {
-//   const bol = A instanceof Array && A.length && B instanceof Array && B.length;
-//   if (bol) {
-//     let arr = [], Len = 0, sub = 0;
-//     for (let i = 0; i < A.length; i++) {
-//       let j = 0, k = i;
-//       while (j < B.length && k < A.length) {
-//         let e = j
-//         while (e < B.length && k < A.length) {
-//           console.log(j, e, k)
-//           if (A[k] == B[e]) {
-//             if (arr.length && (e > arr[arr.length - 1] && sub == e - k)) {
-//               arr.push(e)
-//             } else {
-//               Len = arr.length > Len ? arr.length : Len;
-//               arr = [e]
-//               sub = e - k; // 差值
-//             }
-//             k++
-//           } else {
-//             k = i
-//           }
-//           e++
-//         }
-//         k = i
-//         j++;
-//       }
-//     }
-//     return Len && Len > arr.length ? Len : arr.length
-//   }
-// };
-const arr = [
-  { A: [0, 1, 1, 1, 1], B: [1, 0, 1, 0, 1], c: 2 },
-  { A: [1, 2, 3, 2, 1], B: [3, 2, 1, 4, 7], c: 3 },
-  { A: [0, 0, 0, 0, 0], B: [0, 0, 0, 0, 0], c: 5 },
-  { A: [0, 0, 0, 0, 1], B: [1, 0, 0, 0, 0], c: 4 },
-  { A: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0], B: [0, 0, 0, 0, 0, 0, 0, 1, 0, 0], c: 9 },
-  { A: [1, 0, 0, 0, 1, 0, 0, 1, 0, 0], B: [0, 1, 1, 1, 0, 1, 1, 1, 0, 0], c: 3 },
-]
+
 let i = 0;
+const arr = [
+  {
+    A: [[1, 5, 9], [10, 11, 13], [12, 13, 15]],
+    B: 8,
+    c: 13
+  },
+  {
+    A: [[1, 5, 9], [10, 11, 13], [1, 2, 3]],
+    B: 4,
+    c: 10
+  },
+  {
+    A: [[7, 8, 9], [10, 11, 13], [1, 2, 3]],
+    B: 7,
+    c: 2
+  },
+  {
+    A: [[6, 10, 19], [4, 7, 9], [11, 22, 31]],
+    B: 6,
+    c: 19
+  },
+]
 let Timer = setInterval(() => {
   if (i < arr.length) {
-    console.log("算法得到值：", findLength(arr[i].A, arr[i].B), "   ", arr[i].c, "目标值：",)
+    console.log("算法得到值：", kthSmallest(arr[i].A, arr[i].B), "   ", arr[i].c, "目标值：",)
     i++
   } else {
     clearInterval(Timer)

@@ -29,7 +29,7 @@ npm 包
 pm2 start pm2.json
 pm2 stop all
 
-{
+`{
   "name": "Mobilemap node service",
   "script": "app.js",
   "log_date_format":"YYYY-MM-DD HH:mm Z",
@@ -38,7 +38,7 @@ pm2 stop all
   "watch": true,
   "instances": "max", // 让node代码占满cpu
   "exec_mode": "cluster",  //以主线程的形式运行
-}
+}`
 ~~~
 
 ## shelljs

@@ -1,5 +1,3 @@
-import { reject } from "q";
-
 import rpA from "request-promise"
 export default class indexModel {
   constructor(ctx) {
