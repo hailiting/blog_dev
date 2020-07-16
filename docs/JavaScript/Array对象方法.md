@@ -35,6 +35,13 @@ const total = nums.reduce((acc,item)=>act+item,0)
 ## some() 检测数组元素中是否有元素符合指定条件
 ## sort() 对数组元素进行排序
 ## splice() 从数组中添加或删除元素
+~~~
+var array = ["one", "two", "four"];
+console.log(JSON.stringify(array));//["one","two","four"]
+//在指定位置添加元素,第一个参数指定位置,第二个参数指定要删除的元素,如果为0,则追加
+array.splice(2, 0, "three");
+console.log(JSON.stringify(array));//["one","two","three","four"]
+~~~
 ## toString() 把数组转换为字符串，并返回结果
 ## unshift() 向数组开头添加一个或多个元素，并返回新的长度
 ## valueOf() 返回数组对象的原始值

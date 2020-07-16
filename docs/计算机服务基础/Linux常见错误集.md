@@ -61,3 +61,9 @@ COMMIT
 ``killall -9 nginx``
 ``nginx``
 ``ps aux|grep nginx`` 查看nginx启动情况
+###  brew install mongodb  ``unknown or unsupported macOS version: :mountain_lion``
+~~~
+brew uninstall mongodb
+brew tap mongodb/brew
+brew install mongodb-community
+~~~

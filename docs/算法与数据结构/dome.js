@@ -1,4 +1,58 @@
 /**
+ * 309. 最佳买卖股票时机含冷冻期
+ * 给定一个整数数组，其中第 i 个元素代表了第 i 天的股票价格 。
+ * 设计一个算法计算出最大利润。在满足以下约束条件下，你可以尽可能地完成更多的交易（多次买卖一支股票）:
+ * 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+ * 卖出股票后，你无法在第二天买入股票 (即冷冻期为 1 天)。
+ */
+var maxProfit = function (prices) {
+  if (!prices.length) return 0;
+  const n = prices.length;
+  const a = new Array(n);
+  const b = new Array(n);
+  a[0] = -prices[0];
+  b[0] = 0;
+  for (let i = 1; i < n; i++) {
+    // i天的盈利
+    if (i === 1) {
+      a[i] = Math.max(a[i - 1], -prices[i]);
+    } else {
+      // b[i - 2] 前天的最大盈利   a[i - 1]昨天的盈利
+      a[i] = Math.max(a[i - 1], b[i - 2] - prices[i])
+    }
+    // i天的最大盈利
+    b[i] = Math.max(b[i - 1], a[i - 1] + prices[i])
+  }
+  return b[n - 1]
+};
+let i = 0;
+const arr = [
+  {
+    A: [0, 12, 2, 12, 21, 2, 212, 1],
+    c: 222
+  },
+  {
+    A: [13, 12, 12, 11, 23],
+    c: 12
+  },
+  {
+    A: [1, 2, 3, 0, 2],
+    c: 3
+  },
+  {
+    A: [13, 12, 11, 12, 13],
+    c: 2
+  },
+]
+let Timer = setInterval(() => {
+  if (i < arr.length) {
+    console.log("算法得到值：", maxProfit(arr[i].A), "   ", arr[i].c, "目标值：",)
+    i++
+  } else {
+    clearInterval(Timer)
+  }
+}, 1000)
+/**
  * 栈
  * 378. 有序矩阵中第K小的元素
  * 给定一个 n x n 矩阵，其中每行和每列元素均按升序排序，找到矩阵中第 k 小的元素。
