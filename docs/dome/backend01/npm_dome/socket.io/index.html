@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://lib.baomitu.com/socket.io/2.3.0/socket.io.js"></script>
+</head>
+
+<body>
+  <input type="text" id="input">
+  <button id="btn"> send</button>
+  <div id="content-wrap"></div>
+</body>
+<script>
+  window.onload = () => {
+    let inputValue = null;
+    let socket = io("http://192.168.60.65:3000");
+    socket.on("broadcast", data => {
+      console.log(data)
+      let content = document.createElement("p");
+      content.innerHTML = data;
+      document.querySelector("#content-wrap").appendChild(content);
+    })
+    let inputChangeHandle = (ev) => {
+      inputValue = ev.target.value;
+    }
+    let inputDom = document.querySelector("#input");
+    inputDom.addEventListener("input", inputChangeHandle, false);
+    let sendHandle = () => {
+      console.log({ inputValue })
+      socket.emit("channel", inputValue);
+    }
+    let btnDom = document.querySelector("#btn");
+    btnDom.addEventListener("click", sendHandle, false);
+
+    window.onunload = () => {
+      btnDom.removeEventLister("click", sendHandle, false);
+      inputDom.removeEventLister("input", inputChangeHandle, false);
+    }
+  }
+</script>
+
+</html>
