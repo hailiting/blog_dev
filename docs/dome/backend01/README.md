@@ -671,3 +671,20 @@ a == b // false
 ### post put 方法
 put指定资源路径 幂等
 post无法指定资源路径
+### 如何解决Set-Cookie 失效的问题?
+1，domain 设置是否正确
+2，是否跨域
+3，前端axios请求设置
+~~~
+const fetch = axios.create({
+  baseURL: process.env.BUILD_ENV === "development" ? "" : "",
+  headers: {
+    "X-Requested-With": "XMLHttpRequest",
+    "Accept-Language": "zh-cn",
+  },
+  withCredentials: true,
+});
+// 服务端
+res.header('Access-Control-Allow-Credentials', 'true');
+res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+~~~

@@ -56,7 +56,7 @@ module.exports = app => {
       blog.nextBlogDate = last ? last.blogDate : NO_MORE;
       if (!readSign || readSign !== blogDate) {
         blog.count = await redisTool.incr(blogDate) || "";
-        res.cookies("Cal", blogDate, { maxAge: TEN_MINUTES });
+        res.cookie("Cal", blogDate, { maxAge: TEN_MINUTES });
       } else {
         blog.count = await redisTool.get(blogDate);
       }

@@ -11,7 +11,7 @@ module.exports = app => {
     async newVisitor(req, res) {
       const visitRecent = req.cookies["visit"];
       const viewCount = visitRecent ? await redisTool.get(TOTAL_VIEW_COUNT) : await redisTool.incr(TOTAL_VIEW_COUNT);
-      res.cookies("visit", 1, { maxAge: TEN_MINUTES });
+      res.cookie("visit", 1, { maxAge: TEN_MINUTES });
       return res.json(response(0, viewCount, ""))
     },
     async analyzeBlogDate(req, res) {

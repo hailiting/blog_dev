@@ -3,6 +3,7 @@ module.exports = app => {
   const { userModel } = app.model;
   const { alioss } = app.plugin;
   const { upload, ossPath } = app.app_config;
+  const TEN_MINUTES = 10 * 60 * 1000;
   return {
     async register(req, res) {
       const user = await userModel.findOne({ userName: req.body.userName });
@@ -16,6 +17,8 @@ module.exports = app => {
       if (!user) return res.json(response(1, "", "用户名或密码错误"));
       req.session.user = { _id: user._id, name: user.userName, isAdmin: user.isAdmin || false };
       req.session.isLogin = true;
+      res.cookie("name", "stome", { maxAge: 600000, httpOnly: true });
+      // res.cookie("calabash-token", "123124zadsfa", { maxAge: TEN_MINUTES, httpOnly: true });
       return res.json(response(0, user, "登录成功"));
     },
     async checkStatus(req, res) {
