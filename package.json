@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "fs": "0.0.1-security",
     "markdown-it": "^8.4.2",
     "markdown-it-anchor": "^4.0.0",
     "markdown-it-table-of-contents": "^0.3.6",
+    "path": "^0.12.7",
     "vuepress": "^1.5.2"
   }
 }
