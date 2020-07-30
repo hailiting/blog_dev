@@ -4,7 +4,8 @@
   "description": "'# hello vuepress'",
   "main": "index.js",
   "scripts": {
-    "dev": "vuepress dev docs",
+    "readdir": "node utils/readdir.js",
+    "start": "vuepress dev docs",
     "build": "vuepress build docs"
   },
   "author": "",
@@ -15,6 +16,7 @@
     "markdown-it-anchor": "^4.0.0",
     "markdown-it-table-of-contents": "^0.3.6",
     "path": "^0.12.7",
+    "vue-template-compiler": "^2.6.11",
     "vuepress": "^1.5.2"
   }
 }

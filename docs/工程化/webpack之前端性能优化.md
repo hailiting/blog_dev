@@ -1,5 +1,5 @@
 # webpack之前端性能优化
-![webpack优化前](./img/webpack优化前.png)
+![webpack优化前](./img/a.png)
 ## 优化之前，可以在项目里引入``webpack-bundle-analyzer``分析SPA项目
 ~~~
 // 引入

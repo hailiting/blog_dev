@@ -33,7 +33,7 @@ const getFileName = async (dir, bol, filesM = "") => {
 
   if (files && files.length) {
     let result = files.map(file => {
-      if (file === 'README.md') {
+      if (file.toLowerCase() === 'readme.md') {
         return `${bol ? "/" + filesM + "/" : ""}`;
       } else if (file.indexOf(".md") > -1) {
         file = file.replace('.md', ''); //替换文件后缀为空
@@ -59,6 +59,7 @@ let fileName = []
 getFileName(FOLDERPATH, 0).then(data => {
   data = JSON.stringify(data.filter(v => v))
   //写入操作
+  console.log({ data })
   writeFile(resolve(__dirname, '../docs/.vuepress/filenames.json'), `${data}`, () => {
     console.log('文件名获取完成.');
   })
