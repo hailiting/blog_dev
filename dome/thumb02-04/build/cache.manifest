@@ -1,0 +1,9 @@
+CACHE MANIFEST
+# Time: Fri Aug 07 2020 13:24:59 GMT+0800 (GMT+08:00)
+# praisethumb4
+
+CACHE:
+./public/css/vendor.css
+
+NETWORK:
+ *

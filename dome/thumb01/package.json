@@ -1,0 +1,29 @@
+{
+  "name": "thumb01",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "babel": "babel ./src --out-dir script",
+    "test": "./node_modules/karma/bin/karma start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "jasmine-core": "^3.6.0",
+    "karma": "^5.1.1",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage": "^2.0.3",
+    "karma-jasmine": "^3.3.1",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "phantomjs": "^2.1.7"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.10.4",
+    "babel": "^6.23.0"
+  }
+}

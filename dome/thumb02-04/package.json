@@ -1,0 +1,65 @@
+{
+  "name": "thumb02-04",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "gulp": "gulp",
+    "serve": "nodemon build/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "better-npm-run build:dev",
+    "build": "better-npm-run build:prod"
+  },
+  "betterScripts": {
+    "build:dev": {
+      "command": "webpack --progress --colors",
+      "env": {
+        "NODE_ENV": "dev"
+      }
+    },
+    "build:prod": {
+      "command": "webpack --progress --colors",
+      "env": {
+        "NODE_ENV": "prod"
+      }
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "better-npm-run": "^0.1.0",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "jasmine-core": "^3.1.0",
+    "karma": "^2.0.4",
+    "karma-jasmine": "^1.1.2",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "koa": "^2.5.1",
+    "koa-simple-router": "^0.2.0",
+    "koa-static": "^5.0.0",
+    "koa-swig": "^2.2.1",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
+    "path": "^0.12.7",
+    "phantomjs": "^2.1.7+deprecated",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
+    "style-loader": "^0.21.0",
+    "supertest": "^3.1.0",
+    "webpack": "^3.8.1",
+    "webpack-livereload-plugin": "^1.2.0",
+    "webpack-manifest": "^1.0.8"
+  },
+  "description": "",
+  "dependencies": {
+    "cssnano": "^4.1.10",
+    "nodemon": "^2.0.4"
+  }
+}

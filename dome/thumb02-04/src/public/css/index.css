@@ -1,0 +1,202 @@
+.hand {
+  position: relative;
+  top: 250px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f3c5ad;
+  width: 300px;
+  height: 230px;
+  border-radius: 30px;
+  border: 1px solid #8c3e15;
+  -webkit-transform: rotate(90deg);
+  cursor: pointer;
+  /*cursor属性规定要显示的光标的类型(形状） 光标呈现为指示链接的指针*/
+}
+
+.hand .finger {
+  position: absolute;
+  bottom: 80%;
+  right: 0;
+  width: 75px;
+  height: 75px;
+  border-top-left-radius: 75px;
+  border-top-right-radius: 75px;
+  background-color: #f3c5ad;
+  border-left: 1px solid #b9511b;
+  border-right: 1px solid #b9511b;
+  border-top: 1px solid #b9511b;
+  transition: .3s;
+}
+
+/*:nth-of-type(n) 选择器匹配属于父元素的特定类型的第 N 个子元素的每个元素.*/
+
+.hand .finger:nth-of-type( 5) {
+  right: 299px;
+}
+
+.hand .finger:nth-of-type( 4) {
+  right: 224px;
+}
+
+.hand .finger:nth-of-type( 3) {
+  right: 149px;
+}
+
+.hand .finger:nth-of-type( 2) {
+  right: 74px;
+}
+
+.hand .finger:nth-of-type( 1) {
+  right: -1px;
+}
+
+.hand .finger:nth-of-type(5):after {
+  display: block;
+}
+
+.hand .finger.thumb {
+  transform-origin: left bottom;
+  transform: rotate(-65deg);
+  bottom: 10px;
+  right: 217.39130435px;
+  z-index: -1;
+  /*Z-index 仅能在定位元素上奏效（例如 position:absolute;）！*/
+  height: 150px;
+  border-right: 0;
+  border-top: 1px solid #b9511b;
+}
+
+.hand .finger.thumb:before {
+  top: 2%;
+}
+
+.hand .finger:before,
+.hand .finger:after {
+  content: "";
+  position: absolute;
+  top: 5%;
+  left: 7%;
+  width: 85%;
+  height: 60px;
+  border-top-left-radius: 75px;
+  border-top-right-radius: 75px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+  transition: .2s;
+}
+
+.hand .finger:after {
+  top: 50%;
+  height: 37.5px;
+  background: linear-gradient(to bottom, rgba(185, 81, 27, 0.2) 0%, rgba(185, 81, 27, 0) 100%);
+  display: none;
+}
+
+.hand .arm {
+  position: absolute;
+  bottom: -80%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 200px;
+  height: 200px;
+  background-color: #f3c5ad;
+  border-left: 1px solid #b9511b;
+}
+.star {
+  margin: 130px 50%;
+  position: relative;
+  display: block;
+  color: red;
+  width: 0px;
+  height: 0px;
+  z-index: 999;
+  border-right:  100px solid transparent;
+  border-bottom: 70px  solid red;
+  border-left:   100px solid transparent;
+  -moz-transform:    rotate(35deg);
+  -webkit-transform: rotate(35deg);
+  -ms-transform:     rotate(35deg);
+  -o-transform:      rotate(35deg);
+}
+.star:before {
+  border-bottom: 80px solid red;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  position: absolute;
+  height: 0;
+  width: 0;
+  top: -45px;
+  left: -65px;
+  display: block;
+  content: "";
+  -webkit-transform: rotate(-35deg);
+  -moz-transform:    rotate(-35deg);
+  -ms-transform:     rotate(-35deg);
+  -o-transform:      rotate(-35deg);
+
+}
+.star1{
+  position: relative;
+  display: block;
+  color: red;
+  top: 3px;
+  left: -105px;
+  width: 0px;
+  height: 0px;
+  border-right: 100px solid transparent;
+  border-bottom: 70px solid red;
+  border-left: 100px solid transparent;
+  -webkit-transform: rotate(-70deg);
+  -moz-transform:    rotate(-70deg);
+  -ms-transform:     rotate(-70deg);
+  -o-transform:      rotate(-70deg);
+
+}
+.num {
+  display: block !important;
+  -webkit-animation: neon2 1.5s ease-in-out alternate;
+  animation: neon2 1.5s ease-in-out alternate;
+  /*语法 animation: name duration timing-function delay iteration-count direction;*/
+  -webkit-animation-iteration-count: 1;
+  /*该属性定义动画的播放次数为1。*/
+  /* Safari 和 Chrome */
+  font-size: 40px;
+  color: #FF1177;
+  position: absolute;
+  right: 10%;
+  top: 10%;
+}
+
+.hide {
+  display: none;
+}
+
+@-webkit-keyframes neon2 {
+  from {
+      opacity: 0;
+      -webkit-transform: translateY(-20px);
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
+  }
+  to {
+      opacity: 1;
+      -webkit-transform: translateY(0);
+      text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF1177, 0 0 35px #FF1177, 0 0 40px #FF1177, 0 0 50px #FF1177, 0 0 75px #FF1177;
+  }
+}
+
+/* @keyframes 规则,创建动画的原理是，将一套 CSS 样式逐渐变化为另一套样式。
+语法：@keyframes animationname {keyframes-selector {css-styles;}}
+text-shadow: h-shadow v-shadow blur color;水平h 垂直v阴影的位置 模糊的距离 阴影的颜色*/
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  /*指定如果内容溢出一个元素的框,内容会被修剪，并且其余内容是不可见的。*/
+}
+
+body {
+  background: radial-gradient(ellipse at top left, #94D28A 0%, #D0D8CB 57%);
+  /*css3径向渐变语法：background: radial-gradient(center, shape size, start-color, ...,last-color);
+//渐变radial-gradient
+//左上角的椭圆ellipse at top left*/
+}

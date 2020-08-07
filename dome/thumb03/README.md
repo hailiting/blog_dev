@@ -1,6 +1,6 @@
 # 知识点
 1. 使用``X-Tag``封装点赞插件``<x-praise></x-praise>``;
-2. 使用Glup编译koa2源代码并能监控源代码变化自动编译；
+2. 使用Gulp编译koa2源代码并能监控源代码变化自动编译；
 3. 使用webpack配置上线版本、开发版本配置文件，并能监控文件的变化自动刷新浏览器；
 4. 使用webpack能够对css、js进行编译压缩打包合并并生成MD5;
 5. 去掉System.js，利用webpack进行文件引用（同时提取公共文件成独立JS包）
@@ -36,7 +36,7 @@ xtag.create("x-clock", class extends XTagElement{
   }
 })
 ~~~
-## ``glup``：基于流（stream）的自动化构建工具
+## ``gulp``：基于流（stream）的自动化构建工具
 ~~~
 npm i gulp-cli -g
 mkdir gulpdir
@@ -190,6 +190,8 @@ modules: {
   ]
 }
 ~~~
+#### cssnano
+对css做多方面的压缩，以确保最终生成的文件对生产环境来说体积最小
 #### ``optimize-css-assets-webpack-plugin``
 打包压缩
 ~~~
@@ -236,6 +238,76 @@ splitChunks: {
 } 
 ~~~
 #### ``html-webpack-plugin``
+主要有两个作用
+* 1. 为html文件中引入的外部资源如script、link动态添加每次compile后的hash，防止引用缓存的外部文件问题
+* 2. 可以生成创建html入口文件，比如单页面可以生成一个html文件认可，配置N个html-webpack-plugin就可以生成N个页面入口
+##### 常见的配置作用
+~~~
+plugins: [
+  new HtmlWebpackPlugin({ // 打包输出html
+    title: "my app", // 生成html的title
+    filename: "index.html", // 输出的html文件名称
+
+    /**
+    * template: 根据自己的指定模板文件来生成特定的html文件，这里的模板类型可以是任
+    * 意你喜欢的模板，如 html, jade, ejs, hbs等。但要注意，使用自定义模板文件时，
+    * 需要提前安装对应的loader,否则webpack不能正确解析。
+    */
+    template: "index.html",  // html模板所在的文件路径
+
+    /**
+    * 注入选项，有四个选项值 true, body, head, false
+    * 1, true, 默认值，script标签位于html文件的body底部
+    * 2, body, script标签位于html文件body底部 （同true）
+    * 3, head: script标签位于head标签内
+    * 4, false: 不能插入删除的js,只是单纯的html文件
+    */
+    inject: true,
+    favicon: "./favicon.svg", // 给生成的html加favicon，值为favicon文件所在目录
+    minify: { // 压缩HTML文件
+      caseSensitive: true, // 是否对大小写敏感，默认false
+      collapseBooleanAttributes: true, // 是否简写boolean格式的属性 如：disabled = "disabled" 简写为disabled，默认为false
+      removeComments: true, // 移除HTML中的注释
+      collapseWhitespace: true, // 删除空白符和换行符
+      minifyCSS: true, // 压缩内联css
+      minifyJS: true, // 压缩html里的js 使用 uglify-js 进行压缩
+      preventAttributesEscaping: true, //防止转义属性值
+      removeAttributeQuotes: true, // 是否移除属性里的引号
+      removeCommentsFromCDATA: true, // 是否从脚本和样式删除注释
+      removeEmptyAttributes: true, // 是否删除空属性
+      removeOptionalTags: false, // true时 生成的html没有body和head, html也未合并
+      removeRedundantAttributes: true, // 删除多余属性
+      removeScriptTypeAttributes: true, // 删除script的属性类型["text/javascript"]
+      removeStyleLinkTypeAttribute: true, // 删除style 的 text/css type属性
+      useShortDoctype: true, // 使用短的文档类型，默认为false
+      hash: true, // 给文件加hash
+      cache: true, // 内容变化的时候生成一个新的文件
+      showErrors: true, // 定位错误
+
+      /**
+      * chunks 主要用于多入口文件，编译后生成多个打包后的文件
+      * entry: {
+      *   index: path.resolve(__dirname, "./src/index.js"),
+      *   devor: path.resolve(__dirname, "./src/devor.js"),
+      *   main: path.resolve(__dirname, "./src/main.js"),
+      * }
+      * plugins: [
+      *   new httpWebpackPlugin({
+      *     chunks: ['index', 'main'], // 等同于 excludeChunks: ["devor.js"]
+      *   })
+      * ]
+      * 编译后生成的文件
+      * <script type=text/javascript src="index.js"></script>
+      * <script type=text/javascript src="main.js"></script>
+      * 
+      */
+      chunks: ['index', 'main'], // 
+    },
+  })
+]
+~~~
+
+
 ~~~
 npm i --save-dev html-webpack-plugin
 const HtmlWebpackPlugin = require("html-webpack-plugin");

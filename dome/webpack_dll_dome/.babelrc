@@ -1,0 +1,13 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage", // 根据browserlist填写浏览器，自动添加polyfill
+        "corejs": 2,
+      }
+    ],
+    "@babel/preset-react" // 编译react
+  ],
+  "plugins": []
+}
