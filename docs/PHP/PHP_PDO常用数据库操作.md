@@ -1,3 +1,5 @@
+# PHP_PDO常用数据库操作
+~~~
 <?php
   class Sql{
     public $serverName;
@@ -119,3 +121,4 @@
   *  */ 
   $mythumb -> myAddVal("insert into thumbDetail (val) values ('insert1')");
   ?>
+~~~
