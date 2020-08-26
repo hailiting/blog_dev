@@ -10,23 +10,23 @@
 
 # 前端架构知识点整理
 	HTML核心技巧
-		HTML语义化
-		埋点、监控、日志分析
-		LocalStorage扩容
-		跨域问题解决方案
-		漏洞攻防
+		HTML语义化 1
+		埋点、监控、日志分析 
+		LocalStorage扩容 1
+		跨域问题解决方案  1
+		漏洞攻防  
 	css核心技巧
-		现代化CSS方法论实践
-		CSS高级绘制实战
-		CSS 3D在前端的应用
+		现代化CSS方法论实践 1
+		CSS高级绘制实战   1
+		CSS 3D在前端的应用  1
 		CSS WorkFlow深入
-		CSS 矩阵与高性能渲染
-		CSS 结合数学知识高级应用
+		CSS 矩阵与高性能渲染 1
+		CSS 结合数学知识高级应用 1
 	JavaScript 核心技巧
 		JavaScript 语言精髓
-			基本数据类型，变量提升
-			函数与对象、构造函数
-			this、作用域与闭包
+			基本数据类型，变量提升 1
+			函数与对象、构造函数 1
+			this、作用域与闭包 1
 			Call、appl、bind
 			原型与原型链
 			递归与尾递归
@@ -49,8 +49,8 @@
 		jQuery经典源码解读
 	前端必回的后端知识
 		Linux入门与精通
-			Linux环境安装与配置
-			Web程序员必会的Linux命令
+			Linux环境安装与配置  1
+			Web程序员必会的Linux命令  1
 			Linux深入
 			Linux安全加固
 		Linux与Web服务器
@@ -59,7 +59,7 @@
 		代理与反向代理服务器
 			反向代理实战
 		后端开发
-			PHP+MySQL
+			PHP+MySQL  1
 			图书管理系统实战
 	Node.JS 与大前端开发
 		核心知识
