@@ -1,7 +1,19 @@
 # AsyncAwait
+~~~javascript
+const aaa = () => {
+  return new Promise(resolve => {
+    resolve(1122)
+  })
+}
+const bbb = async () => {
+  const res = await aaa();
+  console.log(res)
+}
+bbb()
+~~~
 ## async创建一个异步函数，await只能在异步函数的代码块中工作
 ## 基本用法
-~~~
+~~~javascript
 // 查询二级文章分类
 static async get_category(ctx){   // async声明这是一个async函数
   const data = await CategoryModel.find();  // await获取异步结果
@@ -9,7 +21,7 @@ static async get_category(ctx){   // async声明这是一个async函数
   return ctx.success({data});
 }
 ~~~
-~~~
+~~~javascript
 var hello = async () => {
   let response = await new Promise((resolve) => {
     setTimeout(() => resolve("aaaa"), 2000)
@@ -29,7 +41,7 @@ hello().then(res => console.log("12: ", res));
 ~~~
 ## 在fetch里的用法
 #### 没有async的时候
-~~~
+~~~javascript
 fetch("coffee.jpg")
 .then(response => response.blob())
 .then(myBlob=>{
@@ -44,7 +56,7 @@ fetch("coffee.jpg")
 })
 ~~~
 用async改写
-~~~
+~~~javascript
 async function myFetch(){
   let respone = await fetch("coffee.jpg");
   let myBlob = await response.blob();
@@ -59,13 +71,13 @@ myFetch()
   console.log(e.message);
 })
 ~~~
-~~~
+~~~javascript
 async  function (){
   awiat something
   dosomething
   return sth
-}.then(res).catch(e)s
-可以return 点式应用
+}.then(res).catch(e)
+// 可以return 点式应用
 ~~~
 
 

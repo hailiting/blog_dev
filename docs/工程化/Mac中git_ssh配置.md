@@ -20,3 +20,60 @@ cat id_rsa.pub
 #### 4，GitLab添加SSH Key: 把复制的粘贴到add an ssh key里
 ## 三：测试配置
 1，``ssh -T remotesource``  => remotesource为远程库git根目录
+
+## 设置多个SSH
+### 1. 打开终端，切换到系统的ssh目录
+~~~shell
+cd ~/.ssh
+~~~
+### 2. 生成自己的github的ssh key
+~~~shell
+ssh-keygen -t rsa -C "自己的github账户" -f github_rsa
+~~~
+### 3. 输入Github账户密码
+### 4. github ssh 公钥获取
+~~~shell
+cat ~/.ssh/id_rsa.pub
+~~~
+### 5. 生成公司gitlab的ssh key
+~~~shell
+ssh-keygen -t rsa -C "公司Gitlab账户" -f company_rsa
+~~~
+### 6. 公司SSH公钥获取
+~~~ssh
+cat ~/.ssh/id_rsa.pub
+~~~
+### 7. 添加配置文件`config`【有就编辑，没有就创建，路径`~/.ssh/config`】,配置的写法如下：
+~~~text
+# github
+Host github.com
+HostName github.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/github_rsa
+
+# gitlab
+Host gitlab.com
+HostName gitlab.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/company_rsa
+~~~
+* Host名称可以随便设置，HostName就是网站的地址
+* 这里要注意的是，如果gitlab主机地址是http://10.10.10.89:11000，那么HostName是10.10.10.89
+### 8. 把ssh key添加到对应的平台
+### 9. 测试是否成功
+~~~shell
+# GitHub
+ssh -T git@github.com
+# GitLab
+ssh -T git@gitlab.com
+~~~
+### 10. 切换不同的ssh
+~~~shell
+# 取消全局 用户名/邮箱设置 并进入项目文件夹单独设置
+git config -global -unset user.name
+git config -global -unset user.email
+
+# 单独设置每个repo，用户名/邮箱
+git config user.email "xxx@xx.com"
+git config user.name "xxx"
+~~~

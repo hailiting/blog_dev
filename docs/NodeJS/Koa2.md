@@ -289,12 +289,47 @@ declare namespace jwt {
 ### 压缩响应体
 `koa-compress`
 ### 输出请求日志
-`koa-logger`
-
+1. 日志大体分为访问日志和应用日志。
+  访问日志记录客户端对项目的访问，主要是http请求，这些属于运营数据，也可以帮助改进和提升网站的性能和用户体验。
+  应用日志是项目中需要特殊标记和记录位置打印日志，包括出现异常的地方，方便开发查询项目的运行和定位bug。
+2. 日志记录什么东西：接口前后，重要方法，容易出处的地方，业务需求的埋点。
+  注意：手机号，银行卡，身份证等敏感信息不能打到日志里，用唯一标识找出错误信息。
+#### 常用插件
+* `log4js`
+* `koa-logger`
+#### log4js
+##### 日志级别【从高到底】
+在应用中按照级别记录日志，日后可以按照指定级别输出高于指定级别的日志。
+`off`, `mark`, `fatal`, `error`, `warn`, `info`, `debug`, `trace`, `all`
+##### 应用
+1. 依赖安装
+~~~shell
+npm i log4js --save
+npm i ip --save
+~~~
+2. 文件结构
+~~~javascript
+// ./middleware/index.js
+// ./middleware/mi-log/logger.js
+// ./middleware/mi-log/access.js
+// ./middleware/mi-log/index.js
+~~~
+#### koa-logger
+~~~javascript
+npm i koa-logger --save
+const logger = require("koa-logger");
+const Koa = require("koa");
+const app = new Koa();
+app.use(logger())
+~~~
 ### 数据库
 `mongoose`
 ### 缓存
 `ioredis`
+### 文档
+`jsdoc`
+### jslink 检查
+
 ## 常用的文件结构
 ~~~
 ├── node_modules
