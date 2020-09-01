@@ -1,6 +1,6 @@
 # 枚举(Enum)
 取值被限定到一定范围
-~~~
+~~~javascript
 enum Days {Sun, Mon, Tue, Wed, Thu, Fri, Sat};
 
 console.log(Days["Sun"] === 0); // true
@@ -18,7 +18,7 @@ var Days;
 ~~~
 
 用例
-~~~
+~~~javascript
 enum apiList {
     'getCurrentUserInfo' = 'getCurrentUserInfo',
     'getSubscriptionSynthesize' = 'getSubscriptionSynthesize',

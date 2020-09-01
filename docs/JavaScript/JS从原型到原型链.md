@@ -1,7 +1,7 @@
 ### 从原型到原型链
 #### 构造函数创建对象
 首先我们用构造函数创建一个对象
-~~~
+~~~javascript
 function Person(argument) {
 } //= fn 构造函数
 var person = new Person() // => person 实例对象
@@ -12,7 +12,7 @@ console.log(person.name) // nake
 很简单吧，接下来进入正题
 #### prototype
 每个函数都有一个prototype属性，就是我们经常在各种例子里看到的prototype，比如：
-~~~
+~~~javascript
 function Person(argument) {
 }
 Person.prototype.name='nake'
@@ -29,7 +29,7 @@ console.log(person02.name) // nake
 _proto_
 每一个JavaScript对象（除null）都具有一个属性，叫``__proto__``，这个属性指向该对象的原型。
 为了证明证明这一点，可以做一个小demo
-~~~
+~~~javascript
 function Person(){
 }
 let person = new Person()
@@ -41,19 +41,19 @@ console.log(person.__proto__ === Person.prototype) // => true
 #### constructor
 指向实例倒没有，因为一个构造函数可以生成多个实例，但原型指向构造函数的倒是有，这就是第三个属性： constructor，每个原型都有一个constructor属性指向关联的构造函数。
 为了验证这一点，我们可以尝试
-~~~
+~~~javascript
 function Person(){}
 console.log(Person === Person.prototype.constructor)  // true
 ~~~
 当获取到person.constructor时，其实person中并没有constructor属性，当不能读取到construct属性时，会向person的原型，也就是Person.prototype去找，正好该原型中有该属性，所以：
-~~~
+~~~javascript
 person.constructor === Person.prototype.constructor
 ~~~
 
 所以可以更新一下关系图
 ![关系图](https://upload-images.jianshu.io/upload_images/1338363-4cb05dab83282dbb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 综上，我们可以得出：
-~~~
+~~~javascript
 function Person(){}
 var person = new Person()
 console.log(person.__proto__ === Person.prototype) // true
@@ -65,7 +65,7 @@ console.log(Object.getPrototypeOf(person) === Person.prototype) // true
 #### 实例与原型
 当读取实例属性时，如果找不到，就会查找与对象关联的原型中的属性，如果还查不到，就去找原型的原型，一直找到最底层为止。
 举个例子：
-~~~
+~~~javascript
 function Person(){}
 Person.prototype.name = 'kity'
 var person = new Person()
@@ -86,7 +86,7 @@ console.log(obj.name) // hitu
 ![关系图](https://upload-images.jianshu.io/upload_images/1338363-b164e558691a51c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 #### 原型链
 那Object.prototype的原型呢？
-~~~
+~~~javascript
 console.log(Object.prototype.__proto__ === null) // true
 ~~~
 > null 表示“没有对象”，即该处不应该有值

@@ -166,12 +166,12 @@ localforage的作用就是用来规避上面localstorage的缺点，同时保留
 优先使用``IndexedDB``存储数据，如果浏览器不支持，使用``WebSQL``，如果浏览器再不支持，则使用``localStorage``.
 API和localStorage一样： get | set | remove | clear | length...
 ep: 
-~~~
-// HTML代码
+~~~HTML
 <label class="ui-button ui-button-warning" for="fileImg">上传图片</label>
 <input type="file" id="fileImg" accept="image/gif, image/jpeg, image/png" hidden>
 <p id="result"></p>
-// JS代码
+~~~
+~~~JS
 var eleResult = document.getElementById("result");
 // 新建图片资源标签
 var eleImg = document.createElement("img");
