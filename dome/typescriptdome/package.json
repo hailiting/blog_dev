@@ -1,0 +1,15 @@
+{
+  "name": "typescriptdome",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc -outFile ./dist/index.js  ./scripts/more.ts && node ./dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "typescript": "^4.0.2"
+  }
+}

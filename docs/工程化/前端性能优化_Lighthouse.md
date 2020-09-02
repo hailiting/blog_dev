@@ -6,7 +6,7 @@
 ## Performance
 ### 首页明确Performance是啥
 Performance是前端性能监控的API，它可以检测页面中的性能，W3C性能小组引入进来的一个新的API，它可以检测到白屏时间，首屏时间，用户可操作的时间节点，页面总下载时间，DNS查询的时间，TCP链接的时间等。
-~~~
+~~~js
 const performance = window.performance ||window.msPerformance ||window.webkitPerformance;
 console.log(performance) //
 Performance {
@@ -34,8 +34,8 @@ encoding常见的编码有：
 - 繁体中文码：BIG5;
 - 西欧字符: UTF-8;                   
 Encoding是服务器和客户端即浏览器约定好的压缩算法来压缩发送内容，起到加快下载速度的作用。使用encoding能更加从根源上解决问题。【先设置nginx encoding，如果不达标就调整webpack设置】
-~~~
-// nginx的配置
+~~~t
+# nginx的配置
 # nginx.conf
 http {
   # ...
@@ -48,16 +48,16 @@ http {
 }
 
 
-// 发送请求头为: [br为Brotli压缩算法]
+# 发送请求头为: [br为Brotli压缩算法]
 Accept-Encoding: gzip, deflate, sdch, br
-// 服务端支持Brotli算法的话，则返回br, 或不支持时，返回 gzip等
+# 服务端支持Brotli算法的话，则返回br, 或不支持时，返回 gzip等
 Content-Encoding: br;
 
-// 为什么我加了  反而更卡了
+# 为什么我加了  反而更卡了
 ~~~
 接下来想想其他法子
 1. css开启硬件加速
-~~~
+~~~css
 -webkit-transform: translateZ(0);
 -moz-transform: translateZ(0);
 -ms-transform: translateZ(0);
@@ -141,7 +141,7 @@ const SpinLoading = Loadable(() => import("@/components/spinLoading"));
 评分更低了。。。。
 
 #### 优化html->有了显著的效果
-~~~
+~~~html
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -163,7 +163,7 @@ const SpinLoading = Loadable(() => import("@/components/spinLoading"));
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="..." />
   <meta name="keywords" content=".." />
-  <title>ZG.COM</title>
+  <title>xxx.COM</title>
   <link rel="manifest" href="./manifest.json" />
 </head>
 
@@ -173,7 +173,7 @@ const SpinLoading = Loadable(() => import("@/components/spinLoading"));
 ~~~
 ![43分。。](./img/lighthouse_answer03.png)
 #### React
-~~~
+~~~js
 // 方法把 abc=()=>{} 改为 abc(){}  
 this.abc=this.abc.bind(this)
 ~~~

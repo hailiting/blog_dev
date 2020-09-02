@@ -3,7 +3,7 @@
 ### 什么是代码分割
 就是把项目中一个大的入口文件分割成多个小的，单独的文件进程。
 ep:
-~~~
+~~~js
 import Loadable from "react-loadable";
 import Loading from "./my-loading-component";
 
@@ -21,7 +21,7 @@ export default class App extends React.Component {
 在大多数应用中，一个路由往往会包含多个组件，像Modal, tabs等UI组件，而用户并不一定是会去操作这些，所以基于组件分割，当用户操作或需要时在加载对应的组件会大大节约流量，太高访问速度。
 ## 前后对比
 未使用
-~~~
+~~~js
 // 
 import Bar from "./components/Bar";
 class foo extends React.Component {
@@ -31,7 +31,7 @@ class foo extends React.Component {
 }
 ~~~
 和foo同步渲染，但在app渲染之前，可以先渲染重要的，Bar延后渲染，所以我们需要的是
-~~~
+~~~js
 import loadable from "react-loadable";
 class MyComponent extends React.Component {
   state = {
@@ -53,7 +53,7 @@ class MyComponent extends React.Component {
 }
 ~~~
 以上代码的复杂度提升了很多，还有import失败的话怎么办，服务端渲染怎么办等等
-~~~
+~~~js
 // 用loadable改装
 import Loadable from "react-loadable";
 const LoadableBar = Loadable({
@@ -64,7 +64,7 @@ const LoadableBar = Loadable({
 })
 ~~~
 ### loading组件优化
-~~~
+~~~js
 function Loading(props){
   if(props.error){
     return <div>Error!</div>
@@ -93,7 +93,7 @@ Loadable({
 })
 ~~~
 #### 加载更多资源 ``Loadable.Map``
-~~~
+~~~js
 Loadable.Map({
   loader: {
     Bar: ()=> import('./Bar'),
@@ -108,7 +108,7 @@ Loadable.Map({
 ~~~
 #### 预加载
 可以决定哪些组件在渲染之前进行预先加载，具体用法如下
-~~~
+~~~js
 const LoadableBar = Loadable({
   loader: ()=> import('./Bar');
   loading: Loading,
@@ -137,7 +137,7 @@ class MyComponent extends React.Component {
 }
 ~~~
 ### 服务端渲染
-~~~
+~~~js
 import express from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -157,7 +157,7 @@ app.get('/', (req, res)=>{
 })
 ~~~
 #### ``Loadable.preloadAll``预加载所有组件
-~~~
+~~~js
 Loadable.preloadAll().then(()=>{
   app.listen(3000, ()=>{
     conosl
@@ -166,7 +166,7 @@ Loadable.preloadAll().then(()=>{
 ~~~
 #### 声明哪个模块被加载
 在``babel.config.js``中加``react-loadable/babel``
-~~~
+~~~js
 {
   "plugins": [
     "react-loadable/babel"
@@ -175,7 +175,7 @@ Loadable.preloadAll().then(()=>{
 ~~~
 #### 找出哪些动态模块正在被加载，将加载的模块映射到打包文件上，客户端会等待所有打包文件加载完成
 1，用``Loadable.Capture``收集所有被加载的模块
-~~~
+~~~js
 import Loadable from 'react-loadable';
 app.get('/', (req, res)=>{
   let modules = [];
@@ -189,7 +189,7 @@ app.get('/', (req, res)=>{
 })
 ~~~
 2, 将加载的模块映射到打包文件上
-~~~
+~~~js
 import { ReactLoadablePlugin } from "react-loadable/webpack";
 export default {
   plugins: [
@@ -200,7 +200,7 @@ export default {
 }
 ~~~
 3, 将模块转换为打包文件，并输入到html中
-~~~
+~~~js
 import express from 'express';
 import React from 'react';
 import Loadable from "react-loadable";
@@ -233,7 +233,7 @@ app.get("/", (req, res)=>{
 })
 ~~~
 4, 由于Webpack工作方式是：主打包文件会比其他的scripts预先加载，但我们需要等待所有文件加载后才开始渲染
-~~~
+~~~js
 // 客户端
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -247,7 +247,7 @@ window.main = ()=>{
   })
 }
 ~~~
-~~~
+~~~js
 // server
 ....
 let bundles = getBundles(stats, modules);
@@ -260,7 +260,7 @@ res.send(`
 ~~~
 
 ## Loadable组件
-~~~
+~~~js
 import React from "react";
 import Loadable from "react-loadable";
 import { ActivityIndicator } from "antd-mobile";

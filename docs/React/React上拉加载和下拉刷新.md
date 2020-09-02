@@ -1,6 +1,6 @@
 # React上拉加载和下拉刷新
 ### 工作遇到问题的解决方法
-~~~
+~~~js
 // 1，数据组装
 Hlist: {
   raw: [], // 一开始可以不声明， 方便判空
@@ -173,7 +173,7 @@ export default History;
 
 ~~~
 ## 回到顶部
-~~~
+~~~js
 class Home extends Component{
   consrcutor(props){
     super(props);
@@ -215,7 +215,7 @@ class Home extends Component{
 ~~~
 ## 上拉加载下一页
 页面结构为 banner + nav + content + footer，除content可以滚动，其他都固定，所有scroll绑定到content上
-~~~
+~~~js
 class Pool extends PureComponent{
   construstor(props){
     super(props);
@@ -281,7 +281,7 @@ class Pool extends PureComponent{
 * touchend: 当手指从屏幕上离开的时候触发
 * touchcancel: 当系统停止跟踪触摸的时候触发
 直接在componentDidMount中将touch相关的事件绑定到content
-~~~
+~~~js
 // this.PoolCon = React.createRef(); 
 // <article className="content" ref={this.ParentCon}>...</article>
 componentMount(){

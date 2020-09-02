@@ -1,7 +1,7 @@
 # webpack之前端性能优化
 ![webpack优化前](./img/a.png)
 ## 优化之前，可以在项目里引入``webpack-bundle-analyzer``分析SPA项目
-~~~
+~~~js
 // 引入
 npm i --save-dev webpack-bundle-analyzer
 // 使用
@@ -44,7 +44,7 @@ plugins: [
 ~~~
 ## 具体方案
 ### 1. 把第三方代码库分离，用externals将第三方库以CDN的方法引入，加快webpack的打包速度
-~~~
+~~~js
 // 优化前
 entry: {
   entry: "./src/main.js",
@@ -77,7 +77,7 @@ externals: {
   - externals中的key是import中使用的
   - externals中的value是window下调用的
 ### 2. 抽取公共代码到 vendor 中
-~~~
+~~~js
 // webpack < 3
 new webpack.optimize.CommonsChunkPlugin({
   name: "vendor",
@@ -108,7 +108,7 @@ splitChunks: {
 ~~~
 ### 3. 和1差不多，dll: 将每个页面都会引用的且基本不会改变的依赖包，如react/react-dom 等在抽离出来，不让其他模块变化污染dll库的hash缓存
 ### 4. manifest: 抽离webpack运行时（runtime）代码
-~~~
+~~~js
 const commonOptions = {
   chunks: 'all',
   reuseExistingChunk: true

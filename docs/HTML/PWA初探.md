@@ -152,7 +152,7 @@ self.addEventListener("message", event=>{
 ## 通过ServiceWorkers让PWA离线工作
 ## 让PWA易于安装
 header
-~~~
+~~~html
 <!DOCTYPE html>
 <html>
   <head>
@@ -169,7 +169,7 @@ header
       name="keywords"
       content=""
     />
-    <link rel="shortcut icon" href="zg.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="xxx.ico" type="image/x-icon" />
     <link rel="manifest" href="manifest.json" />
     <!-- Standard iPhone -->
     <link rel="apple-touch-icon" sizes="57x57" href="static/logo/57.png" />
@@ -242,7 +242,7 @@ header
 ### A2HS(Add to Home screen)
 例子：
 不依赖浏览器，不必每次都弹出A2HS的banner，由用户控制，点击按钮提示安装
-~~~
+~~~js
 let installPromptEvent;
 // 监听beforeinstallprompt事件，浏览器触发A2HS时会执行
 window.addEventListener("beforeinstallprompt",(e)=>{

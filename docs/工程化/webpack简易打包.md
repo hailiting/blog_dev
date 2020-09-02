@@ -1,18 +1,18 @@
 # webpack简易打包
 中文文档地址[https://www.webpackjs.com/guides/]
 ## npm
-~~~
+~~~shell
 npm install --save-dev webpack
 npm install --save-dev webpack-cli
 ~~~
 ## package.json
-~~~
+~~~js
 "scripts": {
     "start": "webpack --config webpack.config.js"
 }
 ~~~
 ## webpack.config.js
-~~~
+~~~js
 const path = require('path');
 
 module.exports = {
