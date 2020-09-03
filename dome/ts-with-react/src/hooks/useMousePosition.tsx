@@ -16,6 +16,7 @@ const useMousePosition = () => {
       document.removeEventListener("mousemove", updateMouse)
     }
   }, [])
+
   return positions
 }
 export default useMousePosition;
