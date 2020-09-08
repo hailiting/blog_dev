@@ -7,7 +7,7 @@ module.exports = ({ config }) => {
       include: path.resolve(__dirname, "../"),
     },
     {
-      test: /\.tsx?$/,
+      test: /\.(stories|story)\.[tj]sx?$/,
       use: [
         {
           loader: require.resolve("react-docgen-typescript-loader"),
@@ -24,14 +24,5 @@ module.exports = ({ config }) => {
       ],
     }
   );
-  config.resolve = {
-    ...config.resolve,
-    modules: [path.resolve(__dirname, "../src"), "node_modules"],
-    // The same approach as in config-overrides.js
-    alias: {
-      ...config.resolve?.alias,
-      "react-dom": "@hot-loader/react-dom",
-    },
-  };
   return config;
 };

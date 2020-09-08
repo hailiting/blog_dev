@@ -7,6 +7,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@fortawesome/react-fontawesome": "^0.1.8",
+    "@storybook/addon-docs": "^6.0.21",
     "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-knobs": "^6.0.21",
     "@svgr/webpack": "4.3.3",
@@ -157,7 +158,7 @@
   },
   "devDependencies": {
     "@hot-loader/react-dom": "^16.13.0",
-    "@storybook/addon-a11y": "^5.3.19",
+    "@storybook/addon-a11y": "5.2.0",
     "@storybook/addon-actions": "^6.0.0-rc.29",
     "@storybook/addon-essentials": "^6.0.0-rc.29",
     "@storybook/addon-jest": "^6.0.21",
