@@ -272,3 +272,20 @@ test("compiling android goes as expected", () => {
   expect(compileAndroidCode).toThrow(/JDK/);
 });
 ```
+
+## 添加
+
+### 当前项目的缺点
+
+- create-react-app 入口文件不适合管理组件库
+- 缺少行为追踪和属性调试功能
+
+### 组件完美开发工具应有的特点
+
+1. 能够展示不同组件
+2. 能追踪组件的行为并具有属性调试功能
+3. 可以为组件自动生成文档和属性列表
+
+### storybook [build bulletproog ul componnents faster]
+
+`npx -p @storybook/cli sb init --type react`

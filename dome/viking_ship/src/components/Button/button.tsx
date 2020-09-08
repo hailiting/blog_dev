@@ -6,16 +6,26 @@ type ButtonType = "primary" | "default" | "danger" | "link";
 
 interface BaseButtonProps {
   className?: string;
+  /**设置 Button 的禁用 */
   disabled?: boolean;
+  /**设置 Button 的尺寸 */
   size?: ButtonSize;
+  /**设置 Button 的类型 */
   btnType?: ButtonType;
   children: React.ReactNode;
-  href?: string;
+  hrefbtnType?: string;
 }
 
 type NativeButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLElement>;
 type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>;
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>; // Partial 属性可选
+/**
+ * 这是Button组件
+ * ## Button componants
+ * ~~~js
+ * import Button from "vikingShip"
+ * ~~~
+ */
 export const Button: FC<ButtonProps> = (props) => {
   const {
     btnType,

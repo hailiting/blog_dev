@@ -1,0 +1,134 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 2,
+  "numPassedTests": 10,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 2,
+  "numTotalTests": 10,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1599473076744,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["test button commponet"],
+          "failureMessages": [],
+          "fullName": "test button commponet should render the correct default button",
+          "location": null,
+          "status": "passed",
+          "title": "should render the correct default button"
+        },
+        {
+          "ancestorTitles": ["test button commponet"],
+          "failureMessages": [],
+          "fullName": "test button commponet should render the component based on different props",
+          "location": null,
+          "status": "passed",
+          "title": "should render the component based on different props"
+        },
+        {
+          "ancestorTitles": ["test button commponet"],
+          "failureMessages": [],
+          "fullName": "test button commponet should render the a link when btnType equals link and href is provided",
+          "location": null,
+          "status": "passed",
+          "title": "should render the a link when btnType equals link and href is provided"
+        },
+        {
+          "ancestorTitles": ["test button commponet"],
+          "failureMessages": [],
+          "fullName": "test button commponet should render disabled button when disabled set to true",
+          "location": null,
+          "status": "passed",
+          "title": "should render disabled button when disabled set to true"
+        }
+      ],
+      "endTime": 1599473080278,
+      "message": "",
+      "name": "/Users/hailiting/Desktop/blog_dev/dome/viking_ship/src/components/Button/button.test.tsx",
+      "startTime": 1599473078044,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["测试Menu组件"],
+          "failureMessages": [],
+          "fullName": "测试Menu组件 Menu 和 MenuItem 默认选项测试",
+          "location": null,
+          "status": "passed",
+          "title": "Menu 和 MenuItem 默认选项测试"
+        },
+        {
+          "ancestorTitles": ["测试Menu组件"],
+          "failureMessages": [],
+          "fullName": "测试Menu组件 Menu 和 MenuItem 必须要插入正确的props",
+          "location": null,
+          "status": "passed",
+          "title": "Menu 和 MenuItem 必须要插入正确的props"
+        },
+        {
+          "ancestorTitles": ["测试Menu组件"],
+          "failureMessages": [],
+          "fullName": "测试Menu组件 MenuItem mouse事件，是否正确运行及回调",
+          "location": null,
+          "status": "passed",
+          "title": "MenuItem mouse事件，是否正确运行及回调"
+        },
+        {
+          "ancestorTitles": ["测试 vertical类型的 Menu 和MenuItem"],
+          "failureMessages": [],
+          "fullName": "测试 vertical类型的 Menu 和MenuItem 当mode是vertical时",
+          "location": null,
+          "status": "passed",
+          "title": "当mode是vertical时"
+        },
+        {
+          "ancestorTitles": ["测试 vertical类型的 Menu 和MenuItem"],
+          "failureMessages": [],
+          "fullName": "测试 vertical类型的 Menu 和MenuItem 点击submennu时",
+          "location": null,
+          "status": "passed",
+          "title": "点击submennu时"
+        },
+        {
+          "ancestorTitles": ["测试 vertical类型的 Menu 和MenuItem"],
+          "failureMessages": [],
+          "fullName": "测试 vertical类型的 Menu 和MenuItem should show subMenu dropdown when defaultOpenSubMenus contains SubMenu index",
+          "location": null,
+          "status": "passed",
+          "title": "should show subMenu dropdown when defaultOpenSubMenus contains SubMenu index"
+        }
+      ],
+      "endTime": 1599473081242,
+      "message": "",
+      "name": "/Users/hailiting/Desktop/blog_dev/dome/viking_ship/src/components/Menu/menu.test.tsx",
+      "startTime": 1599473078044,
+      "status": "passed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false
+}
