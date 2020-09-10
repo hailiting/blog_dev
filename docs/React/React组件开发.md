@@ -169,10 +169,124 @@ const Button = styled.button`
 
 ### 编写
 
+每一个组件在创建的时候都要避免过度设计
+从最简单的原型开始
+
 ```shell
 npm install classnames --save
 npm install @types/classnames --save
 ```
+
+#### 下拉 input 组件思路
+
+```js
+// 做一个项目，先做一个能用的原型，在慢慢添加
+import prependOnceListener from "cluster";
+const a = ["1", "adf", "122"]; // 要筛选的数组
+
+interface AutoCompleteProps {
+  fetchSuggestions: (keyword: string, data: string[]) => string[] | Promise; // 筛选触发【下拉框数据获取】
+  onSelect: (item: void) => void; // 返回选中结果
+}
+const handleChange = (keyword: string) => {
+  return a.filter((item) => item.includes(keyword));
+  return fetch(`url?keyword=${keyword}`);
+};
+const handleSelect = (item: string) => {
+  console.log(item);
+};
+<AutoComplete fetchSuggestions={handleChange} onSelect={handleSelect} />;
+```
+
+#### upload 组件
+
+```js
+// 需求分析
+// upload 本身自己就有属于自己的生命周期
+// 开始 -> 点击按钮、选择文件 -> beforeUpload(file) -> onProgress(event, file) -> onChange(file)->success/error -> callback(onSuccess/onError)
+
+<Upload
+  action="xxx.com/upload" // upload地址
+  beforeUpload={() => {}}
+  onProgress={() => {}}
+  onChange={() => {}}
+  onSuccess={() => {}}
+  onError={() => {}}
+  onRemoved={() => {}}
+>
+  <Button>click to upload</Button>
+</Upload>
+```
+
+##### `xhr`和`$.ajax`
+
+```js
+// 原生的xhr
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "http://test.me");
+xhr.responseType = "json";
+
+xhr.onload = function () {
+  console.log(xhr.response);
+};
+
+xhr.onerror = function () {
+  console.log("error");
+};
+xhr.send();
+
+// $.ajax
+$.ajax({
+  type: "POST",
+  url: "xxx.xx/xx",
+  data: {},
+  dataType: "json",
+  success: function () {},
+  error: function () {},
+});
+
+// fetch
+/**
+ * 1. 只对网络请求报错，对400，500都当做请求成功
+ * 2. 默认不带cookie，需配置 withCredentials
+ * 3. 不支持about，不支持超时控制
+ * 4. 没法原生监测请求进度
+ */
+fetch("xxx.xx/xx")
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data);
+  })
+  .catch(function (e) {
+    console.log("error la");
+  });
+// axios
+import React, { FC, useState, useEffect } from "react";
+import axios from "axios";
+const App: FC = (props) => {
+  const [title, setTitle] = useState("");
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos/1", {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        responseType: "json",
+      })
+      .then((res) => setTitle(res.data.title));
+  }, []);
+
+  return <h3>{title}</h3>;
+};
+export default App;
+```
+
+开源的免费请求接口
+
+- `JSONPlaceholder`
+- `https://designer.mocky.io/design`
 
 ### 组件测试
 
@@ -289,3 +403,180 @@ test("compiling android goes as expected", () => {
 ### storybook [build bulletproog ul componnents faster]
 
 `npx -p @storybook/cli sb init --type react`
+
+## 结尾
+
+需要什么类型的文件给各环境使用
+
+### 打包工具 module boundler 原型过程
+
+```t
+TypescriptFiles.tsx ----tsc---> ES6 modules.jsx ----
+入口文件的引用需要的文件 index.tsx ---- module bundler 【webpack rollup...】 ---> 浏览器可以使用的一个或多个js文件
+```
+
+### Javascript 模块格式
+
+#### `UMD`
+
+可兼容 AMD 浏览器等 js 环境
+
+```js
+(function (root, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["b"], factory);
+  } else if (typeof exports === "object") {
+    module.exports = factory(require("b"));
+  } else {
+    root.returnExports = factory(root.b);
+  }
+});
+```
+
+#### ESModules 模块 vs CommonJS
+
+##### tree-shaking 优化
+
+### typescript-> ESModules
+
+```js
+import { Button } from "vikingship";
+```
+
+1. `from vikingship` => `package.json`里的`module`和`main`字段控制
+
+```json
+...
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+...
+```
+
+2. tsconfig.build.json
+
+```json
+{
+  "compilerOptions": {
+    "outDir": "dist", // 打包的地址
+    "module": "esnext", // 打包的module
+    "target": "es5", // 让浏览器支持ES5
+    "declaration": true, // 获得 ts props 提示检查
+    "jsx": "react", // 语法糖
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true // 支持defult import方式
+  },
+  "include": [
+    "src" // 想打包的文件地址
+  ],
+  "exclude": ["src/**/*.test.tsx", "src/**/*.stories.tsx", "src/setupTests.ts"] // 需要排除的文件
+}
+```
+
+3. `package.json`
+
+```json
+...
+  "build": "npm run clean && npm run build-ts && npm run build-css",
+  "clean": "rimraf ./dist",
+  "build-ts": "tsc -p tsconfig.build.json",
+  "build-css": "node-sass ./src/styles/index.scss ./dist/index.css",
+...
+```
+
+4. 调试
+
+- `npm link` 创建短连接
+- `npm link vikingship` （vikingship 为未知数）
+- 两个版本 react 冲突的问题 `npm link ../myapp/node_module/react from mylib`
+  ```json
+  // package.json
+  // 不会被安装，会出现warn提示
+  "peerDependencies":{
+    "peerDependencies": {
+      "react": ">=16.8.0",
+      "react-dom": ">=16.8.0"
+    },
+  }
+  ```
+
+5. lint
+
+```json
+// package.json
+"scripts": {
+  "start": "node scripts/start.js",
+  "lint": "eslint --ext js,ts,tsx src --max-warnings 5",
+  "build": "npm run clean && npm run build-ts && npm run build-css",
+  "clean": "rimraf ./dist",
+  "build-ts": "tsc -p tsconfig.build.json",
+  "build-css": "node-sass ./src/styles/index.scss ./dist/index.css",
+  "test": "node scripts/test.js",
+  "test:nowatch": "cross-env CI=true node scripts/test.js",
+  "test:generate-output": "jest --json --outputFile=.jest-test-results.json",
+  "storybook": "npm run test:generate-output && npm run dev-storybook",
+  "dev-storybook": "start-storybook -p 9009 -s public",
+  "build-storybook": "npm run test:generate-output &&  build-storybook -s public",
+  "prepublishOnly": "npm run test:nowatch && npm run lint && npm run build"
+},
+```
+
+6. 发版前的代码检查
+
+```json
+// package.json
+"husky": {
+  "hooks": {
+    "pre-commit": "npm run test:nowatch && npm run lint"
+  }
+},
+```
+
+7. CI/CD 【持续集成/持续交付/持续部署（自动化完成测试验证部署）】
+
+```t
+组件库 ---gitpush--->  运行测试（单元测试以及e2e测试）---测试通过---> npm publish -- 成功--> build文档静态文件
+ --- 成功 --->  上传至服务器 -----成功----> 生成新的文档站点
+```
+
+travis-ci.com ci
+
+### 上传到 npm
+
+- 下载别人编写的第三方包到本地使用
+- 下载并安装别人编写的命令行程序本地使用
+- 将自己编写的包或命令行程序上传到 npm 服务器
+
+1. 注册、登录 npmjs.com/signup
+
+- npm whoami 检查是否登录
+- npm config ls 查看当前的代理 【注册源得是默认的 不能是淘宝的】
+  `npm config set registry http://registry.npm.taobao.org/`
+  `npm config set registry https://registry.npmjs.org/`
+  `npm get registry`
+- npm adduser 【logged in as vikingmute on https://registry.npmjs.org/ -> 这个地址是对的】
+
+2. package.json
+
+```json
+version: "0.1.0", // 版本号： 主版本   次版本   修订号
+description: "",
+author: "",
+license: "MIT",
+homepage: "./",
+repository:{
+  "type": "git",
+  "url": "xxx"
+},
+dependencies: {
+  // 严格控制生成环境依赖
+},
+files: [
+  "dist"
+], // 把哪些文件上传上去
+private: true, // 是否是私有的
+scripts: {
+  "prepublish": "npm run build"
+}
+```
+
+3. npm publish

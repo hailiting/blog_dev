@@ -22,9 +22,9 @@ export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>; // Par
 /**
  * 这是Button组件
  * #### Button componants
- * ~~~js
- * import Button from "vikingShip"
- * ~~~
+ * ```js
+ * import { Button 11} from "vikingShip"
+ * ```
  */
 export const Button: FC<ButtonProps> = (props) => {
   const {

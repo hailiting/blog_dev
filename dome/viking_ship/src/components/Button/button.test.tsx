@@ -49,6 +49,6 @@ describe("test button commponet", () => {
     expect(element).toBeInTheDocument();
     expect(element.disabled).toBeTruthy();
     fireEvent.click(element);
-    expect(disabledProps.onClick).not.toHaveBeenCalled;
+    expect(disabledProps.onClick).not.toHaveBeenCalled();
   });
 });

@@ -2,19 +2,12 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { boolean, text } from "@storybook/addon-knobs";
-import { DocsPage, DocsContainer } from "@storybook/addon-docs/blocks";
 
 import Button, { ButtonType, ButtonSize, ButtonProps } from "./button";
 const setButton = (arg: ButtonProps) => <Button {...arg} />;
 storiesOf("Button Component", module)
   .addParameters({ jest: ["button.test.tsx"] })
-  .addParameters({
-    docs: {
-      container: DocsContainer,
-      page: DocsPage,
-      iframeHeight: 1000,
-    },
-  })
+
   // 当name和组件名字一样的时候才会出现markdown文档
   .add("Button", () => {
     return setButton({
