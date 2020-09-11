@@ -12,9 +12,7 @@ module.exports = {
   description: "hailiting Blog",
   base: "/",
   dest: "dist",
-  head: [
-    ['link', { rel: 'icon', href: '/logo.png' }]
-  ]
+  head: [["link", { rel: "icon", href: "/logo.png" }]],
   themeConfig: {
     sidebar: filenames,
   },
