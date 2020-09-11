@@ -14,7 +14,7 @@ describe("test Input component", () => {
       "test-input"
     ) as HTMLInputElement;
     expect(testNode).toBeInTheDocument();
-    expect(testNode).toHaveClass("viking-input-inner");
+    expect(testNode).toHaveClass("mycomp-input-inner");
     fireEvent.change(testNode, { target: { value: "23" } });
     expect(defaultProps.onChange).toHaveBeenCalled();
     expect(testNode.value).toEqual("23");
@@ -29,7 +29,7 @@ describe("test Input component", () => {
   it("should render different input sizes on size property", () => {
     const wrapper = render(<Input placeholder="sizes" size="lg" />);
     const testContainer = wrapper.container.querySelector(
-      ".viking-input-wrapper"
+      ".mycomp-input-wrapper"
     );
     expect(testContainer).toHaveClass("input-size-lg");
   });
@@ -37,7 +37,7 @@ describe("test Input component", () => {
     const { queryByText, container } = render(
       <Input placeholder="pend" prepend="https://" append=".com" />
     );
-    const testContainer = container.querySelector(".viking-input-wrapper");
+    const testContainer = container.querySelector(".mycomp-input-wrapper");
     expect(testContainer).toHaveClass(
       "input-group input-group-append input-group-prepend"
     );

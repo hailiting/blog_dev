@@ -40,7 +40,7 @@ describe("测试upload组件", () => {
   beforeEach(() => {
     wrapper = render(<Upload {...testProps}> Click me</Upload>);
     fileInput = wrapper.container.querySelector(
-      ".viking-file-input"
+      ".mycomp-file-input"
     ) as HTMLInputElement;
     uploadArea = wrapper.queryByText("Click me") as HTMLElement;
   });

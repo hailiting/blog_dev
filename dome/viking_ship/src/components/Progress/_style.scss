@@ -1,13 +1,13 @@
-.viking-progress-bar {
+.mycomp-progress-bar {
   width: 100%;
   box-sizing: border-box;
-  .viking-progress-bar-outer {
+  .mycomp-progress-bar-outer {
     border-radius: $progress-border-radius;
     background-color: $progress-bg;
     overflow: hidden;
     position: relative;
   }
-  .viking-progress-bar-inner {
+  .mycomp-progress-bar-inner {
     position: absolute;
     left: 0;
     top: 0;

@@ -1,10 +1,10 @@
-.viking-upload-list {
+.mycomp-upload-list {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.viking-uploader-dragger {
+.mycomp-uploader-dragger {
   background: $gray-100;
   border: 1px dashed $gray-300;
   border-radius: 4px;
@@ -22,7 +22,7 @@
   }
 }
 
-.viking-upload-list-item {
+.mycomp-upload-list-item {
   transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
   font-size: 14px;
   line-height: 1.8;

@@ -33,7 +33,7 @@ export interface IAutoCompleteProps extends Omit<InputProps, "onSelect"> {
 /**
  * #### 引用
  * ~~~js
- * import { AutoComplete} from "vikingship"
+ * import { AutoComplete} from "mycompship"
  * ~~~
  */
 export const AutoComplete: FC<IAutoCompleteProps> = (props) => {
@@ -133,7 +133,7 @@ export const AutoComplete: FC<IAutoCompleteProps> = (props) => {
           setSuggestions([]);
         }}
       >
-        <ul className="viking-suggestion-list">
+        <ul className="mycomp-suggestion-list">
           {loading && (
             <div className="suggstions-loading-icon">
               <Icon icon="spinner" spin />
@@ -161,7 +161,7 @@ export const AutoComplete: FC<IAutoCompleteProps> = (props) => {
     return renderOption ? renderOption(item) : item.value;
   };
   return (
-    <div className="viking-auto-complete" ref={componentRef}>
+    <div className="mycomp-auto-complete" ref={componentRef}>
       <Input
         value={inputValue}
         onChange={handleChange}

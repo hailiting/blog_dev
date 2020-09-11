@@ -28,7 +28,7 @@ export interface InputProps
 /**
  * Input 输入框
  * ~~~js
- * import {Input} from "vikingship"
+ * import {Input} from "mycompship"
  * ~~~
  * 支持HTMLInput的所有基础属性
  */
@@ -43,7 +43,7 @@ export const Input: FC<InputProps> = (props) => {
     ariaLabel,
     ...restProps
   } = props;
-  const cnames = classNames("viking-input-wrapper", {
+  const cnames = classNames("mycomp-input-wrapper", {
     [`input-size-${size}`]: size,
     "is-disabled": disabled,
     "input-group": prepend || append,
@@ -62,7 +62,7 @@ export const Input: FC<InputProps> = (props) => {
   }
   return (
     <div className={cnames} style={style}>
-      {prepend && <div className="viking-input-group-prepend">{prepend}</div>}
+      {prepend && <div className="mycomp-input-group-prepend">{prepend}</div>}
       {icon && (
         <div className="icon-wrapper">
           <Icon icon={icon} title={`title-${icon}`} />
@@ -70,11 +70,11 @@ export const Input: FC<InputProps> = (props) => {
       )}
       <input
         aria-label={ariaLabel}
-        className="viking-input-inner"
+        className="mycomp-input-inner"
         disabled={disabled}
         {...restProps}
       />
-      {append && <div className="viking-input-group-append">{append}</div>}
+      {append && <div className="mycomp-input-group-append">{append}</div>}
     </div>
   );
 };

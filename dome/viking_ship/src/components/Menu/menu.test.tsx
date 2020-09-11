@@ -45,10 +45,10 @@ const generateMenu = (props: MenuProps) => {
 };
 const createStyleFile = () => {
   const cssFile: string = `
-  .viking-submenu{
+  .mycomp-submenu{
     display: none;
   }
-  .viking-submenu.menu-opened{
+  .mycomp-submenu.menu-opened{
     display: block
   }
   `;
@@ -75,7 +75,7 @@ describe("测试Menu组件", () => {
   });
   it("Menu 和 MenuItem 默认选项测试", () => {
     expect(menuElement).toBeInTheDocument(); // 在文档中
-    expect(menuElement).toHaveClass("viking-menu test");
+    expect(menuElement).toHaveClass("mycomp-menu test");
     expect(menuElement.querySelectorAll(":scope>li").length).toEqual(5);
     expect(activeElement).toHaveClass("menu-item is-active");
     expect(disabledElement).toHaveClass("menu-item is-disabled");

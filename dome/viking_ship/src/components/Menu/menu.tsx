@@ -32,7 +32,7 @@ export const Menu: FC<MenuProps> = (props) => {
     defaultOpenSubMenus,
   } = props;
   const [currentActive, setActive] = useState(defaultIndex);
-  const classes = classNames("viking-menu", className, {
+  const classes = classNames("mycomp-menu", className, {
     "menu-vertical": mode === "vertical",
     "menu-horizontal": mode !== "vertical",
   });

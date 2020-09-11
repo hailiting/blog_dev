@@ -14,7 +14,7 @@
 ### 代码结构
 
 ```file
-viking/
+mycomp/
   README.md
   node_modules/
   package.json
@@ -163,7 +163,7 @@ const Button = styled.button`
   autofocus=""?
   ...
 >
-  {children} Viking Button
+  {children} mycomp Button
 </Button>
 ```
 
@@ -226,11 +226,11 @@ const xhr = new XMLHttpRequest();
 xhr.open("GET", "http://test.me");
 xhr.responseType = "json";
 
-xhr.onload = function () {
+xhr.onload = function() {
   console.log(xhr.response);
 };
 
-xhr.onerror = function () {
+xhr.onerror = function() {
   console.log("error");
 };
 xhr.send();
@@ -241,8 +241,8 @@ $.ajax({
   url: "xxx.xx/xx",
   data: {},
   dataType: "json",
-  success: function () {},
-  error: function () {},
+  success: function() {},
+  error: function() {},
 });
 
 // fetch
@@ -253,13 +253,13 @@ $.ajax({
  * 4. 没法原生监测请求进度
  */
 fetch("xxx.xx/xx")
-  .then(function (response) {
+  .then(function(response) {
     return response.json();
   })
-  .then(function (data) {
+  .then(function(data) {
     console.log(data);
   })
-  .catch(function (e) {
+  .catch(function(e) {
     console.log("error la");
   });
 // axios
@@ -422,7 +422,7 @@ TypescriptFiles.tsx ----tsc---> ES6 modules.jsx ----
 可兼容 AMD 浏览器等 js 环境
 
 ```js
-(function (root, factory) {
+(function(root, factory) {
   if (typeof define === "function" && define.amd) {
     define(["b"], factory);
   } else if (typeof exports === "object") {
@@ -440,10 +440,10 @@ TypescriptFiles.tsx ----tsc---> ES6 modules.jsx ----
 ### typescript-> ESModules
 
 ```js
-import { Button } from "vikingship";
+import { Button } from "mycompship";
 ```
 
-1. `from vikingship` => `package.json`里的`module`和`main`字段控制
+1. `from mycompship` => `package.json`里的`module`和`main`字段控制
 
 ```json
 ...
@@ -486,7 +486,7 @@ import { Button } from "vikingship";
 4. 调试
 
 - `npm link` 创建短连接
-- `npm link vikingship` （vikingship 为未知数）
+- `npm link mycompship` （mycompship 为未知数）
 - 两个版本 react 冲突的问题 `npm link ../myapp/node_module/react from mylib`
   ```json
   // package.json
@@ -575,7 +575,7 @@ deploy:
   `npm config set registry http://registry.npm.taobao.org/`
   `npm config set registry https://registry.npmjs.org/`
   `npm get registry`
-- npm adduser 【logged in as vikingmute on https://registry.npmjs.org/ -> 这个地址是对的】
+- npm adduser 【logged in as mycompmute on https://registry.npmjs.org/ -> 这个地址是对的】
 
 2. package.json
 
