@@ -6,7 +6,7 @@
   "scripts": {
     "readdir": "node utils/readdir.js",
     "start": "vuepress dev docs",
-    "build": "vuepress build docs"
+    "build": "node utils/readdir.js && vuepress build docs"
   },
   "author": "",
   "license": "ISC",
