@@ -10,7 +10,7 @@ const filenames = require("./filenames.json");
 module.exports = {
   title: "hailiting Blog",
   description: "hailiting Blog",
-  base: "/",
+  base: "/blog_dev/",
   dest: "dist",
   head: [["link", { rel: "icon", href: "/logo.png" }]],
   themeConfig: {
