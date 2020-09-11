@@ -1,53 +1,64 @@
-# RN和h5交互
+# RN 和 h5 交互
+
 react-native-webview
-~~~
+
+```
 yarn add react-native-webview
 react-native link react-native-webview
-~~~
-## WebView的基本属性方法介绍和使用
+```
+
+## WebView 的基本属性方法介绍和使用
+
 ### 主要属性介绍
-* source: 在 WebView中载入一段静态的html代码或是传入一个url（可以附带一些header选项）；
-* automaticallyAdjustContentInsets: 设置是否自动调整内容，默认值为true；
-* contrntInset: 设置内容所占尺寸大小，格式：{top:number,left:number,bottom:number,right:number}；
-* injectedJavaScript(string): 当网页加载之前注入一段js代码，其值为字符串形式；
-* startInLoadingState: 是否开启页面加载的状态，值为true或false；
-* bounces: 回弹特性。默认为true，如果设置为false，则内容拉到底部或头部都不回弹。
-* scalesPageToFit: 设置网页是否缩放自适应到整个屏幕视图，以及用户是否可以改变缩放页面；
-* scrollEnaled: 用于设置是否开启页面滚动；
-* domStorageEnable: 用于控制是否开启DOM Storage(存储);
-* javaScriptEnabled: 是否开启JavaScript,在ios中默认是开启的；
+
+- source: 在 WebView 中载入一段静态的 html 代码或是传入一个 url（可以附带一些 header 选项）；
+- automaticallyAdjustContentInsets: 设置是否自动调整内容，默认值为 true；
+- contrntInset: 设置内容所占尺寸大小，格式：{top:number,left:number,bottom:number,right:number}；
+- injectedJavaScript(string): 当网页加载之前注入一段 js 代码，其值为字符串形式；
+- startInLoadingState: 是否开启页面加载的状态，值为 true 或 false；
+- bounces: 回弹特性。默认为 true，如果设置为 false，则内容拉到底部或头部都不回弹。
+- scalesPageToFit: 设置网页是否缩放自适应到整个屏幕视图，以及用户是否可以改变缩放页面；
+- scrollEnaled: 用于设置是否开启页面滚动；
+- domStorageEnable: 用于控制是否开启 DOM Storage(存储);
+- javaScriptEnabled: 是否开启 JavaScript,在 ios 中默认是开启的；
+
 ### 主要方法介绍
-* onNavigationStateChange: 当导航状态变化的时候调用；
-* onLoadStart: 当网页开始加载时调用；
-* onError: 当网页加载失败时调用；
-* onLoad: 当网页加载结束时调用；
-* onLoadEnd: 当页面加载结束时调用，不管成功还是失败；
-* renderLoading: WebView组件正在渲染页面时触发的函数，只有startInLoadingState为true时，函数才起作用；
-* renderError: 监听渲染页面出错的函数；
-* onShouldStartLoadWithRequest: 该方法容许拦截WebView加载的URL地址，进行自定义处理，该方法通过返回true或false来决定是否继续加载该拦截到的请求；
-* onMessage: 在WebView内部网页中，调用window.postMessage可以触发此属性对应的函数， 通过event.nativeEvent.data获取接收到的数据，实现网页和RN之间的数据传递；
-* injectJavaScript(function): 函数接受一个字符串，该字符串将传递给WebView，并立即 执行为JavaScript;
-#### 通过url加载一个页面
-~~~
+
+- onNavigationStateChange: 当导航状态变化的时候调用；
+- onLoadStart: 当网页开始加载时调用；
+- onError:  当网页加载失败时调用；
+- onLoad: 当网页加载结束时调用；
+- onLoadEnd: 当页面加载结束时调用，不管成功还是失败；
+- renderLoading: WebView 组件正在渲染页面时触发的函数，只有 startInLoadingState 为 true 时，函数才起作用；
+- renderError: 监听渲染页面出错的函数；
+- onShouldStartLoadWithRequest: 该方法容许拦截 WebView 加载的 URL 地址，进行自定义处理，该方法通过返回 true 或 false 来决定是否继续加载该拦截到的请求；
+- onMessage: 在 WebView 内部网页中，调用 window.postMessage 可以触发此属性对应的函数， 通过 event.nativeEvent.data 获取接收到的数据，实现网页和 RN 之间的数据传递；
+- injectJavaScript(function): 函数接受一个字符串，该字符串将传递给 WebView，并立即 执行为 JavaScript;
+
+#### 通过 url 加载一个页面
+
+```
 render(){
 	return(
 		<View style={styles.container}>
-			<WebView 
+			<WebView
 				ref={webView=>this.webView=webView}
 				startInLoadingState={true}
 				onNavigationStateChange={e=>this.onNavigationStateChange(e)}
 				source={{uri:'https://github.com/xxx'}}
-			/>			
+			/>
 		</View>
 	)
 }
-~~~
-#### 通过HTML加载一个页面
-~~~
+```
+
+#### 通过 HTML 加载一个页面
+
+```
 render(){
 	return (
 		<View>
-			<WebView 
+			<WebView
 				ref={webView=>this.webView=webView}
 				startInLoadingState={true}
 				onNavigationStateChange={e=>this.onNavigationStateChange(e)}
@@ -56,35 +67,47 @@ render(){
 		</View>
 	)
 }
-~~~
-## RN  WebView和H5之间的通信
-### RN WebView 向H5页面注入JS
-* 通过injectedJavaScript的方式注入JS，在H5页面加载后立即执行。（WebView主动触发H5的方法，从而实现通信）
-#### RN向H5发送消息，h5监听
-WebView绑定ref，通过html5新增的postMessage发送消息
-~~~
+```
+
+## RN WebView 和 H5 之间的通信
+
+### RN WebView 向 H5 页面注入 JS
+
+- 通过 injectedJavaScript 的方式注入 JS，在 H5 页面加载后立即执行。（WebView 主动触发 H5 的方法，从而实现通信）
+
+#### RN 向 H5 发送消息，h5 监听
+
+WebView 绑定 ref，通过 html5 新增的 postMessage 发送消息
+
+```
 onLoadEnd={()=>{
 	this.refs.webView.postMessage('RN向H5发送消息');
 }} // 页面加载结束调用
-~~~
-在H5中注册监听
-~~~
+```
+
+在 H5 中注册监听
+
+```
 window.onload = function(){
 	document.addEventListener('message', function(msg){
 		console.log(msg)
 		message = msg.data
 	})
 }
-~~~
-#### h5向RN发消息，RN通过onMessage接收消息
-~~~
+```
+
+#### h5 向 RN 发消息，RN 通过 onMessage 接收消息
+
+```
 onMessage={(event)=>{console.log(event.nativeEvent.data);}} // data只能是字符串
 
-// h5 
+// h5
 window.postMessage('网页向RN发送消息');
-~~~
-#### webView js注入 h5
-~~~
+```
+
+#### webView js 注入 h5
+
+```
 //  H5
 <!-- 页面点击通信 -->
 export const invokeMethod = (type='',params = {}, callback)=>{
@@ -174,5 +197,4 @@ onMessage=(event)=>{
 	source= {{...}}
 />
 ...
-~~~
-
+```
