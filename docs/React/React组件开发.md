@@ -24,9 +24,11 @@ mycomp/
   src/
     components/
       Button/ 【帕斯卡命名方式】
+        _styles.scss (组件单独样式)
         button.tsx
         button.test.tsx
-        styles.scss (组件单独样式)
+        button.stories.tsx
+        index.tsx
     styles/
       _variables.scss(各种变量以及可配置设置)
       _mixins.scss(全局mixins)
