@@ -538,7 +538,29 @@ import { Button } from "vikingship";
  --- 成功 --->  上传至服务器 -----成功----> 生成新的文档站点
 ```
 
-travis-ci.com ci
+注册登录`travis`[travis-ci.com], 添加 github 账户，在项目根目录新建`.travis.yml`
+
+```yml
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+    - node_modules
+env:
+  - CI=true
+script:
+  - npm run build-storybook
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $github_token
+  local_dir: storybook-static
+  on:
+    branch: master
+```
+
+[pages.github.com] github 提供的静态文件站点
 
 ### 上传到 npm
 
