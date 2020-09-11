@@ -11,7 +11,7 @@ module.exports = {
   title: "hailiting Blog",
   description: "hailiting Blog",
   base: "/hai_blog/",
-  dest: "public",
+  dest: "dist",
   themeConfig: {
     sidebar: filenames,
   },

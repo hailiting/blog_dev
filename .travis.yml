@@ -4,14 +4,12 @@ node_js:
 cache:
   directories:
     - node_modules
-env:
-  - CI=true
 script:
   - npm run build
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $github_token
-  local_dir: public
+  local_dir: dist
   on:
     branch: master
