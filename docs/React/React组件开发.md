@@ -107,7 +107,7 @@ mycomp/
 - Sass/Less
   采用`Sass/Less`
 
-```shell
+```
 npm install sass-loader node-sass --save-dev
 npm install --save @types/node-sass
 npm install @types/node
@@ -176,7 +176,7 @@ const Button = styled.button`
 每一个组件在创建的时候都要避免过度设计
 从最简单的原型开始
 
-```shell
+```
 npm install classnames --save
 npm install @types/classnames --save
 ```
@@ -304,7 +304,7 @@ export default App;
 - jestjs[jestjs.io]
 - @testinig/library[https://testing-library.com/docs/intro]
 
-```shell
+```
 npm install --save-dev @testing-library/react
 
 "@testing-library/jest-dom": "^4.2.4",
@@ -414,7 +414,7 @@ test("compiling android goes as expected", () => {
 
 ### 打包工具 module boundler 原型过程
 
-```t
+```
 TypescriptFiles.tsx ----tsc---> ES6 modules.jsx ----
 入口文件的引用需要的文件 index.tsx ---- module bundler 【webpack rollup...】 ---> 浏览器可以使用的一个或多个js文件
 ```
@@ -537,7 +537,7 @@ import { Button } from "mycompship";
 
 7. CI/CD 【持续集成/持续交付/持续部署（自动化完成测试验证部署）】
 
-```t
+```
 组件库 ---gitpush--->  运行测试（单元测试以及e2e测试）---测试通过---> npm publish -- 成功--> build文档静态文件
  --- 成功 --->  上传至服务器 -----成功----> 生成新的文档站点
 ```

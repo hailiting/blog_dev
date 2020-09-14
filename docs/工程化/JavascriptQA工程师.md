@@ -32,7 +32,7 @@ BDD 关注整体行为是否符合整体预期，编写的每一行代码都有�
 
 ### 单元测试框架
 
-```t
+```
 better-assert(TDD断言库)
 should.js(BDD断言库)
 expect.js(BDD断言库)

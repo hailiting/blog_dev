@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "readdir": "node utils/readdir.js",
-    "start": "vuepress dev docs",
+    "start": "node utils/readdir.js && vuepress dev docs",
     "build": "node utils/readdir.js && vuepress build docs"
   },
   "author": "",
