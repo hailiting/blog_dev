@@ -330,12 +330,12 @@ const Person = ({ personId }) => {
 
 ### 一般用法
 
-```jsx
+```tsx
 import React, { useState, useEffect, useRef } from "react";
 const LikeButton: React.FC = () => {
   const [like, setLike] = useState(0);
   const [on, setOn] = useState(false);
-  const domRef = useRef < HTMLButtonElement > null;
+  const domRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     console.log(like);
   }, [like]);
