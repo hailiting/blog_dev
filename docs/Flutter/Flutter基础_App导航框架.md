@@ -1,18 +1,24 @@
-# App导航框架
-* 如何自定义一个AppBar
-* Scaffold都有哪些常见用法
-* Scaffold+PageView 如何跳转指定Tab
-* NotificationListener除了可以监听滚动之外，还能做什么
-* 列表滚动除了实现导航栏的渐变效果，还可以实现哪些有意思的效果
+# App 导航框架
+
+- 如何自定义一个 AppBar
+- Scaffold 都有哪些常见用法
+- Scaffold+PageView 如何跳转指定 Tab
+- NotificationListener 除了可以监听滚动之外，还能做什么
+- 列表滚动除了实现导航栏的渐变效果，还可以实现哪些有意思的效果
 
 ## 实现首页导航需要哪些材料
+
 Scaffold
-   - BottomNavigationBar
-PageView
-   - PageController
-## 什么是Scaffold widget
-Scaffold 是一个实现了基本的materialDesign的布局结构
-~~~
+
+- BottomNavigationBar
+  PageView
+- PageController
+
+## 什么是 Scaffold widget
+
+Scaffold 是一个实现了基本的 materialDesign 的布局结构
+
+```
 import 'package:flutter/material.dart';
 class TabbedAppBarSample extends StatelessWidget{
   @override
@@ -83,9 +89,11 @@ class ChoiceCard extends StatelessWidget{
 void main(){
   runApp(TabbedAppBarSample());
 }
-~~~
+```
+
 ### 底部导航
-~~~
+
+```
 // navigator/tab_navigator.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_dome/pages/home_page.dart';
@@ -206,10 +214,11 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-~~~
+```
 
 ### 侧拉菜单导航
-~~~
+
+```
 import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 class MyApp extends StatelessWidget{
@@ -258,10 +267,12 @@ class MyHomePage extends StatelessWidget {
         );
     }
 }
-~~~
-* 什么是PageView
-``PageView``是一个可以完成页面之间滚动的widget
-~~~
+```
+
+- 什么是 PageView
+  `PageView`是一个可以完成页面之间滚动的 widget
+
+```
 class PageView extends StatefulWidget{
     PageView({
         Key key,
@@ -277,5 +288,6 @@ class PageView extends StatefulWidget{
         super(key: key);
     ...
 }
-~~~
-* 实现首页导航
+```
+
+- 实现首页导航

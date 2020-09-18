@@ -1,5 +1,6 @@
-# JS图片压缩
-~~~
+# JS 图片压缩
+
+```
 function photoCompress(file, w, objDiv) {
     var ready = new FileReader();
     /*开始读取指定的Blob对象或File对象中的内容. 当读取操作完成时,readyState属性的值会成为DONE,如果设置了onloadend事件处理程序,则调用之.同时,result属性中将包含一个data: URL格式的字符串以表示所读取文件的内容.*/
@@ -61,9 +62,11 @@ function convertBase64UrlToBlob(urlData) {
     type: mime
     });
 }
-~~~
+```
+
 发送请求
-~~~
+
+```
 const request = (file, project_id, callback) => {
     let url = `${env.API_URL}/new_plus/v2/upload_image`;
     const formdata = new FormData();
@@ -121,4 +124,4 @@ const request = (file, project_id, callback) => {
             });
     })
 };
-~~~
+```

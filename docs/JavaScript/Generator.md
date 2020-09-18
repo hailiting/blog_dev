@@ -1,14 +1,19 @@
 # Generator
-## generator(生成器)是ES6标准引入新的数据类型，一个generator看上去像一个函数，但返回多次
+
+## generator(生成器)是 ES6 标准引入新的数据类型，一个 generator 看上去像一个函数，但返回多次
+
 一个函数的完整代码：调用一个函数，传入参数，返回结果：
-~~~
+
+```
 function foo(x){
     return x+x;
 }
 var r=foo(1); // 有return 则return，没return,实际return undefined;
-~~~
-generator和函数不同， generator由``function*``定义，并且，除了return，还可以用``yield``返回多次。
-~~~
+```
+
+generator 和函数不同， generator 由`function*`定义，并且，除了 return，还可以用`yield`返回多次。
+
+```
 function* foo(x){
     yield x+1;
     yield  x+2;
@@ -34,13 +39,16 @@ function* fib(max){
     return;
 }
 for (var x of fib(10)){
-    console.log(x) 
+    console.log(x)
 }
-~~~
-### generator和普通函数相比，有什么用？
+```
+
+### generator 和普通函数相比，有什么用？
+
 1，是一个可以记住执行状态函数
 2，把异步回调代码变为‘同步’代
-~~~
+
+```
 try{
     r1 = yield ajax('api/url1', data1);
     r2 = yield ajax('api/url2', data2);
@@ -65,17 +73,18 @@ function* next_id(k){
 for(var x of next_id(10)){
     console.log(x)
 }
-~~~
-~~~
+```
+
+```
 // 初始化任务
 function init({sliceList, callback}){
     if(!isFunction(callback)){
         console.log('callback必传，并为function');
         return;
     }
-    // 添加切片队列 
+    // 添加切片队列
     this.generator = this.sliceQueue({
-        sliceList, 
+        sliceList,
         callback // 用来通知切片的位置
     })
     // 开始切片
@@ -102,4 +111,4 @@ function next(){
     if(res.done) return;
     raf(this.next.bind(this))
 }
-~~~
+```

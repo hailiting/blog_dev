@@ -1,6 +1,8 @@
-# antd使用经验
-### Modal等挂载到指定dom
-~~~
+# antd 使用经验
+
+### Modal 等挂载到指定 dom
+
+```
 <Modal
   ...
   getContainer={() => {
@@ -8,4 +10,4 @@
   }}
 >
 </Modal>
-~~~
+```

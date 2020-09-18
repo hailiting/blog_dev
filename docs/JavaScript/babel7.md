@@ -1,6 +1,8 @@
 # babel7
-babel 7 版本一般都是以``@babel``开头
-~~~
+
+babel 7 版本一般都是以`@babel`开头
+
+```
 ...
   "scripts": {
     "build": "babel src -d lib",
@@ -13,8 +15,9 @@ babel 7 版本一般都是以``@babel``开头
     "@babel/preset-env": "^7.10.2"
   }
 ...
-~~~
-~~~
+```
+
+```
 {
   "presets": [
     "@babel/preset-env"
@@ -23,4 +26,4 @@ babel 7 版本一般都是以``@babel``开头
     "@babel/plugin-transform-runtime"
   ]
 }
-~~~
+```

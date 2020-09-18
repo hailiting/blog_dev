@@ -1,8 +1,12 @@
-# GestureDetetor类
-## GestureDetetor简介
-GestureDetector是检测手势的widget。如果GestureDetector的child属性不空，GestureDetector的大小设置为child的大小。如果child属性为空，它将自己的大小设置为父组件的大小。
+# GestureDetetor 类
+
+## GestureDetetor 简介
+
+GestureDetector 是检测手势的 widget。如果 GestureDetector 的 child 属性不空，GestureDetector 的大小设置为 child 的大小。如果 child 属性为空，它将自己的大小设置为父组件的大小。
+
 ##### demo
-~~~
+
+```
 GestureDetector(
     onTap: (){
         setState((){_light=true});
@@ -12,9 +16,11 @@ GestureDetector(
         child: Text('Turn lights on'),
     )
 )
-~~~
-### GestureDestector的一些属性
-~~~
+```
+
+### GestureDestector 的一些属性
+
+```
 /**
     GestureDetector({
     Key key,
@@ -52,4 +58,4 @@ GestureDetector(
     this.excludeFromSemantics = false
     })
  */
-~~~
+```

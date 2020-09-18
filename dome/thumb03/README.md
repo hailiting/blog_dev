@@ -1,14 +1,17 @@
 # 知识点
-1. 使用``X-Tag``封装点赞插件``<x-praise></x-praise>``;
-2. 使用Gulp编译koa2源代码并能监控源代码变化自动编译；
-3. 使用webpack配置上线版本、开发版本配置文件，并能监控文件的变化自动刷新浏览器；
-4. 使用webpack能够对css、js进行编译压缩打包合并并生成MD5;
-5. 去掉System.js，利用webpack进行文件引用（同时提取公共文件成独立JS包）
-6. 将编译后的文件能按照Chunk规律分发静态文件并编译进Swig;
 
-## ``X-Tag``是什么
-他是一个JavaScript库，具体用法：
-~~~
+1. 使用`X-Tag`封装点赞插件`<x-praise></x-praise>`;
+2. 使用 Gulp 编译 koa2 源代码并能监控源代码变化自动编译；
+3. 使用 webpack 配置上线版本、开发版本配置文件，并能监控文件的变化自动刷新浏览器；
+4. 使用 webpack 能够对 css、js 进行编译压缩打包合并并生成 MD5;
+5. 去掉 System.js，利用 webpack 进行文件引用（同时提取公共文件成独立 JS 包）
+6. 将编译后的文件能按照 Chunk 规律分发静态文件并编译进 Swig;
+
+## `X-Tag`是什么
+
+他是一个 JavaScript 库，具体用法：
+
+```
 // html
 <body>
   <x-clock></x-clock>
@@ -35,9 +38,11 @@ xtag.create("x-clock", class extends XTagElement{
     else this.start();
   }
 })
-~~~
-## ``gulp``：基于流（stream）的自动化构建工具
-~~~
+```
+
+## `gulp`：基于流（stream）的自动化构建工具
+
+```
 npm i gulp-cli -g
 mkdir gulpdir
 cd gulpdir
@@ -51,15 +56,17 @@ function copy(){
   return src("input/*.js").pipe(dest("output/"));
 }
 export.copy = copy
-~~~
+```
+
 #### gulp-babel 8 + babel 7
-~~~
+
+```
 > gulp-babel 8 对应babel 7
 > npm install --save-dev gulp-babel @babel/core @babel/preset-env
 > npm install --save-dev @babel/plugin-transform-runtime  // 防止 regeneratorRuntime is not defined
 > npm install --save @babel/runtime
 
-> gulp-babel 7 对应babel 6  
+> gulp-babel 7 对应babel 6
 > npm install --save-dev gulp-babel@7 babel-core babel-preset-env
 const gulp = require("gulp");
 const babel = require("gulp-babel");
@@ -89,24 +96,31 @@ gulp.task("praise", () => {
 gulp.task("default", gulp.series("praise", () => {
   gulp.watch(["app/**", "!app/views/**"], gulp.series("praise"))
 }));
-~~~
-## ``webpack``
-better-npm-run   package.json 处理
-### 常见的webpack参数
-~~~
+```
+
+## `webpack`
+
+better-npm-run package.json 处理
+
+### 常见的 webpack 参数
+
+```
 webpack -- config xxx.js // 使用另一份配置文件（比如webpack.config2.js）来打包
 webpack --watch // 监听变动并自动打包
 webpack -p  // 压缩混淆脚本
 webpack -d  // 生成map映射文件，告知哪些模块被最终打包到哪里
 webpack --progress // 显示进度条
-webpack --color  // 显示颜色 
-~~~
-#### ``webpack-livereload-plugin``监控文件变化
-需要谷歌的 livereload 
-~~~
-# for webpack 4 
+webpack --color  // 显示颜色
+```
+
+#### `webpack-livereload-plugin`监控文件变化
+
+需要谷歌的 livereload
+
+```
+# for webpack 4
 npm install --save-dev webpack-livereload-plugin
-# for webpack 3 
+# for webpack 3
 npm install --save-dev webpack-livereload-plugin@1
 
 
@@ -117,9 +131,11 @@ module.exports = {
     new LiveReloadPlugin(options)
   ]
 }
-~~~
-#### ``babel-loader``
-~~~
+```
+
+#### `babel-loader`
+
+```
 npm install -D babel-loader @babel/core @babel/preset-env webpack
 npm install -D @babel/plugin-transform-runtime
 npm install --save @babel/runtime
@@ -138,10 +154,13 @@ module: {
     }
   ]
 }
-~~~
-#### ``extract-text-webpack-plugin-last``
-打包css
-~~~
+```
+
+#### `extract-text-webpack-plugin-last`
+
+打包 css
+
+```
 // webpack v4
 npm install --save-dev extract-text-webpack-plugin@4.0.0-beta.0;
 // 用法
@@ -189,12 +208,17 @@ modules: {
     }
   ]
 }
-~~~
+```
+
 #### cssnano
-对css做多方面的压缩，以确保最终生成的文件对生产环境来说体积最小
-#### ``optimize-css-assets-webpack-plugin``
+
+对 css 做多方面的压缩，以确保最终生成的文件对生产环境来说体积最小
+
+#### `optimize-css-assets-webpack-plugin`
+
 打包压缩
-~~~
+
+```
 npm install --save-dev optimize-css-assets-webpack-plugin
 // 使用
 var OptimizeCssAssertsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -211,11 +235,15 @@ plugins: [
   })
 ]
 ...
-~~~
-#### ``SplitChunksPlugin``
-CommonsChunkPlugin 主要是提取第三方库和公共模块，避免首屏加载bundle文件或按需加载的bundle文件体积过大
-##### ``第三方库``,``自定义公共模块``,``webpack运行文件``
-~~~
+```
+
+#### `SplitChunksPlugin`
+
+CommonsChunkPlugin 主要是提取第三方库和公共模块，避免首屏加载 bundle 文件或按需加载的 bundle 文件体积过大
+
+##### `第三方库`,`自定义公共模块`,`webpack运行文件`
+
+```
 splitChunks: {
   chunks: "async",
   minSize: 30000, // 30kb 模块的最小体积
@@ -235,14 +263,19 @@ splitChunks: {
       reuseExistingChunk: true
     }
   }
-} 
-~~~
-#### ``html-webpack-plugin``
+}
+```
+
+#### `html-webpack-plugin`
+
 主要有两个作用
-* 1. 为html文件中引入的外部资源如script、link动态添加每次compile后的hash，防止引用缓存的外部文件问题
-* 2. 可以生成创建html入口文件，比如单页面可以生成一个html文件认可，配置N个html-webpack-plugin就可以生成N个页面入口
+
+- 1. 为 html 文件中引入的外部资源如 script、link 动态添加每次 compile 后的 hash，防止引用缓存的外部文件问题
+- 2. 可以生成创建 html 入口文件，比如单页面可以生成一个 html 文件认可，配置 N 个 html-webpack-plugin 就可以生成 N 个页面入口
+
 ##### 常见的配置作用
-~~~
+
+```
 plugins: [
   new HtmlWebpackPlugin({ // 打包输出html
     title: "my app", // 生成html的title
@@ -299,16 +332,15 @@ plugins: [
       * 编译后生成的文件
       * <script type=text/javascript src="index.js"></script>
       * <script type=text/javascript src="main.js"></script>
-      * 
+      *
       */
-      chunks: ['index', 'main'], // 
+      chunks: ['index', 'main'], //
     },
   })
 ]
-~~~
+```
 
-
-~~~
+```
 npm i --save-dev html-webpack-plugin
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
@@ -323,6 +355,4 @@ plugins: [
     template: "app/views/index.html"
   })
 ]
-~~~
-
-
+```

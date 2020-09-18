@@ -1,25 +1,34 @@
-# 基于``shared_prefernces``本存储操作
-## ``shared_preferences``是什么
-页面缓存、从网络上获取数据本地持久化等都需要本地数据储存，shared_preferences是Flutter社区开发的一个本地数据存取插件。
-* 简单的，异步的，持久化的key-value存储系统
-* 在Android上，它是基于``SharedPreferences``的
-* 在iOS上它是基于``NSUserDefault``的
+# 基于`shared_prefernces`本存储操作
 
-> sharedpreferences类似于RN中的AsyncStorage
+## `shared_preferences`是什么
 
-## 如何使用``shared_preferences``
-1，在``pubspec.yaml``文件中添加
-~~~
+页面缓存、从网络上获取数据本地持久化等都需要本地数据储存，shared_preferences 是 Flutter 社区开发的一个本地数据存取插件。
+
+- 简单的，异步的，持久化的 key-value 存储系统
+- 在 Android 上，它是基于`SharedPreferences`的
+- 在 iOS 上它是基于`NSUserDefault`的
+
+> sharedpreferences 类似于 RN 中的 AsyncStorage
+
+## 如何使用`shared_preferences`
+
+1，在`pubspec.yaml`文件中添加
+
+```
 dependencies:
     shared_preferences: ^0.5.1+
-~~~
-2，运行``flutter packages get``
+```
+
+2，运行`flutter packages get`
 3，导入
-~~~
+
+```
 import 'package:shared_preferences/shared_preferences.dart';
-~~~
+```
+
 4，添、删、改、查
-~~~
+
+```
 final prefs = await SharedPreferences.getInstance();
 // set value
 prefs.setInt('counter', counter);
@@ -27,18 +36,23 @@ prefs.setInt('counter', counter);
 final counter = prefs.getInt('counter') ?? 0;
 // remove
 prefs.remove('counter');
-~~~
-## ``shared_preferences``常用的API
+```
+
+## `shared_preferences`常用的 API
+
 存取相关的
-~~~
+
+```
 setString(String key, String value);
 setBool(String key, bool value);
 setDouble(String key, double value);
 setInt(String key, int value);
 setStringList(String key, List value);
-~~~
+```
+
 读取相关的
-~~~
+
+```
 get(String key);
 getBool(String key);
 getDouble(String key);
@@ -47,9 +61,11 @@ getKeys(String key);
 getString(String key);
 getStringList(String key);
 toString();
-~~~
-## 基于``shared_preferences``实现计算器Demo
-~~~
+```
+
+## 基于`shared_preferences`实现计算器 Demo
+
+```
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 void main(){
@@ -112,6 +128,4 @@ class _CounterState extends State<_CounterWidget>{
     });
   }
 }
-~~~
-
-
+```

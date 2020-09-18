@@ -1,25 +1,20 @@
-# React源码学习
+# React 源码学习
 
+- react 核心 api
+- 探究 setState
+- 探究 diff 算法
 
-* react核心api
-* 探究setState
-* 探究diff算法
+## CreateElement 手写
 
+## Component 源码手写
 
+## Render 手写
 
+## Hooks 原理剖析
 
+### JSX 到 javascript 转换的过程
 
-## CreateElement手写
-## Component源码手写
-## Render手写
-## Hooks原理剖析
-
-
-
-
-
-### JSX 到 javascript转换的过程
-~~~js
+```js
 function Comp(){
     return <a></a>
 } // 组件开头要大写（babel把jSX转为javascript）
@@ -30,9 +25,9 @@ function Comp(){
 </Comp>
 =>
 React.createElement(
-    Comp, 
+    Comp,
     {
-        id: "div", 
+        id: "div",
         key: "key"
     },
     'abc',
@@ -47,7 +42,8 @@ React.createElement(
         "test"
     ),
 )
-~~~
+```
+
 ### ReactElement
 
 ## Fiber, Update, Schedulerx

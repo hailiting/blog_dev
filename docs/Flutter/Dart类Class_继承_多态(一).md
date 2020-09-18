@@ -1,8 +1,12 @@
-# Dart类Class_继承_多态(一)
+# Dart 类 Class*继承*多态(一)
+
 ## 一：类的声明与使用
-### 1，声明一个Person类
-在``lib/Person.dart`` 声明一个Person class:
-~~~
+
+### 1，声明一个 Person 类
+
+在`lib/Person.dart` 声明一个 Person class:
+
+```
 class Person{
     String name;
     int age;
@@ -23,14 +27,19 @@ class Person{
         }
     }
 }
-~~~
+```
+
 ### 2，类的引入
-在dart文件中引入Person类：
-~~~
+
+在 dart 文件中引入 Person 类：
+
+```
 import 'lib/Person.dart';
-~~~
-### 3，实例化Person类
-~~~
+```
+
+### 3，实例化 Person 类
+
+```
 Person p = new Person('asdfs', 123, 1);
 p.getInfo();
 p.changeName('123123asdas');
@@ -40,9 +49,11 @@ flutter: ------------
 flutter: My name is asdfs, my age is 123, and I am a man
 flutter: ------------
 flutter: My name is 123123asdas, my age is 123, and I am a man
-~~~
+```
+
 ### 4，私有属性以及私有方法
-~~~
+
+```
 class Person {
     // ...
     String _secret; // 私有属性，只在本class有效
@@ -56,25 +67,32 @@ class Person {
         this._run();
     }
 }
-~~~
+```
+
 访问私有属性和方法
-~~~
+
+```
 Person p4 = new Person.secret('_secret message');
 print(p4.getSecret());
 p4.setSecret('new _secret message');
 print(p4.getSecret());
-~~~
+```
+
 ### 5，命名构造函数
+
 命名构造函数容许多个不同名称构造函数的存在，调用不同名称的构造函数，可以实例化出不同的实例。
-~~~
+
+```
 Person.now(){
     print(new DateTime.now());
 }
 Person.setInfo(this.name,this.age,[this.sex])
 Person.secret(this._secret);
-~~~
+```
+
 使用命名构造函数：
-~~~
+
+```
 Person p2 = new Person.now();
 print(p2); // Instance of 'Person'
 p2.getInfo();
@@ -87,10 +105,13 @@ Person p3 = new Person.setInfo();
 p3.getInfo();
 p3.changeName('sfasdf');
 p3.getInfo();
-~~~
-### 6，getter和setter
-getter和setter可以最大程度简化值的获取或者格式化以及设置
-~~~
+```
+
+### 6，getter 和 setter
+
+getter 和 setter 可以最大程度简化值的获取或者格式化以及设置
+
+```
 String get school=>_school;
 // stu1.school = '987';
 get info{
@@ -101,18 +122,23 @@ set newName(String name){
         this.name = name;
     }
 }
-~~~
+```
+
 使用
-~~~
+
+```
 Person p5 = new Person('postbid', 20);
 print(p5.info);
 p5.newName = 'sadfsdaf';
 print(p5.info);
-~~~
+```
+
 ### 7，初始化构造列表
-初始化构造函数可以默认初始化一个值，不过单个class上没有实际意义                  
+
+初始化构造函数可以默认初始化一个值，不过单个 class 上没有实际意义  
 在子类上初始化列表
-~~~
+
+```
 String defaultCountry;
 Person(String name, int age, [int sex = 1]):defaultCountry = 'CN'{
     this.name = name;
@@ -140,16 +166,22 @@ class Children extends Person{
 
 Person p6 = new Person('postbird', 20);
 print(p6.defaultCountry);
-~~~
+```
+
 ### 简写构造函数
+
 如果构造函数没有特殊逻辑处理，可以使用简写的构造函数
-~~~
+
+```
 Person(this.name, this.age, [this.sex]);
-~~~
+```
+
 ## 静态成员
-静态方法只能访问静态属性，不能访问非静态属性。         
+
+静态方法只能访问静态属性，不能访问非静态属性。  
 非静态方法可以正常访问静态属性。
-~~~
+
+```
 class Person {
     static String name;
     int age;
@@ -162,14 +194,17 @@ class Person {
         print('name is ${Person.name}');
     }
 }
-~~~
-## ``？``、``is``、``as``和``..``操作符
-``？`` 如果实例存在则调用，否则不调用                      
-``is`` 判断是否归属于某个类或者子类                      
-``as`` 声明某个实例当做某个类使用，比如``子类as父类``                      
-``..`` 级联操作符，用于串联操作                      
-代码示例： 
-~~~
+```
+
+## `？`、`is`、`as`和`..`操作符
+
+`？` 如果实例存在则调用，否则不调用  
+`is` 判断是否归属于某个类或者子类  
+`as` 声明某个实例当做某个类使用，比如`子类as父类`  
+`..` 级联操作符，用于串联操作  
+代码示例：
+
+```
 import 'demo6.dart';
 class Person {
     String name;
@@ -202,12 +237,15 @@ void main(){
         ..age = 22
         ..printInfo();
 }
-~~~
+```
+
 ## extends 继承
-子类继承父类使用``extends``关键字，                         
-重写方法要加``@override``注释，便于协作                         
-子类构造方法中，如果要初始化父类构造方法，使用``super``关键字，比如Dog(String name,int age,[String nickName]): super(name, age),子类中调用父类的方法使用``super.fun()``;                         
-~~~
+
+子类继承父类使用`extends`关键字，  
+重写方法要加`@override`注释，便于协作  
+子类构造方法中，如果要初始化父类构造方法，使用`super`关键字，比如 Dog(String name,int age,[String nickName]): super(name, age),子类中调用父类的方法使用`super.fun()`;
+
+```
 class Animal {
     String name;
     int age;
@@ -252,11 +290,14 @@ void main(){
     d.setNickName('Nicjsdsa');
     print(d.fullInfo);
 }
-~~~
+```
+
 ## 类的多态
+
 通俗讲，父类可以调用子类同名的方法，输出结果和子类相同，但不能调用父类没有子类中有的方法，也就是子类的方法覆盖了父类的方法
-比如：``Animal d1=new Dog()``,因为d1类型是Animal,因此``d1.speak()``=>实际上调用d1子类方法差不多，但Animal没有``run``,所以不能调用``d1.run()``
-~~~
+比如：`Animal d1=new Dog()`,因为 d1 类型是 Animal,因此`d1.speak()`=>实际上调用 d1 子类方法差不多，但 Animal 没有`run`,所以不能调用`d1.run()`
+
+```
 class Animal {
     speak(){}
 }
@@ -276,4 +317,4 @@ void main(){
     d1.speak();
     d2.run();
 }
-~~~
+```

@@ -1,6 +1,8 @@
-# Flutter基础_基于ListView实现水平和垂直方式滚动的列表
-##  如何实现垂直滚动列表
-~~~
+# Flutter 基础\_基于 ListView 实现水平和垂直方式滚动的列表
+
+## 如何实现垂直滚动列表
+
+```
 import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 const CITY_NAMES = ['a1','a2','a3','a4','a5','a6','a7','a8','a9','a10','a11','a12','a13','a14','a15','a16','a17','a18','a19'];
@@ -36,9 +38,11 @@ class MyApp extends StatelessWidget{
         );
     }
 }
-~~~
+```
+
 ## 如何实现水平滚动列表
-~~~
+
+```
 import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 const CITY_NAMES = ['a1','a2','a3','a4','a5','a6','a7','a8','a9','a10','a11','a12','a13','a14','a15','a16','a17','a18','a19'];
@@ -78,4 +82,4 @@ class MyApp extends StatelessWidget{
         );
     }
 }
-~~~
+```

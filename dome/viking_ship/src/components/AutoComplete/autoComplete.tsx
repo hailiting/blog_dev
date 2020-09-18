@@ -32,9 +32,9 @@ export interface IAutoCompleteProps extends Omit<InputProps, "onSelect"> {
 }
 /**
  * #### 引用
- * ~~~js
+ * ```js
  * import { AutoComplete} from "mycompship"
- * ~~~
+ * ```
  */
 export const AutoComplete: FC<IAutoCompleteProps> = (props) => {
   const {

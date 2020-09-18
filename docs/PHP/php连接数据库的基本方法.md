@@ -1,7 +1,10 @@
-# php连接数据库的基本方法
-都是PHP连接数据库的方法
+# php 连接数据库的基本方法
+
+都是 PHP 连接数据库的方法
+
 ## 对象化
-~~~
+
+```
 $host = 'locahost'; // url 不要加端口，要单独指定
 $db = mysqli_connect($host, $user, $passwd, $database, $port);
 $db->set_charset('utf8'); // 设置查询结果编码
@@ -11,9 +14,11 @@ while($row = $tempResult -> fetch_array()){
     echo $row['post_title'];
 }
 $db->close(); // 关闭连接
-~~~
+```
+
 ## 过程化
-~~~
+
+```
 $host = 'localhost:3306'; // 这个是需要加端口号的
 
 $link = mysql_connect($host, $user, $passwd); // 建立连接
@@ -26,9 +31,11 @@ while($row = mysql_fetch_array($tempResult)){
 
 mysql_close($link); // 关闭连接
 echo $str;
-~~~
+```
+
 ## PDO (PHP Data Object)
-~~~
+
+```
 $servername = "localhost";
 $username = "username";
 $password = "password";
@@ -45,6 +52,4 @@ try{
     echo $sql . "<br/>" . $e->getMessage();
 }
 $conn = null;
-~~~
-
-
+```

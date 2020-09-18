@@ -1,25 +1,32 @@
-# webpack简易打包
+# webpack 简易打包
+
 中文文档地址[https://www.webpackjs.com/guides/]
+
 ## npm
-~~~shell
+
+```shell
 npm install --save-dev webpack
 npm install --save-dev webpack-cli
-~~~
+```
+
 ## package.json
-~~~js
+
+```js
 "scripts": {
     "start": "webpack --config webpack.config.js"
 }
-~~~
+```
+
 ## webpack.config.js
-~~~js
-const path = require('path');
+
+```js
+const path = require("path");
 
 module.exports = {
-  entry: './index.js',
+  entry: "./index.js",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js'
-  }
+    path: path.resolve(__dirname, "dist"),
+    filename: "index.js",
+  },
 };
-~~~
+```

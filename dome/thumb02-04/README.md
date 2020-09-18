@@ -1,70 +1,92 @@
 # 知识点
+
 ## 需求
+
 阶段一：
-1. 使用ES6完成点赞+1功能的父类 PraiseButton;
-2. 开发子类Thumb实现大拇指方式点赞
-3. 使用Babel编译ES6代码，并使用System.js可加载对应编译后的文件
-4. 将编译后的文件挂载为JQuery组件
-5. 实现Karma完成对点赞+1组件的单元测试
+
+1. 使用 ES6 完成点赞+1 功能的父类 PraiseButton;
+2. 开发子类 Thumb 实现大拇指方式点赞
+3. 使用 Babel 编译 ES6 代码，并使用 System.js 可加载对应编译后的文件
+4. 将编译后的文件挂载为 JQuery 组件
+5. 实现 Karma 完成对点赞+1 组件的单元测试
 
 阶段二：
-1. 使用PHP+MySQL完成点赞接口，实用户点击一次更新数据库点赞总数+1
-2. 使用Koa2+ES6封装PHP点赞接口，并建立路由
-3. 将原项目迁移进入KOA2，并顺利通过index/index路由进行访问
-4. 将用户点击事件通过axis链接到KOA2点赞接口
+
+1. 使用 PHP+MySQL 完成点赞接口，实用户点击一次更新数据库点赞总数+1
+2. 使用 Koa2+ES6 封装 PHP 点赞接口，并建立路由
+3. 将原项目迁移进入 KOA2，并顺利通过 index/index 路由进行访问
+4. 将用户点击事件通过 axis 链接到 KOA2 点赞接口
 5. 对用户连续点击事件进行稀释（使用函数式编程）
 6. 完成点赞接口自动化测试，点赞+功能的自动化测试，真实页面点击自动化测试
 
 阶段三：
-1. 使用``X-Tag``封装点赞插件``<x-praise></x-praise>``;
-2. 使用Gulp编译koa2源代码并能监控源代码变化自动编译；
-3. 使用webpack配置上线版本、开发版本配置文件，并能监控文件的变化自动刷新浏览器；
-4. 使用webpack能够对css、js进行编译压缩打包合并并生成MD5;
-5. 去掉System.js，利用webpack进行文件引用（同时提取公共文件成独立JS包）
-6. 将编译后的文件能按照Chunk规律分发静态文件并编译进Swig;
+
+1. 使用`X-Tag`封装点赞插件`<x-praise></x-praise>`;
+2. 使用 Gulp 编译 koa2 源代码并能监控源代码变化自动编译；
+3. 使用 webpack 配置上线版本、开发版本配置文件，并能监控文件的变化自动刷新浏览器；
+4. 使用 webpack 能够对 css、js 进行编译压缩打包合并并生成 MD5;
+5. 去掉 System.js，利用 webpack 进行文件引用（同时提取公共文件成独立 JS 包）
+6. 将编译后的文件能按照 Chunk 规律分发静态文件并编译进 Swig;
 
 阶段四：
-1. 根据雅虎军规将页面CDN预加载等属性配置完备
-2. 扩展新组件星星点赞组件，首页完成直出并利用Pjax完成SPA
-3. 完成前端缓存的负载均衡操作，封装统一ORM库并配置离线包 manifest
-4. 使用webpack4对全部静态文件优化，并能根据上线配置动态配置CDN
-5. lazyload.js重新优化静态文件分发器，使静态资源达到并行最大化
+
+1. 根据雅虎军规将页面 CDN 预加载等属性配置完备
+2. 扩展新组件星星点赞组件，首页完成直出并利用 Pjax 完成 SPA
+3. 完成前端缓存的负载均衡操作，封装统一 ORM 库并配置离线包 manifest
+4. 使用 webpack4 对全部静态文件优化，并能根据上线配置动态配置 CDN
+5. lazyload.js 重新优化静态文件分发器，使静态资源达到并行最大化
 6. 引入完整的页面监控脚本，完整分析当前页面性能瓶颈
-### 根据雅虎军规将页面CDN预加载等属性配置完备
+
+### 根据雅虎军规将页面 CDN 预加载等属性配置完备
+
 #### DNS Prefetching
-##### 什么是DNS Prefetching
-1. DNS-Domain Name System【域名系统】，作为域名和Ip地址相互映射的一个分布式数据库
+
+##### 什么是 DNS Prefetching
+
+1. DNS-Domain Name System【域名系统】，作为域名和 Ip 地址相互映射的一个分布式数据库
 2. 定义：浏览器根据自定义的规则，提前去解析后面可能用到的域名，来加速网站的服务速度
-##### 如何使用DNS Prefetching
-1. a标签会自动启用DNS Prefetching【在https下是不起作用的】
-~~~
+
+##### 如何使用 DNS Prefetching
+
+1. a 标签会自动启用 DNS Prefetching【在 https 下是不起作用的】
+
+```
 // on 开  off 关
 a标签 + <meta http-equiv="x-dns-prefetch-control" content="on">
-~~~
-2. 
-~~~
+```
+
+2.
+
+```
 <meta http-equiv="x-dns-prefetch-control" content="on">
-<link rel="dns-prefetch" href="//g.tbcdn.cn"> 
+<link rel="dns-prefetch" href="//g.tbcdn.cn">
 ...
-~~~
+```
+
 ##### 功能的有效性
-如果本地有缓存，大约0-1ms,如果去路由器找，大约15ms，如果去当地服务器找，常见的大约150ms，如果不常见的，可能在1s以上
 
+如果本地有缓存，大约 0-1ms,如果去路由器找，大约 15ms，如果去当地服务器找，常见的大约 150ms，如果不常见的，可能在 1s 以上
 
-### 扩展新组件星星点赞组件，首页完成直出并利用Pjax完成SPA
+### 扩展新组件星星点赞组件，首页完成直出并利用 Pjax 完成 SPA
+
 #### pjax
-pjax是JQuery插件，结合了pushState和ajax技术，不需要重新加载整个页面就能从服务器加载HTML到当前页面，这个ajax请求会有永久链接、title并支持浏览器的回退/前进按钮
-~~~
+
+pjax 是 JQuery 插件，结合了 pushState 和 ajax 技术，不需要重新加载整个页面就能从服务器加载 HTML 到当前页面，这个 ajax 请求会有永久链接、title 并支持浏览器的回退/前进按钮
+
+```
 npm i jquery-pjax
 or
 https://cdn.bootcdn.net/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.js
-or 
+or
 curl -LO https://raw.github.com/defunkt/jquery-pjax/master/jquery.pjax.js
-~~~
+```
+
 ##### 用法
-1. 引入jquery和jquery.pjax.js
+
+1. 引入 jquery 和 jquery.pjax.js
 2. 注册事件
-~~~
+
+```
 /**
 * 方式一： 按钮父节点监听事件
 * @param selector 触发点击事件的按钮
@@ -100,9 +122,11 @@ $(document).on("submit", "form", function(event){
 $.pjax({url: this.href, container: "#main"});
 // 刷新当前页面容器的内容
 $.pjax.reload("#container");
-~~~
+```
+
 options 默认参数说明
-~~~
+
+```
 timeout  650    ajax超时事件(ms), 超时会执行默认的页面跳转，所以超时时间不应过短，一般不需要设置
 push     true   使用window.history.pushState改变地址栏url(会添加新的历史记录)
 replace  false  使用window.history.replaceState改变地址栏url(不会添加历史记录)
@@ -115,9 +139,11 @@ container           用于查找容器的css选择器，[container]参数没有�
 url      link.href    要跳转的连接 默认a标签的href属性
 target   link         pjax事件参数e的relatedTarget属性，默认为点击a标签
 fragment              使用响应内容的指定部分 （css选择器）
-~~~
-##### pjax生效的情况
-~~~
+```
+
+##### pjax 生效的情况
+
+```
 function handleClick(event,container, options){
   ...
   // 1. 点击事件的事件源不是a标签，使用a标签可以做到对旧版本浏览器的兼容，所以不建议使用其他标签注册事件
@@ -133,10 +159,10 @@ function handleClick(event,container, options){
     return
   // 4. 当前页面的锚点定位
   (link.href.indexOf("#")>-1 && stripHash(link)==stripHash(location))
-    return 
+    return
   // 5. 已经阻止元素发生默认行为（url跳转）
   if (event.isDefaultPrevented())
-    return 
+    return
   ...
   var clickEvent = $.Event("pjax:click");
   $(link).trigger(clickEvent, [opts]);
@@ -147,31 +173,37 @@ function handleClick(event,container, options){
     $(link).trigger("pjax:clicked", [opts]);
   }
 }
-~~~
+```
 
+### 完成前端缓存的负载均衡操作，封装统一 ORM 库并配置离线包 manifest
 
-### 完成前端缓存的负载均衡操作，封装统一ORM库并配置离线包 manifest
 #### ORM 对象关系映射（Object Relational Mapping）
+
 是通过使用对象和数据库之间映射的元数据，将面向对象语言程序中的对象自动持久化到关系数据库中。
-#### web前端本地持久化的一个方案 - localforage
-localforage主要作为一个本地离线持久化工具，对本地一些图片或数据进行缓存，而不是每次刷新都要请求服务器。
-localStorage缺点，
-1. 存储容量限制，大部分浏览器应该最多5M
-2. 仅支持字符串，如果是存储对象，还需``JSON.stringify``和``JSON.parse``方法相互转换
-3. 读取是同步的，如果存储数据较大，例如一张重要图片base64格式存储，再读可能会有可感知的延迟时间
-localforage的作用就是用来规避上面localstorage的缺点，同时保留localstorage的优点而设计的。
-至于如何规避：
-   - IndexedDB 
+
+#### web 前端本地持久化的一个方案 - localforage
+
+localforage 主要作为一个本地离线持久化工具，对本地一些图片或数据进行缓存，而不是每次刷新都要请求服务器。
+localStorage 缺点，
+
+1. 存储容量限制，大部分浏览器应该最多 5M
+2. 仅支持字符串，如果是存储对象，还需`JSON.stringify`和`JSON.parse`方法相互转换
+3. 读取是同步的，如果存储数据较大，例如一张重要图片 base64 格式存储，再读可能会有可感知的延迟时间
+   localforage 的作用就是用来规避上面 localstorage 的缺点，同时保留 localstorage 的优点而设计的。
+   至于如何规避：
+   - IndexedDB
    - WebSQL
-优先使用``IndexedDB``存储数据，如果浏览器不支持，使用``WebSQL``，如果浏览器再不支持，则使用``localStorage``.
-API和localStorage一样： get | set | remove | clear | length...
-ep: 
-~~~HTML
+     优先使用`IndexedDB`存储数据，如果浏览器不支持，使用`WebSQL`，如果浏览器再不支持，则使用`localStorage`.
+     API 和 localStorage 一样： get | set | remove | clear | length...
+     ep:
+
+```HTML
 <label class="ui-button ui-button-warning" for="fileImg">上传图片</label>
 <input type="file" id="fileImg" accept="image/gif, image/jpeg, image/png" hidden>
 <p id="result"></p>
-~~~
-~~~JS
+```
+
+```JS
 var eleResult = document.getElementById("result");
 // 新建图片资源标签
 var eleImg = document.createElement("img");
@@ -221,9 +253,8 @@ const setStorage = function(storkey,storvalue,callback){
     callback();
   })
 }
-~~~
-
-
+```
 
 ### webpack-manifest
+
 ### lazyload

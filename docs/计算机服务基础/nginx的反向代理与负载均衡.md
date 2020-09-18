@@ -1,20 +1,33 @@
-# nginx的反向代理与负载均衡
+# nginx 的反向代理与负载均衡
+
 ## 正向代理与反向代理
+
 ### 正向代理
-明确知道要访问的地址。用计算机A访问某个网站B,如果是国外的，需要服务器C做代理服务器，通过C访问B，这种访问方式就是正向代理。
+
+明确知道要访问的地址。用计算机 A 访问某个网站 B,如果是国外的，需要服务器 C 做代理服务器，通过 C 访问 B，这种访问方式就是正向代理。
+
 ### 反向代理
+
 目标网站有一个服务器集群，并且集群中每个服务器的内容都一样，如果从个人电脑直接访问服务器集群中的服务器，是无法访问的，并且此时第三方服务器可以访问集群，这个时候我们就可以通过第三方服务器访问集群内容，但我们此时不知道是那一台服务器提供的内容，此时的代理方式称为方向代理。
 第三方服务器需要负载均衡，负担服务器压力，保证集群中的每一个服务器压力趋于平衡，避免崩溃情况。
 正向代理的服务对象是客户端，反向代理的对象是服务端。
-## 什么是HTTP``Upstream``模块
-Upstream模块实现在轮询和客户端Ip之间实现后端的负载均衡。
-常用的指令有： ``ip_hash``、``server``、``Upstream``
-### ``ip_hash``命令
-权重【默认是1:1】
-### ``server``指令
-### ``Upstream``指令
-## 部署NodeJS流程
-~~~
+
+## 什么是 HTTP`Upstream`模块
+
+Upstream 模块实现在轮询和客户端 Ip 之间实现后端的负载均衡。
+常用的指令有： `ip_hash`、`server`、`Upstream`
+
+### `ip_hash`命令
+
+权重【默认是 1:1】
+
+### `server`指令
+
+### `Upstream`指令
+
+## 部署 NodeJS 流程
+
+```
 1，下载nginx
 brew search nginx / brew install nginx
 2, brew info nginx 【会打印本机上nginx信息】
@@ -26,11 +39,11 @@ brew search nginx / brew install nginx
     - systemctl start jenkins
 5, sudo brew services stop nginx/nginx
 6, sudo nginx -s reload、nginx -s stop
-7, 查看nginx配置文件  
+7, 查看nginx配置文件
 8, 查看当前配置文件 nginx -t -c 自己配置的文件地址
 9, 拷贝配置文件至Node项目目录，重新修改
 10,服务器端的nginx地址
-11, ``nginx -t``是否生效 
+11, ``nginx -t``是否生效
 12, 端口号被占用处理
 // grep node 筛选出含node字眼的进程
 ps aux | grep node  // 那个程序在运行 第二位为 pid  然后kill -9 pid
@@ -51,10 +64,12 @@ mv name01 name02 # 把 name01 改为 name02
   14-2 负载平衡CPU
   14-3 内存使用过多或cpu调度过于频繁，重启
   14-4 restart个数
-  
-~~~
-找到真正的``.conf``文件
-~~~
+
+```
+
+找到真正的`.conf`文件
+
+```
 nginx.conf
 worker_processes 4;
 events{
@@ -75,4 +90,4 @@ http{
     }
   }
 }
-~~~
+```

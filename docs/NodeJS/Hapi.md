@@ -1,9 +1,12 @@
 # Hapi
-~~~
+
+```
 npm install @hapi/hapi@18.4.1
-~~~
+```
+
 ## 实例
-~~~
+
+```
 const Hapi = require("@hapi/hapi");
 const routers = require("./routers")
 
@@ -69,4 +72,4 @@ var indexHtml = {
   }
 }
 module.exports = [home, username, indexHtml]
-~~~
+```

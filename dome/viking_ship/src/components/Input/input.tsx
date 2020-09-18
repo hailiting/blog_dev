@@ -27,9 +27,9 @@ export interface InputProps
 }
 /**
  * Input 输入框
- * ~~~js
+ * ```js
  * import {Input} from "mycompship"
- * ~~~
+ * ```
  * 支持HTMLInput的所有基础属性
  */
 export const Input: FC<InputProps> = (props) => {

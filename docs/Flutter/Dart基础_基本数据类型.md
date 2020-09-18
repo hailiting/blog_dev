@@ -1,16 +1,24 @@
-# Dart基本数据类型
+# Dart 基本数据类型
+
 ## 概述
-1，Dart 是强类型语言，静态类型（如：Java, c#等）          
-2，面向对象的语言，OOP（如：Python, C++, Objective-C, Java, Kotliin, Swift, C#, Ruby与PHP等）            
-3，JIT & AOT         
-* JIT: 即时编译，开发期间，更快编译，更快的重载
-* AOT: 事前编译，release期间，更快更流畅
+
+1，Dart 是强类型语言，静态类型（如：Java, c#等）  
+2，面向对象的语言，OOP（如：Python, C++, Objective-C, Java, Kotliin, Swift, C#, Ruby 与 PHP 等）  
+3，JIT & AOT
+
+- JIT: 即时编译，开发期间，更快编译，更快的重载
+- AOT: 事前编译，release 期间，更快更流畅
+
 ## 知识体系
+
 ### 常用数据类型
-快速新建dart文结构  ``stfuk`` =》 ``new stateful widge``;            
-按 ``option`` + ``enter`` 选择要引入的依赖；
-#### 数字  num int double
-~~~
+
+快速新建 dart 文结构 `stfuk` =》 `new stateful widge`;  
+按 `option` + `enter` 选择要引入的依赖；
+
+#### 数字 num int double
+
+```
 // 数字类型
 void _numType() {
     num  num1 = -1.0; // 浮点类型  是数字类型的父类
@@ -22,9 +30,11 @@ void _numType() {
     print(num1.toInt()); // -1
     print(num1.toDouble()); // -1.0
 }
-~~~
+```
+
 #### 字符串 String
-~~~
+
+```
   _stringType(){
     String str1="字符串1", str2='字符串2';
     String str3 = "str1: $str1, str2: $str2";
@@ -33,7 +43,7 @@ void _numType() {
     print(str3);
     print(str4);
     // 常用方法
-    print(str5.substring(1,5)); // 用数据类   字符串截取 
+    print(str5.substring(1,5)); // 用数据类   字符串截取
     print(str5.indexOf('类型')); // 4   获取指定字符串位置
     // startsWith, replaceAll, contains, split
     print(str5.startsWith('用', 1)); // true  返回true or  false 验证在index 是否以x开头
@@ -41,9 +51,11 @@ void _numType() {
     print(str5.contains('用'));  // true 是否包含xxx
     print(str5.split('用')); // [常, 数据类型，在控制台输出]   从xx分割成数组
   }
-~~~
+```
+
 #### 布尔（bool）
-~~~
+
+```
   _boolType(){
     bool success = true, fail = false;
     print(success);
@@ -51,10 +63,13 @@ void _numType() {
     print(success || fail);
     print(success && fail);
   }
-~~~
-#### 集合 List  Map
-##### List集合
-~~~
+```
+
+#### 集合 List Map
+
+##### List 集合
+
+```
 _listType(){
     print('---_listType---');
     // 集合初始化
@@ -95,10 +110,13 @@ _listType(){
     print(a); // -1
 
   }
-~~~
-##### Map集合
-Map是key, value相关联的对象，key和value都可以是任何类型的对象，并且key是唯一的，如果key重复后面添加的覆盖前面的
-~~~
+```
+
+##### Map 集合
+
+Map 是 key, value 相关联的对象，key 和 value 都可以是任何类型的对象，并且 key 是唯一的，如果 key 重复后面添加的覆盖前面的
+
+```
 _mapType(){
     // 定义是时候初始化
     Map student = {'name':'小明', 'age': 18};
@@ -125,9 +143,11 @@ _mapType(){
     print(student.containsKey('age')); // true
     print(student.containsKey('ageasda')); // false
 }
-~~~
+```
+
 #### 类型转换 && dynamic, var, Object 三者的区别
-~~~
+
+```
 _tips(){
     print('---tips---');
     dynamic x = 'hai'; // 会使dart数据类型检查的失败
@@ -146,7 +166,6 @@ _tips(){
     print(o1); // Object 只能调用Object属性
     o1 =  123;
     print(o1.runtimeType); // int
-    print(o1); 
+    print(o1);
 }
-~~~
-
+```

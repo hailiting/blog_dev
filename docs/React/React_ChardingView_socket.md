@@ -1,27 +1,36 @@
 # React_ChardingView_socket
+
 中文文档地址 https://b.aitrade.ga/books/tradingview/
+
 ## 文件结构
-~~~
+
+```
 src
   |- service
-  |     |- socket.js    // 链接ws，ws监听 推送 取消订阅 更新最新ticker 等的方法 
+  |     |- socket.js    // 链接ws，ws监听 推送 取消订阅 更新最新ticker 等的方法
   |- root.component.js  // 引用socket
   |- pages
   |    |-kLine
   |        |-index.js   // socket 订阅历史
-~~~
+```
+
 ## 常见问题
-~~~
+
+```
 // 设置图标价格精度
 const e = chart.priceFormatter();
 e.format = (v) => new bigNumber(v).toFixed(1, 1);
-~~~
+```
+
 ## 方法一： npm trader-view
-~~~
+
+```
 import {TradingView, Datafeed } from "trader-view";
-~~~
+```
+
 ### TradingView 初始化图标
-~~~
+
+```
 // params ={symbol, resolution, from, to, firstDataRequest}
 // list为数组 ep: [ {time,close,high,low,open,volume} ... ]
    initDatafeed() {
@@ -104,8 +113,9 @@ import {TradingView, Datafeed } from "trader-view";
       // });
     };
   }
-~~~
-~~~
+```
+
+```
 this.widget = new TradingView({
   // debug: true,
   // fullscreen: true,
@@ -189,8 +199,9 @@ this.widget.onChartReady(()=>{
     }
   })
 })
-~~~
-~~~
+```
+
+```
 export const getOverrides = (theme) => {
   const themes = {
     white: {
@@ -288,18 +299,20 @@ export const getOverrides = (theme) => {
     "mainSeriesProperties.areaStyle.priceSource": "close",
   };
 };
-~~~
-#### 设置图表背景 
+```
 
-~~~
+#### 设置图表背景
+
+```
 // chardingView.css
 table.chart-markup-table {
   background-color: #fafafd;
   background: url("./images/logo.png") #fafafd no-repeat center center;
   background-size: 251px 51px;
 }
-~~~
-~~~
+```
+
+```
 export const resolveSymbol = ({
   Sec: t,
   PrzClose: c,
@@ -316,8 +329,9 @@ export const resolveSymbol = ({
   volume: toNumber(v),
 });
 
-~~~
-~~~
+```
+
+```
 export const createSymbolInfo =(symbol)=>({
   name: symbol,
   full_name: symbol,
@@ -339,8 +353,9 @@ export const createSymbolInfo =(symbol)=>({
   supported_resolutions: periods.map((item)=> item.interval),
   intraday_multipliers: periods.map((item)=> item.interval),
 })
-~~~
-~~~
+```
+
+```
 export const getOverrides = (theme) => {
   const themes = {
     white: {
@@ -439,9 +454,11 @@ export const getOverrides = (theme) => {
     "mainSeriesProperties.areaStyle.priceSource": "close",
   };
 };
-~~~
-### websocket链接获取数据
-~~~
+```
+
+### websocket 链接获取数据
+
+```
 let _cache = {}; // 暂存所有交易对信息
 initWebSocket(isFirst = false){
   this.socket = new WebSocket("wss://ss....");
@@ -515,10 +532,12 @@ onSocketMessage(data){
     }
   }
 }
-~~~
-websock订阅的参数
-~~~
-let hisPage = "1"; 
+```
+
+websock 订阅的参数
+
+```
+let hisPage = "1";
 const subscribe = {
   sub: (symbol, period) =>{
     ++hisPage;
@@ -563,13 +582,17 @@ const subscribe = {
     });
   },
 }
-~~~
-#### 生命周期销毁的时候
-~~~
+```
 
-~~~
-### 更新tradingview
-~~~
+#### 生命周期销毁的时候
+
+```
+
+```
+
+### 更新 tradingview
+
+```
 componentWillUpdate(nextProps) {
   const { currentPeriod, symbol } = nextProps;
   const { currentPeriod: c, symbol: s } = this.props;
@@ -588,8 +611,9 @@ componentWillUpdate(nextProps) {
     // this.initSub(nextProps);
   }
 }
-~~~
-~~~
+```
+
+```
 // kLine/index.js
 import React from "react";
 import moment from "moment";
@@ -1416,8 +1440,9 @@ export default class Kline extends React.Component {
     );
   }
 }
-~~~
-~~~
+```
+
+```
 // service/socket.js
 import { tickerSymbol, periods } from "@/utils/tradingviewHelper";
 let ws = "wss://XXX/market";
@@ -1614,11 +1639,12 @@ export const unsubscribe = (...args) => {
   }
 };
 export default { run, onMessage, subscribe, unsubscribe };
-~~~
-~~~
+```
+
+```
 // root.component.js
 async componentDidMount() {
   const { store } = this.props;
   await socket.run(store.dispatch, store.getState());
 }
-~~~
+```

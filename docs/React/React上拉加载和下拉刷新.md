@@ -1,6 +1,8 @@
-# React上拉加载和下拉刷新
+# React 上拉加载和下拉刷新
+
 ### 工作遇到问题的解决方法
-~~~js
+
+```js
 // 1，数据组装
 Hlist: {
   raw: [], // 一开始可以不声明， 方便判空
@@ -171,118 +173,129 @@ export default History;
 
 
 
-~~~
+```
+
 ## 回到顶部
-~~~js
-class Home extends Component{
-  consrcutor(props){
+
+```js
+class Home extends Component {
+  consrcutor(props) {
     super(props);
     this.state = {
-      showScroll:  false,
-    }
+      showScroll: false,
+    };
   }
-  componentDidMount(){
+  componentDidMount() {
     window.addEventListener("scroll", this.props.toggleTopShow);
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     window.removeEventListener("scroll", this.props.toggleTopShow);
   }
-  toggleTopShow = ()=>{
-    let showScroll='';
-    if(document.documentElement.scrollTop>100){
+  toggleTopShow = () => {
+    let showScroll = "";
+    if (document.documentElement.scrollTop > 100) {
       showScroll = true;
     } else {
       showScroll = false;
     }
     this.setState({
-      showScroll
-    })
-  }
-  handleScrollTop=()=>{
-    window.scrollTo(0,0);
-  }
-  render(){
+      showScroll,
+    });
+  };
+  handleScrollTop = () => {
+    window.scrollTo(0, 0);
+  };
+  render() {
     return (
       <div>
-        {this.state.showScroll?
-        <BackTop onClick={this.handleScrollTop}>
-          <i className="iconfont ic-backtop">&#xe66a;</i>
-        </BackTop>:null}
+        {this.state.showScroll ? (
+          <BackTop onClick={this.handleScrollTop}>
+            <i className="iconfont ic-backtop">&#xe66a;</i>
+          </BackTop>
+        ) : null}
       </div>
-    )
+    );
   }
 }
-~~~
+```
+
 ## 上拉加载下一页
-页面结构为 banner + nav + content + footer，除content可以滚动，其他都固定，所有scroll绑定到content上
-~~~js
-class Pool extends PureComponent{
-  construstor(props){
+
+页面结构为 banner + nav + content + footer，除 content 可以滚动，其他都固定，所有 scroll 绑定到 content 上
+
+```js
+class Pool extends PureComponent {
+  construstor(props) {
     super(props);
-    this.state =  {
+    this.state = {
       PullLoadingTip: "",
-    }
-    this.isLock=true;
+    };
+    this.isLock = true;
     this.PoolCon = React.createRef();
-    this.scrollToBottom =this.scrollToBottom.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
     this.ParentCon.current.addEventListener("scroll", this.scrollToBottom);
   }
-  componentWillUnmount(){
-    this.ParentCon.current.removeEventListener("scroll", this.scrollToBottom)
+  componentWillUnmount() {
+    this.ParentCon.current.removeEventListener("scroll", this.scrollToBottom);
   }
-  scrollToBottom(event){
+  scrollToBottom(event) {
     event.stopPropagation();
     const parent = event.target;
     let scrolltop = parent.scrollTop; //  content上部滚动出高度
-    let height = Zepto(parent).height();  // content的固定高度
-    let scrollheight  = this.PoolCon.current.scrollheight;  // content内部高度
-    if(scrollheight <=  scrolltop +  height){
+    let height = Zepto(parent).height(); // content的固定高度
+    let scrollheight = this.PoolCon.current.scrollheight; // content内部高度
+    if (scrollheight <= scrolltop + height) {
       console.log("到低了");
-      if(Math.ceil(this.TOTAL/LIMIT)>=this.PAGE+1){
+      if (Math.ceil(this.TOTAL / LIMIT) >= this.PAGE + 1) {
         // 有下一页才 执行可以加载
-        this.setState({
-          isShowPullLoading: true,
-        },()=>{
-          if(this.isLock){
-            // 请求下一页过程中不在发送请求
-            this.getData();
+        this.setState(
+          {
+            isShowPullLoading: true,
+          },
+          () => {
+            if (this.isLock) {
+              // 请求下一页过程中不在发送请求
+              this.getData();
+            }
           }
-        })
+        );
       }
     }
   }
-  getData(flag){
+  getData(flag) {
     // 发送请求获取下一页数据，成功后isLock为true
-    this.isLock = false
+    this.isLock = false;
   }
-  render(){
+  render() {
     return (
-      <article 
-      onScroll={this.scrollToBottom}
-      className="content">
+      <article onScroll={this.scrollToBottom} className="content">
         <section ref={this.PoolCon}>
-        /** content列表内容 */
-        {
-          this.state.isShowPullLoading?<p className="pull-loading">正在加载...</p>:null
-        }
+          /** content列表内容 */
+          {this.state.isShowPullLoading ? (
+            <p className="pull-loading">正在加载...</p>
+          ) : null}
         </section>
       </article>
-    )
+    );
   }
 }
-~~~
+```
+
 ## 移动端上实现上拉加载下一页
-插件: iscroll, better-scroll等
-移动端一般监听的是touch事件，而不是scroll
-* touchstart: 当手触摸屏幕时触发，即使已经有一个手指放在屏幕上也会触发
-* touchmove: 当手指在屏幕上滑动的时候连续触发，在这个事件发生期间调用preventDefault()事件可以阻止滚动
-* touchend: 当手指从屏幕上离开的时候触发
-* touchcancel: 当系统停止跟踪触摸的时候触发
-直接在componentDidMount中将touch相关的事件绑定到content
-~~~js
-// this.PoolCon = React.createRef(); 
+
+插件: iscroll, better-scroll 等
+移动端一般监听的是 touch 事件，而不是 scroll
+
+- touchstart: 当手触摸屏幕时触发，即使已经有一个手指放在屏幕上也会触发
+- touchmove: 当手指在屏幕上滑动的时候连续触发，在这个事件发生期间调用 preventDefault()事件可以阻止滚动
+- touchend: 当手指从屏幕上离开的时候触发
+- touchcancel: 当系统停止跟踪触摸的时候触发
+  直接在 componentDidMount 中将 touch 相关的事件绑定到 content
+
+```js
+// this.PoolCon = React.createRef();
 // <article className="content" ref={this.ParentCon}>...</article>
 componentMount(){
   this.ParentCon.current.addEventListener("touchmove", ()=>this.scrollToBottom(event, 1),{passive: false});
@@ -322,4 +335,4 @@ scrollToBottom(event, type) {
     }
   }
 }
-~~~
+```

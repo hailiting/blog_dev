@@ -1,15 +1,20 @@
-# 自定义AppBar实现滚动渐变
+# 自定义 AppBar 实现滚动渐变
+
 ## NotificationListener
-利用NotificationListener监听子Widget滚动时向上发送的notification
-~~~
+
+利用 NotificationListener 监听子 Widget 滚动时向上发送的 notification
+
+```
 const NotificationListener({
   Key key,
   @required this.child, // 被监听的子widget
   this.onNotification, // 监听到notification后的回调方法
 })
-~~~
+```
+
 监听返回值详解
-~~~
+
+```
 class _MyHomePageState extends State<MyHomePage>{
   @override
   Widget build(BuildContext context){
@@ -45,4 +50,4 @@ class _MyHomePageState extends State<MyHomePage>{
     );
   }
 }
-~~~
+```

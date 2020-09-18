@@ -1,33 +1,60 @@
-# CSS3绘制特殊图形的技巧
+# CSS3 绘制特殊图形的技巧
+
 ![cssSpe](./img/cssSpe.png)
+
 ## 具体事例
-#### 弯尾箭头 Curved Tail Arrow  
-#### 梯形 Trapezoid  
-#### 平行四边形 Parallelogram  
-#### 五角星 Star  5-points  
-#### 五边形 Pentagon  
-#### 六边形 Hexagon  
-#### 八边形 Octagon  
-#### 心形 Heart  
-#### 无限符图形 Infinity  
-#### 菱形 Diamond Square  
-#### 钻石盾牌 Diamond Shield  
-#### 窄菱形 Diamond Narrow  
-#### 钻石型 Cut Diamond  
-#### 鸡蛋 Egg  
-#### 吃豆人 Pac-Man  
-#### 聊天框 Talk Bubble  
-#### 爆炸形状 Point Burst  
+
+#### 弯尾箭头 Curved Tail Arrow
+
+#### 梯形 Trapezoid
+
+#### 平行四边形 Parallelogram
+
+#### 五角星 Star 5-points
+
+#### 五边形 Pentagon
+
+#### 六边形 Hexagon
+
+#### 八边形 Octagon
+
+#### 心形 Heart
+
+#### 无限符图形 Infinity
+
+#### 菱形 Diamond Square
+
+#### 钻石盾牌 Diamond Shield
+
+#### 窄菱形 Diamond Narrow
+
+#### 钻石型 Cut Diamond
+
+#### 鸡蛋 Egg
+
+#### 吃豆人 Pac-Man
+
+#### 聊天框 Talk Bubble
+
+#### 爆炸形状 Point Burst
+
 #### 阴阳八卦 Yin Yang
+
 #### 徽章丝带 Badge Ribbon
+
 #### 太空入侵者 Space Invader
+
 #### 电视屏幕 TV Screen
+
 #### 雪佛龙 Chevron
+
 #### 放大镜 Magnifying Glass
+
 #### 圆锥形 Cone
+
 #### 月亮 Moon
 
-~~~
+```
 <!DOCTYPE html>
 <html lang="en">
 
@@ -454,4 +481,4 @@
 </body>
 
 </html>
-~~~
+```

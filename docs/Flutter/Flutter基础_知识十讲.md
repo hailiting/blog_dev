@@ -1,72 +1,106 @@
-# Flutter基础知识十讲
-## 1，学习Flutter该具备的基础
-### 1.1 Dart基础
+# Flutter 基础知识十讲
+
+## 1，学习 Flutter 该具备的基础
+
+### 1.1 Dart 基础
+
 #### 1.1.1 类
+
 ##### 封装、继承、多态
+
 ##### 抽象
+
 ##### 构造方法
+
 #### 1.1.2 函数/方法
+
 ##### 入口方法
+
 ##### 匿名方法
+
 ##### 静态方法
+
 ##### 返回值
+
 ##### 参数（可选参数，默认参数）
+
 #### 1.1.3 泛型
+
 ##### 泛型类（限制泛型类型）
+
 ##### 在构造方法中使用泛型
+
 ##### 泛型方法
+
 #### 1.1.4 异步
+
 ##### async await
+
 ##### Future
+
 ##### Stream
+
 > 学习资料
-> https://www.dartlang.org
-> http://dart.goodev.org
+> https://www.dartlang.org > http://dart.goodev.org
+
 ### 1.2 Android Studio/ VS Code
-### 1.3 一定的Android/ios基础
-## 2，如何快速搭建和运行一个Flutter项目
+
+### 1.3 一定的 Android/ios 基础
+
+## 2，如何快速搭建和运行一个 Flutter 项目
+
 ### 2.1 搭建一个项目
-方式一                               
-1，给android studio安装好flutter和Dart工具                                
-2，Start a new Flutter project(一路next)                               
+
+方式一  
+1，给 android studio 安装好 flutter 和 Dart 工具  
+2，Start a new Flutter project(一路 next)  
 方式二
 1，flutter create fluttername
-2，cd fluttername                               
-3，flutter run （运行到指定的模拟器      flutter  run -d 'iPhone X'）                               
-## 3，如何使用Flutter包和插件
-``https://pub.dartlang.org``                             
-1，在上面的网站找到所要的插件                             
-2，在文件夹 ``pubspec.yaml``文件添加                             
-~~~
+2，cd fluttername  
+3，flutter run （运行到指定的模拟器 flutter run -d 'iPhone X'）
+
+## 3，如何使用 Flutter 包和插件
+
+`https://pub.dartlang.org`  
+1，在上面的网站找到所要的插件  
+2，在文件夹 `pubspec.yaml`文件添加
+
+```
 dependencies:
     flutter_color_plugin: ^0.0.2
-~~~
-3，``flutter packages get``安装                             
-4，``import 'package:flutter_color_plugin/flutter_color_plugin.dart'``来使用                             
-## 4，StatelessWidget与基础组件
+```
+
+3，`flutter packages get`安装  
+4，`import 'package:flutter_color_plugin/flutter_color_plugin.dart'`来使用
+
+## 4，StatelessWidget 与基础组件
+
 ### 不需要可变状态的小部件
-当描述用户界面部分不依赖于对象本身中的配置信息以及widget的BuildContext时，无状态widget非常有用
+
+当描述用户界面部分不依赖于对象本身中的配置信息以及 widget 的 BuildContext 时，无状态 widget 非常有用
 
 ### Container/Text/Icon/CloseButton/BackButton/Chip/Divider/Card/AlertDialog
+
 Container 容器组件
-``this.alignment``
-``this.padding``
-``this.foregroundDecoration``
-``this.margin``,
-``this.transform``
-``this.child``
-``color``
-``decoration``装饰器
-``width``
-``height``
-``constrains``
+`this.alignment`
+`this.padding`
+`this.foregroundDecoration`
+`this.margin`,
+`this.transform`
+`this.child`
+`color`
+`decoration`装饰器
+`width`
+`height`
+`constrains`
 Text 文本组件
 Icon 图标组件
 Chip
-Divider  分割线组件
-Card  卡片格式组件
-AlertDialog  弹窗
-~~~
+Divider 分割线组件
+Card 卡片格式组件
+AlertDialog 弹窗
+
+```
 return MaterialApp(
     title: 'StatelessWidget与基础组件',
     theme: ThemeData(
@@ -118,20 +152,24 @@ return MaterialApp(
     )
     ),
 );
-~~~
+```
 
-## 5，StatefulWidget与基础组件
+## 5，StatefulWidget 与基础组件
+
 ### MaterialApp/Scaffold/AppBar/BottomNavigationBar/RefreshIndicator/Image/TextField/PageView
-MaterialApp  材料设计的app组件（通常在app的根节点）
-Scaffold   flutter封装的，带有导航栏，appbar，侧边栏等的组件
-AppBar   app顶部导航栏
-BottomNavigationBar  app底部的导航栏
+
+MaterialApp 材料设计的 app 组件（通常在 app 的根节点）
+Scaffold flutter 封装的，带有导航栏，appbar，侧边栏等的组件
+AppBar app 顶部导航栏
+BottomNavigationBar app 底部的导航栏
 RefreshIndicator 刷新的指示器
-Image   图片组件
-TextField   输入框组件
-PageView  滑动视图列表
+Image 图片组件
+TextField 输入框组件
+PageView 滑动视图列表
+
 ### 底部导航实现
-~~~
+
+```
 import 'package:flutter/material.dart';
 
 class StatefullGroup extends StatefulWidget {
@@ -234,11 +272,16 @@ class _StatefulGroupState extends State<StatefullGroup> {
     );
   }
 }
-~~~
-## 6，如何进行Flutter布局开发
-### 布局相关的组件``Container``,``RenderObjectWidget``,``ParentDataWidget``
-### ``RenderObjectWidget``
+```
+
+## 6，如何进行 Flutter 布局开发
+
+### 布局相关的组件`Container`,`RenderObjectWidget`,`ParentDataWidget`
+
+### `RenderObjectWidget`
+
 #### SingleChildRenderObjectWidget （单节点）
+
 Opacity
 ClipOval(裁剪为圆形)
 ClipRRect
@@ -247,7 +290,8 @@ Align => Center
 Padding
 SizedBox
 FractionallySizedBox（水平或垂直占满）
-~~~
+
+```
 children: <Widget>[
     ClipOval(
         child: SizedBox(
@@ -295,23 +339,29 @@ children: <Widget>[
                 widthFactor: 1,
                 child: Container(
                    decoration: BoxDecoration(color: Colors.greenAccent),
-                   child: Text('宽度撑满'), 
+                   child: Text('宽度撑满'),
                 )
             )
         ]
     ),
 ]
 
-~~~
+```
+
 #### MultiChildRenderObjectWidget（多节点布局组件）
+
 Stack
 Flex=>Column, Row
 Wrap
 Flow
+
 ### ParentDataWidget
+
 #### Positioned 绝对布局
+
 #### Flexible => Expanded
-~~~
+
+```
 children: <Widget>[
     //元素叠加 前面的会被后面的盖住
     Stack(
@@ -371,9 +421,11 @@ _chip(String label){
         )
     );
 }
-~~~
-## 7，如何创建和使用Flutter的路由与导航
-~~~
+```
+
+## 7，如何创建和使用 Flutter 的路由与导航
+
+```
 // Navigator.push(打开页面)
 void _navigateSecondPage(BuildContext context, page){
     Navigator.push(
@@ -389,9 +441,11 @@ Navigator.pushNamed(context, routeName);
 void _backCurrentPage(BuoldContext context){
     Navigator.pop(context);
 }
-~~~
+```
+
 #### 已命名的路由跳转
-~~~
+
+```
 void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
@@ -429,9 +483,11 @@ appBar: AppBar(
     )
 )
 ...
-~~~
+```
+
 ## 8，如何检测用户手势以及处理点击事件
-~~~
+
+```
 children: <Widget>[
     GestureDetector(
     onTap: ()=>_printMsg("点击"),
@@ -455,20 +511,24 @@ children: <Widget>[
     ),
     Text(printString)
 ],
-~~~
-## 9，如何导入和使用Flutter的资源文件
-1，在``pubspec.yaml``里配置
-2，在dark文件使用
-~~~
+```
+
+## 9，如何导入和使用 Flutter 的资源文件
+
+1，在`pubspec.yaml`里配置
+2，在 dark 文件使用
+
+```
 Image(
     width: 100,
     height: 100,
     image: AssetImage('images/avatar.png'),
 )
-~~~
+```
 
 ## 10，如何打开第三方应用
-~~~
+
+```
 // pubspec.yaml
 dependencies:
     url_launcher: ^5.0.2
@@ -484,7 +544,7 @@ _launchURL() async {
     } else{
         throw "could not launch $url";
     }
-} 
+}
 _openMap() async{
     const url = "geo:52.32,4.917"; // app提供者提供的schema
     if(await canLaunch(url)){
@@ -498,17 +558,27 @@ _openMap() async{
         }
     }
 }
-~~~
-## 11, Flutter页面生命周期实战指南
-### StatelessWidget只有createElement, build两个生命周期方法
-### StatefullWidget生命周期
+```
+
+## 11, Flutter 页面生命周期实战指南
+
+### StatelessWidget 只有 createElement, build 两个生命周期方法
+
+### StatefullWidget 生命周期
+
 #### 1，初始化时期
+
 createState, initState
+
 #### 2，更新期间
+
 didChangeDependencies, build, didUpdateWidget
+
 #### 3，销毁期
+
 deactivate, dispose
-~~~
+
+```
 // stful + enter 快速搭建一个dart结构文件
 // 引入依赖  option+enter
 import 'package:flutter/material.dart';
@@ -583,9 +653,11 @@ class _WidgetLifecycleStateState extends State<WidgetLifecycleState> {
     super.dispose();
   }
 }
-~~~
-## 12, Flutter应用的生命周期
-~~~
+```
+
+## 12, Flutter 应用的生命周期
+
+```
 // 用WidgetsBindingObserver来获取Flutter应用维度的生命周期
 import 'package:flutter/material.dart';
 class AppLifeCycle extends StatefulWidget{
@@ -613,7 +685,7 @@ class _AppLifeCycleState extends State<AppLifeCycle> with WidgetsBindingObserver
     @override
     void didChangeAppLifecycleState(AppLifecycleState state){
         super.didChangeAppLifecyclesState(state);
-        print('state = $state'); 
+        print('state = $state');
         if(state == AppLifecycleState.paused){
           print('App进入后台');
         } else if(state ==AppLifecycleState.resumed){
@@ -630,11 +702,13 @@ class _AppLifeCycleState extends State<AppLifeCycle> with WidgetsBindingObserver
         super.dispose();
     }
 }
-~~~
-## 13, 修改Flutter应用的主题
-~~~
+```
+
+## 13, 修改 Flutter 应用的主题
+
+```
 // 用 StatefullWidget, 而不是StatelessWidget
-// 申请一个所有主题变量 
+// 申请一个所有主题变量
 Brightness _brightness = Brightness.light;  // Brightness.dark
 @overrider
 Widget build(BuildContext context){
@@ -652,20 +726,26 @@ Widget build(BuildContext context){
         )
     )
 }
-~~~
+```
 
 ## 14, 自定义字体
+
 ### 1，下载字体
-### 2，在根目录创建fonts文件，并把.ttf文件放进去
-### 3，修改``pubspec.yaml``文件，注册字体
-~~~
-font: 
+
+### 2，在根目录创建 fonts 文件，并把.ttf 文件放进去
+
+### 3，修改`pubspec.yaml`文件，注册字体
+
+```
+font:
     family: RubikMonoOne
-    fonts: 
-        asset: fonts/RubikMonoOne-Regular.ttf 
-~~~
+    fonts:
+        asset: fonts/RubikMonoOne-Regular.ttf
+```
+
 ### 4.1，全局应用
-~~~
+
+```
 // main.dart
 ...
 Widget build(BuildContext context){
@@ -678,21 +758,27 @@ Widget build(BuildContext context){
     )
 }
 ...
-~~~
+```
+
 ### 4.2，部分页面应用
-~~~
+
+```
 ...
 child: Text("切换主题abc", style: TextStyle(fontFamily: 'RubikMonoOne'),),
 ...
-~~~
-### 5，pubspec.yaml下 有一个``Packages get``,点击运行
+```
+
+### 5，pubspec.yaml 下 有一个`Packages get`,点击运行
+
 ## 15，修改应用名称
+
 android
-~~~
+
+```
 - flutterdome
   - android
     - app
-      - src 
+      - src
        - main
         -AndroidManifest.xml
           <application
@@ -700,9 +786,11 @@ android
             android:label="ABCdome"
             ...
           >
-~~~
+```
+
 ios
-~~~
+
+```
 - flutterdome
   - ios
     - Runner
@@ -712,41 +800,56 @@ ios
 	      <key>CFBundleName</key>
         <string>ABCdome</string>
         ...
-~~~
+```
+
 ## 16，修改应用图标
+
 android
-~~~
+
+```
 // 放icon图标的文件地址
-domename/android/app/src/main/res/mipmap-hdpi 
+domename/android/app/src/main/res/mipmap-hdpi
 // domename/android/app/src/main AndroidManifest.xml
 ...
 android:icon="@mipmap/icon_logo"
 ...
-~~~
+```
+
 ios
-~~~
+
+```
 // 放icon图标的文件地址
 domename/ios/Runner/Assets.xcassets/AppIcon.appiconset
 Icon-App-20*20@1x.png
-~~~
-## 17，Flutter打包
+```
+
+## 17，Flutter 打包
+
 ### android
-#### 17.1  生成key
+
+#### 17.1 生成 key
+
 17.1.1 通过命令
-``keytool -genkey -v -keystore D:/key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias key``
-17.1.2 AndroidStudio自带功能生成
-``Generate signed bundle/APK...`` 
-#### 17.2, 配置key
-在android目录下新建文件“key.properties”，填写内容如下
-~~~
+`keytool -genkey -v -keystore D:/key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias key`
+17.1.2 AndroidStudio 自带功能生成
+`Generate signed bundle/APK...`
+
+#### 17.2, 配置 key
+
+在 android 目录下新建文件“key.properties”，填写内容如下
+
+```
 storePassword=密匙库口令
 keyPassword=key密匙口令
 keyAlias=key别名
 storeFile=路径
-~~~
-#### 17.3, 配置build.gradle
-1，在app目录里的build.gradle里
-~~~
+```
+
+#### 17.3, 配置 build.gradle
+
+1，在 app 目录里的 build.gradle 里
+
+```
 ...
 def keystorePropertiesFile = rootProject.file("key.properties")
 def keystoreProperties = new Properties()
@@ -754,9 +857,11 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 android{
   ...
 }
-~~~
-2, 在android里加入signingConfigs和替换buildTypes
-~~~
+```
+
+2, 在 android 里加入 signingConfigs 和替换 buildTypes
+
+```
 signingConfigs {
   release{
     keyAlias keystoreProperties['keyAlias']
@@ -771,24 +876,32 @@ buildTypes {
     signingConfig signingConfigs.release
   }
 }
-~~~
-#### 17.4, 生成apk
-在项目跟目录``flutter build apk``;
-最后生成的apk在项目目录的``build/app/outputs/apk``里
+```
+
+#### 17.4, 生成 apk
+
+在项目跟目录`flutter build apk`;
+最后生成的 apk 在项目目录的`build/app/outputs/apk`里
+
 ### ios
+
 1，申请钥匙串、申请证书
-2，注册Bundle ID
+2，注册 Bundle ID
 3，添加测试设备
 4，配置证书
-5，打包ipa，
+5，打包 ipa，
 6，应用发布
-~~~
+
+```
 1，配置的bundle id应该与应用的bundle id一致
 2，证书分为开发证书和发布证书，发布证书配置时，发布到app store的选择 "App Store"，发布到fir.im或蒲公英等三方分发网站的选择'Ad hoc'
-~~~
-## 【实战】拍照App开发
-### 1，新建dart文件``photo_app_page.dart``
-~~~
+```
+
+## 【实战】拍照 App 开发
+
+### 1，新建 dart 文件`photo_app_page.dart`
+
+```
 // stf
 import 'package:flutter/material.dart';
 
@@ -816,44 +929,62 @@ class _PhotoAppState extends State<PhotoApp> {
     );
   }
 }
-~~~
-### 2，``flutter``图片插件 ``image_picker``
-flutter插件官网地址 ``https://pub.dartlang.org/packages/``
-#### 2.1 添加依赖到``pubspec.yaml``
-~~~
-dependncies: 
+```
+
+### 2，`flutter`图片插件 `image_picker`
+
+flutter 插件官网地址 `https://pub.dartlang.org/packages/`
+
+#### 2.1 添加依赖到`pubspec.yaml`
+
+```
+dependncies:
     image_picker: ^0.5.2
-~~~
-#### 2.2 下载  ``flutter pub get``
-#### 2.3 导入  
-~~~
+```
+
+#### 2.2 下载 `flutter pub get`
+
+#### 2.3 导入
+
+```
 import 'package:image_picker/image_picker.dart';
-~~~
-### 3，兼容androidX
-#### 3.1 ``android/gradle/wrapper/gradle-wrapper.properties``里distributionUrl配置
-~~~
+```
+
+### 3，兼容 androidX
+
+#### 3.1 `android/gradle/wrapper/gradle-wrapper.properties`里 distributionUrl 配置
+
+```
 distributionUrl=https\://services.gradle.org/distributions/gradle-4.10.2-all.zip:
-~~~
-#### 3.2 ``android/build.gradle``
-~~~
+```
+
+#### 3.2 `android/build.gradle`
+
+```
 dependencies{
     // 原来的
     classpath 'com.android.tools.build:gradle:3.2.1'
     // 改为
     classpath 'com.android.tools.build.gradle:3.3.0'
 }
-~~~
-#### 3.3 ``android/gradle.properties``
-~~~
+```
+
+#### 3.3 `android/gradle.properties`
+
+```
 // 添加
 android.enableJetifier=true
 android.useAndroidX=true
-~~~
-#### 3.4 ``android/app/build.gradle``
-``compileSdkVersion`` >=28                                      
-``targetSdkVersion`` >=28
-#### 3.5 ``android/app/build.gradle``
-~~~
+```
+
+#### 3.4 `android/app/build.gradle`
+
+`compileSdkVersion` >=28  
+`targetSdkVersion` >=28
+
+#### 3.5 `android/app/build.gradle`
+
+```
 // 原来的
 testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 // 替换为
@@ -867,9 +998,11 @@ androidTestImplementation 'com.android.support.test.espresso.espresso-core:3.0.2
 // 改为
 androidTestImplementation 'androidx.test:runner:1.1.1'
 androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-~~~
-### 4，配置ios项
-~~~
+```
+
+### 4，配置 ios 项
+
+```
 // ios/Runner/info.plist
 <true/>
 <key>NSCameraUsageDescription</key>
@@ -878,9 +1011,11 @@ androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 <string>在这里配置录音的使用</string>
 <key>NSPhotoLibraryUsageDescription</key>
 <string>在这里配置相册的使用</string>
-~~~
-### 5，测试是否OK
-~~~
+```
+
+### 5，测试是否 OK
+
+```
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -927,9 +1062,11 @@ class _PhotoAppState extends State<PhotoApp> {
     );
   }
 }
-~~~
+```
+
 ### 6，最终实现
-~~~
+
+```
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -1134,4 +1271,4 @@ class _PhotoAppState extends State<PhotoApp> {
     }).toList();
   }
 }
-~~~
+```

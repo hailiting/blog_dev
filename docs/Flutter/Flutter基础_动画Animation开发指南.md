@@ -1,15 +1,21 @@
-# 动画Animation开发指南
-* 在Flutter中有哪些类型的动画
-* 如何使用动画库中的基础类给widget添加动画
-* 如何为动画添加监听器
-* 什么时候使用AnimatedWidfget与AnimatedBuilder
-* 如何使用Hero动画
-## 在Flutter中有哪些类型的动画
- 基于tween(补间动画)       
+# 动画 Animation 开发指南
+
+- 在 Flutter 中有哪些类型的动画
+- 如何使用动画库中的基础类给 widget 添加动画
+- 如何为动画添加监听器
+- 什么时候使用 AnimatedWidfget 与 AnimatedBuilder
+- 如何使用 Hero 动画
+
+## 在 Flutter 中有哪些类型的动画
+
+基于 tween(补间动画)  
  基于物理的动画
-## 如何使用动画库中的基础类给widget添加动画
-先看看怎么为widget添加动画
-~~~
+
+## 如何使用动画库中的基础类给 widget 添加动画
+
+先看看怎么为 widget 添加动画
+
+```
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 
@@ -70,12 +76,14 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin{
         super.dispose();
     }
 }
-~~~
-* Animation: 是Flutter动画库中的一个核心类，生成指导动画的值
-Animation是一个抽象类，拥有当前值和状态（完成或停止），常用的是``Animation<double>``
-* CurvedAnimation Animation的子类，将过程抽象为一个非线性的曲线
-Curves类定义许多常用的曲线，也可以自己创建
-~~~
+```
+
+- Animation: 是 Flutter 动画库中的一个核心类，生成指导动画的值
+  Animation 是一个抽象类，拥有当前值和状态（完成或停止），常用的是`Animation<double>`
+- CurvedAnimation Animation 的子类，将过程抽象为一个非线性的曲线
+  Curves 类定义许多常用的曲线，也可以自己创建
+
+```
 final CuredAnimation curve = new CurvedAnimation(parent: controller, curve: Curves.easeIn);
 // 自定义
 class ShakeCurve extends Curve{
@@ -84,27 +92,34 @@ class ShakeCurve extends Curve{
         return math.sin(t*math.PI*2);
     }
 }
-~~~
-* AnimationController  Animation的子类，用于管理Animation
-``AnimationController``是特殊的Animation对象，在屏幕刷新的每一帧，都会生成一个新的值。
-~~~
+```
+
+- AnimationController Animation 的子类，用于管理 Animation
+  `AnimationController`是特殊的 Animation 对象，在屏幕刷新的每一帧，都会生成一个新的值。
+
+```
 final AnimationController controller = new AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
 AnimationController 具有控制动画的其他方法：
 > forward() // 启动动画
 > reverse({double from}) // 倒放动画
 > reset() // 重置动画，将其设置到动画的开始位置
 > stop({bool canceled = true}) // 停止动画
-~~~
-* Tween  正在执行的动画对象所使用的数据范围之间生成的值
-~~~
+```
+
+- Tween 正在执行的动画对象所使用的数据范围之间生成的值
+
+```
 final AnimationController controller = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
 final Animation curve = new CurvedAnimation(parent: controller, curve: Curves.easeOut);
 Animation<int> alpha = new IntTween(begin: 0, end: 255).animate(curve);
-~~~
-## ``addListener``和``addStatusListener`` 动画添加监听器'
-* addListener: 动画的值发生变化时被调用
-* addStatusListener: 动画状态发生变化时被调用
-~~~
+```
+
+## `addListener`和`addStatusListener` 动画添加监听器'
+
+- addListener: 动画的值发生变化时被调用
+- addStatusListener: 动画状态发生变化时被调用
+
+```
 @override
 void initState(){
     super.initState();
@@ -125,18 +140,21 @@ void initState(){
                 });
     controller.forward();
 }
-~~~
+```
+
 ## AnimatedWidget
-AnimatedWidget可以理解为Animation的助手
-下面的实例  LogoApp继承自 AnimatedWidget,AnimatedWidget在绘制时，使用动画的当前值。LogoApp仍然管理着AnimationController 和 Tween.
-~~~
+
+AnimatedWidget 可以理解为 Animation 的助手
+下面的实例 LogoApp 继承自 AnimatedWidget,AnimatedWidget 在绘制时，使用动画的当前值。LogoApp 仍然管理着 AnimationController 和 Tween.
+
+```
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 void main(){
     runApp(new LogoApp());
 }
 class AnimatedLogo extends AnimatedWidget{
-    AnimatedLogo({Key key,Animation<double> animation}) 
+    AnimatedLogo({Key key,Animation<double> animation})
         :super(key: key,listenable: animation);
     Widget build(BuildContext context){
         final Animation<double> animation = listenable;
@@ -173,14 +191,18 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin{
     }
 }
 
-~~~
+```
+
 ## AnimatedBuilder
-AnimatedBuilder是拆分动画的工具类，借助它，我们可以更好的将动画和Widget分离
-* 显示logo
-* 定义Animation对象
-* 渲染过度效果
-``Container => GrowTransition => AnimatedBuilder => (AnonymousBuilder) => LogoWidget``
-~~~
+
+AnimatedBuilder 是拆分动画的工具类，借助它，我们可以更好的将动画和 Widget 分离
+
+- 显示 logo
+- 定义 Animation 对象
+- 渲染过度效果
+  `Container => GrowTransition => AnimatedBuilder => (AnonymousBuilder) => LogoWidget`
+
+```
 import 'package: flutter/animation.dart';
 import 'package: flutter/material.dart';
 void main()=> runApp(LogoApp());
@@ -219,10 +241,13 @@ class LogoWidget extends StatelessWidget {
         child: FlutterLogo(),
     )
 }
-~~~
-## Hero动画
-效果：hero通过动画从原页面飞到目标页面  ，目标页面逐渐淡入视野。
-~~~
+```
+
+## Hero 动画
+
+效果：hero 通过动画从原页面飞到目标页面 ，目标页面逐渐淡入视野。
+
+```
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 
@@ -292,9 +317,11 @@ class HeroAnimation extends StatelessWidget{
   }
 }
 void main()=>runApp(MaterialApp(home: HeroAnimation());
-~~~
-#### Hero函数原型
-~~~
+```
+
+#### Hero 函数原型
+
+```
 const Hero({
     Key key,
     @required this.tag,
@@ -307,12 +334,15 @@ const Hero({
     assert(transitionOnUserGestures != null),
     assert(child != null),
     super(key: key);
-~~~
-* tag: [必须]用于关联两个Hero动画的标识
-* createRectTween: [可选]定义目标Hero的边界，在从起始位置到目标位置的飞行过程如何变化
-* child: [必须]定义动画所呈现的widget
-### 径向hero动画
-~~~
+```
+
+- tag: [必须]用于关联两个 Hero 动画的标识
+- createRectTween: [可选]定义目标 Hero 的边界，在从起始位置到目标位置的飞行过程如何变化
+- child: [必须]定义动画所呈现的 widget
+
+### 径向 hero 动画
+
+```
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
@@ -466,4 +496,4 @@ class RadialExpansionDemo extends StatelessWidget {
 void main(){
   runApp(MaterialApp(home: RadialExpansionDemo()));
 }
-~~~
+```

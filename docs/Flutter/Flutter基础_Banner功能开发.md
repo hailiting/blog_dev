@@ -1,13 +1,17 @@
-# Banner功能开发
+# Banner 功能开发
+
 ## flutter_swiper
-~~~
+
+```
 // add pubspec.yaml
 flutter_swiper: ^lastest_version
 // run
 flutter packages get
-~~~
-* autoplayDisableOnInteraction 左右两边箭头显示隐藏
-~~~
+```
+
+- autoplayDisableOnInteraction 左右两边箭头显示隐藏
+
+```
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 void main()=> runApp(new MyApp());
@@ -79,4 +83,4 @@ class _MyHomePageState extends State<MyHomePage>{
     );
   }
 }
-~~~
+```

@@ -1,12 +1,16 @@
-# js基础算法题
-* 冒泡排序
-* 快速排序
-* 二分查找
-* 递归算法
-* 常见前端算法面试题
+# js 基础算法题
+
+- 冒泡排序
+- 快速排序
+- 二分查找
+- 递归算法
+- 常见前端算法面试题
+
 ## 计算汉明重量
+
 ### 汉明重量是一串符号中非零符号的个数。
-~~~
+
+```
 function hammingWeight(n){
     let num=0;
     while(n!==0){
@@ -19,16 +23,21 @@ function hammingWeight(n){
 }
 let a = hammingWeight(111)
 console.log(a)
-~~~
+```
+
 ### 判断奇偶
-~~~
+
+```
 function isOdd(n){
     return n&1 === 1
 }
-~~~
-### 二分查找 
+```
+
+### 二分查找
+
 非递归方法
-~~~
+
+```
 function binarySearch(nums, target){
     let low=0;
     let high=nums.length-1;
@@ -48,9 +57,11 @@ function binarySearch(nums, target){
     return -1
 }
 binarySearch([12,213,123,312,123,12312,123],213)
-~~~
+```
+
 递归方法
-~~~
+
+```
 function binarySearch(nums, target){
     let low=0;
     let high = nums.length-1;
@@ -63,10 +74,13 @@ function binarySearch(nums, target){
     }
     return binaryWalker(nums, low, high, target);
 }
-~~~
+```
+
 ## 常见排序
+
 ### 快速排序
-~~~
+
+```
 function quickSort(arr){
     if(arr.length<=1) return arr;
     let left=[];
@@ -81,9 +95,11 @@ function quickSort(arr){
     }
     return [...quickSort(left),pivot,...quickSort(right)];
 }
-~~~
+```
+
 ### 冒泡排序
-~~~
+
+```
 function bubbleSort(arr){
     let i = arr.length-1;
     while(i>=0){
@@ -96,24 +112,22 @@ function bubbleSort(arr){
     }
     return arr;
 }
-~~~
-
-
+```
 
 二叉树遍历相关
 先序遍历（中->左->右）
 
 递归实现
 function preOrderTraverse(root) {
-    if(root) {
-      console.log(root);
-      preOrderTraverse(root.left);
-      preOrderTraverse(root.right);
-    }
-  }
+if(root) {
+console.log(root);
+preOrderTraverse(root.left);
+preOrderTraverse(root.right);
+}
+}
 非递归实现
 function preOrderTraverse(root) {
-    let stack = [];
+let stack = [];
 
     if(root) {
       stack.push(root);
@@ -127,25 +141,26 @@ function preOrderTraverse(root) {
 
       if(temp.left) stack.pus(temp.left);
     }
-  }
+
+}
 中序遍历（左->中->右）
 
 递归实现
 function midOrderTraverse(root) {
-    if(root) {
-      midOrderTraverse(root.left);
-      console.log(root);
-      midOrderTraverse(root.right);
-    }
-  }
+if(root) {
+midOrderTraverse(root.left);
+console.log(root);
+midOrderTraverse(root.right);
+}
+}
 非递归实现
 function midOrderTraverse(root) {
-    let stack = [];
-    while(true) {
-      while(root) {
-        stack.push(root);
-        root = root.left;
-      }
+let stack = [];
+while(true) {
+while(root) {
+stack.push(root);
+root = root.left;
+}
 
       if(!stack.length) break;
 
@@ -153,36 +168,37 @@ function midOrderTraverse(root) {
       console.log(temp);
       root = temp.right;
     }
-  }
+
+}
 后序遍历（左->右->中）
 
 递归实现
 function postOrderTraverse(root) {
-    if(root) {
-      postOrderTraverse(root.left);
-      postOrderTraverse(root.right);
-      console.log(root);
-    }
-  }
+if(root) {
+postOrderTraverse(root.left);
+postOrderTraverse(root.right);
+console.log(root);
+}
+}
 非递归实现
 function postOrderTraverse(root) {
-    let stack = [];
-    let rest = [];
-    if(root)stack.push(root);
-    while(stack.length) {
-      let temp = stack.pop();
-      rest.push(temp);
-      if(temp.left) stack.push(temp.left);
-      if(temp.right) stack.push(temp.right);
-    }
-    return rest.reverse();
-  }
+let stack = [];
+let rest = [];
+if(root)stack.push(root);
+while(stack.length) {
+let temp = stack.pop();
+rest.push(temp);
+if(temp.left) stack.push(temp.left);
+if(temp.right) stack.push(temp.right);
+}
+return rest.reverse();
+}
 层次遍历
 
 function levelTraverse(root) {
-    if(!root) return;
-    let stack = [];
-    stack.push(root);
+if(!root) return;
+let stack = [];
+stack.push(root);
 
     while(stack.length) {
       let temp = stack.shift();
@@ -190,10 +206,5 @@ function levelTraverse(root) {
       if(temp.left) stack.push(temp.left);
       if(temp.right) stack.push(temp.right);
     }
-  }
 
-
-
-
-
-
+}

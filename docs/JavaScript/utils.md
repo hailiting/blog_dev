@@ -1,6 +1,8 @@
 # 工作中常用的工具类
+
 ## 输入框为数字
-~~~
+
+```
 export function inputNumStyleValue(value, exp) {
   let v = value
     .replace(/[^0-9\.]/, "")
@@ -20,9 +22,11 @@ export function inputNumStyleValue(value, exp) {
   console.log({ v })
   return v;
 }
-~~~
+```
+
 ## 显示数字
-~~~
+
+```
 function toNonExponential(num) {
   let m = num.toExponential().match(/\d(?:\.(\d*))?e([+-]\d+)/);
   return num.toFixed(Math.max(0, (m[1] || '').length - m[2]));
@@ -58,9 +62,11 @@ export function accFloorInfo(value = 0, exp = 8) {
   const num002 = pointval ? String(pointval).length > 0 ? '.' + String(pointval).substring(0, exp) : '' : ''
   return val.split('.')[0] + num002
 }
-~~~
-## 0.001小数点位数
-~~~
+```
+
+## 0.001 小数点位数
+
+```
 export function numberSplit(str) {
   if (+str >= 1) {
     return str.split('.')[0];
@@ -74,9 +80,11 @@ export function numberSplit(str) {
     // return str.replace(/(\.\d+[1-9])0+$/, '$1');
   }
 };
-~~~
-## 判断能不能被``JSON.parse``解析
-~~~
+```
+
+## 判断能不能被`JSON.parse`解析
+
+```
 function isJson(str) {
   if (typeof str == 'string') {
     try {
@@ -87,9 +95,11 @@ function isJson(str) {
     }
   }
 }
-~~~
-## 保留小数点n位，并规避科学计数法
-~~~
+```
+
+## 保留小数点 n 位，并规避科学计数法
+
+```
 function digits(v, d = 0) {
   let a = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"];
   if (!v && v !== 0) {
@@ -148,9 +158,11 @@ function digits(v, d = 0) {
   }
   return v;
 }
-~~~
+```
+
 ## 对象排序
-~~~
+
+```
 var compare = function (prop) {
   return function (obj1, obj2) {
     var val1 = obj1[prop];
@@ -164,4 +176,4 @@ var compare = function (prop) {
   }
 }
 data.sort(compare("symbolName"))
-~~~
+```

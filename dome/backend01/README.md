@@ -1,16 +1,19 @@
 # 项目解读
+
 ## 启动项目
-~~~
+
+```
 # mongod
 sudo mongod
 # redis
 redis-server
-~~~
-
+```
 
 ## node 模块
+
 ### http
-~~~
+
+```
 // app.js
 var http = require("http");
 http.createServer(function(req, res){
@@ -19,9 +22,11 @@ http.createServer(function(req, res){
   res.end("<p>hello world</p>")
 }).listen(3000);
 console.log("http server is listening at port 3000");
-~~~
+```
+
 #### http url get
-~~~
+
+```
 var http = require("http");
 var url = require("url");
 var server = http.createServer(function (req, res) {
@@ -43,15 +48,21 @@ var server = http.createServer(function (req, res) {
 server.listen(3000, () => {
   console.log("server start ok: http://localhost:3000")
 })
-~~~
-### ``process.cwd()``和``__dirname``区别
-cwd 是指当前node命令执行时所在文件夹目录;
-__dirname是指被执行js文件所在的文件夹目录;
+```
+
+### `process.cwd()`和`__dirname`区别
+
+cwd 是指当前 node 命令执行时所在文件夹目录;
+\_\_dirname 是指被执行 js 文件所在的文件夹目录;
+
 ## npm 包
+
 ### debug
-debug库是一款专门控制日志输出的库，根据DEBUG环境变量，控制日志是否输出。
+
+debug 库是一款专门控制日志输出的库，根据 DEBUG 环境变量，控制日志是否输出。
 【可以选择性的输出哪些模块日志】
-~~~
+
+```
 // app.js
 /** node app.js 啥日志也不会输出
   * DEBUG=worker:* node app.js  会输出worker:*下的所有日志
@@ -78,10 +89,13 @@ function workb(){
   setTimeout(workb, Math.random()*2000);
 }
 workb();
-~~~
-### socket.io 
-socket.io不是websocket，它是将Websocket和轮询（Polling机制）以及其它实时通信方法封装成一个通用的接口，并且在服务端实现这些实时机制的相应代码。也就是说Socket.io包含websocket,websocket仅仅是socket.io的一个子集，因此websocket客户端连不上socket.io服务器，socket.io客户端也连不上websock服务器。
-~~~
+```
+
+### socket.io
+
+socket.io 不是 websocket，它是将 Websocket 和轮询（Polling 机制）以及其它实时通信方法封装成一个通用的接口，并且在服务端实现这些实时机制的相应代码。也就是说 Socket.io 包含 websocket,websocket 仅仅是 socket.io 的一个子集，因此 websocket 客户端连不上 socket.io 服务器，socket.io 客户端也连不上 websock 服务器。
+
+```
 const server = require("http").createServer();
 const io = require("socket.io")(server,{path:"/socket"});
 io.on("connection", client=>{
@@ -128,10 +142,13 @@ window.onload = ()=>{
   }
 }
 </script>
-~~~
+```
+
 ### express
-express框架简单封装了node的http模块，因此，express支持node的原生写法，express的重要意义在于：支持使用中间件+路由 来开发服务器逻辑
-~~~
+
+express 框架简单封装了 node 的 http 模块，因此，express 支持 node 的原生写法，express 的重要意义在于：支持使用中间件+路由 来开发服务器逻辑
+
+```
 let app = express();
 app.get("/demo", function(req, res){
   console.log("rcv msg from browser");
@@ -139,9 +156,11 @@ app.get("/demo", function(req, res){
   res.end();
 })
 app.listen(3000);
-~~~
-express到底是什么？
-~~~
+```
+
+express 到底是什么？
+
+```
 function createApplication(){
   var app = function(req, res, next){
     app.handle(req, res, next);
@@ -159,31 +178,43 @@ function createApplication(){
   app.init();
   return app;
 }
-~~~
-#### 获取实际客户端的ip
-~~~
+```
+
+#### 获取实际客户端的 ip
+
+```
 app.set("trust proxy", "172.16.36.149");
 app.get("/", function(req, res){
   console.log("ip: ", req.ip);
 })
-~~~
+```
+
 ### cookie-parser
-方便操作客户端的cookie值
-#### 1. 安装cookie-parser第三方cookie操作模块
-~~~
+
+方便操作客户端的 cookie 值
+
+#### 1. 安装 cookie-parser 第三方 cookie 操作模块
+
+```
 npm install cookie-parser -S
-~~~
+```
+
 #### 2. 引入
-~~~
+
+```
 const cookieParser = require("cookie-parser");
 app.use(cookieParser("123456")); // 使用cookie中间件，传入签名123456进行加密
-~~~
-#### 3. 设置cookie
-~~~
+```
+
+#### 3. 设置 cookie
+
+```
 res.cookie("key", "value", option)
-~~~
-- option是json，包含以下选择
-~~~
+```
+
+- option 是 json，包含以下选择
+
+```
 {
   domain: "", // 域名
   expires: "", // 过期时间（秒）
@@ -193,33 +224,43 @@ res.cookie("key", "value", option)
   httpOnly: true, // 默认为false，true时，客户端无法通过document.cookie读取到cookie信息，可防止xss攻击
   // 表示是否签名(加密)cookie，设为true会对这个cookie签名，这样就需要用res.signedCookies访问，前提是设置中间件app.use传参，未设置则可用res.cookie访问,
   // 被篡改的签名cookie会被服务器拒绝，并且cookie值会重置为它的原始值
-  signed: true, 
+  signed: true,
 }
-~~~
-~~~
+```
+
+```
 res.cookie("cart", {items: [1,2,3]}, {maxAge: 10000*4, signed: true, httpOnly: true});
-~~~
-#### 4. 获取cookie
-~~~
+```
+
+#### 4. 获取 cookie
+
+```
 req.signedCookies;
 req.signedCookies.cart;
 ...
-~~~
-#### 5. 删除cookie
-~~~
+```
+
+#### 5. 删除 cookie
+
+```
 res.cookie("cart", {items: [1,2,3]}, {maxAge: 0});
-~~~
+```
+
 ### body-parser
-body-parser是一个HTTP请求的中间件，使用这个模块可以解析JSON、Raw、文件、URL-encoded格式的请求体。
-~~~
+
+body-parser 是一个 HTTP 请求的中间件，使用这个模块可以解析 JSON、Raw、文件、URL-encoded 格式的请求体。
+
+```
 // 常用的api
 bodyParser.json()  // 解析JSON格式
 bodyParser.raw() // 解析二进制格式
 bodyParser.text() // 解析文本格式
 bodyParser.urlencoded() // 解析文本格式
-~~~
+```
+
 #### 不依赖三方插件的原生写法
-~~~
+
+```
 const http = require("http");
 http.createServer(function(req, res){
   if(req.method.toLowerCase() === "post"){
@@ -244,9 +285,11 @@ http.createServer(function(req, res){
     res.end("其他方式的提交")
   }
 }).listen(3000);
-~~~
-#### 用body-parser的写法
-~~~
+```
+
+#### 用 body-parser 的写法
+
+```
 var express = require("express");
 var bodyParrser = require("body-parser");
 var app = express();
@@ -255,9 +298,11 @@ var app = express();
 app.use(bodyParser.json());
 // 解析application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded());
-~~~
-#### 为单个express路由添加请求体解析
-~~~
+```
+
+#### 为单个 express 路由添加请求体解析
+
+```
 var express = require("express");
 var bodyParser = require("body-parser");
 
@@ -277,10 +322,13 @@ app.post("/login", urlencodedParser, function(req, res){
 app.post("/api/users", jsonParser, function(req, res){
   if(!req.body) return res.sendStatus(400);
 })
-~~~
+```
+
 #### 指定解析方式
-指定时，可以通过在解析方法中添加type参数修改指定的Content-Type解析方式。
-~~~
+
+指定时，可以通过在解析方法中添加 type 参数修改指定的 Content-Type 解析方式。
+
+```
 app.use(bodyParser.json({type: "text/plain"}));
 // 解析自定义的json
 app.use(bodyParser.json({type: "application/*+json"}));
@@ -288,27 +336,39 @@ app.use(bodyParser.json({type: "application/*+json"}));
 app.use(bodyParser.raw({type: "application/vnd.custom-type"}));
 // 将HTML请求体做为字符串处理
 app.use(bodyParser.text({type: "text/html"}));
-~~~
+```
+
 ### express-session
+
 #### session
-- session是一种记录开户状态的机制，与cookie保存在客户端浏览器不同，session是保存在服务器中的。
-- 当客户端访问服务器时，服务器会生成一个session对象，对象中保存的是key:value值，同时服务器会将key传回给客户端的cookie当中，当用户第二次访问服务器时，就会把cookie当中的key传回到服务器中，最后服务器会把value值返回给客户端。
-- 客户端和服务端依靠这个key来访问会话信息数据。
-#### 设置session
-1. 安装express-session
-~~~
+
+- session 是一种记录开户状态的机制，与 cookie 保存在客户端浏览器不同，session 是保存在服务器中的。
+- 当客户端访问服务器时，服务器会生成一个 session 对象，对象中保存的是 key:value 值，同时服务器会将 key 传回给客户端的 cookie 当中，当用户第二次访问服务器时，就会把 cookie 当中的 key 传回到服务器中，最后服务器会把 value 值返回给客户端。
+- 客户端和服务端依靠这个 key 来访问会话信息数据。
+
+#### 设置 session
+
+1. 安装 express-session
+
+```
 npm i express-session --save
-~~~
-2. 引入express-session模块
-~~~
+```
+
+2. 引入 express-session 模块
+
+```
 const seesion = require("express-session");
-~~~
-3. 设置session
-~~~
+```
+
+3. 设置 session
+
+```
 session(options);
-~~~
+```
+
 #### session(option)的主要参数
-~~~
+
+```
 session
   name: 保存在本地cookie的一个名字，默认connect.sid 可以不设置
   store: session存储实例
@@ -320,9 +380,11 @@ session
   saveUninitialized: 强制将未初始化的session存储，默认为true，建议设置成true，这对于登录验证，减轻服务端存储压力，权限控制是有帮助的。
   proxy: 当设置了secure cookie(通过x-forwarded-proto header)时信任反向代理，当设置为true时，x-forwarded-proto header将被使用。当设置为false时，所有headers将被忽略，当属性没被设定时，将使用express的trust proxy
   unset: 控制req.session是否取消（例如通过delete，或将它设置为null）。它可以使session保持存储状态，但忽略修改和删除的请求（默认为keep）
-~~~
-##### session常用方法
-~~~
+```
+
+##### session 常用方法
+
+```
 req.session.username = "张三";
 // 获取session
 req.session.username
@@ -332,9 +394,11 @@ req.seesion.cookie.maxAge = 1000;
 req.session.destory(function(err){
 
 })
-~~~
+```
+
 #### 简单的例子
-~~~
+
+```
 const express = require('express')
 const session = require("express-session");
 const app = express()
@@ -370,15 +434,21 @@ app.use("/", function (req, res) {
   }
 })
 app.listen(3000);
-~~~
+```
+
 ### node-schedule
+
 完成定时任务需求的三方插件
+
 1. 安装
-~~~
+
+```
 npm install node-schedule --save
-~~~
-2. 用法（cron风格定时器）
-~~~
+```
+
+2. 用法（cron 风格定时器）
+
+```
 const schedule = require("node-schedule");
 const scheduleCronstyle = ()=>{
   // 每分钟的第30s定时执行一次
@@ -391,11 +461,15 @@ const scheduleCronstyle = ()=>{
   }, 5000)
 }
 scheduleCronstyle()
-~~~
-#### "* * * * * *" 6个占位符
+```
+
+#### "\* \* \* \* \* \*" 6 个占位符
+
 - 从左到右分别代表：秒、分、时、日、月、周几
-* 表示通配符，当是*时，表示任意【秒|分|时....】都触发，
-~~~
+
+* 表示通配符，当是\*时，表示任意【秒|分|时....】都触发，
+
+```
 '30 * * * * *'  每分钟的第30s
 '30 1 * * * *'   每小时的第一分钟的第30s
 '30 1 1 * * *'  每天的1点的第一分钟的第30s
@@ -405,26 +479,34 @@ scheduleCronstyle()
 '1-10 * * * * *'  每分钟的1-10秒都会被触发
 /* dayOfWeek  month  dayOfMonth hour minute second */
 {hour: 16, minute: 11, dayOfWeek: 1} 每周一的16点11分触发
-~~~
+```
+
 ### require-context
-require-context 是实现自动化引入模块。就不需要require或import了
+
+require-context 是实现自动化引入模块。就不需要 require 或 import 了
+
 1. npm
-~~~
+
+```
 npm i require-context --save
-~~~
+```
+
 2. 用法
-~~~
+
+```
 /**
 * directory {String} 读取文件的路径
 * useSubdirectories {Boolean} 是否遍历文件的子目录
 * regExp {RegExp} 匹配文件的正则
-* eg: 
+* eg:
 * requireContext(path.join(__dirname, "../router"), false, /\.js$/);
 */
 require.context(directory, useSubdirectories=false, regExp=/^\.\//);
-~~~
+```
+
 3. dome
-~~~
+
+```
 const requireContext = require("require-context");
 const model = Symbol("model");
 const path = require("path");
@@ -441,16 +523,22 @@ const getFilesObject = app => {
 }
 getFilesObject()
 // getFilesObject 返回的是一个模块，和导入的效果一样
-~~~
-### morgan 
-morgan是一个nodejs关于http请求的日志中间件
+```
+
+### morgan
+
+morgan 是一个 nodejs 关于 http 请求的日志中间件
+
 1. 安装
-~~~
+
+```
 npm install morgan --save
-~~~
+```
+
 2. 使用
-2.1 将日志写入文件
-~~~
+   2.1 将日志写入文件
+
+```
 var express = require("express");
 var logger = require("morgan");
 var fs = require("fs");
@@ -466,9 +554,11 @@ app.use("/", function (req, res) {
   res.send("hello world!");
 })
 app.listen(3000);
-~~~
+```
+
 2.2 一天一个日志文件
-~~~
+
+```
 var express = require("express");
 var logger = require("morgan");
 var fs = require("fs");
@@ -489,15 +579,21 @@ app.get("/", function (req, res) {
   res.send("hello world!");
 });
 app.listen(3000);
-~~~
+```
+
 ### pug
+
 视图模板引擎
+
 1. 下载
-~~~
+
+```
 npm install pug --save
-~~~
+```
+
 2. 使用
-~~~
+
+```
 const express = require("express");
 const app = express();
 app.set("views", "./views");
@@ -512,37 +608,48 @@ html
     title=title
   body
     h1=message
-~~~
-~~~
+```
+
+```
 // -template.pug
 p #{name}的Pug代码！
-// 
+//
 const pug = require("pug");
 const compiledFunction = pug.compileFile("template.pug");
 // 渲染一组数据
 console.log(compiledFunction({
   name: "Lili"
 })) // <p>Lili的Pug代码！</p>
-~~~
+```
+
 ### multer
-node使用express+multer文件上传和下载
+
+node 使用 express+multer 文件上传和下载
+
 #### 1，下载 multer
-~~~
+
+```
 npm i multer -save
-~~~
+```
+
 #### 2，上传
+
 ##### 2.1，单个上传
-表单要设置``enctype="multipart/form-data"``
-~~~
+
+表单要设置`enctype="multipart/form-data"`
+
+```
 <h1>文件上传</h1>
 <from action="/" method="post" enctype="multipart/form-data">
   // multiple属性是允许多文件上传
   <input id="files" type="file" name="file" multiple />
   <input type="submit" value="上传" />
 </from>
-~~~
-服务端代码，单文件用``single()``
-~~~
+```
+
+服务端代码，单文件用`single()`
+
+```
 const express = require("express");
 const multer = require("multer");
 const fs = require("fs");
@@ -570,9 +677,11 @@ router.post("/", multer({
     res.end("上传成功")
   }
 })
-~~~
+```
+
 ##### 上传多个文件 不用 single 用 .array
-~~~
+
+```
 router.post("/", multer({
   dest: "upload"
 }).array("file", 10), function(req, res, next){ // 最多支持10张
@@ -602,9 +711,11 @@ router.post("/", multer({
     res.end("success!");
   }
 })
-~~~
+```
+
 #### 下载
-~~~
+
+```
 // 第一种，直接下载 [如果是图片，会直接打开，不友好]
 let road = "下载文件路径-可是相对路径也可是绝对路径";
 res.download(road);
@@ -616,20 +727,27 @@ res.writeHead(200,{
   "Content-Type": "application/force-download",
   "Content-Disposition": "attachment; filename=name"
 });
-load.pipe(res); 
-~~~
-## JavaScript原生
+load.pipe(res);
+```
+
+## JavaScript 原生
+
 ### parseInt
+
 解析一个字符串，并返回一个整数。
-radix表示要解析数字的基数【2-36】。
-~~~
+radix 表示要解析数字的基数【2-36】。
+
+```
 parseInt(string, radix);
 parseInt("1f2a.ad62a"); // 1
 parseInt(12.62); // 12
-~~~
+```
+
 ### Object.defineProperties()
+
 Object.defineProperties()方法直接在一个对象上定义新的属性或修改现有的属性，并返回该对象。
-~~~
+
+```
 Object.defineProperties(obj, props)
 var obj ={};
 Object.defineProperties(obj, {
@@ -642,11 +760,13 @@ Object.defineProperties(obj, {
     writable: false,
   }
 })
-~~~
+```
 
 ### Object.fromEntries()
+
 把键值对列表转换为一个对象
-~~~
+
+```
 const entries = new Map([
   ["foo", "bar"],
   ["baz", 42]
@@ -654,28 +774,39 @@ const entries = new Map([
 const obj = Object.fromEntries(entries);
 
 console.log(obj) // Object {foo: "bar", "baz": 42}
-~~~
-### Symbol 
-js的第七种数据类型，表示独一无二的值。
-Symbol函数的参数只是表示对当前Symbol值的描述，因此相同参数的Symbol函数返回值也相等。
-~~~
+```
+
+### Symbol
+
+js 的第七种数据类型，表示独一无二的值。
+Symbol 函数的参数只是表示对当前 Symbol 值的描述，因此相同参数的 Symbol 函数返回值也相等。
+
+```
 const a = Symbol("a");
 const b = Symbol("a");
 a == b // false
-~~~
+```
+
 ### join()
+
 数组组装成字符串
-~~~
+
+```
 [12,312].join("a"); // "12a312"
-~~~
+```
+
 ### post put 方法
-put指定资源路径 幂等
-post无法指定资源路径
-### 如何解决Set-Cookie 失效的问题?
+
+put 指定资源路径 幂等
+post 无法指定资源路径
+
+### 如何解决 Set-Cookie 失效的问题?
+
 1，domain 设置是否正确
 2，是否跨域
-3，前端axios请求设置
-~~~
+3，前端 axios 请求设置
+
+```
 const fetch = axios.create({
   baseURL: process.env.BUILD_ENV === "development" ? "" : "",
   headers: {
@@ -687,4 +818,4 @@ const fetch = axios.create({
 // 服务端
 res.header('Access-Control-Allow-Credentials', 'true');
 res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-~~~
+```

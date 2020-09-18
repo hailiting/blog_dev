@@ -1,5 +1,6 @@
-# Flutter基础_生命周期
-~~~
+# Flutter 基础\_生命周期
+
+```
 create widget
 构造函数
 initState
@@ -14,45 +15,64 @@ inactive
 paused
 inactive
 resumed
-~~~
-### 1, 创建wedget到显示，打印结果
-~~~
+```
+
+### 1, 创建 wedget 到显示，打印结果
+
+```
 : initState
 : didChangeDependencies
 : build
-~~~
+```
+
 ### 2, 退出这个页面执行
-~~~
+
+```
 : deactivate
 : dispose
-~~~
+```
+
 ### 3, 点击热重载按钮
-~~~
+
+```
 : reassemble
 : didUpdateWidget
 : build
-~~~
-### 4, app由显示到切换后台（home状态）
-~~~
+```
+
+### 4, app 由显示到切换后台（home 状态）
+
+```
 : AppLifecycleState.inactive
 : AppLifecycleState.paused
-~~~
-### 5, App由后台切回到前台
-~~~
+```
+
+### 5, App 由后台切回到前台
+
+```
 : AppLifecycleState.inactive
 : AppLifecycleState.resumed
-~~~
+```
 
-## Flutter页面生命周期实战指南
-### StatelessWidget只有createElement, build两个生命周期方法
-### StatefullWidget生命周期
+## Flutter 页面生命周期实战指南
+
+### StatelessWidget 只有 createElement, build 两个生命周期方法
+
+### StatefullWidget 生命周期
+
 #### 1，初始化时期
+
 createState, initState
+
 #### 2，更新期间
+
 didChangeDependencies, build, didUpdateWidget
+
 #### 3，销毁期
+
 deactivate, dispose
-~~~
+
+```
 // stful + enter 快速搭建一个dart结构文件
 // 引入依赖  option+enter
 import 'package:flutter/material.dart';
@@ -127,9 +147,11 @@ class _WidgetLifecycleStateState extends State<WidgetLifecycleState> {
     super.dispose();
   }
 }
-~~~
-## Flutter应用的生命周期
-~~~
+```
+
+## Flutter 应用的生命周期
+
+```
 // 用WidgetsBindingObserver来获取Flutter应用维度的生命周期
 import 'package:flutter/material.dart';
 class AppLifeCycle extends StatefulWidget{
@@ -157,7 +179,7 @@ class _AppLifeCycleState extends State<AppLifeCycle> with WidgetsBindingObserver
     @override
     void didChangeAppLifecycleState(AppLifecycleState state){
         super.didChangeAppLifecyclesState(state);
-        print('state = $state'); 
+        print('state = $state');
         if(state == AppLifecycleState.paused){
           print('App进入后台');
         } else if(state ==AppLifecycleState.resumed){
@@ -174,4 +196,4 @@ class _AppLifeCycleState extends State<AppLifeCycle> with WidgetsBindingObserver
         super.dispose();
     }
 }
-~~~
+```

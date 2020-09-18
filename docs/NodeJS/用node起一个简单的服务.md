@@ -1,13 +1,17 @@
-# 用node起一个简单的服务
-## web 
-~~~
+# 用 node 起一个简单的服务
+
+## web
+
+```
 let express = require('express');
 let app = express();
 app.use(express.static(__dirname));
 app.listen(4000);
-~~~
+```
+
 ## ws
-~~~
+
+```
 let express = require("express");
 let app =  express();
 let WebSocket = require("ws");
@@ -18,4 +22,4 @@ wss.on("connection", function(ws){
     ws.send("我不爱你")
   })
 })
-~~~
+```

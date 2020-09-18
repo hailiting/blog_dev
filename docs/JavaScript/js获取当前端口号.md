@@ -1,5 +1,6 @@
-# js获取当前端口号
-~~~
+# js 获取当前端口号
+
+```
 const getIp = () => {
   var interfaces = require("os").networkInterfaces();
   var hostname = require("os").hostname()
@@ -21,4 +22,4 @@ const getIp = () => {
   }
 };
 console.log(getIp())
-~~~
+```

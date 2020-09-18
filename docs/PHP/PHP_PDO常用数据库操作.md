@@ -1,5 +1,6 @@
-# PHP_PDO常用数据库操作
-~~~
+# PHP_PDO 常用数据库操作
+
+```
 <?php
   class Sql{
     public $serverName;
@@ -33,7 +34,7 @@
       $row=$res->fetchAll(PDO::FETCH_ASSOC);//以关联数组返回 [{....}...]
       $arr= array("result"=>$row);
       // foreach ($res as $row) {
-      //   print_r($row); 
+      //   print_r($row);
       // }
       echo json_encode($arr);
       $this->closeCon();
@@ -118,7 +119,7 @@
   * `val` int(200) NOT NULL,
   * PRIMARY KEY (`id`)
   * ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1
-  *  */ 
+  *  */
   $mythumb -> myAddVal("insert into thumbDetail (val) values ('insert1')");
   ?>
-~~~
+```

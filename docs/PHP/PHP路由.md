@@ -1,6 +1,8 @@
-# PHP路由
-## 一：基于原生PHP的路由分配实现
-~~~
+# PHP 路由
+
+## 一：基于原生 PHP 的路由分配实现
+
+```
 <?php
   // 权限控制
   include_once "./auth.php";
@@ -43,21 +45,27 @@
       echo "页面不存在";
     }
   }
-~~~
+```
+
 ## ThinkPHP5 之 route
-有三种模式   
-* PATH_INFO
-* 混合
-* 强制使用路由模式(推荐)
-模式的配置在``application``的``config.php``里
-~~~
+
+有三种模式
+
+- PATH_INFO
+- 混合
+- 强制使用路由模式(推荐)
+  模式的配置在`application`的`config.php`里
+
+```
 // 混合模式
 url_route_on => true,
 // 强制启用路由模式
 url_route_must => true,
-~~~
+```
+
 ### PATH_INFO
-~~~
+
+```
 <?php
   return [
       '__pattern__' => [
@@ -68,9 +76,11 @@ url_route_must => true,
           ':name' => ['index/hello', ['method' => 'post']],
       ],
   ];
-~~~
+```
+
 ### 使用路由模式
-~~~
+
+```
 use think\Route;
 // Route::rule("路由表达式", "路由地址", "请求类型", "路由参数(数组)", "变量规则(数组)");
 // GET POST DELETE PUT * (默认为*)
@@ -78,7 +88,4 @@ use think\Route;
 // Route::get(...);
 // 路由参数["https"=>true]
 Route::get("hello", "sample/Test/hello");
-~~~
-
-
-
+```

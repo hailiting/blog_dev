@@ -1,38 +1,52 @@
 # 网络编程与数据存储技术
-* 常使用http的哪些类型的请求
-* 如何解决http请求中中文乱码的问题
-* 对比Future与ES6的Promise，有哪些异同
-* FutureBuilder都可以用来做什么
-* JSON解析都有哪些实用方式
-* shared_preferences在Android和ios中分别基于什么实现的？
-* 在复杂JSON转模型上有哪些技巧
+
+- 常使用 http 的哪些类型的请求
+- 如何解决 http 请求中中文乱码的问题
+- 对比 Future 与 ES6 的 Promise，有哪些异同
+- FutureBuilder 都可以用来做什么
+- JSON 解析都有哪些实用方式
+- shared_preferences 在 Android 和 ios 中分别基于什么实现的？
+- 在复杂 JSON 转模型上有哪些技巧
 
 ## http
-Http是Flutter社区开发的可组合，跨平台用于Flutter网络的请求插件
-- 插件安装: ``pubspec.yaml``中引入http
-~~~
-dependenceies: 
+
+Http 是 Flutter 社区开发的可组合，跨平台用于 Flutter 网络的请求插件
+
+- 插件安装: `pubspec.yaml`中引入 http
+
+```
+dependenceies:
   http: <latest_version>
-~~~
+```
+
 ### http - get
-~~~
+
+```
 Future<http.Responese> fetchPost(){
   return http.get('https://jsonplaceholder.typicode.com/posts/1');
 }
-~~~
-http.get()返回一个包含http.Response的Future:
-* Future: 是与异步操作一起工作的核心Dart类。它用于表示未来某个时候可能会出现的可用值或错误；
-* http.Response: 类包含一个成功的HTTP请求接收到的数据；
+```
+
+http.get()返回一个包含 http.Response 的 Future:
+
+- Future: 是与异步操作一起工作的核心 Dart 类。它用于表示未来某个时候可能会出现的可用值或错误；
+- http.Response: 类包含一个成功的 HTTP 请求接收到的数据；
+
 ### http - post
-~~~
+
+```
 Future<http.Response> fetchPost(){
   return http.post('https://jsonplaceholder.typicode.com/posts/1');
 }
-~~~
-## 如何将Response转换成Dart object
-#### 1，创建一个CommonModel类
-CommonModel包含网络请求的数据，包括一个工厂构造函数，他容许通过JSON创建一个CommonModel对象。
-~~~
+```
+
+## 如何将 Response 转换成 Dart object
+
+#### 1，创建一个 CommonModel 类
+
+CommonModel 包含网络请求的数据，包括一个工厂构造函数，他容许通过 JSON 创建一个 CommonModel 对象。
+
+```
 class CommonModel{
   final String icon;
   final String title;
@@ -50,20 +64,24 @@ class CommonModel{
     );
   }
 }
-~~~
-#### 2，将http.Response转换为CommonModel对象
-2.1 用``dart:convert``package将响应内容转化为json Map;
-2.2 使用fromJson工厂函数，将json Map转化为CommonModel对象；
-~~~
+```
+
+#### 2，将 http.Response 转换为 CommonModel 对象
+
+2.1 用`dart:convert`package 将响应内容转化为 json Map;
+2.2 使用 fromJson 工厂函数，将 json Map 转化为 CommonModel 对象；
+
+```
 Future<CommonModel> fetchPost() asnyc{
   final response = await http.get('https://jsonplaceholder.typicode.com/posts/1');
   final result = json.decode(response.body);
   return new CommonModel.fromJson(result);
 }
-~~~
+```
 
 ### 整体代码
-~~~
+
+```
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -129,7 +147,4 @@ class CommonModel{
     );
   }
 }
-~~~
-
-
-
+```

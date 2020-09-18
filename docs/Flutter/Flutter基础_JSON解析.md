@@ -1,9 +1,14 @@
-# JSON解析
+# JSON 解析
+
 ## 如何序列化
+
 ### 大型项目
-插件 ``json_serializable``, ``built_value``;
+
+插件 `json_serializable`, `built_value`;
+
 ### 小型项目
-~~~
+
+```
 String jsonStr = '{"icon": "",title: "", url: "", statusBarColor: "", hideAppBar:""}';
 Map<String, dynamic> map = JSON.decode(jsonStr);
 CommonModel model = CommonModel.fromJson(map);
@@ -29,10 +34,13 @@ class CommonModel{
     );
   }
 }
-~~~
-> 这样就可以明确知道model中有哪些字段了
-### 解析复杂JSON
-~~~
+```
+
+> 这样就可以明确知道 model 中有哪些字段了
+
+### 解析复杂 JSON
+
+```
 {
   "url": "XXX",
   "tabs": [
@@ -72,5 +80,4 @@ class TravelTab {
     groupChannelCode = json['groupChannelCode'];
   }
 }
-~~~
-
+```
