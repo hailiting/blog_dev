@@ -28,12 +28,12 @@ ES6 Module
 打包成浏览器可认识的语言
 everything is module
 
-- Split the dependency tree into chunks loaded on demand (拆分依赖到代码块，按需加载)
-- keep initial loading time low (快速初始化加载)
-- Every static asset should be able to be a module (所有静态资源都可当成模块)
-- Ability to integrate 3rd-party libraries as modules(第三方库模块化)
-- Ability to customize nearly every part of the module bundler(自定义模块化打包)
-- Suited for big project(适合大型项目)
+- 拆分依赖到代码块，按需加载
+- 快速初始化加载
+- 所有静态资源都可当成模块
+- 第三方库模块化
+- 自定义模块化打包
+- 适合大型项目
 
 ```
 npm i webpack
@@ -50,11 +50,53 @@ plugins: 插件
 
 ### loader features
 
-- Loaders can be chained. They are applied in a pipeline to the resource. The final loader is expected to return JavaScript: each other loader can return source in arbitrary format. which is passed to the next loader. (链式调用，资源通过管道 最后一个 loader 返回 javascript)
-- Loaders can be synchronous or asynchronous. (可以同步或异步执行)
-- Loaders run in Node.js and can do everything that's possible there. (运行在 Nodejs 无所不能)
-- Loaders accept query parameters. This can be used to pass conofiguration to the loader. (loaders 可以接受参数，你可以在配置文件中设置 loaders)
-- Loaders can be bound to extensions / RegExps in the configuration. (可以通过资源扩展名或正则表达式来匹配每个 loader 生效范围)
-- Loaders can be published /install through npm.(loaders 可以通过 npm 安装和发布)
-- Plugins can give loaders more feature.（插件可以提供给 loaders 更多功能）
-  24：00
+- 链式调用，资源通过管道 最后一个 loader 返回 javascript
+- 可以同步或异步执行
+- 运行在 Nodejs 无所不能
+- loaders 可以接受参数，你可以在配置文件中设置 loaders
+- 可以通过资源扩展名或正则表达式来匹配每个 loader 生效范围
+- loaders 可以通过 npm 安装和发布
+- 插件可以提供给 loaders 更多功能
+
+```js
+module: {
+  rules: {
+    [
+      {
+        test: /\.js$/,
+        exclude: [path.resolve(__dirname, "node_modules")],
+        loader: "babel-loader",
+      },
+      {
+        test: /\.(scss|css)$/,
+        exclude: [/\.krem.(scss|css)$/],
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              // modules: true,
+            },
+          },
+          "postcss-loader",
+          "sass-loader",
+        ],
+      },
+    ];
+  }
+}
+```
+
+### 模式【mode】
+
+```js
+// 只在配置中提供mode
+module.exports = {
+  mode: "production",
+}
+// 从CLI参数中传递
+webpack --mode=production
+```
+
+tips: 只设置`NODE_ENV`，则不会自动设置`mode`，

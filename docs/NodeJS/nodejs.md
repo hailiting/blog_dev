@@ -449,3 +449,23 @@ util.isRegExp(object);
 util.isDate(object);
 util.isError(object);
 ```
+
+### 具体 api
+
+#### process.argv
+
+process 对象是一个全局变量，它提供当前 nodejs 进程的有关信息以及控制当前 node.js 进程。因为是全局变量，所以无需 require().
+
+```js
+// 启动进程为以下时
+node process-args.js one two=three four
+// process.argv[0]   ->  /usr/local/bin/node
+// process.argv[1]   ->  /Users/mjr/work/node/process-args.js
+// process.argv[2]   ->  one
+// process.argv[3]   ->  two=three
+// process.argv[4]   ->  four
+
+process.argv.forEach((val, index) => {
+  console.log(`${index}: ${val}`);
+});
+```
