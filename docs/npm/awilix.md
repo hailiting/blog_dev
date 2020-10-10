@@ -87,7 +87,6 @@ import Koa from "koa";
 import serve from "koa-static";
 import config from "./config";
 import render from "koa-swig";
-// co: 把函数全部自动向下执行 next->next->done
 import co from "co";
 import log4js from "log4js";
 import errorHandle from "./middlewares/errorHandler";
@@ -149,6 +148,7 @@ log4js.configure({
 });
 const logger = log4js.getLogger("cheese");
 errorHandle.error(app, logger);
+// 自动注册路由
 app.use(loadControllers(__dirname + "/controllers/*.js"), {
   cwd: __dirname,
 });
