@@ -1,12 +1,12 @@
 # Dart 知识体系
 
-## 常用数据类型
+## [常用数据类型](./Dart基础_常用数据类型.md)
 
 - 数字
   - num
   - int
   - double
-- 字符串 String
+- 字符串 string
 - 布尔（bool）
 - 集合
   - List

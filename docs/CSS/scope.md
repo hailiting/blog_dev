@@ -1,4 +1,4 @@
-# `:scope`
+# css_scope
 
 ## `:scope`属于 css 伪类，它表示作为选择器要匹配的参考点元素
 

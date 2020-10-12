@@ -1,4 +1,4 @@
-# Dart 基础\_基本数据类型
+# Dart 基础\_常用数据类型
 
 ## 概述
 
@@ -6,8 +6,47 @@
 2，面向对象的语言，OOP（如：Python, C++, Objective-C, Java, Kotliin, Swift, C#, Ruby 与 PHP 等）  
 3，JIT & AOT
 
-- JIT: 即时编译，开发期间，更快编译，更快的重载
-- AOT: 事前编译，release 期间，更快更流畅
+- JIT(Just In Time): 即时编译，开发期间，更快编译，更快的重载
+- AOT(Ahead Of Time): 事前编译，release 期间，更快更流畅
+
+```dart
+// main.dart
+import "package:flutter/material.dart";
+import "package:flutter_app/navigator/data_type.dart";
+void main()=>runApp(MyApp());
+class MyApp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return MaterialApp(
+      title: "Dome",
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: BaseStyles(),
+    )
+  }
+}
+// data_type.dart
+import 'package:flutter/material.dart';
+
+class BaseStyles extends StatefulWidget {
+  @override
+  _BaseStylesState createState() => _BaseStylesState();
+}
+
+class _BaseStylesState extends State<BaseStyles> {
+  @override
+  Widget build(BuildContext context) {
+    _numType();
+    return Container(
+      child: Text("常用数据类型"),
+    );
+  }
+  void _numType(){
+    // ...
+  }
+}
+```
 
 ### 常用数据类型
 
@@ -16,7 +55,7 @@
 
 #### 数字 num int double
 
-```
+```dart
 // 数字类型
 void _numType() {
     num  num1 = -1.0; // 浮点类型  是数字类型的父类
@@ -32,7 +71,7 @@ void _numType() {
 
 #### 字符串 String
 
-```
+```dart
   _stringType(){
     String str1="字符串1", str2='字符串2';
     String str3 = "str1: $str1, str2: $str2";
@@ -53,7 +92,7 @@ void _numType() {
 
 #### 布尔（bool）
 
-```
+```dart
   _boolType(){
     bool success = true, fail = false;
     print(success);
@@ -67,13 +106,13 @@ void _numType() {
 
 ##### List 集合
 
-```
+```dart
 _listType(){
     print('---_listType---');
     // 集合初始化
     List list = [1,2,3,'asdfas'];  // 泛型 <dynamic>
     print(list);
-    List<int>list2=[];
+    List<int> list2=[];
     // list2 = list; // err List<dynamic> is not a subtype of type List<int>
     List list3 = [];
     list3.add('list3');
@@ -114,7 +153,7 @@ _listType(){
 
 Map 是 key, value 相关联的对象，key 和 value 都可以是任何类型的对象，并且 key 是唯一的，如果 key 重复后面添加的覆盖前面的
 
-```
+```dart
 _mapType(){
     // 定义是时候初始化
     Map student = {'name':'小明', 'age': 18};
@@ -145,7 +184,11 @@ _mapType(){
 
 #### 类型转换 && dynamic, var, Object 三者的区别
 
-```
+- dynamic：会使 dart 数据类型检查的失败，不建议使用。可重新赋值新类型
+- var：不关心赋值的是何种数据类型，数据类型一旦确定不能修改 [关于变量详情，参见](./Dart基础_变量)
+- Object：只能调用 Object 属性，可调用如`tostring()`,`hashCode()`方法，dynamic 与 Object 最大区别是类型检查
+
+```dart
 _tips(){
     print('---tips---');
     dynamic x = 'hai'; // 会使dart数据类型检查的失败

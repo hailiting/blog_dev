@@ -1,4 +1,4 @@
-# https://hailiting.github.io/hai_blog/
+# https://hailiting.github.io/blog_dev/
 
 ## 好用的  工具网站
 
@@ -41,14 +41,59 @@ cd oh-my-zsh/tools
 sh install.sh
 ```
 
-# 既然选择了远方，就要风雨兼程
+### 前端架构体系
+
+```
+- 前端架构师知识体系
+	- 1. 基础
+		- 数据结构(算法)  20
+    - 计算机组成 10
+	- 2. 前端基础
+		- css
+      - scss 80
+      - less 80
+		- js
+      - typescript 80
+      - 三大框架
+      - vue 80
+      - react 80
+      - angular 0
+      - 小程序 0
+	- 3. 前端进阶
+		- 热门框架是设计模式(mvm,mvvm) 60
+		- 数据可视化
+			- WebGL 0
+			- Three.js 0
+			- Echart  60
+			- Tradingview  70
+			- Cocos2d-js 0
+			- canvas 20
+		- 多端解决方案
+			- ReactNative 40
+			- Flutter 40
+		- 网站优化方案  20
+		- 编程工程化
+			- webpack 60
+			- gulp 60
+			- grunt 0
+			- bower 0
+			- Yeoman 0
+	- 4. 架构师
+		- nodejs 60
+		- php 40
+		- python 10
+		- java 6
+		- go 6
+		- mysql 30
+		- mongodb 30
+```
 
 ## 需求
 
 - 加分：小程序，数据可视化，大数据处理，游戏开发
 - 1，熟练掌握 H5/Hybrid/小程序/ReactNative/Weex 开发
 - 2，对移动前端性能优化有充足的实践和方法
-- 3，通晓主流 weeb 技术，主导与组织过复杂的 webApp 项目开发
+- 3，通晓主流 web 技术，主导与组织过复杂的 webApp 项目开发
 - 4，熟悉现代前端研发生态圈，包括模块化、前端编译和构建工具
 - 5，熟练运用主流的移动端 js 库和开发框架，并深入理解其设计原理，如：webpack、reactjs、vue 等
 - 6，熟悉 Java Web/NodeJS Web 应用开发，了解服务端领域的核心设计思想和原理

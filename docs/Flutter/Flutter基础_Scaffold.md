@@ -6,6 +6,33 @@
 - NotificationListener 除了可以监听滚动之外，还能做什么
 - 列表滚动除了实现导航栏的渐变效果，还可以实现哪些有意思的效果
 
+```dart
+const Scaffold({
+  Key key,
+  this.appBar,  // 横向水平布局，通常显示在顶部（*）
+  this.body,  // 内容（*）
+  this.floatingActionButton,  //  悬浮按钮，就是上图右下角按钮
+  this.floatingActionButtonLocation,  // 悬浮按钮位置
+  this.floatingActionButtonAnimator,  //  悬浮按钮在[floatingActionButtonLocation]出现/消失动画
+  this.persistentFooterButtons, // 在底部呈现一组button，显示于[bottomNavigationBar]之上，[body]之下
+  this.drawer, // 一个垂直面板，显示于左侧，初始处于隐藏状态
+  this.endDrawer,
+  this.bottomNavigationBar,  //  出现于底部的一系列水平按钮
+  this.bottomSheet, // 底部持久化提示框
+  this.backgroundColor,  // 内容背景颜色
+  this.resizeToAvoidBottomPadding,  // 弃用，使用[resizeToAvoidBottomInset]
+  this.resizeToAvoidBottomInset,  // 重新计算布局空间大小
+  this.primary = true,   //  是否显示到底部，默认为true将显示到顶部状态栏
+  this.drawerDragStartBehavior = DragStartBehavior.start,
+  this.extendBody = false, // 控制body底部的可显示范围是否在bottomNavigationBar和persistentFooterButtons之上，如果设置为True则会直接显示到屏幕的底部，而不是bottomNavigationBar和persistentFooterButtons的上面。
+  this.extendBodyBehindAppBar = false, // 这个是控制是否是从屏幕顶部开始显示，而不是从AppBar下面开始显示。
+  this.drawerScrimColor, // 侧滑布局滑出去之后剩余部分的颜色
+  this.drawerEdgeDragWidth,  // 水平滑动将打开抽屉的区域的宽度,默认值20，除了0之外其他都不起作用
+  this.drawerEnableOpenDragGesture = true,//通过手势滑动打开左侧侧滑栏
+  this.endDrawerEnableOpenDragGesture = true,// 通过手势滑动打开右侧侧滑栏
+})
+```
+
 ## 实现首页导航需要哪些材料
 
 Scaffold
@@ -18,7 +45,7 @@ Scaffold
 
 Scaffold 是一个实现了基本的 materialDesign 的布局结构
 
-```
+```dart
 import 'package:flutter/material.dart';
 class TabbedAppBarSample extends StatelessWidget{
   @override
@@ -93,7 +120,7 @@ void main(){
 
 ### 底部导航
 
-```
+```dart
 // navigator/tab_navigator.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_dome/pages/home_page.dart';
