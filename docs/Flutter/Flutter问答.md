@@ -24,6 +24,7 @@
 - 3. 运行`flutter run`
 - 4. 用 xcode 打开项目 `open ios/Runner.xcworkspace`
 - 5. 打开 ios 模拟器`xcrun instruments -s` || `open -a Simulator`
+     flutter device
 
 ## 3. Flutter doctor 命令是做什么用的
 
@@ -45,5 +46,6 @@
 ## 7. 如何通过命令启动 IOS/Android 模拟器
 
 开启一个 ios 模拟器：`open -a Simulator`
+开启一个安卓模拟器 `emulator -avd myavd01`，这里的 avd 名称可以通过 androidstudio 的 AVD manage 设置
 
 ## 8. 你觉得 Flutter 开发工具有哪些吐槽点
