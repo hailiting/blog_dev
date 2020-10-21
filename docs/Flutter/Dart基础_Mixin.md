@@ -1,5 +1,7 @@
 # Dart 基础\_Mixin
 
+Mixins(混入功能)相当于多继承，也就是说可以继承多个列
+
 ## 概述
 
 - Mixin 是面向对象程序程序设计语言中的类，提供了方法的实现。
@@ -60,4 +62,32 @@ main(list<String>arguments){
     Cat cat01 = Cat();
     // cat01.fly();  cat不能飞
 }
+```
+
+### 使用 with 关键字来实现 Mixins 的功能
+
+```dart
+class First {
+    void printSth(){
+        print("im first printSth");
+    }
+}
+class Second {
+    void printSth(){
+        print("test");
+    }
+    void secondPrint(){
+        print("im secenc printSth");
+    }
+}
+class A = Second with First;
+main(){
+    A a = new A();
+    a.printSth();
+    a.secondPrint();
+}
+// 会打印以下
+// im first printSth
+// im secenc printSth
+// Second printsth 不会走
 ```

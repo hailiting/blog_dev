@@ -111,7 +111,7 @@ p3.getInfo();
 
 getter 和 setter 可以最大程度简化值的获取或者格式化以及设置
 
-```
+```dart
 String get school=>_school;
 // stu1.school = '987';
 get info{
