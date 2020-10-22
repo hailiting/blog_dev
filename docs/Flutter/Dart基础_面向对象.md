@@ -4,6 +4,10 @@
 
 面向对象是一种软件开发思想，就是把事务对象化，包括属性和行为。面向对象编程更贴近实际生活思想。总体来说，面向对象的底层还是面向过程，面向过程抽象成类，然后封装，方便使用就是面向对象（万物皆对象）。
 
+在类里，除了构造方法之外，都是实例方法。
+
+静态方法：有`static`标识的;
+
 ## 面向对象的基本知识点
 
 - 实例化成员变量
@@ -140,6 +144,7 @@ class Son extends Father {
 class User{
   String name;
   int age;
+  // name是当前class的变量
   User(mName, mAge):name = mName, age=mAge{
       // do sth
     }
@@ -267,6 +272,54 @@ main(){
 }
 ```
 
+```dart
+abstract class People{
+  int PeopleNumber;
+  void Say();     // 没有方法体（未实现的方法）的抽象方法
+}
+class Man extends People{
+  // 作为抽象类的子类，不需要对属性重写
+  @overrride
+  // 继承抽象类的子类必须实现抽象方法
+  void Say(){
+    print('Man say Hello!');
+  }
+}
+void main(){
+  Man m1 =   new Man();
+  m1.Say();
+}
+```
+
+##### 接口的实现和差异
+
+作为接口使用的时候，子类必须重写接口内的所有方法和属性
+
+```dart
+abstract class People{
+  int  PeopleNumberr;
+  void Say();
+}
+// implements 关键字 子类继承这个接口
+class Man implements People{
+  @override
+  int PeopleNumber;   // 接口必须实现属性
+  @override
+  void Say(){
+    print('Man say Hello!');
+  }
+}
+void main(){
+  Man m1 =  new Man();
+  m1.Say();
+}
+```
+
+##### 什么时候用抽象类 vs 什么时候用接口
+
+- 用抽象类继承的子类都用到了父类的同一个或多个 方法或属性的情况下
+- 用接口继承的子类只是把父类作为一个模板和标准的时候需要自己全部实现属性和方法的时候
+
 ### 枚举类型
 
 枚举类型是一种特殊的类，通常用来表示相同类型的一组常量值，用`enum`来定义。
@@ -298,6 +351,397 @@ main(){
 }
 ```
 
-### [Mixin](./Dart基础_Mixin.md)
+### [Mixin]
 
-### [泛型](./Dart基础_泛型.md)
+Mixins(混入功能)相当于多继承，也就是说可以继承多个列
+
+#### 概述
+
+- Mixin 是面向对象程序程序设计语言中的类，提供了方法的实现。
+- 其他类可以访问 mixin 类的方法而不必成为其子类。
+- Mixin 有时被称作`included（包含）`而不是`inherited（继承）`。
+- Mixin 为使用它的 class 提供额外的功能，但自身却不单独使用（不能单独生成实例对象，属于抽象类）。
+
+#### 优势
+
+Mixin 有利于代码复用，避免了多继承的复杂。  
+使用 Mixin 享有单一继承的单纯性和多重继承的共有性。  
+接口和 Mixin 都可以多继承，而 Mixin 是带实现的。
+
+#### 结构
+
+```dart
+mixin Musical {
+    bool canPlayPiao = false;
+    void entertainMe(){
+        // code
+    }
+}
+
+class Musician extends Performer with Musical,Danced{
+    Musician(String name, int age) : super(name, age);
+    @override
+    // ...
+}
+```
+
+#### 实例
+
+```dart
+abstract class Animal {}
+abstract class Mammal extends Animal{}
+abstract class Bird extends Animal{}
+abstract class Fish extends Animal{}
+mixin Walker{
+    // 函数返回类型为void
+    void walk(){
+        print('I am working!');
+    }
+}
+mixin Swimmer {
+    void swim(){
+        print('I am swimming!');
+    }
+}
+mixin Flyer{
+    void fly(){
+        print('I am flying');
+    }
+}
+class Dolphin extends Mammal with Swimmer{};
+class Bat extends Mammal with Walker,Flyer{};
+class Cat extends Mammal with Walker{}
+main(list<String>arguments){
+    Cat cat01 = Cat();
+    // cat01.fly();  cat不能飞
+}
+```
+
+#### 使用 with 关键字来实现 Mixins 的功能
+
+```dart
+class First {
+    void printSth(){
+        print("im first printSth");
+    }
+}
+class Second {
+    void printSth(){
+        print("test");
+    }
+    void secondPrint(){
+        print("im secenc printSth");
+    }
+}
+class A = Second with First;
+main(){
+    A a = new A();
+    a.printSth();
+    a.secondPrint();
+}
+// 会打印以下
+// im first printSth
+// im secenc printSth
+// Second printsth 不会走
+```
+
+### 泛型
+
+#### List<...>
+
+常用的泛型名称 E、T、S、K、V，这些字母本身没有意义，只是可读性和协作方面有优势  
+`E => Element`
+`T => Type`
+`K => key`
+`V => value`
+
+#### 为什么使用泛型
+
+- 1，指定泛型类型，可以使代码更安全，提高代码的可读性；
+
+```dart
+var names = new List<String>();
+names.addAll(['Seth','Kathy','Lars']);
+// 检查模式编译失败，生产模式编译成功
+names.add(42);
+```
+
+- 2，使用泛型可以避免代码重复。提高解决类、接口、方法的复用性、以及对不特定数据类型的支持
+
+```dart
+//  T是自定义类型的占位符
+abstract class Cache<T> {
+    T getByKey(String key);
+    setByKey(String key, T value);
+}
+
+
+main(List<String> args){
+    TestGeneric asdfsd= TestGeneric();
+    asdfsd.start();
+}
+class TestGeneric {
+    void start(){
+        Cache<String>cache1 = Cache();
+        // cache1.setItem('cache1',11); // err
+        cache1.setItem('cache1','11'); // ok
+        String string1 = cache1.getItem('cache1');
+        print(string1);
+        Cache<int>cache2 = Cache();
+        cache2.setItem('cache1',12); // ok
+    }
+}
+class Cache<T>{
+    static final Map<String, Object> _cached = Map();
+    void setItem(String key, T value){
+        _cached[key]= value;
+    }
+    T getItem(String key){
+        return _cached[key];
+    }
+}
+=>
+// 接口缓存对象
+abstract class ObjectCache {
+    Object getByKey(String key);
+    setByKey(String key, Object value);
+}
+// 只是String接口
+abstract class StringCache {
+    String getByKey(String key);
+    setByKey(String key, String value);
+}
+// ...
+main(List<String> args){
+    // 指定了String，就不能在add 1
+    Cache<String> strList = Cache<String>();
+    strList.add('a');
+    strList.add(1);
+}
+```
+
+#### 使用集合文字
+
+List,Map 文字可以参数化。
+
+```dart
+// <type>用于列表
+var names=<String>['123','adad','asdad'];
+// <keyType, valueType>用于映射
+var pages = <String, String>{
+    'index.html':'homepagw',
+    'robots.txt':'Hints for web r',
+    ...
+}
+```
+
+#### 使用带构造函数的参数化类型
+
+可以检查 泛型集合及其包含的类型
+
+```dart
+var names = List<String>();
+names.addAll(['setcg','karrch','sdf']);
+var nameSet = Set<String>.from(names);
+// 可以检查 泛型集合及其包含的类型
+print(nameSet is List<String>); // true
+
+// 创建一个具有整形键和类型视图的映射
+var views = Map<int, View>();
+```
+
+#### 限制参数化类型
+
+用`extend`来实现
+
+```dart
+class Foo<T extends SomeBaseClass>{
+    String toString()=> "Instance of 'Foo<$T>'";
+}
+class Extender extends SomeBaseClass{
+    ...
+}
+```
+
+可以使用 SomeBaseClass 或它的任何子类作为通用参数
+
+```dart
+var someBaseClassFoo = Foo<SomeBaseClass>();
+var extenderFoo = Foo<Extender>();
+```
+
+也可以不指定通用参数
+
+```dart
+var someBaseClassFoo = Foo();
+```
+
+指定其他非 SomeBaseClass 类型将导致错误
+
+```dart
+var foo = Foo<Object>(); // err
+```
+
+## 使用泛型的方法
+
+```dart
+T first<T>(List<T> ts){
+    T tmp = ts[0];
+    return tmp;
+}
+```
+
+## 代码
+
+```dart
+// main.dart
+import "package:flutter/material.dart";
+import "package:flutter_dart_file/data_type.dart";
+import "package:flutter_dart_file/oop_learn.dart";
+
+void main()=>runApp(MyApp());
+
+class MyApp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return MaterialApp(
+      title: "Flutter Dart",
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(title: "Flutter必备Dart基础"),
+    )
+  }
+}
+
+class MyHomePage  extends StatefulWidget {
+  MyHomePage({Key key, this.title}):super(key:key);
+  final String title;
+  @override
+  _MyHomePageState createState()=>_MyHomePageState();
+}
+class _MyHomePageState extends State<MyHomePage>{
+  @override
+  Widget build(BuildContext context){
+    _oopLearn();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title)
+      ),
+      body: Center(
+        child:ListView(
+          children: <Widget>[]
+        )
+      )
+    )
+  }
+  void  _oopLearn(){
+    // 创建Student的对象
+    Student stu1 = Student("清华", "Jack", 18);
+    stu1.school = "985";
+    print(stu1.toString());
+    Student stu2 = Student("北大","Tom", 16, city:"上海", country: "中国");
+    print(stu2.toString());
+    Student.doPrint("_oopLearn");
+    StudyFlutter sf = StudyFlutter();
+    sf.study();
+
+    Logger log1=Logger();
+    Logger log2=Logger();
+    print(log1 == log2);
+  }
+}
+// oop_learn.dart
+class Person {
+  String name;
+  int age;
+  Person(this.name, this.age);
+  /// 重写父类方法
+  @override
+  String toString(){
+    return "name: $name, age: $age";
+  }
+}
+
+class Student extends Person {
+  // 定义类的变量
+  String _school; // 下划线用来标识私有变量
+  String city;
+  String country;
+  String name;
+  static Student instance;
+  /// 构造方法
+  /// 通过 this.school 初始化自有参数
+  /// name, age交给父类进行初始化
+  /// city为可选参数
+  /// country设有默认参数
+  Student(this._school, String name, int age, {this.city, this.country = "China"})
+  // 初始化列表，除了调用父类构造器，在子类构造器方法体之前，可以初始化实例变量，不同的初始化变量之间用逗号分隔开
+  :name="$country.$city",
+  // 如果父类没没有默认构造方法（无参构造方法），则需要在初始化列表中调用父类构造方法进行初始化
+  super(name, age){
+    // 构造方法体不是必须的
+    print("构造方法体不是必须的")；
+  }
+  // 命名构造方法：【类名.方法名】
+  // 使用命名构造方法为类实现多个构造方法
+  Student.cover(Student stu): super(stu.name, stu.age){
+    print("命名构造方法");
+  }
+  // 命名工厂构造方法：factory 【类名.方法名】
+  // 他可以有返回值，而且不需要将类的final变量作为参数，是提供一种灵活获取类对象的方法
+  factory Student.stu(Student stu){
+    return Student(stu._school, stu.name, stu.age, city: stu.city, country: stu.country);
+  }
+  @override
+  String toString(){
+    /// 实例方法，对象的实例方法 可以访问到实例变量与this，如下面的this._school
+    return "name: $name, school: ${this._school}, city: $city, country: $country ${super.toString()}";
+  }
+  // 可以为私有字段设置getter来让外界获取到私有字段
+  String get school => _school;
+  // 可以为私有变量设置setter来控制外界对私有字段的修改
+  set school(String value){
+    _school = value;
+  }
+  // 静态方法
+  static doPrint(String str){
+    print("doPrint: $str");
+  }
+}
+
+/// 工厂构造方法
+class Logger{
+  static Logger _cache;
+  // 工厂构造方法：
+  // 不仅仅是构造方法，也是一种模式
+  // 有时候为了返回一个之前已创建的缓存对象，原始的构造方法已经不能满足要求
+  // 那么可以使用工厂模式来定义构造方法
+  factory Logger(){
+    if(_cache == null){
+      _cache == Logger._internal();
+    }
+    return _cache;
+  }
+  Logger._internal();
+  void log(String msg){
+    print(msg);
+  }
+}
+// 使用abstract修饰符来定义一个抽象类，该类不能被实例化，抽象类在定义接口的时候非常有用，抽象类也可以包含一些实现
+abstract class Study {
+  void study();
+}
+/// 为类添加特征：mixins
+/// mixins 是在多个类层次结构中重用代码的一种方式
+/// 要使用minxins， 在with关键字后跟一个或多个mixin的名字，有对号隔开，并且with要用在extends关键字之后
+/// mixins的特征：实现mixin,就创建一个继承Object类的子类，不声明任何构造方法，不调用super
+
+class Test extends Person with Study {
+  Test(String name, int age): super(name, age);
+  @override
+  void study(){
+    //
+  }
+}
+```

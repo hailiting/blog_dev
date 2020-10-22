@@ -43,7 +43,7 @@ Dart 天生支持四种集合类型：`lists`,`maps`,`queues`和`sets`。
 
 ### 1, 尽量使用
 
-```
+```dart
 // good
 var points = [];
 var address = {};
@@ -54,7 +54,7 @@ var addresses = new Map();
 
 也可以提供泛型类型
 
-```
+```dart
 // good
 var points = <Point>[];
 var addresses = <String, Address>{};
@@ -70,7 +70,7 @@ var address = new Map<String, Address>{};
 
 Dart 提供了更高效率和易用的 getter 函数： `.isEmpty`和`.isNotEmpty`。
 
-```
+```dart
 // god
 if(lunchBox.isEmpty) return 'so hungry...';
 if(words.isNotEmpty) return words.join(' ');
@@ -84,7 +84,7 @@ if(!words.isNotEmpty) return words.join(' ');
 如果现有一个集合并且想要修改里面的内容转换为另一个集合，使用`.map()`、`.where()`以及`Iterable`提供的其他函数让代码更简洁。  
 使用这些函数代替`for`循环会让代码更简洁的表述意图，生成一个新的集合系列并不具有副作用。
 
-```
+```dart
 var aquaticNames = animals
         .where((animal)=> animal.isAquatic)
         .map((animal)=> animal.name);
@@ -92,7 +92,7 @@ var aquaticNames = animals
 
 ### 4, 避免在 `Iterable.forEach()`中使用函数声明形式
 
-```
+```dart
 // good
 for(var person in people){
     ...
@@ -105,7 +105,7 @@ people.forEach((person){
 
 如果在每个集合元素上调用一个已经定义好的函数，则可以使用`forEach()`;
 
-```
+```dart
 people.forEach(print)
 ```
 
@@ -115,7 +115,7 @@ people.forEach(print)
 
 对于编程语言来说，局部嵌套方法以及闭包是非常有用的。通常是在一个方法中定义另一个方法。在大部分情况下，这些嵌套方法都用做回调函数而且不需要名字。
 
-```
+```dart
 // good
 void main(){
     localFunction(){
@@ -134,7 +134,7 @@ void  main(){
 
 如果你在一个对象上调用函数并省略了括号，Dart 称之为'tear-off'——一个和函数使用同样参数的闭包，当调用他的时候就执行了这个函数
 
-```
+```dart
 // good
 names.forEach(print);
 // bad      不要把函数调用包装为一个lambda表达式
@@ -149,7 +149,7 @@ names.forEach((name){
 
 Dart 中没有初始化的变量和域会自动初始化为 null。Dart 中没有’初始化内存’这个概念，所以添加`=null`是多余的。
 
-```
+```dart
 // good
 int _nextId;
 class LazyId{
@@ -167,7 +167,7 @@ int _nextId  = null;
 
 ### 避免保存可以计算的结果
 
-```
+```dart
 // bad  不知道什么时候缓存失效（radius是可变的），需要重新计算
 class Circle {
     num radius;
@@ -182,7 +182,7 @@ class Circle {
 
 为了避免缓存失败，可这样做：
 
-```
+```dart
 class Circle {
     num _radius;
     num get radius =>_radius;
@@ -208,7 +208,7 @@ class Circle {
 
 上面的代码不利于编写、维护及调试
 
-```
+```dart
 class Circle{
     num radius;
     num get area => match.PI * radius*radius;
@@ -221,7 +221,7 @@ class Circle{
 
 显式的定义局部变量类型会制造视觉噪音
 
-```
+```dart
 // good
 Map<int, List<Person>> groundByZip(Iterable<Person> people){
     var peopleByZip = <int, List<Person>>{};
@@ -248,7 +248,7 @@ Map<int,List<Person>> groupByZip(Iterable<Person> people){
 
 ### 不要创建不必要的 getter 和 setter
 
-```
+```dart
 // good
 class Box{
     var contents;
@@ -265,7 +265,7 @@ class Box{
 
 ### 使用`final`关键字来限制只读属性
 
-```
+```dart
 // good
 class Box{
     final contents = [];
@@ -279,7 +279,7 @@ class Box{
 
 ### 用`=>`来实现只有一个单一返回语句的函数
 
-```
+```dart
 get width => right - left;
 bool ready(num time) => minTime == null || minTime <= time;
 containsValue(String value) => getValues().contains(value);
@@ -291,7 +291,7 @@ containsValue(String value) => getValues().contains(value);
 
 只有当局部变量和成员变量名称一样的时候，才需要使用`this.`来访问成员变量。
 
-```
+```dart
 class Box{
     var value;
     void clear(){
@@ -305,7 +305,7 @@ class Box{
 
 注意：构造函数参数在初始化列表中从来不会出现参数冲突的情况
 
-```
+```dart
 class Box extends BaseBox{
     var value;
     Box(value)
@@ -317,7 +317,7 @@ class Box extends BaseBox{
 
 ### 要尽可能的在定义变量的时候初始化其值
 
-```
+```dart
 class Folder{
     final String name;
     final List<Document> contents=[];
@@ -332,7 +332,7 @@ class Folder{
 
 ### 尽可能的使用初始化形式
 
-```
+```dart
 class Point{
     num x,y;
     // 这里位于构造函数参数之前的``this.``语法称为初始化形式
@@ -342,7 +342,7 @@ class Point{
 
 ### 不要在初始化形式上定义类型
 
-```
+```dart
 // good
 class Point{
     int x, y;
@@ -357,7 +357,7 @@ class Point{
 
 ### 要用`;`来替代函数体的构造函数{}
 
-```
+```dart
 class Point{
     int x,y;
     Point(this.x,this.y); // bad  Point(this.x, this.y){}
@@ -366,7 +366,7 @@ class Point{
 
 ### 要把`super()`调用放到构造函数初始化列表之后调用
 
-```
+```dart
 View(Style style,List children)
     :_children = children,
     super(style){}
@@ -380,7 +380,7 @@ View(Style style,List children)
 
 ### 使用 rethrow 来重新抛出捕获的异常
 
-```
+```dart
 try{
     somethingRisky();
 } catch(e){
@@ -393,7 +393,7 @@ try{
 
 ### 使用`async/await`，而不是直接使用底层的特性
 
-```
+```dart
 // good
 Future<bool> doAsyncComputation() async{
     try{
@@ -417,7 +417,7 @@ Funture<bool> doAsyncComputation(){
 
 ### 不要在没有有用效果的情况下使用`async`
 
-```
+```dart
 // good
 Future afterTwoThings(Future first, second){
     return Future.wait([first,second]);
@@ -430,7 +430,7 @@ Future afterTwpThings(Future first, second) async{
 
 1，使用了 await
 
-```
+```dart
 Future usesAwait(Future later) async{
     print(await later);
 }
@@ -438,7 +438,7 @@ Future usesAwait(Future later) async{
 
 2，抛出一个异常(asymc throw 比 return new Future.error(...)更简短)
 
-```
+```dart
 Future asyncError() async{
     throw 'Error';
 }
@@ -446,7 +446,7 @@ Future asyncError() async{
 
 3，返回一个值
 
-```
+```dart
 Future asyncValue() async{
     return 'value';
 }
@@ -454,9 +454,9 @@ Future asyncValue() async{
 
 ### 考虑用高阶函数来转换事件流
 
-### 避免直接使用 Completer
+### 避免直接使用 s
 
-```
+```dart
 // bad
 Future<bool> fileContainsBear(String path){
     var completer = new Completer<bool>();

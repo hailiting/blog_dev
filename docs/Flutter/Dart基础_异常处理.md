@@ -8,7 +8,7 @@ Dart 提供了`throw, rethrow, try, catch, on, finally`关键字让开发者抛�
 
 Dart 提供两个类异常： `Exception`和`Error`， Dart 不仅可以抛出异常，还可以抛出任何不为`null`的对象
 
-```
+```dart
 // 抛出异常
 throw FormatException('Expected at least 1 section');
 
@@ -18,7 +18,7 @@ throw 'Out of llamas！';
 
 ### `catch`和`on`
 
-```
+```dart
 try {
     breedMoreLlamas();
 } on OutOfLlamasException {
@@ -35,7 +35,7 @@ try {
 
 catch 拿到异常的堆栈信息
 
-```
+```dart
 try{
     // ...
 } on Exception catch(e){
@@ -50,7 +50,7 @@ try{
 
 `on, catch`关键字捕获的异常会停止传播，如果需要异常继续传播，可以使用`rethrow`关键字
 
-```
+```dart
 void misbehave(){
     try {
         dynamic foo = true;
@@ -71,7 +71,7 @@ void main(){
 
 ### `finnaly` 不管是否抛出异常`finally`都一定会执行
 
-```
+```dart
 try{
     breedMoreLlamas();
 }  catch(e){
