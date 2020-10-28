@@ -1,4 +1,4 @@
-# 动画 Animation 开发指南
+# Flutter 基础\_动画 Animation 开发指南
 
 - 在 Flutter 中有哪些类型的动画
 - 如何使用动画库中的基础类给 widget 添加动画
@@ -8,14 +8,14 @@
 
 ## 在 Flutter 中有哪些类型的动画
 
-基于 tween(补间动画)  
- 基于物理的动画
+- 基于 tween(补间动画)
+- 基于物理的动画
 
 ## 如何使用动画库中的基础类给 widget 添加动画
 
 先看看怎么为 widget 添加动画
 
-```
+```dart
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 
@@ -37,6 +37,7 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin{
         controller = AnimationController(duration: const Duration(seconds: 2), vsync: this);
         animation = Tween<double>(begin: 0, end: 300).animate(controller)
             ..addListener((){
+                // setState 才会触发页面重新渲染
                 setState((){
                     animationValue = animation.value;
                 });
@@ -78,14 +79,18 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin{
 }
 ```
 
-- Animation: 是 Flutter 动画库中的一个核心类，生成指导动画的值
-  Animation 是一个抽象类，拥有当前值和状态（完成或停止），常用的是`Animation<double>`
-- CurvedAnimation Animation 的子类，将过程抽象为一个非线性的曲线
+- `Animation`: 是 Flutter 动画库中的一个核心类，生成指导动画的值
+
+  - `Animation` 是一个抽象类，拥有当前值和状态（完成或停止），常用的是`Animation<double>`，除 double 之外，还有`Animation<Color>`或`Animation<Size>`;
+  - `Animation`对象有状态，可以通过访问其 value 属性获取动画的当前值；
+  - `Animation`对象本身和 UI 渲染没有任何关系；
+
+- `CurvedAnimation`: Animation 的子类，将过程抽象为一个非线性的曲线
   Curves 类定义许多常用的曲线，也可以自己创建
 
-```
-final CuredAnimation curve = new CurvedAnimation(parent: controller, curve: Curves.easeIn);
-// 自定义
+```dart
+final CurvedAnimation curve = new CurvedAnimation(parent: controller, curve: Curves.easeIn);
+// Curves类定义了许多常用曲线，也可以自定义
 class ShakeCurve extends Curve{
     @override
     double transform(double t){
@@ -94,11 +99,18 @@ class ShakeCurve extends Curve{
 }
 ```
 
-- AnimationController Animation 的子类，用于管理 Animation
-  `AnimationController`是特殊的 Animation 对象，在屏幕刷新的每一帧，都会生成一个新的值。
+- `AnimationController`
+  - `AnimationController`是一个特殊的`Animation`对象，在屏幕刷新的每一帧，就会生成一个新的值，默认情况下，`AnimationController`在给定的时间段内会线性的生成从`0.0`到`1.0`的数字。
 
-```
+创建一个`Animation`对象:
+
+```dart
 final AnimationController controller = new AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
+```
+
+`AnimationController`派生自`Animation<double>`。当创建一个`AnimationController`时，需要传递一个`vsync`参数，存在`vsync`时会防止屏幕外动画消耗不必要的资源，可以将`stateful`对象作为`vsync`的值。
+
+```dart
 AnimationController 具有控制动画的其他方法：
 > forward() // 启动动画
 > reverse({double from}) // 倒放动画
@@ -106,20 +118,51 @@ AnimationController 具有控制动画的其他方法：
 > stop({bool canceled = true}) // 停止动画
 ```
 
-- Tween 正在执行的动画对象所使用的数据范围之间生成的值
+- `Tween` 正在执行的动画对象所使用的数据范围之间生成的值
 
-```
-final AnimationController controller = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
-final Animation curve = new CurvedAnimation(parent: controller, curve: Curves.easeOut);
-Animation<int> alpha = new IntTween(begin: 0, end: 255).animate(curve);
+```dart
+final Tween doubleTween = new Tween<double>(begin: -200.0, end: 0.0);
 ```
 
-## `addListener`和`addStatusListener` 动画添加监听器'
+`Tween`是一个无状态(stateless)对象，需要`begin`和`end`值。`Tween`的唯一职责就是定义从输入范围到输出范围的映射。输入范围弹窗为`0.0`到`1.0`，但并不一定。  
+`Tween`继承自`Animatable<T>`,而不是`Animation<T>`。`Animataable`和`Animation`相似，不是必须输出 double，例如`ColorTween()`指定两个颜色之间的过渡。
 
-- addListener: 动画的值发生变化时被调用
-- addStatusListener: 动画状态发生变化时被调用
-
+```dart
+final Tween colorTween = new ColorTween(begin: Colors.transparent, end: Colors.black54);
 ```
+
+`Tween`对象不存储如何状态。相反，它提供了`evaluate(Animation<double> animtion)`方法将映射函数应用于动画当前值。`Animation`对象的当前值可以通过`value()`获取到。`evaluate`函数还执行一些其他处理，例如分别确保动画值为`0.0`到`1.0`时返回开始和结束状态。
+
+- `Tween.animate`
+  - 要使用`Tween`对象，可调用它的`animate()`方法，传入一个控制器对象，如下：在`500ms`内生成从`0`到`255`的整数
+
+```dart
+final AnimationController controller = new AnimationController(
+  duration: const Duration(milliseconds: 500), vsync: this
+);
+Animation<int> alpha = new IntTween(begin:0,  end: 255).animate(controller);
+```
+
+##### 以下是构建一个控制器，一条曲线和一个 Tween:
+
+```dart
+final AnimationController controller = new AnimationController(
+  duration: const Duration(milliseconds: 500),
+  vsync: this
+);
+final Animation curve = new CurvedAnimation(
+  parent: controller,
+  curve: Curves.easeOut
+);
+Animation<int> alpha = new IntTween(begin:0, end: 255).animate(curve); // animate 返回的是Animation对象
+```
+
+## 为动画添加监听器
+
+- `addListener`: 动画的值发生变化时被调用
+- `addStatusListener`: 动画状态发生变化时被调用
+
+```dart
 @override
 void initState(){
     super.initState();
@@ -144,10 +187,10 @@ void initState(){
 
 ## AnimatedWidget
 
-AnimatedWidget 可以理解为 Animation 的助手
+AnimatedWidget 可以理解为 Animation 的助手  
 下面的实例 LogoApp 继承自 AnimatedWidget,AnimatedWidget 在绘制时，使用动画的当前值。LogoApp 仍然管理着 AnimationController 和 Tween.
 
-```
+```dart
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 void main(){
@@ -202,44 +245,60 @@ AnimatedBuilder 是拆分动画的工具类，借助它，我们可以更好的�
 - 渲染过度效果
   `Container => GrowTransition => AnimatedBuilder => (AnonymousBuilder) => LogoWidget`
 
-```
+```dart
 import 'package: flutter/animation.dart';
 import 'package: flutter/material.dart';
 void main()=> runApp(LogoApp());
 
-class LogoApp extends StatefulWidget{
-    _LogoAppState createState()=> _LogoApppState();
+class LogoWidget extends StatelessWidget{
+  Widget build(BuildContext context)=>Container(
+    margin: EdgeInsets.symmetric(vertical: 10),
+    child: FlutterLogo(),
+  );
+}
+class GrowTransition extends StatelessWidget{
+  GrowTransition({this.child, this.animation});
+  final Widget child;
+  final Animation<double> animation;
+  Widget build(BuildContext context)=>Center(
+    child: AnimationdBuilder(
+      animation: animation,
+      builder: (context, child)=>Container(
+        height: animation.value,
+        width: animation.value,
+        child: child,
+      ),
+      child: child
+    ),
+  );
 }
 
-
+class LogoApp extends StatefulWidget {
+  _LogoAppState createState() => _LogoAppState();
+}
 class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin{
-    Animation<double> animation;
-    AnimationController controller;
-    @override
-    void initState(){
-        super.initState();
-        controller = new AnimationController(duration: const Duration(seconds: 2), vsync: this);
-        animation = Tween<double>(begin: 0, end: 300).animate(controller);
-        controller.forward();
-    }
-    @override
-    Widget build(BuildContext context)=>GrowTransition(
-        child: LogoWidget();
-        animation: animation,
+  Animation<double> animation;
+  AnimationController controller;
+  @override
+  void initState(){
+    super.initState();
+    controller = AnimationController(
+      duration: const Duration(seconds:1),
+      vsync: this,
     );
-    @override
-    void dispose(){
-        controller.dispose();
-        super.dispose();
-    }
-}
-
-
-class LogoWidget extends StatelessWidget {
-    Widget build(BuildContext context) => Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        child: FlutterLogo(),
-    )
+    animation = Tween<double>(begin:0,end:300).animate(controller);
+    controller.forward();
+  }
+  @override
+  Widget build(BuildContext context)=>GrowTransition(
+    child: LogoWidget(),
+    animation: animation,
+  )
+  @override
+  void dispose(){
+    controller.dispose();
+    super.dispose();
+  }
 }
 ```
 
@@ -247,13 +306,18 @@ class LogoWidget extends StatelessWidget {
 
 效果：hero 通过动画从原页面飞到目标页面 ，目标页面逐渐淡入视野。
 
-```
+```dart
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 
 
 class PhotoHero extends StatelessWidget{
-  const PhotoHero({Key key, this.photo, this.onTap, this.width}) : super(key: key);
+  const PhotoHero({
+      Key key,
+      this.photo,
+      this.onTap,
+      this.width
+  }) : super(key: key);
   final String photo;
   final VoidCallback onTap;
   final double width;
@@ -321,7 +385,7 @@ void main()=>runApp(MaterialApp(home: HeroAnimation());
 
 #### Hero 函数原型
 
-```
+```dart
 const Hero({
     Key key,
     @required this.tag,
@@ -342,7 +406,7 @@ const Hero({
 
 ### 径向 hero 动画
 
-```
+```dart
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;

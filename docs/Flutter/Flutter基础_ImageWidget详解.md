@@ -1,4 +1,4 @@
-# 图片控件开发详解
+# ImageWidget 详解
 
 - Image widget
 - 如何加载网络图片
@@ -25,11 +25,11 @@ Flutter 中用 Image 来展示图片的 widget
 
 Image 支持以下类型的图片： JPEG, PNG, Gif, Animated GIF, WebP, Animated WebP, BMP 和 WBMP
 
-### Doem
+### Dome
 
 #### 加载网络图片
 
-```
+```dart
 import 'package:flutter/material.dart';
 void main()=>runApp(new MyApp());
 class MyApp extends StatelessWidget{
@@ -50,14 +50,14 @@ class MyApp extends StatelessWidget{
 
 ##### 1，在`pubspec.yaml`文件中声明图片资源的路径：
 
-```
+```yaml
 assets:
-    - images/my_icon.png
+  - images/my_icon.png
 ```
 
 ##### 2，使用`AssetImage`访问图片
 
-```
+```dart
 Image(
     height: 26,
     width: 26,
@@ -73,19 +73,21 @@ Image.asset(
 
 #### 如何加载本地图片
 
+存在手机 SD 卡里的图片
+
 ##### 1，加载完整路径的本地图片
 
-```
+```dart
 import 'dart:io';
 Image.file(File('/sdcard/Download/Stack.png')),
 ```
 
 ##### 2，加载相对路径的本地图片
 
-2.1 第一步： 在`pubspec.yaml`中添加 path_provider 插件;
+2.1 第一步： 在`pubspec.yaml`中添加 `path_provider` 插件;
 2.2 第二步： 导入头文件
 
-```
+```dart
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 // Image.file(File('/sdcard/Download/Stack.png')),
@@ -95,7 +97,7 @@ FutureBuilder(
         return snapshot.data !=null? Image.file(snapshot.data):Container();
     }
 )
-// 获取SDCard的路径
+// getExternalStorageDirectory： 获取外部存储卡的路径
 Future<File> _getLocalFile(String filename) async{
     String dir = (await getExternalStorageDirectory()).path;
     File f = newFile('$dir/$filename');
@@ -105,19 +107,20 @@ Future<File> _getLocalFile(String filename) async{
 
 ### 如何设置 Placeholder
 
-为设置 Placeholder，我们需要借助 FadeInImage,它能从内存，本地资源中加载 placeholder.
+为设置 Placeholder，我们需要借助 `FadeInImage` Widget, 它能从内存，本地资源中加载 `placeholder`.
 
 #### 从内存中加载 placeholder
 
 ##### 1，第一步
 
-安装 transparent_image 插件
+安装 `transparent_image` 插件
 
 ##### 2，导入并使用插件
 
-```
-// import 'package:flutter/material.dart';
-// import 'package:transparent_image/transparent_image.dart';
+```dart
+import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
+...
 class MyApp extends StatelessWidget{
     @override
     Widget build(BuildContext context){
@@ -132,8 +135,9 @@ class MyApp extends StatelessWidget{
                     children:<Widget>[
                         Center(child: CircularProgressIndicator()),
                         Center(
+                            // FadeInImage.memoryNetwork  从内存里加载图片
                             child: FadeInImage.memoryNetwork(
-                                placeholder: kTransparentImage,
+                                placeholder: kTransparentImage, // transparent_image -> kTransparentImage 从完全脱敏到逐渐显示
                                 image: 'http://....'
                             ),
                         ),
@@ -149,15 +153,15 @@ class MyApp extends StatelessWidget{
 
 ##### 第一步：配置本地资源
 
-```
+```yaml
 flutter:
-    assets:
-        - assets/loading.gif
+  assets:
+    - assets/loading.gif
 ```
 
 ##### 第二步：加载本地资源图片作为 placeholder
 
-```
+```dart
 FadeInImage.assetNetwork(
     palceholder: 'assets/loading.gif',
     image: 'https://...'
@@ -168,7 +172,8 @@ FadeInImage.assetNetwork(
 
 在 Flutter 中，使用`cached_network_image`插件，来从网络上加载图片，并且将其缓存到本地，以供下次使用
 
-```
+```dart
+import ....;
 void main(){
     runApp(MyApp());
 }
@@ -192,70 +197,4 @@ class MyApp extends StatelessWidget{
         )
     }
 }
-```
-
-### 如何加载 Icon
-
-```
-const Icon(
-    this.icon//IconDate,
-    {
-        Key key,
-        this.size,
-        this.color,
-        this.semanticLabel, // 标志位
-        this.textDirection, // 绘制方向，一般使用不到
-    }
-)
-const IconData(
-    this.codePoint // fonticon对应的16进制Unicode,
-    {
-        this.fontFamily, // 字体库系列
-        this.fontPackage, // 字体在那个包中，不填仅在自己的程序中查找
-        this.matchTextDirection: false, // 图标是否按照图标绘制方向显示
-    }
-)
-```
-
-#### 一：从 Flutter 内置的`material_fonts`加载
-
-```
-import 'package:flutter/material.dart';
-void main(){
-    runApp(new MaterialApp(home: new MyApp()));
-}
-class MyApp extends StatelessWidget{
-    @override
-    Widget build(BuildContext context){
-        return new Scaffold(
-            appBar: new AppBar(
-                title: new Text("Icons"),
-            ),
-            body: new Center(
-                child: new Icon(Icons.android, size: 100.0),
-            )
-        )
-    }
-}
-```
-
-#### 二：使用自定义 Icon
-
-第一步： 在`pubspec.yaml`中配置 icon:
-
-```
-fonts:
-    - family: devio
-      font:
-        asset: fonts/devio.ttf
-```
-
-第二步：使用
-
-```
-child: new Icon(
-    new IconDate(0xf5566, fontFamily:"devio"),
-    size: 100.0,
-    color: Colors.blueAccent,
-)
 ```
