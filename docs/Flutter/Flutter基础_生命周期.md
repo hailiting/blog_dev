@@ -1,6 +1,10 @@
 # Flutter 基础\_生命周期
 
-```
+## Widget
+
+![flutter-widget-lifecycle.png](./img/flutter-widget-lifecycle.png)
+
+```s
 create widget
 构造函数
 initState
@@ -54,7 +58,7 @@ resumed
 : AppLifecycleState.resumed
 ```
 
-## Flutter 页面生命周期实战指南
+### Flutter 页面生命周期实战指南
 
 ### StatelessWidget 只有 createElement, build 两个生命周期方法
 
@@ -149,7 +153,9 @@ class _WidgetLifecycleStateState extends State<WidgetLifecycleState> {
 }
 ```
 
-## Flutter 应用的生命周期
+## App 生命周期
+
+![flutter-app-lifecycle.png](./img/flutter-app-lifecycle.png)
 
 ```
 // 用WidgetsBindingObserver来获取Flutter应用维度的生命周期

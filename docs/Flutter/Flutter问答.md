@@ -48,4 +48,18 @@
 开启一个 ios 模拟器：`open -a Simulator`
 开启一个安卓模拟器 `emulator -avd myavd01`，这里的 avd 名称可以通过 androidstudio 的 AVD manage 设置
 
-## 8. 你觉得 Flutter 开发工具有哪些吐槽点
+## 8. 如果设置图片的`Placeholder`
+
+## 9. 如何加载不同分辨率的项目中图片
+
+## 10. 如何加载手机存储中的图片
+
+## 11. 实现一个动画有哪些方式
+
+## 12. 简述 Hero 动画有哪些应用场景
+
+## 13. 有哪些 Flutter 调试技巧
+
+## 14. 如何调试 Flutter 项目中的 Android 代码
+
+## 15. 如何调试 Flutter 项目中的 iOS 代码
