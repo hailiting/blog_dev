@@ -304,7 +304,86 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin{
 
 ## Hero 动画
 
-效果：hero 通过动画从原页面飞到目标页面 ，目标页面逐渐淡入视野。
+- Hero 指的是可以在路由（页面）之间"飞行"的 widget；
+- 将`hero`的形状从圆形转换为矩形，同时将其从一个路由飞到另一个路由的过程中进行动画处理；
+- Flutter 中的`Hero widget`实现了通常称为`共享元素转换`或`共享元素动画`的动画风格
+
+使用场景： 路由显示代表待售物品的缩略图列表，选择一个产品跳转到新的路由（页面的结构大致不变，新页面包含更多详细信息和"购买"按钮）。【共享元素转换】
+
+### Hero 函数原型
+
+```dart
+const Hero({
+    Key key,
+    @required this.tag,
+    this.createRectTween,
+    this.flightShuttleBuilder,
+    this.placeholderBuilder,
+    this.transitionOnUserGestures = false,
+    @request this.child,
+}) : assert(tag != null),
+    assert(transitionOnUserGestures != null),
+    assert(child != null),
+    super(key: key);
+```
+
+- tag: [必须]用于关联两个 Hero 动画的标识
+- createRectTween: [可选]定义目标 Hero 的边界，在从起始位置到目标位置的飞行过程如何变化
+- child: [必须]定义动画所呈现的 widget
+- 在不同路由中使用两个`hero widget`, 但使用匹配的标签来实现动画
+- 导航器管理包含应用程序路由的栈
+- 从导航器栈中推入或弹出路由会触发动画
+- Flutter 框架会计算一个补间矩形，用于定义在从源路由飞行到目标路由时 hero 的边界。在飞行过程中，hero 会移动到应用程序上的一个叠加层，以便它出现在两个页面上
+
+#### Hero 动画代码具有以下结构：
+
+1. 定义一个起始 hero widget，即`源hero`。指定其图像表示【通常是图片】和识别标记，并且位于源路由定义的当前显示的 widget 树中。
+2. 定义一个结束 widget，即`目标hero`。此 hero 指定了它的图形表示，以及源 hero 相同的标记。为了获得最佳效果，hero 应该有几乎相同的 widget 树。
+3. 创建一个包含目标 hero 的路由，目标路由定义了动画结束时的 widget 数。
+4. 通过导航器将目标路由入栈来触发动画。Navigator 推送和弹出操作会为每对 hero 配对，并在源路由和呃呃目标路由中使用匹配的标签触发 hero 动画。
+
+#### 基本类
+
+- Hero
+  - 从源路由飞到目标路由的 widget，为源路由定义一个 hero，为目标路由定义另一个 hero，并为每个标签分配相同的标签，Flutter 为具有匹配标签的 hero 配对。
+- Inkwell
+  - 指定点击 hero 时发生的情况，`InkWell`的`onTap()`方法构建新路由并将其 push 到导航器的栈。
+- Navigator
+  - 导航器管理一个路由栈，从导航器栈中 push 或 pop 路由会触发动画。
+- Route
+  - 指定一个路由或页面，除了最基本的应用外，大多数应用都有多条路由。
+
+### 标准的 hero 动画
+
+- `PhotoHero` 类
+- `HeroAnimation` 类
+
+> - 使用`MaterialPageRoute`、`CupertinoPageRoute`指定路由，或使用`PageRouteBuilder`构建自定义路由
+> - 通过将目标图片包装到 SizedBox 中来过度结束时的图片大小
+> - 将目标图片放入布局 Widget 中，更改图片的位置，如：`Container`
+
+```
+PhotoHero Widget tree
+  |
+SizedBox <--- 在动画的开始和结束处指定hero的大小
+  |
+Hero
+  |
+Material  <--- 使用透明色定义Material Widget可使图片在飞向目标看背景
+  |
+InkWell  <---- 包裹图片
+  |
+Image  <--- 将图片fit属性设置为`BoxFit.contain`，可以确保图片在转换过程中尽可能大而不改变其长度比
+
+
+HeroAnimation Widget tree
+  |
+MaterialPageRoute <---- 当用户点击包含源hero的InkWell时，代码将使用`MaterialPageRoute`创建目标路由。将目标路由push到导航栈会触发动画。
+  |
+Container <--- 该Container将PhotoHero放置在目标路由AppBar下方的左下角
+  |
+timeDilation <--- 在调试时使用 timeDilation 属性来减缓动画
+```
 
 ```dart
 import 'package:flutter/material.dart';
@@ -383,28 +462,12 @@ class HeroAnimation extends StatelessWidget{
 void main()=>runApp(MaterialApp(home: HeroAnimation());
 ```
 
-#### Hero 函数原型
+### Radial hero 动画
 
-```dart
-const Hero({
-    Key key,
-    @required this.tag,
-    this.createRectTween,
-    this.flightShuttleBuilder,
-    this.placeholderBuilder,
-    this.transitionOnUserGestures = false,
-    @request this.child,
-}) : assert(tag != null),
-    assert(transitionOnUserGestures != null),
-    assert(child != null),
-    super(key: key);
-```
+Radial(径向) hero 动画中，在 hero 在页面之间”飞行“的同时，其形状从圆形变为矩形
 
-- tag: [必须]用于关联两个 Hero 动画的标识
-- createRectTween: [可选]定义目标 Hero 的边界，在从起始位置到目标位置的飞行过程如何变化
-- child: [必须]定义动画所呈现的 widget
-
-### 径向 hero 动画
+- `Photo` 类
+- `RadialExpansion` 类
 
 ```dart
 import 'dart:math' as math;
@@ -561,3 +624,5 @@ void main(){
   runApp(MaterialApp(home: RadialExpansionDemo()));
 }
 ```
+
+![tero动画.gif](./img/tero动画.gif)
