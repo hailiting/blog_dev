@@ -239,7 +239,7 @@ class MyApp extends StatelessWidget {
 
 ### 侧拉菜单导航
 
-```
+```dart
 import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 class MyApp extends StatelessWidget{
@@ -293,7 +293,7 @@ class MyHomePage extends StatelessWidget {
 - 什么是 PageView
   `PageView`是一个可以完成页面之间滚动的 widget
 
-```
+```dart
 class PageView extends StatefulWidget{
     PageView({
         Key key,

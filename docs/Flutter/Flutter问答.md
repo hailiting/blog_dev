@@ -73,3 +73,15 @@
 ## 19. NotificationListener 除了可以用来监听列表滚动外，还可以用来做什么
 
 ## 20. 列表滚动除了实现导航栏的渐变效果外，还能实现哪些有意思的效果
+
+## 21. 如何解决 http 请求中的中文乱码
+
+## 22. Future 与 ES6 的 Promise 有哪些异同
+
+## 23. FutureBuilder 都可以用来做什么
+
+## 24. JSON 解析都有哪些实用的方式
+
+## 25. shared_preferences 在 Android 和 Ios 中分别基于什么实现的
+
+## 26. 在复杂 json 转模型上有哪些心得体会

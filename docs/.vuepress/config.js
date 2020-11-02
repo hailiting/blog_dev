@@ -16,4 +16,5 @@ module.exports = {
   themeConfig: {
     sidebar: filenames,
   },
+  port: 3333,
 };

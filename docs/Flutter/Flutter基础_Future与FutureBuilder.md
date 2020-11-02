@@ -1,4 +1,4 @@
-# Future 与 FutureBuilder
+# Flutter 基础\_Future 与 FutureBuilder
 
 ## 什么是 Future
 
@@ -14,7 +14,7 @@
 
 ### 使用 future.then 获取 future 的值与捕获 future 异常
 
-```
+```dart
 import 'dart:async';
 Future<String> testFuture(){
   // throw new Error();
@@ -35,7 +35,7 @@ main(){
 > 如果 catchError 与 onError 同时存在，则只会调用 onError;
 > Future 的 then 原型
 
-```
+```dart
 Future<R> then<R>(FutureOr<r> onValue(T value), {Function onError});
 ```
 
@@ -43,7 +43,7 @@ Future<R> then<R>(FutureOr<r> onValue(T value), {Function onError});
 
 Future 是异步的，借助`async await`来完成同步
 
-```
+```dart
 import 'dart:async';
 test() async{
   int result = await Future.delayed(Duration(milliseconds: 2000), (){
@@ -62,7 +62,7 @@ main(){
 
 `Future`结束时做的事情，相当于 try catch 里的 finally
 
-```
+```dart
 import 'dart:async';
 import 'dart:math';
 
@@ -85,7 +85,7 @@ void main(){
 
 设置请求超时
 
-```
+```dart
 import 'dart:async';
 void main(){
   new Future.delayed(new Duration(seconds: 3), (){
@@ -102,7 +102,7 @@ void main(){
 
 ### FutureBuilder 的构造方法
 
-```
+```dart
 FutureBuilder({
   Key key,
   Future<T> future, // future: Future对象，表示此构建器当前连接的异步计算
@@ -123,7 +123,7 @@ FutureBuilder({
 
 ## FutureBuilder 使用
 
-```
+```dart
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
