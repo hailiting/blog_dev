@@ -4,11 +4,11 @@
 
 一个函数的完整代码：调用一个函数，传入参数，返回结果：
 
-```
-function foo(x){
-    return x+x;
+```js
+function foo(x) {
+  return x + x;
 }
-var r=foo(1); // 有return 则return，没return,实际return undefined;
+var r = foo(1); // 有return 则return，没return,实际return undefined;
 ```
 
 generator 和函数不同， generator 由`function*`定义，并且，除了 return，还可以用`yield`返回多次。

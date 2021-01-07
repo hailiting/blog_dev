@@ -85,3 +85,27 @@
 ## 25. shared_preferences 在 Android 和 Ios 中分别基于什么实现的
 
 ## 26. 在复杂 json 转模型上有哪些心得体会
+
+## Flutter 混合开发都有哪些步骤
+
+## 创建一个 Fluttermodule 都有哪些方式
+
+## 简述为现有 Android 项目集成 Flutter 都需要哪些步骤
+
+## 简述为现有的 Ios 项目集成 Flutter 需要哪些步骤
+
+## 对比纯 Flutter 和混合 flutter 项目在调试上有哪些异同
+
+## 要运行集成了 Flutter 的 Android 项目是应该在 Android Studio 的 Android 模式下运行还是应该在 Flutter 模式下运行
+
+## 如何打包一个集成了 Flutter 的 Android 项目？有哪些步骤
+
+## 简述 Flutter 和 Native 通信都有哪几种方式，并说明每种方式的使用场景
+
+## 描述 channel 是如何工作的
+
+## Flutter 如何调用 Native 代码
+
+## Native 如何调用 Flutter 代码
+
+## 如何将 Flutter 作为页面的一部分集成到现有页面
