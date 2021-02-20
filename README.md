@@ -6,6 +6,10 @@
 
 邮箱快速注册 
 
+### https://icomoon.io/app/#/select
+
+多个 svg 转单个
+
 ### mac 终端美化
 
 #### `oh-my-zsh`
