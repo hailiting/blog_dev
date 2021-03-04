@@ -10,6 +10,10 @@
 
 多个 svg 转单个
 
+### http://kangax.github.io/compat-table/es2016plus/
+
+查看 js 属性在各大浏览器支持的情况
+
 ### mac 终端美化
 
 #### `oh-my-zsh`

@@ -1,5 +1,24 @@
 # ES5 核心
 
+## 严格模式`use strict`
+
+- 未声明的变量赋值抛出`ReferenceError`
+- 不止一次对**对象**字面量分配相同的属性，会抛出`SyntaxError`
+- 使用 with 语句抛出`SyntaxError`
+
+```js
+"use strict";
+function a{
+  aa = 1; // ReferenceError
+  var i = {
+    test: 5,
+    test: 6,// SyntaxError
+  }
+}
+```
+
+## 具体代码
+
 - 1. 立即执行函数
 - 2. 闭包
 - 3. 原型链
@@ -12,7 +31,7 @@
 - 6. 函数提示 变量提升 函数提升的级别比变量高
 - 7. jq 内部有很多经典的写法，模块化编程的概念 闭包
 
-## 一
+### 一
 
 ```js
 /// 变量提升
@@ -43,7 +62,7 @@ console.log(c); // 20
 console.log(e); // error: e is not defined
 ```
 
-## 二
+### 二
 
 - `this`的优先级比`prototype`大
 - `this`谁调用就指谁【()=>箭头函数】
@@ -131,7 +150,7 @@ user.init(); // 20
 user.init.bind(data)(); // 40
 ```
 
-## 三
+### 三
 
 ```js
 $("#test").click(function (argument) {
