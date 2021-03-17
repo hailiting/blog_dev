@@ -1,4 +1,4 @@
-# Dart 类 Class*继承*多态(一)
+# Dart 类 Class 继承多态(一)
 
 ## 一：类的声明与使用
 
@@ -6,7 +6,7 @@
 
 在`lib/Person.dart` 声明一个 Person class:
 
-```
+```dart
 class Person{
     String name;
     int age;
@@ -33,13 +33,13 @@ class Person{
 
 在 dart 文件中引入 Person 类：
 
-```
+```dart
 import 'lib/Person.dart';
 ```
 
 ### 3，实例化 Person 类
 
-```
+```dart
 Person p = new Person('asdfs', 123, 1);
 p.getInfo();
 p.changeName('123123asdas');
@@ -53,7 +53,7 @@ flutter: My name is 123123asdas, my age is 123, and I am a man
 
 ### 4，私有属性以及私有方法
 
-```
+```dart
 class Person {
     // ...
     String _secret; // 私有属性，只在本class有效
@@ -71,7 +71,7 @@ class Person {
 
 访问私有属性和方法
 
-```
+```dart
 Person p4 = new Person.secret('_secret message');
 print(p4.getSecret());
 p4.setSecret('new _secret message');
@@ -82,7 +82,7 @@ print(p4.getSecret());
 
 命名构造函数容许多个不同名称构造函数的存在，调用不同名称的构造函数，可以实例化出不同的实例。
 
-```
+```dart
 Person.now(){
     print(new DateTime.now());
 }
@@ -92,7 +92,7 @@ Person.secret(this._secret);
 
 使用命名构造函数：
 
-```
+```dart
 Person p2 = new Person.now();
 print(p2); // Instance of 'Person'
 p2.getInfo();
@@ -126,7 +126,7 @@ set newName(String name){
 
 使用
 
-```
+```dart
 Person p5 = new Person('postbid', 20);
 print(p5.info);
 p5.newName = 'sadfsdaf';
@@ -138,7 +138,7 @@ print(p5.info);
 初始化构造函数可以默认初始化一个值，不过单个 class 上没有实际意义  
 在子类上初始化列表
 
-```
+```dart
 String defaultCountry;
 Person(String name, int age, [int sex = 1]):defaultCountry = 'CN'{
     this.name = name;
@@ -172,7 +172,7 @@ print(p6.defaultCountry);
 
 如果构造函数没有特殊逻辑处理，可以使用简写的构造函数
 
-```
+```dart
 Person(this.name, this.age, [this.sex]);
 ```
 
@@ -181,7 +181,7 @@ Person(this.name, this.age, [this.sex]);
 静态方法只能访问静态属性，不能访问非静态属性。  
 非静态方法可以正常访问静态属性。
 
-```
+```dart
 class Person {
     static String name;
     int age;
@@ -204,7 +204,7 @@ class Person {
 `..` 级联操作符，用于串联操作  
 代码示例：
 
-```
+```dart
 import 'demo6.dart';
 class Person {
     String name;
@@ -245,7 +245,7 @@ void main(){
 重写方法要加`@override`注释，便于协作  
 子类构造方法中，如果要初始化父类构造方法，使用`super`关键字，比如 Dog(String name,int age,[String nickName]): super(name, age),子类中调用父类的方法使用`super.fun()`;
 
-```
+```dart
 class Animal {
     String name;
     int age;
@@ -297,7 +297,7 @@ void main(){
 通俗讲，父类可以调用子类同名的方法，输出结果和子类相同，但不能调用父类没有子类中有的方法，也就是子类的方法覆盖了父类的方法
 比如：`Animal d1=new Dog()`,因为 d1 类型是 Animal,因此`d1.speak()`=>实际上调用 d1 子类方法差不多，但 Animal 没有`run`,所以不能调用`d1.run()`
 
-```
+```dart
 class Animal {
     speak(){}
 }

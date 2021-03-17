@@ -1,10 +1,10 @@
-# Dart 类 Class*继承*多态(二)
+# Dart 类 Class 继承多态(二)
 
 ## 静态构造函数
 
 如果类产生的对象永远不会改变，可以让这些对象成为编译时常量。为此，需要定义一个 const 构造函数并确保所有 实例变量都是 final 的
 
-```
+```dart
 class ImmutablePoint {
     final num x;
     final num y;
@@ -18,7 +18,7 @@ class ImmutablePoint {
 
 使用命名构造函数可以为一个类声明多个构造函数，或者说是提供额外声明
 
-```
+```dart
 class Point {
     num x;
     num y;
@@ -38,7 +38,7 @@ class Point {
 
 默认情况下，子类构造函数会调用父类的无参数构造函数。如果父类没有构造函数，则必须手动调用父类的构造函数中的一个。在冒号后、构造函数之前指定父类的构造函数（如果有的话）
 
-```
+```dart
 class Person {
     Person.fromJson(Map data){
         print('in Person');
@@ -61,7 +61,7 @@ main(){
 为了返回一个之前已经创建的缓存对象  
 当实现使用 factory 关键词修饰的构造函数时，这个构造函数不必创建类的新实例。例如，工厂构造函数可以从缓存返回实例，或者他可能返回子类的实例。
 
-```
+```dart
 class Logger {
     final String name;
     bool mute = false;
@@ -93,9 +93,12 @@ logger.log('Button clicked');
 ## 命名工厂构造方法 factory[类名+.+方法名]
 
 不需要将 final 变量作为参数
+
+```dart
 class Student{
-...
-factory Student.stu(Student.stu){
-return Student(stu.\_school, stu.name, stu.age);
+    ...
+    factory Student.stu(Student.stu){
+        return Student(stu.\_school, stu.name, stu.age);
+    }
 }
-}
+```
