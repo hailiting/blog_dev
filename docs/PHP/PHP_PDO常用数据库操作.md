@@ -1,6 +1,26 @@
-# PHP_PDO 常用数据库操作
-
-```
+# PHP PDO 常用数据库操作
+~~~php
+<?php
+header("Content-Type: text/html;charset=utf-8");
+$dbms = "mysql";
+$host = "localhost";
+$dbname = "PHPLesson";
+$user = "root";
+$pwd = "";
+$dsn = "$dbms:host=$host;dbname=$dbname";
+try{
+  $conn = new PDO($dsn, $user,  $pwd);
+  echo  "连接成功";
+  foreach($conn->query("SELECT * FROM  `news` WHERE newsID=1") as $row){
+    print_r($row);
+  }
+  $conn = null;
+}catch(PDOException  $e){
+  die("Error: ".$e.getMessage());
+}
+?>
+~~~
+```php
 <?php
   class Sql{
     public $serverName;

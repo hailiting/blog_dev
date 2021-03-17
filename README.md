@@ -14,6 +14,14 @@
 
 查看 js 属性在各大浏览器支持的情况
 
+### http://www.cx121.com/sfz/
+
+身份证号
+
+### https://www.materialtools.com/
+
+手机号
+
 ### mac 终端美化
 
 #### `oh-my-zsh`

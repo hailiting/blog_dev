@@ -1,20 +1,23 @@
 # ES5 核心
 
-## 严格模式`use strict`
+## `Function.prototype.bind[thisArg, [, arg1,[arg2, ...]]]`
 
-- 未声明的变量赋值抛出`ReferenceError`
-- 不止一次对**对象**字面量分配相同的属性，会抛出`SyntaxError`
-- 使用 with 语句抛出`SyntaxError`
+`Function.prototype.c`返回一个新的函数对象，该函数对象的 this 绑定到 `thisArg`参数上，从本质上讲，这允许在其对象链中执行一个函数
+容许对当前的 function 改变 this
 
 ```js
-"use strict";
-function a{
-  aa = 1; // ReferenceError
-  var i = {
-    test: 5,
-    test: 6,// SyntaxError
-  }
+// this的值被bind改变，指向 kitty
+function locate() {
+  console.log(this.location);
 }
+function Maru(location) {
+  this.location = location;
+}
+var kitty = new Maru("cardboard box");
+var locateMaru = locate.bind(kitty);
+locateMaru();
+locate.apply(kitty);
+locate.call(kitty);
 ```
 
 ## 具体代码

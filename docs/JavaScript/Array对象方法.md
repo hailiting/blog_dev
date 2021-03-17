@@ -16,8 +16,6 @@
 
 ## findIndex() 返回符合传入测试（函数）条件的数组元素索引
 
-## forEach() 数组每个元素都执行一次回调函数
-
 ## from() 通过给定的对象中创建一个数组
 
 ## includes() 判断一个数组是否包含一个指定的值
@@ -39,10 +37,6 @@
 ## pop() 删除数组的最后一个元素并返回删除的元素
 
 ## push() 向数组尾部添加一个或多个元素，并返回新的长度
-
-## reduce() 将数组元素计算为一个值（从左到右）
-
-`array.reduce(function(total,currentValue,currentIndex,arr),initialValue)`
 
 #### total: 必须，初始值，或者计算结果后的返回值
 
@@ -82,3 +76,68 @@ console.log(JSON.stringify(array));//["one","two","three","four"]
 ## unshift() 向数组开头添加一个或多个元素，并返回新的长度
 
 ## valueOf() 返回数组对象的原始值
+
+## ES5 新增
+
+- `Array.prototype.indexOf`
+- `Array.prototype.lastIndexOf`
+- `Array.prototype.every`
+- `Array.prototype.some`
+- `Array.prototype.forEach`数组每个元素都执行一次回调函数
+
+```js
+[1, 2, 3, 4].forEach(function (item, index, array) {
+  console.log("数组项:", item, "索引:", index);
+});
+```
+
+- `Array.prototype.map`
+  - 处理数组中的所有值并返回处理后的值，不影响原数组，返回结果为新的数组
+
+```js
+var a = [1, 2, 3, 4].map(function (item, index, array) {
+  console.log("数组项:", item, "索引:", index);
+  return item + 1;
+});
+console.log(a); // [2, 3, 4, 5]
+```
+
+- `Array.prototype.filter`
+- `Array.prototype.reduce`
+  `array.reduce(function(total,currentValue,currentIndex,arr),initialValue)`
+
+```js
+// 二维数组扁平化
+var matrix = [
+  [1, 2],
+  [3, 4],
+  [5, 6],
+];
+var flatten = matrix.reduce(function (pre, cur) {
+  return pre.concat(cur);
+});
+```
+
+- `Array.prototype.reduceRight`
+
+```js
+// 二维数组扁平化
+var matrix = [
+  [1, 2],
+  [3, 4],
+  [5, 6],
+];
+var flatten = matrix.reduceRight(function (pre, cur) {
+  return pre.concat(cur);
+});
+console.log(flatten);
+```
+
+### `Array.isArray`直接写在 Array 构造器上，而不是 prototype 对象上
+
+```js
+Array.isArray("abc");
+
+/// ES3
+Object.prototype.toString.apply(value) === "[object Array]";
+```
