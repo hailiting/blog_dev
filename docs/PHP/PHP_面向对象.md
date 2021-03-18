@@ -309,3 +309,216 @@ echo $sWm->money;
 ```
 
 ## 抽象类和接口
+
+包含抽象方法的类叫抽象类  
+抽象类和抽象方法都是用`abstract`声明，如：
+
+```php
+public abstract function fun();
+```
+
+### 抽象类的特点：
+
+- 不能实例化，也就是不能 new 成对象
+- 若想使用抽象类，就必须定义一个类去继承这个抽象类，并定义覆盖父类的抽象方法（实现抽象方法）
+
+### 接口
+
+接口：指定了一个实现了该接口的类必须实现一系列函数
+
+```php
+// 定义格式:
+interface 接口名称{
+  // 常量成员(使用const关键字定义)
+  // 抽象方法(不需要使用abstract关键字)
+}
+// 使用格式
+class 类名 implements 接口名1,接口名2{
+  ...
+}
+```
+
+### 接口 和 抽象类
+
+- 当关注一个事物本质的时候，用抽象类，抽象类是对根源的抽象，表示这个类是什么，对类的整体进行抽象，对一类事物的抽象描述
+- 当关注一个操作的时候，用接口，接口是对动作的抽象，表示这个对象能做什么，对类的局部行为进行抽象
+  > 男人和女人是两个类，他们的抽象类是人，人可以吃东西，狗也可以吃东西，然后 可以定义一个接口`吃东西`,然后让这些类去实现他
+- 所以一个类只能实现一个抽象类，但可以继承多个接口
+
+#### 区别
+
+- 接口是抽象类的变体，接口中所有的方法都是抽象的。而抽象类是声明方法的存在而不去实现他的类
+- 接口可以多继承，抽象类不行
+- 接口定义方法，不能实现，而 抽象类可以实现部分方法
+- 接口中基本数据类型为 statci，而抽象类不是
+- 接口中不能包含静态代码块及静态方法，而抽象类可以包含静态方法和静态代码块
+-
+
+#### 对象的多态性
+
+```php
+/**
+* 1. 含义抽象方法的类必须是抽象类
+* 2. 抽象类不一定非得有抽象方法
+* 3. 抽象类不能被实例化，并由一个子类继承，并实现抽象类的抽象方法
+*/
+<?php
+abstract class Person {
+  public abstract function eat();
+  public function dodo(){
+    echo "dodo";
+  }
+}
+class Man  extends Person {
+  function eat(){
+    echo "000";
+  }
+}
+$man  = new Man();
+$man->dodo();
+$man->eat();
+?>
+```
+
+```php
+<?php
+// 1. 接口声明的关键字是interface
+// 2. 接口可以声明常量也可以抽象方法
+// 3. 接口中的方法都是抽象方法，不能用abstract去人肉的定义
+// 4. 接口不能被实例化，需要一个类去实现它
+// 5. 一个类不能继承多个类 一个类可以实现多个接口
+interface Person {
+  const NAME =  "xiaoming"; // 静态变量
+  public function run();
+  public function eat();
+}
+interface Study{
+  public function study();
+}
+abstract class Human  implements Person,study {
+  const data = 3.1415926;
+  public function run(){
+  }
+  public function eat(){
+  }
+  public function study(){
+
+  }
+  public function test(){
+    echo self::data;
+  }
+  public static function staticTest(){
+    echo '<br/>'.self::data."-----22212311".'<hr/>';
+  }
+}
+class Student extends Human {
+
+}
+$xw = new Student();
+$xw->test();
+$xw::staticTest();
+echo $xw::NAME;
+echo $xw::data;
+?>
+```
+
+## 常见的关键字
+
+- final 关键字 只能修饰类和方法，不能使用 final 这个关键字来修饰成员属性
+- static 关键字
+- 单例设计模式
+- const 关键字
+- instanceof 关键字
+
+#### final 特征
+
+- 使用 final 关键字标识的类不能被继承
+- final 标识的方法不能被子类覆盖重写，是最终版本
+- -是位了安全
+- 二是没必要被继承和重写
+
+#### static
+
+修饰静态属性和静态方法
+
+#### const
+
+const 是在类中定义常量的关键字，
+
+```php
+const CONTANT = 'constant value';
+echo self::CONSTANT; // 类内部访问
+echo className::CONTANT; // 类的外部访问
+```
+
+#### instanceof
+
+检测某一个是否是哪一个类
+
+- `clss_exists`
+- `get_class_methods`
+- `get_class` - 返回对象的类名
+- `get_object_vars` - 返回由对象属性组成的关联数组
+- `string get_parent_class([ mixed $obj ])` - 返回对象或类的父类名
+- `bool is_a(onject $object, string $class_name)` - 如果对象属于该类或该类是此对象的父类则返回 TRUE
+- `method_exists`
+- `property_exists`
+
+## PHP\_系统自带的异常处理
+
+```php
+class Exception {
+  protected $message = "Unknown exception"; // 异常信息
+  protected $code = 0; // 用户自定义异常代码
+  protected $file;  // 发生异常的文件名
+  protected $line;
+  function __construct($message=null, $code=0);
+  final function getMessage(); // 返回异常信息
+  final function getCode();  // 返回异常的代码
+  final function getFile();  // 返回发生异常的文件名
+  final function getLine(); // 返回发生异常的代码行号
+  final function getTrace(); // backtrace()数组
+  final function getTraceAsString(); // 已格式化成字符串的getTrace信息
+  function __toString(); // 可输出的字符串
+}
+```
+
+## 继承系统错误类，自定义
+
+```php
+<?php
+class myException extends Exception {
+  public function getAllInfo(){
+    return "异常处理的文件为:{$this->getFile()},异常发生的行为为:{$this->getLine()}, 异常信息为{$this->getMessage()},异常代码为:{$this->getCode()}";
+  }
+ }
+ try {
+    if($_GET["num"] == 1){
+      throw new myException("user");
+    } else if($_GET["num"] == "2"){
+      throw new myException("sys");
+    }
+    echo "success";
+ } catch (myException $e){
+   echo $e->getAllInfo();
+ }
+?>
+```
+
+## `__toString`
+
+```php
+<?php
+class TestClass {
+  public $foo;
+  public function __construct($foo){
+    $this->foo=$foo;
+  }
+  public function __toString(){
+    return $this->foo." this is string";
+  }
+}
+$class  = new TestClass("abc");
+echo $class;  /// abc this is string
+?>
+```
