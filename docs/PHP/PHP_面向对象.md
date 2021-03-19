@@ -505,7 +505,24 @@ class myException extends Exception {
 ?>
 ```
 
-## `__toString`
+## 一些魔术方法
+
+- `__contract`
+- `__destruct`
+- `__call`
+- `__callStatic`
+- `__get`
+- `__set`
+- `__isset`
+- `__unset`
+- `__sleep`
+- `__wakeup`
+- `__toString`
+- `__set_state`
+- `__clone`
+- `__autoload`
+
+### `__toString`
 
 ```php
 <?php
@@ -521,4 +538,120 @@ class TestClass {
 $class  = new TestClass("abc");
 echo $class;  /// abc this is string
 ?>
+```
+
+### `__clone()`
+
+```
+class a
+```
+
+### 把对象串行化 seriallize()方法，**sleep()方法，**wekeup()方法
+
+`age=1&name=avb&agent=male` =>`{age: 1, name: "avb", agent: "male"}`
+
+##### 应用场景
+
+- 在网络传输时，需要将对象串行化
+- 把对象写入文件或数据库的时候需要串行化
+
+##### 过程
+
+- 对象转为二进制，在使用时用 serialize()
+- \_\_sleep 保留需要的量
+- \_\_wakeup 重新生成对象时，重新给对象赋值
+
+```php
+<?php
+class Person{
+  var $name;
+  var $sex;
+  var $age;
+  function __construct($name="",$sex="", $age=""){
+    $this->name = $name;
+    $this->sex = $sex;
+    $this->age = $age;
+  }
+  function say(){
+    echo "我的名字是: ".$this->name.", 性别是：".$this->sex.", 我的年龄是: ".$this->age."<br/>";
+  }
+  function __sleep(){
+    $arr = array("name", "age"); // 此时属性 $sex 将被删除
+    return $arr;
+  }
+  function __wakeup(){
+    $this->age = 40;
+  }
+}
+$p1= new Person("张三","男", 20);
+$p1_string = serialize($p1); // 把一个对象串行化，返回一个字符串
+echo $p1_string."<br/>";
+$p2 = unserialize($p1_string);
+$p2->say();
+?>
+```
+
+### `__autoload()`自动加载类
+
+在使用未被定义的类时自动调用，脚本邀请在 PHP 出错失败前有一个最后的机会加载所需类，`__autoload()`函数就接收一个参数，就是想加载的类的类名
+
+```php
+<?php
+function __autoload($classname){
+  require_once $classname.".php";
+}
+// MyClass1类不存在的时候，会自动调用 `__autoload()` 函数，传入参数"MyClass1"
+$obj = new MyClass1();
+// MyClass2类不存在的时候，会自动调用 `__autoload()` 函数，传入参数"MyClass2"
+$obj = new MyClass2();
+?>
+```
+
+### namespace 命名空间
+
+```php
+<?php
+namespace MyProject;
+const CONNECT_OK = 1;
+class Connection {/**/}
+
+namespace AnotherProject;
+const CONNECT_OK = 1;
+class Connection {/**/}
+?>
+```
+
+## js 里的面向对象
+
+js 是面向原型链的语言  
+js 里没有 class, 可以用函数来创建类
+
+```js
+function People(name) {
+  // construct 会自动把内容执行掉
+  this.name = name;
+  console.log(this.name);
+}
+People.prototype.say = function(first_argument) {
+  console.log(first_argument + " " + this.name);
+};
+
+// clone 功能
+function Woman(name) {
+  People.call(this, name);
+}
+var _prototype = Object.create(People.prototype);
+_prototype.constructor = Woman;
+Woman.prototype = _prototype;
+Woman.prototype.run = function() {
+  console.log(this.name + " is running");
+};
+var xiaohong = new Woman("kkk");
+xiaohong.say("hi");
+console.log(xiaohong);
+xiaohong.run(); //error
+var s = new People("ssss");
+s.say("晚上好");
+console.log(s);
+s.run(); //error
 ```
