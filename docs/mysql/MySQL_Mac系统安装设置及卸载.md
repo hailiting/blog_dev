@@ -75,7 +75,78 @@ mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'Tom579#$%^&';
 mysql> flush privileges;
 ```
 
+## 修改密码规则
+
+```mysql
+use mysql;
+show tables;
+select user, host from user;
+SELECT DISTINCT CONCAT('User: ''',user,'''@''',host,''';') AS query FROM mysql.user;
+# 查看规则
+SHOW VARIABLES LIKE 'validate_password%';
+alter user 'root'@'%' identified with mysql_native_password by '123456hai';
+
+#设置密码强弱等级
+set global validate_password.policy=0;
+#设置密码长度
+set global validate_password.length=6;
+#设置密码检查开关
+set global validate_password.check_user_name=OFF;
+#设置密码包含数字个数
+set global validate_password.number_count=0;
+#设置密码特殊字符个数
+set global validate_password.special_char_count=0;
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';
+#刷新
+FLUSH PRIVILEGES;
+```
+
+```mysql
+ALTER USER 'root'@'localhost' IDENTIFIED BY '123456' PASSWORD EXPIRE NEVER; #修改加密规则 
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'; #更新一下用户的密码 
+
+FLUSH PRIVILEGES; #刷新权限
+
+alter user 'root'@'localhost' identified by 'xzx123456';#重置密码，xzx123456就是变更后的密码，自己的密码自己更改下哦
+```
+
+## MySQL8.0 登录连接报错 caching_sha2_password 解决方法
+
+### 一 mysql 设置
+
+```mysql
+# 进入mysql
+mysql -uroot -p123456
+use mysql;
+show tables;
+select user;
+# 查看身份验证类型
+SELECT Host, User, plugin from user;
+#设置密码强弱等级
+set global validate_password.policy=0;
+#设置密码长度
+set global validate_password.length=6;
+# 修改身份验证类型（修改密码）
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';
+FLUSH PRIVILEGES;
+
+# 验证是否生效
+use mysql;
+SELECT Host, User, plugin from user;
+```
+
+#### 二：修改`mysql.cnf`
+
 ## 跳过权限认证，免密进入数据库
+
+```js
+[mysqld];
+default_authentication_plugin = mysql_native_password;
+```
 
 ```sh
 # 进入数据库指令文件
@@ -133,4 +204,16 @@ sudo rm -rf /var/db/receipts/com.mysql.*
 ps aux | grep mysqld
 # kill 进程
 kill -9 46912
+```
+
+### `Plugin caching_sha2_password could not be loaded:`
+
+```mysql
+ALTER USER 'root'@'localhost' IDENTIFIED BY '123456' PASSWORD EXPIRE NEVER; #修改加密规则 
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'; #更新一下用户的密码 
+
+FLUSH PRIVILEGES; #刷新权限
+
+alter user 'root'@'localhost' identified by 'xzx123456';#重置密码，xzx123456就是变更后的密码，自己的密码自己更改下哦
 ```
