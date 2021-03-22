@@ -24,7 +24,7 @@ GRANT 的反操作，去除权限 `REVOKE SELECT ON db_name.* TO name;`
 
 ### 2，创建数据库
 
-`CREATE DATABASE db_name;`
+`CREATE DATABASE`db_test`DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;`
 
 ### 3，使用数据库
 
@@ -34,7 +34,16 @@ GRANT 的反操作，去除权限 `REVOKE SELECT ON db_name.* TO name;`
 
 `DROP DATABASE db_name;`
 
-## 表的操作
+## Tables 的操作
+
+PK: 主键
+NN: 非空
+AI: 自动增长
+date: 年月日
+varChar(40): 不定长字符
+char: 定长字符
+datetime: 年月日时分秒
+timestamp: 从 1970 年开始
 
 ### 1，创建表
 
@@ -48,6 +57,19 @@ CREATE TABLE table_name(
     PRIMARY KEY(id)
 )ENGINE=InnoDB // 设置表的存储引擎，一般常用InnoDB和MyISAM，InnoDB可靠，支持商务、MyISAM高效，不支持全文检索
 DEFAULT charset=utf8; // 设置默认编码，防止数据库中的乱码
+```
+
+```mysql
+# 在忘记去设定数据库的情况下，`db_test`.`t_student` 可以自动创建或查找到所需要的数据库
+CREATE TABLE `db_test`.`t_student` (
+  # 名称  类型   非空   自动增长   注释
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `name` VARCHAR(40) NOT NULL COMMENT '',
+  `birthdate` DATE NOT NULL COMMENT '',
+  `gender` CHAR(1) NOT NULL COMMENT '性别  M 男   F  女',
+  `class_id` INT NOT NULL COMMENT '',
+  PRIMARY KEY (`id`) COMMENT ''
+);
 ```
 
 ### 2，复制表
@@ -91,6 +113,20 @@ ALTER TABLE tb_name CHANGE score score SMALLINT(4) NOT NULL;
 
 ## 数据操作
 
+数据库内置函数
+
+- count()
+- min() 最小
+- max() 最大
+- first()
+- last()
+- len() 求长度
+- now() 返回 当前时间
+- sum() 求和
+- sqrt() 求平方根
+- rand() 求随机数 - 验证码 0-1 任意一个数字
+- concat() 拼接字符串函数 生成报表的时候
+
 ### 1，插入数据
 
 #### 插入新数据
@@ -119,11 +155,41 @@ ALTER TABLE tb_name CHANGE score score SMALLINT(4) NOT NULL;
 
 #### WHERE 语句
 
-`SELECT * FROM tb_name WHERE id=3;`
+`SELECT * FROM db_name.tb_name WHERE id=3;`
 
 #### HAVING 语句
 
-`SELECT * FROM tb_name GROUP BY score HAVING count(*)>2;`
+```mysql
+# * 代表所有字段
+SELECT * FROM tb_name GROUP BY score HAVING count(*)>2;
+```
+
+#### 查询数量
+
+```mysql
+#  db_test.t_student 表里有几个男同学
+SELECT COUNT(*) FROM db_test.t_student WHERE gender="M";
+```
+
+```mysql
+# min 求最小值
+SELECT min(birthdate) FROM db_test.t_student;
+SELECT max(birthdate) FROM db_test.t_student;
+# birthdate 的最小值
+SELECT min(birthdate),  t_student.* FROM t_student;
+SELECT now();
+SELECT concat(id, "  ", name) FROM t_student;
+```
+
+## 自定义函数
+
+```msql
+CREATE FUNCTION `new_function` ()
+RETURNS INTEGER
+BEGIN
+RETURN 1;
+END
+```
 
 #### 相关条件控制符
 
