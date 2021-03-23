@@ -70,6 +70,15 @@ CREATE TABLE `db_test`.`t_student` (
   `class_id` INT NOT NULL COMMENT '',
   PRIMARY KEY (`id`) COMMENT ''
 );
+
+
+CREATE TABLE `db_test`.`t_class` (
+  -- 名称  类型   非空   自动增长   注释
+  `class_id` INT NOT NULL  COMMENT '',
+  `class_name` VARCHAR(16) NOT NULL COMMENT '班级的名字',
+  `class_description` VARCHAR(100)  NULL COMMENT '班级的描述',
+  PRIMARY KEY (`class_id`) COMMENT ''
+);
 ```
 
 ### 2，复制表
@@ -181,6 +190,68 @@ SELECT now();
 SELECT concat(id, "  ", name) FROM t_student;
 ```
 
+#### 查询区间
+
+方法一：
+
+```mysql
+SELECT * FROM t_student
+WHERE birthdate >= "1991-01-01"
+AND birthdate <= "1993-12-31"
+```
+
+方法二：
+`BETWEEN ... AND ...`在...之间
+`--`mysql 注释
+
+```mysql
+SELECT * FROM t_student
+WHERE birthdate BETWEEN "1991-01-01" AND "1993-12-31";
+```
+
+#### 模糊查询
+
+通配符`%`
+`%`代表任意字符
+
+```mysql
+SELECT * FROM t_student
+-- where name LIKE "王%";
+where name LIKE "%六%";  -- 名字中有六的
+```
+
+#### 排序查询
+
+对单表排序
+
+```mysql
+SELECT * FROM t_student
+-- DESC 逆序 大-小   ASC 顺序 小-大
+ORDER BY birthdate DESC | ASC
+```
+
+#### 表与表查询
+
+```mysql
+-- 查询两个表的字段
+-- 查询指定字段，节约宽带
+SELECT t_student.id,t_student.name,t_class.class_id,t_class.class_name
+FROM t_student,t_class
+WHERE t_student.class_id=t_class.class_id;
+```
+
+##### JOIN ON
+
+左连接
+
+```mysql
+SELECT t_student.id,t_student.name,t_class.class_id,t_class.class_name
+FROM t_student JOIN t_class
+ON t_student.class_id = t_class.class_id;
+```
+
+左连接
+
 ## 自定义函数
 
 ```msql
@@ -193,12 +264,12 @@ END
 
 #### 相关条件控制符
 
-=、>、<、<>、IN(1,2,3...)、 BETWEEN a AND b、NOT、AND、 OR、 Linke() 【%为匹配任意，\_ 匹配一个字符（可以是汉子）】、IS NULL 空值检测
+=、>、<、<>、IN(1,2,3...)、 BETWEEN a AND b、NOT、AND、 OR、 Linke() 【%为匹配任意，\_ 匹配一个字符（可以是汉字）】、IS NULL 空值检测
 
 ### 5，分组查询
 
 分组查询可以按照指定的列进行分组
-`SELECT COUNT(*)FROM tb_name GROUP BY score HAVINIG COUNT(*)>1;`
+`SELECT COUNT(*) FROM tb_name GROUP BY score HAVINIG COUNT(*)>1;`
 ORDER BY 排序
 ORDER BY DESC|ASC // 按数据的降序或升序排列
 
