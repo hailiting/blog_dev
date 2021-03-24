@@ -385,6 +385,35 @@ CREATE TABLE db_name(
     introducemyself varchar(255) COLLATE utf8_estonian_ci DEFAULT NULL,
     PRIMARY KEY('id')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci ROW_FORMAT=DYNAMIC;
+
+
+
+CREATE TABLE t_coin_withdraw (
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  out_trade_no varchar(50) NOT NULL COMMENT '订单号',
+  txid varchar(200) NOT NULL DEFAULT '' COMMENT '链上交易id',
+  member_id int(11) unsigned NOT NULL,
+  coin_id int(11) unsigned NOT NULL,
+  coin_type varchar(10) NOT NULL,
+  member_address varchar(100) NOT NULL COMMENT '用户地址',
+  to_address varchar(100) NOT NULL COMMENT '到账地址',
+  amount decimal(24,8) unsigned NOT NULL COMMENT '提币数量',
+  fee decimal(24,8) unsigned NOT NULL COMMENT '平台手续费',
+  actual_amount decimal(24,8) unsigned NOT NULL COMMENT '实际数量',
+  miner_fee decimal(24,8) unsigned NOT NULL DEFAULT '0.00000000' COMMENT '矿工费',
+  status tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '交易状态（0：待审核，1：提币成功，2：提币失败，3：审核通过，4：审核拒接 5.已打包）',
+  result varchar(50) NOT NULL DEFAULT '' COMMENT '交易结果',
+  remark varchar(200) DEFAULT '' COMMENT '提币备注',
+  tag varchar(50) DEFAULT '' COMMENT '地址标签，如 eos用到',
+  agree_num int(10) unsigned NOT NULL DEFAULT '0' COMMENT '网络确认数',
+  version int(10) unsigned NOT NULL DEFAULT '0',
+  gmt_create bigint(20) unsigned NOT NULL,
+  gmt_modified bigint(20) unsigned NOT NULL,
+  dealer_name varchar(50) NOT NULL DEFAULT '' COMMENT '审核人员',
+  platform_type int(11) DEFAULT NULL COMMENT '平台类型 1 会员 2 平台',
+  return_status tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '如果status=4，资金要退回，退回状态 0待处理 1已处理',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='提币申请表（链上转账）';
 ```
 
 ### 2，排序

@@ -203,3 +203,6 @@ babel({
   plugins: ["transform-es2015-modules-commonjs", "transform-decorators-legacy"],
 });
 ```
+
+- LTS 长期支持版本
+- BETA 测试版本
