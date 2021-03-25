@@ -63,7 +63,7 @@ preset 分为以下几种
 
 ### 插件和 preset 的配置项
 
-```
+```.babelrc
 {
   "presets": [
     ["@babel/preset-env", {
@@ -76,7 +76,7 @@ preset 分为以下几种
 }
 ```
 
-```
+```.babelrc
 {
   "presets": [
     ["@babel/env", {
@@ -193,4 +193,33 @@ use: {
 
 ```sh
 npx babel-upgrade --write
+```
+
+## # babel7
+
+babel 7 版本一般都是以`@babel`开头
+
+```js
+  "scripts": {
+    "build": "babel src -d lib",
+  }
+  // ...
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/preset-env": "^7.10.2"
+  }
+  ...
+```
+
+```js
+{
+  "presets": [
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime"
+  ]
+}
 ```
