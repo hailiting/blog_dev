@@ -414,6 +414,49 @@ CREATE TABLE t_coin_withdraw (
   return_status tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '如果status=4，资金要退回，退回状态 0待处理 1已处理',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='提币申请表（链上转账）';
+
+
+
+CREATE TABLE m_member (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  uid varchar(12) DEFAULT '' COMMENT '靓号',
+  country_code varchar(6) DEFAULT NULL COMMENT '国家电话区号',
+  name varchar(50) DEFAULT '' COMMENT '名称',
+  nickname varchar(50) NOT NULL DEFAULT '' COMMENT '昵称',
+  mobile varchar(16) DEFAULT NULL COMMENT '电话（格式：+86-13600910563）',
+  email varchar(30) DEFAULT NULL COMMENT '邮箱',
+  gender tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '性别（0：未知，1：男，2：女）',
+  birthday int(10) unsigned NOT NULL DEFAULT '0',
+  head_url varchar(128) NOT NULL DEFAULT '' COMMENT '头像地址',
+  pwd_salt varchar(100) NOT NULL DEFAULT '' COMMENT '登录密码',
+  pwd_hash varchar(100) NOT NULL DEFAULT '',
+  pwd_level tinyint(4) unsigned NOT NULL COMMENT '密码安全级别（1：低，2：中，3：高）',
+  pay_salt varchar(100) NOT NULL DEFAULT '' COMMENT '资金密码',
+  pay_hash varchar(100) NOT NULL DEFAULT '',
+  google_secret varchar(20) NOT NULL DEFAULT '' COMMENT '谷歌验证码',
+  member_type tinyint(4) unsigned NOT NULL COMMENT '用户类型（1：个人，2：商户）',
+  uuid varchar(100) DEFAULT NULL COMMENT '会员uuid，用于极光推送',
+  auth_status tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '认证状态(0：未认证，1：认证成功，2：认证中，3：认证失败)',
+  rank_id smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '会员级别',
+  proxy_level tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '代理等级',
+  reg_device tinyint(4) unsigned NOT NULL COMMENT '用户数据来源：1、Web；2、Android 3、 iOS ',
+  reg_type tinyint(4) unsigned NOT NULL COMMENT '注册类型:1-平台注册 2-推荐注册',
+  reg_sid int(11) unsigned NOT NULL DEFAULT '0' COMMENT '推荐人ID',
+  reg_ip varchar(50) NOT NULL DEFAULT '' COMMENT '注册IP地址',
+  reg_biz_date varchar(30) NOT NULL DEFAULT '0' COMMENT '注册业务时间',
+  gmt_create bigint(20) unsigned NOT NULL COMMENT '创建时间',
+  gmt_modified bigint(20) unsigned NOT NULL COMMENT '修改时间',
+  is_merchant int(2) unsigned NOT NULL DEFAULT '0' COMMENT '是否是商户(0未申请,1审核中,2通过,3拒绝)',
+  lang varchar(30) DEFAULT NULL COMMENT '选中的语言类型',
+  is_partner int(2) unsigned NOT NULL DEFAULT '0' COMMENT '是否是合作商(0未申请,1审核中,2通过,3拒绝)',
+  is_suspicion tinyint(4) DEFAULT '0' COMMENT '是否关注用户',
+  suspicion_reason varchar(256) DEFAULT '' COMMENT '关注理由',
+  personal_profile varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '简介',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY p_mobile (`mobile`) USING BTREE,
+  UNIQUE KEY p_email (`email`) USING BTREE,
+  KEY reg_sid (`reg_sid`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=68285818 DEFAULT CHARSET=utf8mb4 COMMENT='会员信息表';
 ```
 
 ### 2，排序
