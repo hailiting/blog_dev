@@ -1,5 +1,7 @@
 # JavascriptQA 工程师
 
+工程师：白盒 黑盒
+
 ## 测试核心概念
 
 - 单元测试
@@ -25,7 +27,7 @@
 目的：单元测试能让开发者明确知道代码的结果
 原则：单一职责，接口抽象，层次分离
 断言库：保证最小单元是否正常运行检测方法
-测试风格：测试驱动开发(TDD)、行为驱动开发(BDD)【都属于敏捷开发的方法论】
+测试风格：测试驱动开发(Test-Driven Development, TDD)、行为驱动开发(Behavior Driven Development, BDD)【都属于敏捷开发的方法论】
 
 TDD 关注所有功能是否被实现（每一个功能都必须有对应的测试用例），`suite配合test利用assert("tobi"==user.name)`;
 BDD 关注整体行为是否符合整体预期，编写的每一行代码都有目的的提供一个全面的测试用例集。expect/should, describe 配合 it 利用自然语言处理`expect(1).toEqual(fn())`执行结果。
@@ -88,7 +90,7 @@ npm install karma-coverage --save-dev【报告和测试覆盖率检查】
 "phantomjs-prebuilt": "^2.1.14",
 ```
 
-## 性能测试
+## 基准测试
 
 - 面向切面编程 AOP 无侵入式
 - Benchmark 基准测试方法，它并不是简单地统计执行多少次测试代码后对比时间，它对测试有着严密的抽样过程。执行多少次取决于采样到数据能否完成统计。根据统计次数计算方差。

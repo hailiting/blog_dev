@@ -10,6 +10,7 @@
 - class
 - set, map
 - module
+- Decorator
 
 ## const, let
 
@@ -356,7 +357,7 @@ var asyncReadFile = async function() {
 
 - 内置执行器，不需要 next
 
-## 修饰器
+## Decorator 修饰器
 
 修改类的行为，编译时发生的
 
