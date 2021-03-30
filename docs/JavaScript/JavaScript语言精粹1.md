@@ -1,5 +1,8 @@
-# JavaScript 语言精粹
+# JavaScript 语言精粹 1
 
+- 数据驱动 UI，
+  - 所有的变化都是是可控的，所有的变化都是确定的，程序是可描述的
+  - 指令式编程是糟糕的，程序是需要设计的
 - JavaScript 本身就是一个弱类型语言，是一门面向原型的设计
 - JavaScript 本身的不严谨要求用 JavaScript 的人更严谨
 - JavaScript 很灵活
@@ -246,10 +249,11 @@ fn();
 - 对象方法
 
 ```js
+// es5
 function inherits(child, parent) {
-  var _proptotype = Object.create(parent.prototype);
-  _proptotype.constructor = child.prototype.constructor;
-  child.prototype = _proptotype;
+  const _proto = Object.create(parent.prototype);
+  _proto.constructor = child.prototype.constructor;
+  child.prototype = _proto;
 }
 function People(name, age) {
   this.name = name;
@@ -264,4 +268,206 @@ function English(name, age, language) {
   this.language = language;
 }
 inherits(English, People);
+English.prototype.introduce = function() {
+  console.log(this.getName());
+  console.log(this.language);
+};
+const a = new English("aaa", 23, "English");
+console.log(a);
+console.log(People.prototype);
+const b = new People("ddd", 253);
+a.introduce();
+b.introduce(); // err
+
+/// es6   语法糖
+class People {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  getName() {
+    return this.name;
+  }
+}
+class English extends People {
+  // 如果构建的和父类一样，可以不写constructor
+  constructor(name, age, language) {
+    super(name, age);
+    this.language = language;
+  }
+  introduce() {
+    console.log(this.getName());
+    console.log(this.language);
+  }
+}
+```
+
+## 语法
+
+### label statement
+
+```js
+loop: for (var i = 0; i < 10; i++) {
+  for (var j = 0; j < 5; j++) {
+    console.log(j);
+    if (j === 1) {
+      break loop;
+    }
+  }
+}
+console.log(i);
+```
+
+### 语句与表达式
+
+```js
+var x = { a: 1 };
+// 语句优先
+{a:2};
+{a:2, b:2};
+```
+
+`()`,`+`, `-`,` !``~ `里要求必须是一个表达式
+
+```js
+/// function(){}()  方法的声明
+(function() {})();
+// 与
+(function() {})(); // 原理不一样
+```
+
+## 高阶函数
+
+高阶函数是把函数当做参数或返回值是函数的函数  
+函数式编程 vs 指令式编程  
+确定的输入 肯定会得到 确定的输出
+
+#### 回调函数
+
+```js
+[1, 2, 3, 4].forEach(function(item) {
+  console.log(item);
+});
+```
+
+#### 闭包
+
+闭包由两部分组成，函数的嵌套，并返回函数
+
+- 1. 函数
+- 2. 环境：函数创建时作用域内的局部变量
+- 3. 解决全局污染的问题
+
+```js
+function makeCounter(init) {
+  var init = init || 0;
+  return function() {
+    return ++init;
+  };
+}
+var counter = makeCounter(10);
+console.log(counter());
+console.log(counter());
+console.log(counter());
+console.log(counter());
+counter = null;
+```
+
+##### 滥用闭包
+
+```js
+const doms = [0, 1, 2, 3, 4, 5];
+for (var i = 0; i < doms.length; i++) {
+  doms.eq(i).on("click", function(ev) {
+    console.log(i); // 因为i没被释放掉，没有被销毁，并且保存下来了
+  });
+}
+
+for (var i = 0; i < doms.length; i++) {
+  // 利用函数的特点  实参  把每一次的i值都保留下来
+  (function(i) {
+    doms.eq(i).on("click", function(ev) {
+      console.log(i);
+    });
+  })(i);
+}
+```
+
+### 惰性函数
+
+```js
+// 执行一次   之后就能确定用哪一个
+function eventBinderGenerator() {
+  if (window.addEventListener) {
+    return function(element, type, handler) {
+      element.addEventListener(type, hanlder, false);
+    };
+  } else {
+    return function(element, type, handler) {
+      element.attachEvent("on" + type, handler.bind(element, window.event));
+    };
+  }
+}
+const fun = eventBinderGenerator();
+fun(element, type, handler);
+```
+
+### 柯里化
+
+一种允许使用部分参数生成函数的方式
+
+#### 抽象变化
+
+- 每次都变
+- 确定一次改变后 就不变了 一次性变化 抽象到 type
+
+```js
+function isType(type) {
+  return function(obj) {
+    return Object.prototype.toString.call(obj) === "[object " + type + "]";
+  };
+}
+var isNumber = isType("Number");
+console.log(isNumber(1));
+console.log(isNumber("d"));
+var isArray = isType("Array");
+
+function pipe(f, g) {
+  return function() {
+    return f.call(null, g.apply(null, arguments));
+  };
+}
+var fn = pipe(f, g);
+console.log(fn(5));
+```
+
+## 尾递归
+
+- 1. 尾调用是指某个函数的最后一步是调用另一个函数
+- 2. 函数调用自身，称为递归
+- 3. 如果尾调用自身，就称为尾递归
+     斐波那契数列
+
+**递归很容易发生`栈溢出`错误（stack overflow）**
+**但对于尾递归来说，由于只存在一个调用记录，所以永远不会发生`栈溢出`**
+
+```js
+function factorial(n) {
+  if (n === 1) return 1;
+  return n * factorial(n - 1);
+}
+```
+
+## 反柯里化
+
+```js
+Function.prototype.uncurry = function() {
+  return this.call.bind(this);
+};
+// push 通用化
+var push = Array.prototype.push.uncurry();
+var arr = [];
+push(arr, 1);
+push(arr, 3);
+push(arr, 4);
 ```
