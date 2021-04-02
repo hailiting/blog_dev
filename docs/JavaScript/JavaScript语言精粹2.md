@@ -3,6 +3,7 @@
 ## 闭包，作用域，原型链
 
 ```js
+// 变量作用域提前
 if (!("userName" in window)) {
   console.log("eee");
   var userName = "222"; // 声明提前
@@ -213,6 +214,11 @@ a.fun(1);
 a.fun(2);
 var b = fun(0)
   .fun(1)
-  .fun(2);
+  .fun(2)
   .fun(3);
+var c = fun(0).fun(1);
+c.fun(2);
+c.fun(3);
 ```
+
+变量声明提前
