@@ -69,11 +69,11 @@ sw 不会通过页面刷新或简单的切换页面更新的，可以通过 skip
 
 #### 一：skipWaiting
 
-```
-self.addEventListener("install", event=>{
+```js
+self.addEventListener("install", (event) => {
   // 让新的SW插队，强制令他立刻取代老的sw
-  self.skipWaiting()
-})
+  self.skipWaiting();
+});
 ```
 
 缺点：像断网或网络不顺畅或采用 CacheFirst 之类的缓存策略的时候，当老的 sw 在请求了一半资源，突然发现有新的 sw，老的被干掉，新的接管，给页面添加了很多不稳定因素。
@@ -82,15 +82,17 @@ self.addEventListener("install", event=>{
 
 在注册 sw 的地方，通过 controllerchange 事件来得知控制当前页面的 sw 是否发生变化
 
-```
+```js
 if ("serviceWorker" in navigator) {
-	navigator.serviceWorker.register("/js13kpwa/sw.js", {
-    scope: "."
-  }).then(function(registration){
-    console.log("pwa registered", registration);
-  });
+  navigator.serviceWorker
+    .register("/js13kpwa/sw.js", {
+      scope: ".",
+    })
+    .then(function(registration) {
+      console.log("pwa registered", registration);
+    });
   let refreshing = false; // 避免无限刷新
-  navigator.seviceWorker.addEventListener("controllerchange", function(event){
+  navigator.seviceWorker.addEventListener("controllerchange", function(event) {
     // 或者直接刷新
     // window.location.reload();
     // if(refreshing){
@@ -100,13 +102,18 @@ if ("serviceWorker" in navigator) {
     // window.location.reload();
 
     console.log("Controllerchange, ServiceWorker: ", event);
-    navigator.serviceWorker.controller.addEventListener("statechange",function(){
-      console.log("statechange: ", this.state);
-      if(this.state==="activated"){
-        document.getElemeentById("offlineNotification").classList.remove("hidden");
+    navigator.serviceWorker.controller.addEventListener(
+      "statechange",
+      function() {
+        console.log("statechange: ", this.state);
+        if (this.state === "activated") {
+          document
+            .getElemeentById("offlineNotification")
+            .classList.remove("hidden");
+        }
       }
-    })
-  })
+    );
+  });
 }
 ```
 
@@ -121,58 +128,60 @@ if ("serviceWorker" in navigator) {
 
 ##### 第二步
 
-```
-function emitUpdate(){
+```js
+function emitUpdate() {
   var event = document.createEvent("Event");
   // 发送名为"sw.update"的一个事件来通知外部
   event.initEvent("sw.update", true, true);
   window.dispatchEvent(event);
 }
-if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("/service-worker.js").then(function(reg){
-    if(reg.waiting){
-      emitUpdate();
-      return;
-    }
-    reg.onupdatefound = function(){
-      var installingWorker = reg.installing;
-      installingWorker.onstatechange=function(){
-        switch(installingWorker.state){
-          case "installed":
-            if(navigator.serviceWorker.controller){
-              emitUpdate();
-            }
-            break;
-        }
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/service-worker.js")
+    .then(function(reg) {
+      if (reg.waiting) {
+        emitUpdate();
+        return;
       }
-    }
-  })
-  .catch(function(e){
-    console.error(e)
-  })
+      reg.onupdatefound = function() {
+        var installingWorker = reg.installing;
+        installingWorker.onstatechange = function() {
+          switch (installingWorker.state) {
+            case "installed":
+              if (navigator.serviceWorker.controller) {
+                emitUpdate();
+              }
+              break;
+          }
+        };
+      };
+    })
+    .catch(function(e) {
+      console.error(e);
+    });
 }
 ```
 
 ##### 第三部
 
-```
+```js
 // 用户点击事件
-try{
-  navigator.serviceWorker.getRegistration().then(reg=>{
+try {
+  navigator.serviceWorker.getRegistration().then((reg) => {
     reg.waiting.postMessage("skipWaiting");
-  })
-} catch(e){
+  });
+} catch (e) {
   window.location.reload();
 }
 ```
 
-```
+```js
 // sw.js
-self.addEventListener("message", event=>{
-  if(event.data ==="skipWaiting"){
+self.addEventListener("message", (event) => {
+  if (event.data === "skipWaiting") {
     self.skipWaiting();
   }
-})
+});
 // controllerchange
 ```
 
