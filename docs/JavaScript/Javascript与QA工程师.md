@@ -35,30 +35,50 @@ BDD 关注整体行为是否符合整体预期，编写的每一行代码都有�
 
 ### 单元测试框架
 
-```
-better-assert(TDD断言库)
-should.js(BDD断言库)
-expect.js(BDD断言库)
-chai.js(TDD BDD双模)
-Jasmine.js(BDD)
-Node.js本身集成require("assert");
-Intern 更大而全的单元测试框架
-QUnit 一个游离在JQuery左右的测试框架
-Macaca 国产（阿里）
-```
+- better-assert(TDD 断言库)
+- should.js(BDD 断言库)
+- expect.js(BDD 断言库)
+- **chai.js**(TDD BDD 双模) // 比较常用的
+- **Jasmine.js**(BDD) // 比较常用的
+- Node.js 本身集成 require("assert");
+- Intern 更大而全的单元测试框架
+- QUnit 一个游离在 JQuery 左右的测试框架
+- Macaca 国产（阿里）
 
 ### 单元测试运行流程
 
 每个测试用例组通过 describe 进行设置
 `before->beforeEach->it->after->afterEach`
-1，before 单个测试用例(it)开始前
-2，beforeEach 每个测试用例开始前
-3，it: 定义测试用例，并利用断言库进行设置 chai。如：expect(x).to.equal(true);异步 mocha。
-4，以上专业术语叫 mock
+
+- 1，before 单个测试用例(it)开始前
+- 2，beforeEach 每个测试用例开始前
+- 3，it: 定义测试用例，并利用断言库进行设置 chai。如：expect(x).to.equal(true);异步 mocha。
+- 4，以上专业术语叫 mock
 
 ### 自动化单元测试
 
-karma 自动化 runner 集成 PhantomJS 无刷新
+karma 自动化 runner 集成  
+PhantomJS 无刷新
+Phantomcss ui 测试
+
+```shell
+$ npm install karma --save-dev
+# Install plugins that your project needs:
+$ npm install karma-jasmine karma-chrome-launcher jasmine-core --save-dev
+
+$ npm i karma-coverage --save-dev # 代码覆盖率
+
+
+# npm install -g karma-cli
+./node_modules/karma/bin/karma init
+
+
+"jasmine-core": "^3.7.1",
+"karma": "^6.3.2",
+"karma-chrome-launcher": "^3.1.0",
+"karma-jasmine": "^4.0.1",
+"karma-phantomjs-launcher": "^1.0.4"
+```
 
 ```
 npm install karma --save-dev
@@ -220,7 +240,8 @@ PM 产品 FE 前端 RD 后端
   根目录会有 backstop.json 和 engine_scripts 文件夹
   backstop.json
 
-```
+```js
+/// backstop.json
 id: "自动生成一个文件，避免与BackstopJS资源名冲突",
 // 测试项目的一系列屏幕尺寸对象（至少一个）
 scenarios: [
@@ -249,12 +270,25 @@ backstop_default_BackstopJS_Homepage_0_document_0_web.png
 
 3, `backstop test`
 
-### 自动化 selenium-webdriver
+### e2e 测试 自动化 selenium-webdriver
 
 1,
 
-```
-npm install selenium-webdriver
+```js
+// npm install selenium-webdriver
+// 下载驱动
+const { Builder, By, Key, until } = require("selenium-webdriver");
+(async function example() {
+  // 打开启动
+  let driver = await new Builder().forBrowser("firefox").build();
+  try {
+    await driver.get("http://www.google.com/ncr");
+    await driver.findElement(By.name("q")).sendKeys("webdriver", Key.RETURN);
+    await driver.wait(until.titleIs("webdriver - Google Search"), 1000);
+  } finally {
+    await driver.quit();
+  }
+})();
 ```
 
 2, 下载驱动，并解压到本地
@@ -262,28 +296,47 @@ npm 页面有好多浏览器的下载包，选择适合本机的下载
 3,
 `npm install --save-dev puppeteer rize`
 
-```
+```js
 // 为了看到这个过程发生了什么headless: false
-const Rize = require('rize');
-const rize = new Rize({ headless: false })
+const Rize = require("rize");
+const rize = new Rize({ headless: false });
 rize
-  .goto('https://github.com/')
-  .type('input.header-search-input', 'node')
-  .press('Enter')
+  .goto("https://github.com/")
+  .type("input.header-search-input", "node")
+  .press("Enter")
   .waitForNavigation()
-  .saveScreenshot('searching-node.png')
-  .end()
+  .saveScreenshot("searching-node.png")
+  .end();
 ```
 
-### mocha 异步测试
+## service 异步测试
 
+```js
+// service/app.js
+const express = require("express");
+const app = express();
+app.get("/test", (req, res) => {
+  res.send({
+    data: "222",
+  });
+});
+const server = app.listen(3000, () => {
+  console.log("server start at 3000");
+});
+module.exports = app;
 ```
+
+### mocha service 异步测试
+
+```sh
+npm i mocha --save-dev
+# mochawesome 测试报表
 mocha test.js --reporter mochawesome --reporter-options reportDir=customReportDir,reportFilename=customReportFilename
 ```
 
 1，新建 mochaRunner.js 文件
 
-```
+```js
 npm i mocha --save
 npm i mochawesome --save
 
@@ -292,7 +345,8 @@ const mocha = new Mocha({
   reporter: "mochawesome",
   reporterOptions: {
     reportDir: "./docs/mochawesome-report",
-    reportFilename: "mochawesome-report"
+    reportFilename: "mochawesome-report",
+    quiet: true,
   }
 });
 
@@ -302,37 +356,36 @@ mocha.run(function () {
 })
 ```
 
-```
+```sh
 npm install supertest --save
 ```
 
-```
+```js
 // router.spec.js
 const superagent = require("supertest");
 
 const app = require("./app");
 
-
 function request() {
   return superagent(app.listen());
 }
 
-describe("后台接口测试", function () {
+describe("后台接口测试", function() {
   it("test接口测试", (done) => {
     request()
       .get("/test")
       .expect("Content-Type", /json/)
       .expect(200)
-      .end(function (err, response) {
-        console.log(response)
+      .end(function(err, response) {
+        console.log(response);
         if (response.data == "ok message") {
-          done("ok")
+          done("ok");
         } else {
-          done("err")
+          done("err");
         }
-      })
-  })
-})
+      });
+  });
+});
 ```
 
 ### chai 断言库
@@ -341,51 +394,89 @@ describe("后台接口测试", function () {
 npm i chai --save
 ```
 
-```
+```js
 const axios = require("axios");
 const { expect } = require("chai");
 
-describe("后台接口测试", function () {
-  it("test接口测试", function (done) {
-    axios.get("http://localhost:3100/test")
-      .then(function (response) {
-        console.log(response.data.data)
+describe("后台接口测试", function() {
+  it("test接口测试", function(done) {
+    axios
+      .get("http://localhost:3100/test")
+      .then(function(response) {
+        console.log(response.data.data);
         expect(response.status).to.equal(200);
         if (response.data.data == "ok message111") {
           done();
         } else {
           done(new Error("数据不符合预期"));
         }
-      }).catch(function (error) {
-        done(error);
       })
-  })
-})
+      .catch(function(error) {
+        done(error);
+      });
+  });
+});
 ```
 
 #### chai 断言库常用语句
 
-```
-chai .should();
+```js
+chai.should();
 foo.should.be.a("string");
 foo.should.equal("bar");
 foo.should.have.lengthOf(3);
 tea.should.have.property("flavors").with.lengthOf(3);
 ```
 
-```
+```js
 var expect = chai.expect;
 expect(foo).to.be.a("string");
 expect(foo).to.equal("bar");
 expect(foo).to.have.lengthOf(3);
-expect(tea).to.have.property("flavors").with.lengthOf(3);
+expect(tea)
+  .to.have.property("flavors")
+  .with.lengthOf(3);
 ```
 
-```
+```js
 var assert = chai.assert;
 assert.typeOf(foo, "string");
 assert.equal(foo, "bar");
 assert.lengthOf(foo, 3);
 assert.property(tea, "flavors");
-assert.lengthOf(tea.flavors, 3)
+assert.lengthOf(tea.flavors, 3);
 ```
+
+## jest 测试
+
+````js
+// shell
+npm i jest --save-dev
+// package.json
+"e2e": "jest test/"
+
+// test/index.test.js
+const { Builder, By, Key, until } = require("selenium-webdriver");
+describe("test google.com", () => {
+  var driver;
+  beforeEach(() => {
+    console.log(111);
+    driver = new Builder().forBrowser("firefox").build();
+  });
+
+  afterEach(() => {
+    console.log(222);
+    driver.quit();
+  });
+
+  it("should open google search", async () => {
+    await driver.get("http://www.google.com/ncr");
+    await driver.findElement(By.name("q")).sendKeys("webdriver", Key.RETURN);
+    await driver.wait(until.titleIs("webdriver - Google 搜索"), 1000);
+    await driver.getTitle().then((title) => {
+      console.log("```title: " + title);
+      expect(title).toEqual("webdriver - Google 搜索");
+    });
+  }, 300000);
+});
+````

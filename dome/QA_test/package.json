@@ -4,9 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node ./tests/service/app.js",
+    "server-test": "node ./mochaRunner.js",
+    "unit": "./node_modules/karma/bin/karma start",
+    "e2e": "jest ./tests/e2e/"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "jasmine-core": "^3.7.1",
+    "jest": "^26.6.3",
+    "karma": "^6.3.2",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage": "^2.0.3",
+    "karma-jasmine": "^4.0.1",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "mocha": "^8.3.2",
+    "mochawesome": "^6.2.2",
+    "selenium-webdriver": "^4.0.0-beta.2"
+  },
+  "dependencies": {
+    "supertest": "^6.1.3"
+  }
 }

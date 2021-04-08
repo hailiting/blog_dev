@@ -1,0 +1,104 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-04-08T12:09:51.477Z",
+    "end": "2021-04-08T12:09:51.511Z",
+    "duration": 34,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "8f0deb3f-1754-4069-822d-9088936279a5",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "6b92f54d-6330-4ddd-83c8-0757c6e65355",
+          "title": "Node接口测试",
+          "fullFile": "/Users/hailiting/Desktop/blog_dev/dome/QA_test/tests/service/router.spec.js",
+          "file": "/tests/service/router.spec.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "test接口测试",
+              "fullTitle": "Node接口测试 test接口测试",
+              "timedOut": false,
+              "duration": 28,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "request()\n  .get(\"/test\")\n  .expect(200)\n  .expect(\"content-type\", /json/)\n  .end(function(err, res) {\n    // err  done  是 mocha 给的\n    if (err) {\n      done(err);\n    } else {\n      if (res.body.data === \"222\") {\n        done();\n      } else {\n        done(new Error(\"接口数据异常\"));\n      }\n    }\n  });",
+              "err": {},
+              "uuid": "7a03a873-5b95-48df-b222-dce3e1b9d59b",
+              "parentUUID": "6b92f54d-6330-4ddd-83c8-0757c6e65355",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "7a03a873-5b95-48df-b222-dce3e1b9d59b"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 28,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "8.3.2"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": true,
+        "reportFilename": "mochawesome-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.2.2"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "./docs/mochawesome-report",
+        "reportFilename": "mochawesome-report",
+        "quiet": true
+      },
+      "version": "5.2.0"
+    }
+  }
+}
