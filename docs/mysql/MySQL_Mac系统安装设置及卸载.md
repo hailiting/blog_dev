@@ -13,6 +13,8 @@ mysql_secure_installation
 
 # 给mysql权限
 sudo chmod -R 777 /usr/local/Cellar/mysql
+
+sudo chmod g+w ./assets/
 ```
 
 ## 修改密码
