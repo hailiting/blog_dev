@@ -244,3 +244,224 @@ http
   })
   .listen(3000);
 ```
+
+## 全局变量
+
+### `__filename`
+
+表示当前正在执行的脚本文件名，输出文件所在位置的绝对路径，且和命令行参数所指定的文件名不一定相同，如果在模块中，返回的值是模块文件的路径
+
+### `__dirname`
+
+表示当前执行脚本所在的目录
+
+### setTimeout / clearTimeout / setInterval/clearInterval
+
+### console
+
+- `console.trace(message[,...])`当前执行代码在堆栈中的调用路径
+
+```js
+var counter = 10;
+console.log("计数：", counter);
+console.time("获取数据");
+// ....
+console.timeEnd("获取数据");
+console.info("程序执行完毕");
+// 内存信息
+console.memory;
+```
+
+### process
+
+process 是全局变量，即 global 对象属性  
+它用于描述当前 nodejs 进程状态的对象，提供了一个与操作系统的简单接口。
+
+- exit 当进程准备退出是触发
+- beforeExit 当 node 清空事件循环，并没有其他安排的时候触发。通常来说，当没有进程安排时 node 退出，但 beforeExit 的监听器可以异步调用，这样 node 就会继续执行
+- uncaughtException 当一个异常冒泡回到事件循环，触发这个事件。如果给异常添加了监听器，默认的操作（打印堆栈跟踪信息并退出）就不会发生
+- Signal 事件 当进程收到信号时触发，信号列表详见标准的 POSIX 信号名，如 SIGNT, SIGUSR1 等
+
+```js
+process.on("exit", function(code) {
+  setTimeout(function() {
+    console.log("该段代码永远不会执行");
+  }, 0);
+  console.log("退出码为: ", code);
+});
+console.log("程序执行完毕");
+```
+
+```js
+// 输出到终端
+process.stdout.write("hello world！\n");
+// 通过参数读取
+process.argv.forEach(function(val, index, array) {
+  console.log(index + ":" + val);
+});
+// 获取执行路径
+console.log(process.execPath);
+// 平台信息
+console.log(process.platform);
+
+// 输出当前目录
+console.log("当前目录: ", process.cwd());
+// 输出当前版本
+console.log("当前版本: ", process.version);
+// 输出内存使用情况
+console.log("当前内存使用情况: ", process.memoryUsage());
+```
+
+## 文件系统
+
+Nodejs 提供 一组类似 UNIX（POSIX）标准的文件操作 API.Node 导入文件系统模块(fs)语法
+
+```js
+var fs = require("fs");
+```
+
+### `fs.readFile()`异步读取，`fs.readFileSync()`同步读取
+
+```js
+var fs = require("fs");
+// 异步读取
+fs.readFile("input.txt", function(err, data) {
+  if (err) {
+    return console.err(err);
+  }
+  console.log("异步读取: " + data.toString());
+});
+// 同步读取
+var data = fs.readFileSync("input.txt");
+console.log("同步读取：" + data.toString());
+console.log("程序执行完毕");
+```
+
+### `fs.open(path, flags[, mode], callback)`
+
+- path 路径
+- flags 文件打开的行为
+  - r+ 以读写模式打开文件，如果文件不存在，抛出异常
+- mode 设置文件模式（权限），文件创建的默认权限为 0666(可读，可写)
+- callback(err, fd) 回调函数
+
+```js
+var fs = require("fs");
+// 异步打开
+console.log("准备打开文件");
+fs.open("input.txt", "r+", function(err, fd) {
+  if (err) {
+    return console.err(err);
+  }
+  console.log("文件打开成功");
+});
+```
+
+### 获取文件信息
+
+```js
+var fs = require("fs");
+fs.stat("./fs.js", function(err, stats) {
+  console.log("是否为文件： " + stats.isFile());
+  console.log("是否为目录： " + stats.isDirectory());
+});
+```
+
+### `fs.writeFile(file, data[, options], callback)`写文件
+
+- file 文件名或文件描述符
+- data 要写入文件的数据，可以是 String 字符串，或 Buffer 缓冲对象
+- options 一个对象，包含`{encoding, mode, flag}`.默认为`{encoding:"utf8", mode:0666, flag:"w"}`
+
+```js
+var fs = require("fs");
+console.log("准备写入文件");
+fs.writeFile("input.txt", "hhhhha", function(err) {
+  if (err) {
+    return console.err(err);
+  }
+  console.log("数据写入成功");
+  fs.readFile("input.txt", function(err, data) {
+    if (err) {
+      return console.err(err);
+    }
+    console.log("异步读取： " + data.toString());
+  });
+});
+```
+
+### `fs.read(fd, buffer, offset, length, position, callback)` 异步读取文件
+
+- fd 通过`fs.open()`方法返回的文件描述符
+- buffer 数据写入缓冲区
+- offset 缓冲区写入的写入偏移量
+- length 要从文件中读取的字节数
+- position 文件读取的起始位置 null ->从当前文件指针的位置读取
+- `callback(err, bytesRead, buffer)` bytesRead 表示读取的字节数，buffer 为缓冲区对象
+
+```js
+var fs = require("fs");
+var buf = new Buffer.alloc(1024);
+fs.open("input.txt", "r+", function(err, fd) {
+  if (err) {
+    return console.err(err);
+  }
+  fs.read(fd, buf, 0, buf.length, 0, function(err, bytes) {
+    if (err) {
+      return console.err(err);
+    }
+    console.log(bytes + "字节被读取");
+    // 仅输出读取的字节
+    if (bytes > 0) {
+      console.log(buf.slice(0, bytes).toString());
+    }
+    fs.close(fd, function(err) {
+      if (err) {
+        return console.err(err);
+      }
+      console.log("文件关闭成功");
+    });
+  });
+});
+```
+
+### `fs.close(fd, function(err))`
+
+### `fs.ftruncate(fd, len, callbeck)`异步模式下的文件截取
+
+### `fs.unlink(path, callbeck)` 删除文件
+
+```js
+var fs = require("fs");
+
+console.log("准备删除文件！");
+fs.unlink("input.txt", function(err) {
+  if (err) {
+    return console.error(err);
+  }
+  console.log("文件删除成功！");
+});
+```
+
+### `fs.mkdir(path[, options], callback)`创建目录
+
+- path 文件路径
+- options
+  - recursive 是否一递归方式创建目录，默认为 false
+  - mode 设置目录权限 默认 0777
+- callback(err)
+
+```js
+var fs = require("fs");
+console.log("创建目录 /tmp/test/");
+// 不管/tmp/ 和 /tmp/a/ 目录是否存在
+fs.mkdir("/tmp/a/test/", { recursive: true }, (err) => {
+  if (err) throw err;
+});
+```
+
+### `fs.readdirr(path,callbeck(err,files))` 读取目录
+
+- files 为目录下的文件数组列表
+
+### `fs.rmdir(path, callback)`删除目录
