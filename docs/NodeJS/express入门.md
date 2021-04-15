@@ -289,3 +289,71 @@ app.get("/", function(req, res) {
 });
 app.listen(8081);
 ```
+
+## express 中间件 `next()`
+
+中间件（Middleware）是一个函数，可以访问请求对象（`request object(req)`），响应对象（`response object(res)`），和 web 应用处于请求-响应循环流程中的中间件，一般被命名为`next`变量
+
+- 执行任何代码
+- 修改请求和响应对象
+- 终结请求-响应循环
+- 调用堆栈中的下一个中间件函数
+
+### Express 应用可使用如下几个中间件
+
+- 应用级中间件
+- 路由级中间件
+- 错误处理中间件 `var router = express.router();`
+- 内置中间件
+- 第三方中间件
+
+```js
+var express = require("express");
+var app = express();
+app.get(
+  "/",
+  function(req, res, next) {
+    req.data = 123;
+    next();
+  },
+  (req, res) => {
+    console.log(req.data);
+    res.send("hi nn");
+    // res.end(""); // end就结束了
+  }
+);
+app.listen(8081);
+```
+
+#### 错误处理
+
+```js
+var express = require("express");
+var cookieParser = require("cookie_parser");
+
+var app = express();
+// 获取cookie要前置
+app.use(cookieParser());
+// 前置处理
+app.use(function(req, res, next) {
+  req.cookies = function() {
+    return {
+      data: "1223",
+    };
+  };
+  next();
+});
+app.get("/", function(req, res, next) {
+  res.send(req.cookies().data);
+});
+app.get("/index", function(req, res, next) {
+  console.log(req.cookies);
+  res.send("adfasdf");
+});
+// 放在后面兜错
+app.use(function(err, req, res, next) {
+  console.log(err.stack);
+  res.status(500).send("something wrong");
+});
+app.listen(8081);
+```
