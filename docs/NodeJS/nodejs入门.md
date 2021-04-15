@@ -85,6 +85,21 @@ fs.readFile("data.txt", function(err, data) {
   console.log(data.toString()); // 后
 });
 console.log("代码执行完毕"); // 先
+
+var fs = require("fs");
+const p = new Promise((resolve, reject) => {
+  fs.readFile("./index.html", (err, fd) => {
+    if (err) {
+      reject(err);
+    }
+    resolve(fd.toString());
+  });
+});
+p.then((data) => {
+  return data.substring(20);
+}).then((data) => {
+  console.log(data);
+});
 ```
 
 ## Nodejs 事件驱动机制
@@ -465,3 +480,154 @@ fs.mkdir("/tmp/a/test/", { recursive: true }, (err) => {
 - files 为目录下的文件数组列表
 
 ### `fs.rmdir(path, callback)`删除目录
+
+## Nodejs 常用工具
+
+```js
+const util = require("util");
+```
+
+### `util.callbackify`
+
+将 async 异步函数（或一个返回值为 Promise 的函数）转换为遵循异常优先的回调风格函数。
+
+```js
+const util = require("util");
+async function fn() {
+  return "hello world";
+}
+const callbackFunction = util.callbackify(fn);
+callbackFunction((err, ret) => {
+  if (err) throw err;
+  console.log(ret);
+});
+
+function fn() {
+  return Promise.rejcet(null);
+}
+const callbackFunction = util.callbackify(fn);
+
+callbackFunction((err, ret) => {
+  // 当Promise被以 null 拒绝时，它被包装为Error并且原始值存储在"reason"中，
+  err && err.hasOwnProperty("reason") && err.reason == null;
+});
+```
+
+### `util.inherits(constructor, superConstructor)`是一个实现对象间原型继承的函数
+
+```js
+var util = require("util");
+function Base() {
+  this.name = "base";
+  this.base = 1001;
+  this.sayHello = function() {
+    console.log("Hello " + this.name);
+  };
+}
+Base.prototype.showName = function() {
+  console.log(this.name);
+};
+function Sub() {
+  this.name = "sub";
+}
+util.inherits(Sub, Base);
+var objBase = new Base();
+objBase.showName();
+objBase.sayHello();
+console.log(objBase);
+var objSub = new Sub();
+objSub.showName();
+// Sub 仅继承Base原型中定义的函数，而构造函数内部的base属性和sayHello函数没有被继承。
+// objSub.sayHello();
+console.log(objSub.base); // undefined
+console.log(objSub);
+```
+
+### `util.inspect(object, [showHidden], [depth], [colors])`
+
+将任意对象转换为字符串的方法，通常由于调试和错误输出
+
+- showHidden 是可选参数，如果为 true，将会输出更多隐藏信息
+- depth 表示最大递归，默认为 2 层，null 为不限递归层数完整遍历对象
+- colors 值为 true，输出格式将以 ANSI 颜色编码
+- util.inspect 并不是调用`toString`方法
+
+```js
+var util = require("util");
+function Person() {
+  this.name = "ssss";
+  this.toString = function() {
+    return this.name;
+  };
+}
+var obj = new Person();
+console.log(util.inspect(obj));
+console.log(util.inspect(obj, true, 2, true));
+```
+
+### `util.isArray(object)`
+
+```js
+var util = require("util");
+util.isArray([]);
+util.isArray(new Array());
+util.isArray({});
+```
+
+### `util.isRegExp(object)`
+
+检查`object`是否是正则表达式
+
+### `util.isDate(object)`
+
+检查`object`是否是一个日期
+
+## web module
+
+```js
+// client.js
+var http = require("http");
+// 用于请求的选项
+var options = {
+  host: "loaclhost",
+  port: "8080",
+  path: "/index.html",
+};
+// 处理响应的回调函数
+var callback = function(response) {
+  // 不断更新数据
+  var body = "";
+  response.on("data", function(data) {
+    body += data;
+  });
+  reponse.on("end", function() {
+    // 数据接收完成
+    console.log(body);
+  });
+};
+// 向服务器发送请求
+var req = http.request(options, callback);
+req.end();
+```
+
+```js
+// server.js
+var http = require("http");
+var fs = require("fs");
+var url = require("url");
+http
+  .createServer(function(request, response) {
+    var pathname = url.parse(request.url).pathname;
+    fs.readFile(pathname.substr(1), function(err, data) {
+      if (err) {
+        console.log(err);
+        response.writeHead(404, { "Content-Type": "text/html" });
+      } else {
+        response.writeHead(200, { "Content-Type": "text/html" });
+        response.write(data.toString());
+      }
+      response.end();
+    });
+  })
+  .listen(8080);
+```
