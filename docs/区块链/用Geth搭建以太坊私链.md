@@ -120,9 +120,32 @@ $ geth --testnet --datadir .--syncmode fast
 //  地址  balance   表示在创世纪的时候  这些地址有这些balance   balance单位是wei
 {
   "config": {
-    "chainId": 15
+    "chainId": 15,
+    "homesteadBlock": 0,
+    "eip155Block": 0,
+    "eip158Block": 0
   },
   "difficulty": "2000",
+  "gasLimit": "2100000",
+  "alloc": {
+    "0xf1DE2d4c9DA3201B82402b4c3cD06E7E128A1430": { "balance": "300000" }
+  }
+}
+
+{
+  "config": {
+    "chainId": 15,
+    "homesteadBlock": 0,
+    "eip155Block": 0,
+    "eip158Block": 0
+  },
+  "coinbase": "0x0000000000000000000000000000000000000000",
+  "difficulty": "0x4",
+  "extraData": "",
+  "nonce": "0x0000000000000042",
+  "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "timestamp": "0x00",
   "gasLimit": "2100000",
   "alloc": {
     "0xf1DE2d4c9DA3201B82402b4c3cD06E7E128A1430": { "balance": "300000" }
@@ -143,3 +166,5 @@ $ geth --datadir ./myChain/ --networkid 15
 ```
 
 查看是否正常启动，如果正常启动，说明已经成功启动一条自己的私链了
+
+## ![启动控制台及控制台操作](./geth控制台操作.md)
