@@ -142,7 +142,7 @@ $ geth --testnet --datadir .--syncmode fast
   "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
   "coinbase": "0x0000000000000000000000000000000000000000",
   "alloc": {
-    "0Bbf9E54c4c5737aaBd484168fAe8D1905B972CC": {
+    "0xf1DE2d4c9DA3201B82402b4c3cD06E7E128A1430": {
       "balance": "30000000000000000000"
     }
   },
@@ -162,11 +162,11 @@ $ geth --datadir ./myChain/ init genesis.json
 **下面是必须的，绑定 networkid，要不然不能保证 networkid 和 chainid 是一样的**
 
 ```shell
-$ geth --datadir ./myChain/ --networkid 15
+$ geth --datadir ./myChain/ --networkid 523
 ```
 
 ```shell
-$ geth --datadir . --rpc --networkid 523 --nodiscover console 2>eth_output.log --allow-insecure-unlock
+$ geth --datadir ./myChain/ --rpc --networkid 523 --nodiscover console 2>eth_output.log --allow-insecure-unlock
 ```
 
 查看是否正常启动，如果正常启动，说明已经成功启动一条自己的私链了
@@ -190,6 +190,7 @@ $ tail -f output.log # 动态跟踪output.log文件的变化
 
 
 $ geth --datadir . --rpc --networkid 523 --nodiscover console 2>eth_output.log --allow-insecure-unlock
+
 ```
 
 #### 参数列表
@@ -274,7 +275,10 @@ Succesful
   to: "0xf1DE2d4c9DA3201B82402b4c3cD06E7E128A1430",
   value: web3.toWei(1, "ether")
 })
-
+> miner.start(1)
+> miner.stop()
+// 发送交易后需要挖矿打包交易才生效
+// 划转后得挖一下矿
 // 查询区块信息
 > eth.getBlock("210")
 // 查询交易
@@ -287,7 +291,8 @@ Succesful
   gasPrice: 1000000000,
   hash: "0xe961eedcc4e0254ff2733ead42fb05b000748252d33299db2a1f24327d8b05d7",
   input: "0x",
-  nonce: 0, // 像一个计算器
+  // 由发起人EOA发出的序列号，用于防止交易消息重播  1，2，3，4   6  等待 5   5交易完   交易 6
+  nonce: 0,
   r: "0xfb0fa585b15e55cdcdeb6722a12ec4769b3a5221627d92184a01b8595240a441",
   s: "0x54844af4e3773fc1d551911e5437e4159d964377ffb25b5cb61626453670fd3c",
   to: "0xf1de2d4c9da3201b82402b4c3cd06e7e128a1430",
@@ -296,6 +301,7 @@ Succesful
   v: "0x439",
   value: 1000
 }
+// v,r,s 发起人EOA的ECDSA签名的三个组成部分
 > eth.getBlock(3)
 {
   difficulty: 131072,
@@ -353,9 +359,14 @@ var serializedTx = tx.serialize();
 //console.log(serializedTx.toString('hex'));
 //0xf889808609184e72a00082271094000000000000000000000000000000000000000080a47f74657374320000000000000000000000000000000000000000000000000000006000571ca08a8bbf888cfa37bbf0bb965423625641fc956967b81d12e23709cead01446075a01ce999b56a8a88504be365442ea61239198e23d1fce7d00fcfc5cd3b44b7215f
 
-web3.eth.sendRawTransaction(serializedTx.toString("hex"), function(err, hash) {
+> web3.eth.sendRawTransaction(serializedTx.toString("hex"), function(err, hash) {
   if (!err) console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"
 });
+// 估算某笔交易所花费的gas
+> eth.estimateGas({from: eth.accounts[0],to: eth.accounts[1], value: web3.toWei(100,"ether")})
+21000
+> eth.estimateGas({from: eth.accounts[0],to: eth.accounts[1], value: 10, data: "0x1234"})
+21032
 ```
 
 ![eth_translate_err01][./img/eth_translate_err01.jpg]
