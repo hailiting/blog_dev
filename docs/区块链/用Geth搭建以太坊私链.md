@@ -187,8 +187,6 @@ $ geth --datadir ./myChain/ --networkid 15 --rpc console 2>output.log
 $ tail -f output.log # 动态跟踪output.log文件的变化
 
 # 30303  p2p节点
-
-
 $ geth --datadir . --rpc --networkid 523 --nodiscover console 2>eth_output.log --allow-insecure-unlock
 
 ```
@@ -419,7 +417,7 @@ const web3= {
     stopRPC: function(),
     stopWS: function()
   },
-  bzz: {
+  bzz: { //
     hive:  undefined,
     info: undefined,
     blockNetworkRead: function(),
@@ -439,7 +437,7 @@ const web3= {
     send: function(),
     sendAsync: function()
   },
-  db: {
+  db: { // 底层数据库
     getHex: function(),
     getString: function(),
     putHex: function(),

@@ -3,7 +3,7 @@
 ## Solidity 是什么
 
 - Solidity 是一门面向合约的、为实现智能合约而创建的高级编 程语言。这门语言受到了 C++，Python 和 Javascript 语言的 影响，设计的目的是能在以太坊虚拟机(EVM)上运行。
-- Solidity 是静态类型语言，支持继承、库和复杂的用户定义类 型等特性。
+- Solidity 是静态类型语言，支持继承、库和复杂的用户定义类型等特性。
 - 内含的类型除了常见编程语言中的标准类型，还包括 address 等以太坊独有的类型，Solidity 源码文件通常以 .sol 作为扩展 名
 - 目前尝试 Solidity 编程的最好的方式是使用 Remix。Remix 是一个基于 Web 浏览器的 IDE，它可以让你编写 Solidity 智 能合约，然后部署并运行该智能合约。
 
@@ -23,7 +23,7 @@ Solidity 源代码要成为可以运行在以太坊上的智能合约需要经�
 
 - 1. 用 Solidity 编写的智能合约源代码需要先使用编译器编译为字节码 (Bytecode)，编译过程中会同时产生智能合约的二进制接口规范 (Application Binary Interface，简称为 ABI);
 - 2. 通过交易(Transaction)的方式将字节码部署到以太坊网络，每次 成功部署都会产生一个新的智能合约账户;
-- 3. 使用 Javascript 编写的 DApp 通常通过 web3.js + ABI 去调用智能合 约中的函数来实现数据的读取和修改。
+- 3. 使用 Javascript 编写的 DApp 通常通过 web3.js + ABI 去调用智能合约中的函数来实现数据的读取和修改。
 
 ## Solidity 编译器
 
@@ -31,6 +31,52 @@ Solidity 源代码要成为可以运行在以太坊上的智能合约需要经�
   - Remix 是一个基于 Web 浏览器的 Solidity IDE;可在线使用而无需安装任 何东西
   - http://remix.ethereum.org
 - solcjs
-
   - solc 是 Solidity 源码库的构建目标之一，它是 Solidity 的命令行编译器
   - 使用 npm 可以便捷地安装 Solidity 编译器 solcjs `npm install -g solc`
+
+```js
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >= 0.4.22 <0.9.0;
+contract SimpleStorage {
+  // 声明函数的状态变量
+  uint256 private value;
+  constructor (uint256 _value) {
+    value = _value;
+  }
+  function setValue(uint256 _value) public{
+    value = _value;
+  }
+  // public view returns  函数类型
+  // uint256 返回类型
+  function getValue() public view returns (uint256){
+    return value;
+  }
+  function pureAdd(uint a, uint b) public pure returns(uint sum, uint origin_a){
+    return (a+b, a);
+  }
+}
+
+
+
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >0.4.22;
+contract Car {
+  bytes32 brand;
+  uint public price;
+  // 创建是时候设置初始化
+  constructor(bytes32 initBrand, uint initPrice){
+    brand = initBrand;
+    price = initPrice;
+  }
+  // 0x7465737400000000000000000000000000000000000000000000000000000000
+  function setBrand(bytes32 newBrand) public{
+    brand = newBrand;
+  }
+  function getBrand() public view returns(bytes32){
+    return brand;
+  }
+  function setPrice(uint newPrice) public {
+    price = newPrice;
+  }
+}
+```
