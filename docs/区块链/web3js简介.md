@@ -60,12 +60,15 @@ web3.eth.getBlock(48, function(error, result) {
 
 ```js
 web3.eth.sendTransation({from:"0x123...", data: "0x2323..."})
+// 监听返回交易 hash
 .once("transactionHash", function(hash){
   ...
 })
+// receipt 收据，在交易打包进块的啥时候
 .once("receipt", function(receipt){
   ...
 })
+// 有确认了
 .on("confirmation", function(confNumber, receipt){
   ...
 })
@@ -73,13 +76,13 @@ web3.eth.sendTransation({from:"0x123...", data: "0x2323..."})
   ...
 })
 .then(function(receipt){
-  // will be fired once the receipt is mined
+  // 在打包收据 进块的时候，就会触发
 })
 ```
 
 ## 应用二进制接口（ABI）
 
-- web3.js 通过以太坊智能合约的 json 接口（Application Binary Interface, ABI）创建一个 JavaScript 对象，用来在 js 代码中描述
+- web3.js 通过以太坊智能合约的 json 接口（Application Binary Interface，json 的描述，ABI）创建一个 JavaScript 对象，用来在 js 代码中描述
 - 函数（functions)
   - type: 函数类型，默认“function”，也可能是“constructor”
   - constant, payable, stateMutability: 函数的状态可变性
@@ -87,6 +90,45 @@ web3.eth.sendTransation({from:"0x123...", data: "0x2323..."})
 - 事件（events）
   - type: 类型，总是"event"
   - inputs: 输入对象列表，包括 name, type, indexed
+
+```shell
+$ vi Coin.sol
+// SPDX-License-Identifier: SimPL-2.0
+pragma solidity >=0.7.0 <0.9.0;
+contract Contract {
+  constructor() payable{}
+  function send5VdtToReceiver(address payable _receiver) payable public{
+    _receiver.transfer(5);
+  }
+}
+$ mkdit contract
+$ mv Coin.sol contract/
+$ solcjs --abi Coin.sol
+$ ls
+Coin.sol Coin_sol_Contract.abi
+$ cat Coin_sol_Contract.abi
+# 事件  函数
+[
+  {
+    "inputs":[],
+    "stateMutability":"payable",
+    "type":"constructor"
+  },
+  {
+    "inputs":[
+      {
+        "internalType":"address payable",
+        "name":"_receiver",
+        "type":"address"
+      }
+    ],
+    "name":"send5VdtToReceiver",
+    "outputs":[],
+    "stateMutability":"payable",
+    "type":"function"
+  }
+]
+```
 
 ## 批处理请求
 
