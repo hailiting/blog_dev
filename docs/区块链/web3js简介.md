@@ -1,5 +1,7 @@
 # web3js
 
+shell 清除屏幕 `Control + L`
+
 ## 前期准备
 
 ### 安装 solc
@@ -14,15 +16,18 @@ $ solcjs -V
 
 - Web3 JavaScript app API
 - web3js 是一个 JavaScript API 库，要使 DApp 在以太坊上运行，可以使用 web3js 库提供的 web3 对象
-- web3js 通过 RPC 调用与本地节点通信，它可以用于任何暴露了 RPC 层的以太坊节点
+- web3js 通过 **RPC 调用与本地节点通信**，它可以用于任何暴露了 RPC 层的以太坊节点
 - web3 包含 eth 对象-web3.eth(专门与以太坊区块链交互)和 shh 对象-web3.shh(用于与 Whisper 交互)
+  - Whisper -> 以太坊生态系统的一部分，实时通信，是分布式消息
+  - Swarm 分布式存储
 
 ## web3 模块加载
 
 - 将 web3 模块安装在项目中
 
 ```shell
-npm install web3@0.20.1
+# 最新的 1.3.5
+$ npm install web3@0.20.1
 ```
 
 - 然后创建一个 web3 实例，设置一个`provider`
@@ -41,6 +46,7 @@ if (typeof web3 !== "undefined") {
 - web3js API 设计的最初始的目的，主要是为了和本地 RPC 节点共同使用，所以默认情况下发送的是同步 HTTP 请求
 - 如果要发送异步请求，可以在函数的最后一个参数位置上吗，传入一个回调函数。回调函数是可选的（optional）
 - 一般采用回调风格的“错误优先”，例如：
+- 同步会阻塞
 
 ```js
 web3.eth.getBlock(48, function(error, result) {
@@ -95,12 +101,23 @@ web3.eth.sendTransation({from:"0x123...", data: "0x2323..."})
 $ vi Coin.sol
 // SPDX-License-Identifier: SimPL-2.0
 pragma solidity >=0.7.0 <0.9.0;
-contract Contract {
-  constructor() payable{}
-  function send5VdtToReceiver(address payable _receiver) payable public{
-    _receiver.transfer(5);
+contract Coin {
+  address public minter;
+  mapping (address => uint) public balances;
+  event Sent(address from,  address to, uint amount);
+  constructor()  {minter  = msg.sender;}
+  function mint(address receiver, uint amount) public {
+    require(msg.sender == minter);
+    balances[receiver] += amount;
+  }
+  function send(address receiver, uint amount) public {
+    require(amount <= balances[msg.sender]);
+    balances[msg.sender] -= amount;
+    balances[receiver] += amount;
+    emit Sent(msg.sender, receiver, amount);
   }
 }
+
 $ mkdit contract
 $ mv Coin.sol contract/
 $ solcjs --abi Coin.sol
@@ -108,26 +125,128 @@ $ ls
 Coin.sol Coin_sol_Contract.abi
 $ cat Coin_sol_Contract.abi
 # 事件  函数
+# abi 接口
+
+```
+
+```js
+mapping (address => uint) public balances;
+// 相当于
+function balances(address _addr) public view returns(uint){
+  return balances(_addr)
+}
+```
+
+```json
 [
   {
-    "inputs":[],
-    "stateMutability":"payable",
-    "type":"constructor"
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
-    "inputs":[
+    "anonymous": false, // 匿名
+    "inputs": [
       {
-        "internalType":"address payable",
-        "name":"_receiver",
-        "type":"address"
+        // 可以所有的事件参数   日志在topic下，有单独的日志
+        "indexed": false,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "name":"send5VdtToReceiver",
-    "outputs":[],
-    "stateMutability":"payable",
-    "type":"function"
+    "name": "Sent",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "balances", // 一个映射
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "mint",
+    "outputs": [],
+    "stateMutability": "nonpayable", // 状态可变型
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "minter",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "send",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ]
+```
+
+`solcjs --bin Coin.sol`最后提交到以太坊的代码
+
+```js
+var Web3 = require("web3");
+var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+console.log(web3.isConnected());
 ```
 
 ## 批处理请求
@@ -159,10 +278,20 @@ batch.execute();
 - JavaScript 中默认的数字精度较小，所以 web3.js 会自动添加一个依赖库 BigNumber, 专门用于大数处理
 
 ```js
+var BigNumber = require("bignumber.js");
 var balance = new BigNumber("131242344353464564564574574567456");
+console.log(balance);
+// BigNumber 类型的对象
+BigNumber {
+  s: 1, // 表示 + -  -1 表示负数
+  e: 32, // 位数
+  c: [ 13124, 23443534645645, 64574574567456 ] // 从低位切起  14位
+}
 // or
 // var balance = web3.eth.getBalance(someAddress);
 balance.plus(21).toString(10);
+balance.toString(10);  // 10进制
+balance.toString(16);  // 16进制
 // "131242344353464564564574574567477"
 ```
 
@@ -176,18 +305,23 @@ balance.plus(21).toString(10);
 
 ```js
 web3.version.api;
+
+web3.version;
 ```
 
 - 查看 web3 链接到的节点版本（clientVersion）
 
 ```js
+// 0.+版本
 // 同步
-web3.version.node;
+> web3.version.node; // 'Geth/v1.10.2-stable/darwin-amd64/go1.16.3'
 // 异步
-web3.version.getNode((error, result) => {
-  console.log(result);
-});
-web3.eth.getNodeInfo().then(console.log);
+> web3.version.getNode((err, result) => console.log(result));
+
+//  1+ 版本
+> web3.eth.getNodeInfo().then(console.log);
+Promise {<pending>}
+> 'Geth/v1.10.2-stable/darwin-amd64/go1.16.3'
 ```
 
 - 获取`network id`
@@ -199,6 +333,7 @@ web3.version.network;
 web3.version.getNetwork((err, res) => {
   console.log(res);
 });
+// 1.+ 版本
 web3.eth.net.getId().then(console.log);
 ```
 
@@ -211,6 +346,7 @@ web3.version.ethereum;
 web3.version.getEthereum((err, res) => {
   console.log(res);
 });
+// 1.+ 版本
 web3.eth.getProtocolVersion().then(console.log);
 ```
 
@@ -224,6 +360,7 @@ web3.isConnect();
 web3.net.listening;
 // 异步
 web3.net.getListening((err, res) => console.log(res));
+// 1.+ 版本
 web3.eth.net.isListening().then(console.log);
 ```
 
