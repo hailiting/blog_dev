@@ -188,6 +188,7 @@ $ tail -f output.log # 动态跟踪output.log文件的变化
 
 # 30303  p2p节点
 $ geth --datadir . --rpc --networkid 523 --nodiscover console 2>eth_output.log --allow-insecure-unlock
+$ geth --datadir ./myChain/ --rpc --networkid 523 --nodiscover console 2>eth_output.log --allow-insecure-unlock
 
 ```
 

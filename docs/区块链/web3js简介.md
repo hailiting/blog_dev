@@ -51,11 +51,34 @@ if (typeof web3 !== "undefined") {
 ```js
 web3.eth.getBlock(48, function(error, result) {
   if (!error) {
-    console.log(JSON.stringify(result));
+    console.log(result);
   } else {
     console.error(error);
   }
 });
+{
+  difficulty: '132160', // 难度
+  extraData: '0xd983010a02846765746888676f312e31362e338664617277696e', // 附加信息
+  gasLimit: 4925370, // 总共的gas上限
+  gasUsed: 0, // 出块的时候消耗 的 gas
+  hash: '0x854f5109bbdad66deaef69e409575225e981049c0b61c22b7bf8c94823a4b513',
+  logsBloom: '0x000...', // 事件过滤
+  miner: '0x9cab180D378005f9ecEa4869e77Cdde2BDb06FF5',
+  mixHash: '0x868ec7d705e858a2ec795318a645570093361ac1d81d230844f3750f956e8140', // 挖矿时计算相关的 parentHash
+  nonce: '0x38e647f6f084e477', // 挖矿的 时候的随机数
+  number: 48,
+  parentHash: '0x29cccb304525e35a7bd7062a8f836e3367dac5459a0456961efd5eb13186ae72',
+  receiptsRoot: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421', //
+  sha3Uncles: '0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347',
+  size: 537,
+  stateRoot: '0xf7bb7f07785453c10e82dda0614cfc2069fefbceb6328696fec0d944b14dd935',
+  timestamp: 1619523928,
+  totalDifficulty: '6329090',
+  transactions: [], //  没有交易，所以是空的
+  transactionsRoot: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421',
+  uncles: []
+}
+
 ```
 
 ### 用 Promise 回调
@@ -126,7 +149,6 @@ Coin.sol Coin_sol_Contract.abi
 $ cat Coin_sol_Contract.abi
 # 事件  函数
 # abi 接口
-
 ```
 
 ```js
@@ -247,6 +269,8 @@ function balances(address _addr) public view returns(uint){
 var Web3 = require("web3");
 var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 console.log(web3.isConnected());
+// 1.0+
+console.log(web3.currentProvider.connected);
 ```
 
 ## 批处理请求
@@ -382,8 +406,42 @@ web3.currentProvider;
 // 查看浏览器环境设置的`web3 provider`
 web3.givenProvider;
 // 设置provider
-web3.setProvider(provider) -
-  web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+// 已经创建好了web3对象，但不一定是需要的服务对象
+web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+// 浏览器环境检查现在连接到的provider
+window.web3; // 在浏览器非空页面，MateMask会注入web3到浏览器window对象里
+```
+
+#### geth 启动服务的选项
+
+```js
+API AND CONSOLE OPTIONS:
+--ipcdisable    // Disable the IPC-RPC server 是否启用
+--ipcpath value    // Filename for IPC socket/pipe within the datadir (explicit paths escape it)
+--http    // Enable the HTTP-RPC server
+--http.addr value    // HTTP-RPC server listening interface(defalut: "localhost")
+--http.port value    // HTTP-RPC server listening port(default: 8545)
+--http.api value    // API's offered over the HTTP-RPC interface
+--http.rpcprefix value    // HTTP path path prefix  on which JSON-RPC is served. Use  "/" to serve on all paths
+--http.corsdomain value    // 允许跨域请求的域名列表（逗号分隔，浏览器强制）
+// Comma separated list of domains from which  to accept cross origin requests (browser enforced)
+
+--http.vhosts value    // Comma separated list of virtual hostnames from which to accept requests(server enforced). Accepts "*"  wildcard.(default: "localhost")
+--ws    // Enable the WS-RPC  server  官方推荐，安全
+--ws.addr value    // WS-RPC server listening  interface(default:  "localhost")
+--ws.port value    // WS-RPC server listening port(default: 8546)
+--ws.api value    // API's offered over the WS-RPC interface
+--ws.rpcprefix value    // HTTP path prefix on which JSON-RPC  is served. Use "/" to serve on  all  paths.
+--ws.origins value    // Orgins from which to accept websockets requestss
+--graphql    // Enable GraphQL on the HTTP-RPC server. Note that GraphQL can only be started if an HTTP server is started as well.
+--graphql.corsdomain value    // Comma separated list of domains from which  to accept cross origin requests (browser enforced)
+--graphql.vhosts value    // Comma separated list of virtual hostnames from which to accept requests(server enforced). Accepts "*"  wildcard.(default: "localhost")
+--rpc.gascap value    // Sets a cap on gas that can be used in eth_call/estimateGas(0=infinite) (default:  25000000)
+--rpc.txfeecap value    // Sets a cap on transaction  fee (in ether)that can be sent via the  RPC APIs(0=no cap)(default:  1)
+--rpc.allow-unprotected-txs    // Allow for unprotected (non EIP155 signed) transactions to be submitted via RPC
+--jspath loadScript    // JavaScript root path for loadScript(defaukt: ".")
+--exec value    // Execute JavaScript statement
+--preload value    // Comma separated list of JavaScript files to preload into the console
 ```
 
 ### web3 通用工具方法
@@ -393,14 +451,30 @@ web3.setProvider(provider) -
 ```js
 web3.fromWei;
 web3.toWei;
+// 0.+
+web3.fromWei(2200823232323232323212121, "ether");
+web3.toWei(1, "ether");
+// 1.+
+web3.utils.fromWei("2200823232323232323212121", "ether");
+web3.utils.toWei("1", "ether");
 ```
 
 - 数据类型转换
 
 ```js
+// 0.+
 web3.toString;
 web3.toDecimal;
 web3.toBigNumber;
+/// 1.+
+// 返回给定十六进制值的数字表示形式
+web3.utils.hexToNumber("0x2a"); // 42
+web3.utils.toDecimal("0x2a"); // 42
+
+var BN = web3.utils.BN;
+new BN(1234).toString(); // "1234"
+new BN("1234").add(new BN("1")).toString(); // "1235"
+new BN("0xea").toString(); // "234" // 这个有问题
 ```
 
 - 字符编码转换
@@ -410,6 +484,17 @@ web3.toHex;
 web3.toAscii;
 web3.toUtf8;
 web3.fromUtf8;
+
+/// 1. +
+web3.utils.toHex("234"); // "0xea"
+web3.utils.toHex("0x49204c6f766520796f75"); // 'I Love you'
+web3.utils.hexToAscii("0x49204c6f766520796f75"); // 'I Love you'
+//
+web3.utils.hexToUtf8("0x49204c6f766520796f75");
+web3.utils.hexToString("0x49204c6f766520796f75");
+web3.utils.toUtf8("0x49204c6f766520796f75");
+
+web3.fromUtf8(string); // ALIAS, deprecated
 ```
 
 - 地址相关
@@ -417,6 +502,11 @@ web3.fromUtf8;
 ```js
 web3.isAddress;
 web3.toChecksumAddress;
+// 1.+
+web3.utils.isAddress("0xc1912fee45d61c87cc5ea59dae31190fffff232d"); // true
+// 将以太坊地址的大小写转换为校验和地址
+web3.utils.toChecksumAddress("0XC1912FEE45D61C87CC5EA59DAE31190FFFFF232D");
+// 0xc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d // same as above
 ```
 
 ### 账户相关
@@ -424,10 +514,10 @@ web3.toChecksumAddress;
 - coinbase 查询
 
 ```js
-// 同步
-web3.eth.coinbase;
 // 异步
 web3.eth.getCoinbase((err, res) => console.log(res));
+// 1.+
+web3.eth.getCoinbase().then(console.log);
 ```
 
 - 账户查询
@@ -435,20 +525,26 @@ web3.eth.getCoinbase((err, res) => console.log(res));
 ```js
 // 同步
 web3.eth.accounts;
-// 异步
+// 异步  geth环境里也可用(es6语法不行)
 web3.eth.getAccounts((err, res) => console.log(res));
 web3.eth.getAccounts().then(console.log);
 ```
 
 ### 区块相关的
 
-- 区块查询
+- 区块高度查询
 
 ```js
 // 同步
-web3.eth.getBlockNumber(hashStringOrBlockNumber[, returnTransactionObjects]);
+web3.eth.blockNumber;
 // 异步
-web3.eth.getBlockNumber(hashStringOrBlockNumber, callback);
+web3.eth.getBlockNumber((err, res) => console.log(res));
+// 1. +
+web3.eth.getBlockNumber().then(console.log);
+
+web3.eth.gasPrice.toString();
+// 1. +
+web3.eth.getGasPrice().then(console.log);
 ```
 
 - 块中交易数量查询
@@ -458,6 +554,9 @@ web3.eth.getBlockNumber(hashStringOrBlockNumber, callback);
 web3.eth.getBlockTransactionCount(hashStringOrBlockNumber);
 // 异步
 web3.eth.getBlockTransactionCount(hashStringOrBlockNumber, callback);
+
+// 1. +
+web3.eth.getBlockTransactionCount(hashStringOrBlockNumber).then(console.log);
 ```
 
 ### 交易相关
@@ -466,6 +565,7 @@ web3.eth.getBlockTransactionCount(hashStringOrBlockNumber, callback);
 
 ```js
 web3.eth.getBalance(addressHexString[, defaultBlock][, callback]);
+web3.eth.getBalance(web3.eth.accounts[0]).toString()
 ```
 
 - 交易查询
@@ -497,8 +597,32 @@ web3.eth.estimateGas(callObject[, callback]);
   - value: 交易金额，以 wei 为单位，可选
   - gas: 交易消耗 gas 上限，可选
   - gasPrice: 交易 gas 单价，可选
-  - data: 交易携带的字符串数据，可选
+  - data: 交易携带的字符串数据，可选 // 合约交易携带的参数
   - nonce: 整数 nonce 值，可选
+
+```js
+// 1.在geth里解锁account[0]
+> personal.unlockAccount(eth.accounts[0]);
+
+// 2.web3
+>
+async function getBalance(){return await web3.eth.getAccounts();}var a = getBalance();
+// 想要交易receipt  必须要挖矿  miner.start()
+a.then( res=> {
+   web3.eth.sendTransaction({
+    from: res[0],
+    to: res[1],
+    value: 200000,
+    data: "0x",
+  }).once("transactionHash", function(hash){
+    console.log({hash});
+  }).then(res=>{
+    console.log({res});
+  }).catch(e=>{
+    console.log({e})
+  });
+})
+```
 
 ### 消息调用
 
@@ -510,7 +634,9 @@ web3.eth.estimateGas(callObject[, callback]);
 
 ```js
 var result = web3.eth.call({
+  // 向谁发出来的调用
   to: "0xc4abd0339eb8d57087278718986382264244252f",
+  // 32位的字节 前8  函数的选择器
   data:
     "0xc6888fa1000000000000000000000000000000000000000000000000000 0000000000003",
 });
@@ -522,22 +648,26 @@ console.log(result);
 - `web3.eth.filter(filterOptions[, callback])`
 
 ```js
-// filterString可以是“latest” or "pending"
-var filter = web3.eth.filter(filterString);
+// 0. +
+// pending 交易状态在pending 过滤
+// filterString 可以是“latest” or "pending" 指定过滤器选项
+// var filter = web3.eth.filter(filterString);
 // 或者可以填入一个日志过滤
-var filter = web3.eth.filter(options);
+var filter = web3.eth.filter("latest");
 // 监听日志变化
 filter.watch(function(error, result) {
   if (!error) {
     console.log(result);
   }
 });
+filter.stopWatch();
 // 还可以用传入回调函数的方法，立即开始监听日志
 web3.eth.filter(options, function(error, result) {
   if (!error) {
     console.log(result);
   }
 });
+// 1. +
 ```
 
 ## 合约相关的
@@ -547,19 +677,89 @@ web3.eth.filter(options, function(error, result) {
 - web3.eth.contract
 
 ```js
-var MyContract = web3.eth.contract(abiArray);
+/// 方法一  合约已部署
 // 通过地址初始化合约实例
-var contractInstance = MyContract.at(address);
-// 或者部署一个新的合约
-var contractInstance = MyContract.new(
-  [constructorParam1]
-  [,constructorParam2],
+// var contractInstance = MyContract.at(address);
+
+/// 方法一  合约未部署
+// 部署一个新的合约
+// var contractInstance = MyContract.new(
+//   [constructorParam1]
+//   [,constructorParam2],
+//   {
+//     data: "0x....",
+//     from: myAccount,
+//     gas: 1000000,
+//   },
+// );
+// abiArray 源代码数据结构
+var abiArray = [
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
-    data: "0x....",
-    from: myAccount,
-    gas: 1000000,
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      { indexed: false, internalType: "address", name: "to", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "Sent",
+    type: "event",
   },
-);
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "balances",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "receiver", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "mint",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "minter",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "receiver", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "send",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+var byteCode = "0x" + "xxx"; // solcjs --bin Coin.sol
+var MyContract = web3.eth.contract(abiArray);
+var deployTxObject = {
+  from: web3.eth.accounts[0],
+  data: byteCode,
+  gas: 1000000,
+};
+
+var contractInstance = CoinContract.new(deployTxObject);
+contractInstance.address; // 如果是undefined说明出块失败    如果是0x...说明部署成功
 ```
 
 ### 调用合约函数
@@ -567,12 +767,23 @@ var contractInstance = MyContract.new(
 - 可以通过已创建的合约实例，直接调用合约函数
 
 ```js
+// myMethod 合约里的函数名称
 // 直接调用，自动按函数类型决定用sendTransaction还是call
-myContractInstance.myMethod(param1[,param2,...][,transactionObject][,defaultBlock][,callback]);
-// 显示以消息调用形式call该函数
-myContractInstance.myMethod.call(param1[,param2,...][,transactionObject][,defaultBlock][,callback]);
-// 显式以发送交易形式调用该函数
-myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
+contractInstance.myMethod(param1[,param2,...][,transactionObject][,defaultBlock][,callback]);
+// 显示以消息调用形式call该函数  指定以消息调用的形式去调用 不需要发送交易时
+contractInstance.myMethod.call(param1[,param2,...][,transactionObject][,defaultBlock][,callback]);
+// 显式以发送交易形式调用该函数  状态的修改   转币
+contractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
+
+
+
+contractInstance.minter({from: web3.eth.accounts[0],  to: web3.eth.accounts[1], value:40000});// err
+contractInstance.mint(web3.eth.accounts[0],3000000, {from: web3.eth.accounts[0]},(err, res)=>{if(res){console.log(res); }if(err){console.log(err)}})
+contractInstance.balances(web3.eth.accounts[0], (err, res)=>console.log(res))
+
+contractInstance.balances(web3.eth.accounts[0], (err, res)=>{if(res){console.log(res); }if(err){console.log(err)}})
+
+contractInstance.balances("0x9cab180d378005f9ecea4869e77cdde2bdb06ff5")
 ```
 
 ### 监听合约事件
@@ -587,4 +798,8 @@ var event = myContractInstance.MyEvent(
     if (!error) console.log(result);
   }
 );
+contractInstance.Sent("pending", (err, res) => console.log(err || res));
+contractInstance.send(web3.eth.accounts[0], 23000, {
+  from: web3.eth.accounts[0],
+});
 ```
