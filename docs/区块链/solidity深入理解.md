@@ -392,4 +392,119 @@ contract E is C {
 - payable: 允许从消息调用中接收以太币 Ether
 - constant: 与 view 相同，一般只修饰状态变量，不允许赋值（除初始化以外）
 
-### Solidity 函数状态可变性
+#### 以下情况被认为是修改状态
+
+- 修改状态变量
+- 产生事件
+- 创建其他合约
+- 使用 selfdestruct
+- 通过调用发送以太币
+- 调用任何没有标记 view 或 pure 的函数
+- 使用低级调用
+- 使用包含特定操作码的内联汇编
+
+#### 以下被认为是从状态中进行读取
+
+- 读取状态变量
+- 访问`this.balance`或`<address>.balance`
+- 访问`block`,`tx`,`msg`中任意成员（除`msg.sig`和`msg.data`之外）
+- 调用任何未标记为 pure 的函数
+- 使用包含某些操作码的内联汇编
+
+### 函数修饰器（modifier）
+
+- 使用修饰器`modifier`可以轻松改变函数的行为。例如，他们可以在执行函数之前自动检查某个条件。修饰器`modifier`是合约的可继承属性，并可能被派生合约覆盖
+- 如果同一个函数有多个修饰器`modifier`，他们之间以空格隔开，修饰器`modifier`会依次检查执行
+
+```js
+pragma solidity >=0.4.22 >0.6.0;
+contract Purchase {
+  address public seller;
+  modifier onlySeller(){
+    require(msg.sender == seller,"only seller can call");
+  }
+  function abort() public view onlySeller {
+    // modifier user
+    // ...
+  }
+}
+```
+
+### 回退函数（fallback）
+
+- 回退函数（fullback function）是合约中特殊的函数；没有名字，不能有参数也不能有返回值
+- 如果在一个到合约的调用中，没有其他函数与给定的函数标识符匹配（或没有提供调用数据），那么这个函数（fallback 函数）会被执行
+- 每当合约收到以太币（没有任何数据），回退函数就会被执行。此外，为了接收以太币，fallback 函数必须标记为 payable。如果不存在这样的函数，则 合约不能通过常规交易接收以太币
+- 在上下文中通常只有很少的 gas 可以用来完成回退函数的调用，所以使 fallback 函数的调用尽量廉价很重要
+
+```js
+pragma solidity >0.4.99 <0.6.0;
+contract Sink{
+  function() external  payable{}
+}
+contract Test {
+  function() external {x=1;}
+  uint x;
+}
+contract Caller {
+  function callTest(Test test) public returns (bool){
+    (bool success,) = address(test).call(abi.encodeWithSignature("nonExistingFunction")) ;
+    require(success);
+    address payable testPayable = address(uint160(address(test)));
+    return testPayable.send(2 ether);
+  }
+}
+```
+
+## 事件（event）
+
+- 事件是以太坊 EVM 提供的一种日志基础设施。事件可以用来做操作记录，存储为日志。也可以用来实现一些交互功能 ，比如通知 UI，返回函数调用结果等
+- 当定义的事件触发时，我们可以将事件存储到 EVM 的交易日志中，日志是区块链中的一种特殊数据结构；日志与合约关联，与合约的存储合并存入区块链中；只要某个区块可以访问，其相关的日志就可以访问；但在合约中，我们不能直接访问日志和事件数据
+- 可以通过日志实现简单支付验证 SPV(Simplified Payment Verification), 如果一个外部实体提供了一个带有这种证明的合约，它可以检查日志是否真实存在于区块链中
+
+## Solidity 异常处理
+
+- Solidity 使用“状态恢复异常”来处理异常。这样的异常将撤销对当前调用（及其所有子调用）中的状态所做的所有更改，并向调用者返回错误
+- 函数 assert 和 require 可用于判断条件，并在不满足条件时抛出异常
+- assert() 一般只应用于测试内部错误，并检查常量
+- require() 应用于确保满足条件（如收入或合约状态变量），或验证调用外部合约的返回值
+- revert() 用于抛出异常，它可以标记一个错误并将当前调用回退
+
+## Solidity 中的单位
+
+### 以太币（ether）
+
+- 以太币 Ether 单位之间的换算就是在数字后加 wei， finny, szabo 或 ether 来实现，如果后面没有单位，默认为 wei，例如 `2 ether == 2000 finney`的逻辑判定值为`true`
+
+| Unit               | Wei Value | Wei                       |
+| ------------------ | --------- | ------------------------- |
+| wei                | 1         | 1 wei                     |
+| Kwei(babbage)      | 1e3 wei   | 1,000                     |
+| Mwei(lovelace)     | 1e6 wei   | 1,000,000                 |
+| Gwei(shannon)      | 1e9 wei   | 1,000,000,000             |
+| microether(szabo)  | 1e12 wei  | 1,000,000,000,000         |
+| milliether(finney) | 1e15 wei  | 1,000,000,000,000,000     |
+| ether              | 1e18 wei  | 1,000,000,000,000,000,000 |
+
+### 时间
+
+- 秒为缺省时间单位，在时间单位之间，数字后面带有`seconds`,`minutes`,`hours`,`day`,`weeks`和`years`的可以进行换算，基本换算关系如下
+
+```js
+1 == 1 seconds
+1 minutes == 60 seconds
+1 hours == 60 minutes
+1 days == 24 hours
+1 weeks ==  7 days
+1 years == 365 days
+```
+
+- 这些后缀不能直接用在变量后面，如果想用时间单位（如 days）来将输入变量换算为时间，我们可以用如下方式来完成
+
+```js
+function f(uint start,uint daysAfter) public {
+  if(now>= start  + daysAfter* 1 days){
+    // ...
+  }
+}
+```
