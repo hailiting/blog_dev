@@ -43,7 +43,7 @@
 
 - Solidity 支持通过构造结构体的形式定义新的类型
 
-### 映射 - Mapping
+### 映射 - Mapping 字典
 
 - 映射可以视作`哈希表`，在实际的初始化过程中创建每个可能的 key，并将其映射到字节形式其实零的值（类型默认值）
 
@@ -62,20 +62,89 @@
 - Payable 地址是可以发送 ether 的地址，而普通`address`不能
 - 允许从 `payable address`到`address`的隐式转换,而反过来的直接转换是不可能的（唯一的方法是通过`uint160`来 进行中间的转换）
 - 从 0.5.0 版本开始，合约不再是从地址型派生而来，但如果它有`payable`的回退函数，那同样可以显示转换为`address`或`address payable`类型
+- 0.5.0 以下 合约是继承地址类型
 
 ### 地址类型成员变量
+
+大的一个对象和结构
 
 #### `<address>.balance(uint256)`
 
 - 该地址的 ether 余额，以 wei 为单位
 
+```js
+// SPDX-License-Identifier: UNLICENSED;
+pragma solidity >0.4.0;
+contract Car {
+  string  brand;
+  uint  price;
+  constructor(string memory initBrand, uint  initPrice)  {
+    brand = initBrand;
+    price = initPrice;
+  }
+  function setBrand(string  memory newBrand)  public  {
+    brand  = newBrand;
+  }
+  function getBrand() public view returns  ( string memory){
+    return brand;
+  }
+  function setPrice(uint newPrice) public {
+    price = newPrice;
+  }
+  fixed128x20 a;
+}
+contract CarPayable {
+  string a;
+  Car car = new Car("BMW", 10000);
+  function aa() view public returns(uint) {
+   return address(car).balance;
+  }
+  function aaaaa() view public returns(string memory) {
+   return car.getBrand();
+  }
+}
+```
+
 #### `<address payable>.transfer(uint256 amount)`
 
-- 向指定地址发送数量为`amount`的`ether`(以 wei 为单位)，失败时抛出异常，发送 2300gas 的矿工费，不可调节
+- 向指定地址发送数量为`amount`的`ether`(以 wei 为单位)，失败时抛出异常（等价于 `requi(send())`），发送 2300gas 的矿工费，不可调节
 
-#### `<address payable>.transfer(uint256 amount) returns (bool)`
+```js
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >0.4.0;
+contract Faucet {
+    constructor()  payable {
+    }
+  function deposit(address payable recipient, uint256 amount)  payable public returns (bool success){
+   return recipient.send(amount);
+  }
+  function deposit02(address payable recipient, uint256 amount) payable public {
+      require(address(this).balance >= amount, "balance");
+      recipient.transfer(amount);
+  }
+  function sendValue(address payable recipient, uint256 amount)  payable public  {
+      require(address(this).balance >= amount, "Address: insufficient balance");
 
+      // solhint-disable-next-line avoid-low-level-calls, avoid-call-value
+      (bool success, ) = recipient.call{ value: amount }("");
+      require(success, "Address: unable to send value, recipient may have reverted");
+  }
+  function balance(address payable recipient) public view returns (uint256 amount){
+      return recipient.balance;
+  }
+  fallback () payable external {}
+  receive () payable external {}
+}
+```
+
+#### `<address payable>.send(uint256 amount) returns (bool)`
+
+- send 和 transfer 类似，send 不会发生异常，而是抛出 flase
 - 向指定地址发送数量为`amount`的`ether`(以 wei 为单位)，失败是返回 false，发送 2300 gas 的矿工费用，不可调节
+
+#### `<address>.call(bytes memory) returns (bool, bytes memory)`
+
+- 发出底层函数 call，失败时返回 false，发送所有可用 gas,可调节
 
 #### `<address>.delegatecall(bytes memory) returns (bool, bytes memory)`
 
@@ -106,6 +175,11 @@ if(x.balance <10 &&  myAddress.balance>=10){
 - 也可以用 call 来实现转币的操作，通过添加`.gas()`和`.value()`修饰符
 
 ```js
+function sendValue(address payable recipient, uint256 amount) internal {
+    require(address(this).balance >= amount, "Address: insufficient balance");
+    (bool success, ) = recipient.call{ value: amount }("");
+    require(success, "Address: unable to send value, recipient may have reverted");
+}
 nameReg.call.gas(1000000).value(1 ether)(abi.encodeWithSignature("register(string)", "MyName"));
 ```
 
@@ -117,6 +191,18 @@ nameReg.call.gas(1000000).value(1 ether)(abi.encodeWithSignature("register(strin
 - 有一个`.length`属性，返回数组长度（只读）
 - 属于引用类型，包括`bytes`和`string`，不同的是`bytes`是 Hex 字符串，而`string`是 `UTF-8`编码的字符串
 
+```js
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >0.4.0;
+contract Test{
+  function test() pure public returns  (uint256 num){
+    bytes17 a;
+    return a.length;
+  }
+}
+// 0:uint256: num 17
+```
+
 ## 枚举（Enum）
 
 - 枚举类型用来用户自定义一组常量值
@@ -125,7 +211,14 @@ nameReg.call.gas(1000000).value(1 ether)(abi.encodeWithSignature("register(strin
 ```js
 pragma solidity >= 0.4.0 <0.6.0;
 contract Purchase {
+  //  0 1 2
   enum State  {Created,  Locked, Inactive}
+  function test() public pure returns(uint){
+    State a = State.Created;
+    return uint(a); // 0
+    // State a = State.Locked;
+    // return uint(a); // 1
+  }
 }
 ```
 
@@ -136,6 +229,7 @@ contract Purchase {
 - 越界访问数组，会导致调用失败回退
 - 如果要添加新元素，则必须使用`.push()`或将`.length`增大
 - 变长的`storage`数组和`bytes`（不包括 string）有一个`push()`方法。可以将一个新元素附加到数组末端，返回值为当前长度
+- memory 是给定长度的
 
 ```js
 pragma solidity>=0.4.16 <0.6.0;
