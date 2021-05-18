@@ -232,14 +232,23 @@ contract Purchase {
 - memory 是给定长度的
 
 ```js
-pragma solidity>=0.4.16 <0.6.0;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity>0.4.16;
 contract C {
   function f(uint len) public pure{
     uint[] memory  a =  new uint[](7);
-    bytes memory b = new bytes(len);
+    bytes memory b = new bytes(len); // 分配路由
     assert(a.length == 7);
     assert(b.length == len);
     a[6] = 8;
+  }
+  function fun(uint len) public  pure  returns  (uint[] memory){
+    uint[] memory a= new uint[](len);
+    return a;
+  }
+  function fun01(uint len) public  pure  returns  (bytes memory){
+    bytes memory b =new bytes(len);
+    return b;
   }
 }
 ```
@@ -250,9 +259,11 @@ contract C {
 - 结构不能包含自己类型的成员，但可以作为自己数组成员的类型，也可以作为自己映射成员的值类型
 
 ```js
-pragma solidity >=0.4.0 <0.6.0;
-contract  Ballot  {
-  struct  Voter{
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >=0.4.0;
+contract Ballot  {
+  // struct Ballot // err 不能引用循环
+  struct Voter{
     uint weight;
     bool voted;
     uint vote;
@@ -262,25 +273,55 @@ contract  Ballot  {
 
 ## 映射(Mapping)
 
-- 声明一个映射：`mapping (_KeyType=>_ValueType)`
+- 声明一个映射：`mapping(_KeyType=>_ValueType)`
 - `_KeyType`可以是任何基本类型。这意味着他可以是任何内置值类型 加上字节和字符串。不允许使用用户定义的或复杂的类型，如枚举，映射，结构 以及除`bytes`和`string`之外的任何数组类型
 - `_ValueType`可以是任何类型，包括映射
 
+**谁调起了方法，谁就是`msg.sender`**
+
 ```js
-pragma solidity >=0.4.0 <0.6.0;
-contract MappingExample{
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >=0.4.0;
+contract C{
   mapping(address=>uint) public balances;
+  constructor(){
+    balances[address(this)] = 300;
+  }
+  // 自己改自己的余额
   function update(uint newBalance)public{
     balances[msg.sender] = newBalance;
   }
-}
-contract MappingUser {
-  function f() public returns (uint){
-    MappingExample m = new MappingExample();
-    m.update(100);
-    return m.balances(address(this));
+  function updateAddr(address addr, uint newBalance)public{
+    balances[addr] = newBalance;
   }
 }
+contract D {
+  function f() public returns (uint[2] memory){
+    // C 合约本身也是一个类型
+    // new C() 调用了C 的 constructor
+    C c = new C();
+    // 一个合约的外面去调用合约方法
+    c.update(100); // 这里更新的是D的余额，因为D调用了c
+    c.updateAddr(msg.sender, 1000);
+    // m.balances   访问的是内置的方法
+    // 定义public   相当于定义了balances function 变量
+    // 在输出台输出
+    // decoded output	{ "0": "uint256[2]: 100,1000" }
+    // decoded 已解码
+    return [c.balances(address(this)),c.balances(address(msg.sender))];
+
+    // msg.sender指部署合约的地址   所以是0
+    // return c.balances(address(msg.sender));
+
+    // decoded output	{ "0": "uint256: success 300" }
+    // return c.balances(address(c));
+  }
+}
+// 主地址 部署了 D，成为了msg.sender
+// c是D调用的
+// C的合约c来调用
+// update是D来调用
+// 只要msg.sender没有加代理，一定就是D
 ```
 
 ## Solidity 数据位置
@@ -289,6 +330,8 @@ contract MappingUser {
 - 根据上下文不同，大多数时候数据有默认的位置，但也可以通过在类型名后添加关键字`storage`或`memory`进行修改
 - 函数参数(包括返回的参数)的数据位置默认是 memory，局部变量的数据位置默认是`storage`，状态变量的数据位置强制`storage`
 - 另外还存在第三种数据位置，calldata，这是一块只读的，且不会永久存储的位置，用来存储函数参数。外部函数的参数（非返回参数）的数据位置被强制指定为`calldata`，效果跟`memory`差不多
+- `memory` 访问快，占用少
+- `storage` 存储空间大，持久化存储
 
 ### 数据位置总结
 
@@ -304,32 +347,79 @@ contract MappingUser {
 - 公开可见（public visible）的函数参数一定是 memory 类型，如果要求是`storage`类型则必须是`private`或者`internal`函数，这是为了防止随意的公开调用占用资源
 
 ```js
-pragma solidity ^0.4.0;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >0.4.0;
 contract C{
-  uint[] data1;
-  uint[] data2;
-  function appendOne() public{
+  uint[] public data1;
+  uint[] public data2;
+  function appendOne() public returns (uint[] memory){
     append(data1);
+    data1.push(233);
+    return data1;
   }
   function appendTwo() public {
     append(data2);
   }
+  // d 是 data1 的引用
   function append(uint[] storage d) internal {
-    d.push(1);
+    d.push(1111);
   }
 }
 ```
 
 ```js
-// 找错
-pragma solidity ^0.4.0;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >0.4.0;
+contract  C{
+  uint public a;
+  uint public b;
+  uint[] data; // 存的是data的长度
+  function f() public{
+    // TypeError: Data location must be "storage", "memory" or "calldata" for variable, but none was given.
+    // 没有分配存储空间的一个属性
+    // 元素的索引值和 x 的length
+    uint[] x;
+    x.push(123); // x指向全局 长度变为1  x的长度改变为1会指向C的第一位  所以a变为1
+    data = x;
+  }
+}
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >0.4.0;
+contract  C{
+  uint someVariable;
+  uint[] data;
+  function f() public{
+    uint[] storage x = data;// err
+    x.push(2);
+    data = x;
+  }
+}
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >0.4.0;
+contract  C{
+  uint public a;
+  uint public b;
+  uint[] data;
+  function f() public{
+    arrLen(data,  123);
+  }
+  function arrLen(uint[] storage arr, uint  num) internal returns (uint[] memory){
+       arr.push(num);
+       return arr;
+  }
+}
+```
+
+```js
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >0.4.0;
 contract C {
   uint[] x;
-  function f(uint[] memoryArray) public {
+  function f(uint[] memory memoryArray) public {
     x=memoryArray;
-    uint[] y = x;
+    uint[] memory y = x;
     y[7];
-    y.length = 2;
+    // y.length = 2; // read only
     delete  x;
     y = memoryArray;
     delete y;
@@ -337,8 +427,8 @@ contract C {
     h(x);
   }
   function g(uint[] storage storageArray) internal {}
-  function h(uint[] memoryArray) public {}
- }
+  function h(uint[] memory memoryArray) public {}
+}
 ```
 
 ```js
