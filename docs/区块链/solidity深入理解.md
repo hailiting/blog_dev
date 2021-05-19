@@ -416,39 +416,53 @@ pragma solidity >0.4.0;
 contract C {
   uint[] x;
   function f(uint[] memory memoryArray) public {
-    x=memoryArray;
+    // memory和storage数据类型一样的话，可以互相传值
+    // memory赋值给storage变量，是完整的拷贝
+    // 局部转状态的时候是拷贝
+    x = memoryArray;
     uint[] memory y = x;
     y[7];
     // y.length = 2; // read only
-    delete  x;
+    delete x;
     y = memoryArray;
     delete y;
     g(x);
     h(x);
   }
-  function g(uint[] storage storageArray) internal {}
-  function h(uint[] memory memoryArray) public {}
+  function g(uint[] storage storageArray) internal{
+       storageArray.push(111);
+  }
+  function h(uint[] memory memoryArray) public pure returns(uint){
+      return memoryArray.length;
+  }
 }
 ```
 
 ```js
+// SPDX-License-Identifier: UNLICENSED
 pragma solidity >0.4.22;
 contract Honeypot {
+  constructor() payable {}
   uint luckyNum = 52;
   uint public last;
-  struct Guess{address player, uint number;}
+  struct Guess{
+    address player;
+    uint number;
+  }
   Guess[] public guessHistory;
-  address owner = msg.sender;
   function guesss(uint _num) public payable {
-    Guess newGuess;
+    Guess memory newGuess;
     newGuess.player = msg.sender;
     newGuess.number = _num;
     guessHistory.push(newGuess);
     if(_num == luckyNum){
-      msg.sender.transfer(msg.value *2);
+      // 合约要给这个sender2倍币
+      payable(msg.sender).transfer(msg.value *2);
     }
-    last = now;
+    last = block.timestamp;
   }
+  fallback () payable external {}
+  receive () payable external {}
 }
 ```
 
@@ -465,11 +479,33 @@ function getBrand() public view returns (string) {
 }
 ```
 
-- 内部函数只能在当前合约内被调用（更具体来说，在当前代码块内，包括内部库函数和继承的函数中），因为他们不能在当前合约上下文的外部被执行。
+- 内部函数只能在当前合约内被调用（更具体来说，在`当前代码块`内，包括`内部库函数`和`继承的函数`中调用），因为他们不能在当前合约上下文的外部被执行。
 - 调用一个内部函数是通过跳转到它的入口标签来实现的，就像在当前合约的内部调用一个函数
 - 外部函数由一个地址和一个函数签名组成，可以通过外部函数调用传递或返回
 - 调用内部函数：直接 使用名字 f
 - 调用外部函数：`this.f`(当前合约)，`a.f`(外部合约)
+
+```js
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >0.4.22;
+contract C{
+  uint a;
+  function f() public {}
+  function e() private {} // 私有方法不能被外部调用
+  function d() internal {}
+}
+contract D{
+  function g() public {
+    C c = new C();
+    c.f(); // 外部调用
+  }
+}
+contract E is C{
+  function g() public {
+    f(); // 继承函数
+  }
+}
+```
 
 ### Solidityy 函数可见性
 
@@ -477,13 +513,13 @@ function getBrand() public view returns (string) {
 对于状态变量，不能设置为`external`，默认是`internal`
 
 - `external`: 外部函数作为合约接口的一部分，意味着我们可以从其他合约和交易中调用。一个外部函数`f`不能从内部调用（即 f 不起作用，但`this.f()`可以）。当收到大量数据的时候，外部函数有时候会更有效率
-- `public`: `public`函数是合约接口的一部分，可以在内部或通过消息调用。对于 public 状态变量，会自动生成一个 getter 函数
+- `public`: `public`函数是合约接口的一部分，可以在内部或通过消息调用。对于 `public` 状态变量，会自动生成一个 `getter` 函数
 - `internal`: 这些函数和状态变量只能是内部访问（即从当前合约内部或从它派生的合约访问），不使用`this`调用
 - `private`: `private`函数和状态变量仅在当前定义它们的合约中使用，并且不能被派生合约使用
 
 ```js
-// 找错误
-pragma solidity >=0.4.0 <0.6.0;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >0.4.22;
 contract C {
   uint private data;
   function f(uint  a) private pure returns (uint b){
@@ -492,7 +528,7 @@ contract C {
   function setData(uint a) public {
     data = a;
   }
-  function getData(uint a) public view returns(uint) {
+  function getData() public view returns(uint) {
     return data;
   }
   function compute(uint a, uint b) internal pure returns (uint) {
@@ -502,22 +538,27 @@ contract C {
 contract D{
   function readData() public {
     C c = new C();
-    uint local = c.f(7);
+    uint local;
+    // private 仅在当前合约内部访问
+    // uint local = c.f(7);
+
     c.setData(3);
-    local = c.getDate();
-    local =c.compute(3, 5);
+    local = c.getData();
+    // compute internal 当前合约内部 或 派生合约 访问
+    // local =c.compute(3, 5);
   }
 }
 contract E is C{
-  function g() public {
-    C c=new C();
+  function g() public pure returns(uint) {
     uint val = compute(3, 5);
+    return val;
   }
 }
 ```
 
 ```js
-pragma solidity >=0.4.16 <0.6.0;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >0.4.22;
 contract C {
   function f(uint a) private pure returns (uint b){
     return a+1;
@@ -534,41 +575,6 @@ contract C {
 }
 ```
 
-```js
-// 找错误
-pragma solidity ^0.4.0;
-contract C {
-  uint private data;
-  function f(uint a) private returns (uint b) {
-    return a+b;
-  }
-  function setData(uint a) public {
-    data = a;
-  }
-  function getData() public returns (uint){
-    return data;
-  }
-  function compute(uint a,  uint b) internal  returns (uint)  {
-    return a+b;
-  }
-}
-contract D{
-  function readData() public {
-    C c=new C();
-    uint local =c.f(7);  // 错误   成员f不可见
-    c.setData(3);
-    local = c.getData();
-    local = c.compute(3, 5); // 错误：成员 compute 不可见
-  }
-}
-contract E is C {
-  uint local = c.f(7);
-  c.setData(3);
-  local =c.getData();
-  local = c.compute(3,5); // 错误：成员 compute 不可见
-}
-```
-
 ### Solidity 函数状态可变性
 
 - pure: 纯函数，不允许修改或访问状态
@@ -579,12 +585,12 @@ contract E is C {
 #### 以下情况被认为是修改状态
 
 - 修改状态变量
-- 产生事件
+- 产生事件 `emit` `event`
 - 创建其他合约
 - 使用 selfdestruct
 - 通过调用发送以太币
-- 调用任何没有标记 view 或 pure 的函数
-- 使用低级调用
+- **调用任何没有标记 view 或 pure 的函数**
+- 使用低级调用 call xxxcall
 - 使用包含特定操作码的内联汇编
 
 #### 以下被认为是从状态中进行读取
@@ -599,30 +605,43 @@ contract E is C {
 
 - 使用修饰器`modifier`可以轻松改变函数的行为。例如，他们可以在执行函数之前自动检查某个条件。修饰器`modifier`是合约的可继承属性，并可能被派生合约覆盖
 - 如果同一个函数有多个修饰器`modifier`，他们之间以空格隔开，修饰器`modifier`会依次检查执行
+- 把一个固定的操作添加到某一个函数上
 
 ```js
-pragma solidity >=0.4.22 >0.6.0;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >0.4.22;
 contract Purchase {
   address public seller;
-  modifier onlySeller(){
-    require(msg.sender == seller,"only seller can call");
+  uint256 public a;// a 为300
+  constructor(){
+      seller = msg.sender;
   }
-  function abort() public view onlySeller {
+  modifier onlySeller(){
+    _; // 自己原有的代码在这执行
+    a = 300;
+    require(msg.sender == seller, "only seller can call");
+
+  }
+  function abort() public onlySeller returns(uint256){
     // modifier user
     // ...
+    a = 200;
+    return 1111;
   }
 }
 ```
 
-### 回退函数（fallback）
+### 回退函数
 
-- 回退函数（fullback function）是合约中特殊的函数；没有名字，不能有参数也不能有返回值
+- 回退函数（fallback function）是合约中特殊的函数；没有名字，不能有参数也不能有返回值
 - 如果在一个到合约的调用中，没有其他函数与给定的函数标识符匹配（或没有提供调用数据），那么这个函数（fallback 函数）会被执行
-- 每当合约收到以太币（没有任何数据），回退函数就会被执行。此外，为了接收以太币，fallback 函数必须标记为 payable。如果不存在这样的函数，则 合约不能通过常规交易接收以太币
+- 每当合约收到以太币（没有任何数据，纯转账），回退函数就会被执行。此外，为了接收以太币，fallback 函数必须标记为 payable。如果不存在这样的函数，则 合约不能通过常规交易接收以太币
 - 在上下文中通常只有很少的 gas 可以用来完成回退函数的调用，所以使 fallback 函数的调用尽量廉价很重要
+- 自己的合约调用别人的合约，没有判定地址是什么地址类型，重复的回退调用（thedog）
 
 ```js
-pragma solidity >0.4.99 <0.6.0;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >0.4.22;
 contract Sink{
   function() external  payable{}
 }
