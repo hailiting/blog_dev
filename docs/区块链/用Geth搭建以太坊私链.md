@@ -188,8 +188,20 @@ $ tail -f output.log # 动态跟踪output.log文件的变化
 
 # 30303  p2p节点
 $ geth --datadir . --rpc --networkid 523 --nodiscover console 2>eth_output.log --allow-insecure-unlock
-$ geth --datadir ./myChain/ --rpc --networkid 523 --nodiscover console 2>eth_output.log --allow-insecure-unlock
+# --rpcapi="db,eth,net,web3,personal,web3" 容许他们对geth进行修改
+$ geth --datadir ./myChain/ --rpc  --rpcapi="db,eth,net,web3,personal,web3" --networkid 523 --nodiscover console 2>eth_output.log --allow-insecure-unlock
 
+
+# 在后台启动，不要在前台挂起
+$ nohup geth --datadir ./myChain/ --networkid 523 --rpc 2>output.log --allow-insecure-unlock &
+# 查看进程
+$ ps -ef
+# 重新进入工具行
+$ geth attach http://localhost:8545
+# Fatal: Failed to start the JavaScript console: api modules:
+# ====解决方法====
+# 关闭91服务器防火墙
+$ sudo killall geth
 ```
 
 #### 参数列表
@@ -255,7 +267,7 @@ Passphrase: 123456
 > personal.unlockAccount(eth.accounts[0])
 // 解锁
 Passphrase: xxxx
-> personal.unlockAccount(eth.accounts[0], "123456", 2);
+> personal.unlockAccount(eth.accounts[0], "123456", 2000000);
 > eth.sendTransaction({from:eth.accounts[0], to: "0xf1DE2d4c9DA3201B82402b4c3cD06E7E128A1430", value: 1000})
 // insufficient funds for transfer    余额不足
 

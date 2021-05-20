@@ -289,10 +289,7 @@ batch.add(
   )
 );
 batch.add(
-  web3.eth
-    .contract(abi)
-    .at(address)
-    .balance.request(address, callback2)
+  web3.eth.contract(abi).at(address).balance.request(address, callback2)
 );
 batch.execute();
 ```
@@ -637,8 +634,7 @@ var result = web3.eth.call({
   // 向谁发出来的调用
   to: "0xc4abd0339eb8d57087278718986382264244252f",
   // 32位的字节 前8  函数的选择器
-  data:
-    "0xc6888fa1000000000000000000000000000000000000000000000000000 0000000000003",
+  data: "0xc6888fa1000000000000000000000000000000000000000000000000000 0000000000003",
 });
 console.log(result);
 ```
@@ -655,14 +651,14 @@ console.log(result);
 // 或者可以填入一个日志过滤
 var filter = web3.eth.filter("latest");
 // 监听日志变化
-filter.watch(function(error, result) {
+filter.watch(function (error, result) {
   if (!error) {
     console.log(result);
   }
 });
 filter.stopWatch();
 // 还可以用传入回调函数的方法，立即开始监听日志
-web3.eth.filter(options, function(error, result) {
+web3.eth.filter(options, function (error, result) {
   if (!error) {
     console.log(result);
   }
@@ -757,9 +753,38 @@ var deployTxObject = {
   data: byteCode,
   gas: 1000000,
 };
-
-var contractInstance = CoinContract.new(deployTxObject);
+var contractInstance = coinContract.new(deployTxObject);
+var contractInstance = contractInstance.new(deployTxObject);
+// 有延时
+// setTimeout(() => {
+//   console.log(contractInstance.address);
+//   // 0xca2f8c802b5a9a85e08dda50d1269e1939d97108
+// }, 20000);
 contractInstance.address; // 如果是undefined说明出块失败    如果是0x...说明部署成功
+```
+
+v1.+
+
+```js
+new web3.eth.Contract(jsonInterface[, address][, options])
+```
+
+- jsonInterface
+  - Object: 要实例化的合约的 json 接口
+- address
+  - myContract.options.address = "0x123" 来指定该地址
+- options
+  - Object 可选，合约的配置对象，其中某些字段用作调用和交易的回调
+  - from: string 交易发生方地址
+  - gasPrice: string 用于交易的 gas 价格，单位 wei
+  - gas： number 交易可用最大 gas 量，即`gas limit`
+  - data: string 合约字节码，部署合约时需要
+
+```js
+var myContract = new web3.eth.Contract([...], '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', {
+    from: '0x1234567890123456789012345678901234567891', // default from address
+    gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
+});
 ```
 
 ### 调用合约函数
@@ -794,7 +819,7 @@ contractInstance.balances("0x9cab180d378005f9ecea4869e77cdde2bdb06ff5")
 var event = myContractInstance.MyEvent(
   { valueA: 23 },
   [, additionalFill],
-  function(error, result) {
+  function (error, result) {
     if (!error) console.log(result);
   }
 );
@@ -802,4 +827,16 @@ contractInstance.Sent("pending", (err, res) => console.log(err || res));
 contractInstance.send(web3.eth.accounts[0], 23000, {
   from: web3.eth.accounts[0],
 });
+```
+
+## 添加账户
+
+```js
+// geth 得设置 --rpcapi="db,eth,net,web3,personal,web3
+(async () => {
+  let newAccount = await web3.eth.personal.newAccount("123456");
+  console.log(newAccount);
+  let accounts = await web3.eth.getAccounts();
+  console.log(accounts);
+})();
 ```
