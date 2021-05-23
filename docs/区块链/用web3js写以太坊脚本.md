@@ -237,18 +237,40 @@ var contractAddress = "0x2e873d61c5d0f713e94afd1ca3201a7e1d01ed4d";
 var contractInstance = CoinContract.at(contractAddress);
 // (_to, amout)  合约参数  {from: _from}  交易对象
 var amount = 1000;
+
 var _from = web3.eth.accounts[0];
 var _to = web3.eth.accounts[2];
-// web3.personal.unlockAccount(_from, "123456", 2000000);
+web3.personal.unlockAccount(_from, "123456", 2000000);
 // 必须，要不然报 Invalid Address
 web3.eth.defaultAccount = _from;
 // contractInstance.mint(_from, 10000000000);
 // console.log("ssss: " + contractInstance.getBalances(_to));
+
 contractInstance.send(_to, amount, { from: _from }, (err, res) => {
   if (err) {
     console.log(err);
   } else {
     console.log({ res });
+  }
+});
+const arguments = process.argv; //  第一项是node   第二项为执行js的完整路径
+if (!arguments[2]) {
+  console.log("no addr");
+  return;
+}
+var _addr = arguments[2];
+contractInstance.balances(_addr, (err, res) => {
+  if (err) {
+    console.log("error: ", err);
+  } else {
+    console.log("result: ", res.toString());
+  }
+})
+// 监听事件
+// 定义回调   等于直接启用了事件监听
+contractInstance.Sent("latest", (res) => {
+  if (res) {
+    console.log("Latest Send Error: ", res);
   }
 });
 ```
