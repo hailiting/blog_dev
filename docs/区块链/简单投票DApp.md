@@ -222,6 +222,7 @@ contract Voting {
 const path = require("path");
 const fs = require("fs");
 const solc = require("solc");
+
 const votingPath = path.resolve(__dirname, "contracts", "Voting.sol");
 
 const source = fs.readFileSync(votingPath, "utf8");
@@ -394,6 +395,49 @@ n.js"></script>
     </script>
   </body>
 </html>
+```
+
+```js
+// server.js
+var http = require("http");
+var fs = require("fs");
+var url = require("url");
+http
+  .createServer(function (req, res) {
+    var pathName = url.parse(req.url).pathname;
+    console.log("request for: " + pathName + " received. ");
+    fs.readFileSync(pathName.substr(1), function (err, data) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.write(data.toString());
+      }
+    });
+    res.end();
+  })
+  .listen(3000);
+```
+
+```js
+// server.js
+var http = require("http");
+var fs = require("fs");
+var url = require("url");
+var path = require("path");
+http
+  .createServer(function (req, res) {
+    var pathName = url.parse(req.url).pathname;
+    console.log("request for: " + pathName + " received. ");
+    const _path = path.resolve(__dirname, pathName.substr(1));
+    console.log(_path);
+    var data = fs.readFileSync(_path, "utf-8");
+    console.log(!111);
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.write(data.toString());
+    res.end();
+  })
+  .listen(3000);
 ```
 
 参考地址 https://github.com/XiangXaoLong/EthereumWorkshop/tree/43d4d11cea737780a7baaac8ba70ad0dbc466c03/DApp
