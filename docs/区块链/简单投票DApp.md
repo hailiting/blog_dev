@@ -222,12 +222,9 @@ contract Voting {
 const path = require("path");
 const fs = require("fs");
 const solc = require("solc");
-
 const votingPath = path.resolve(__dirname, "contracts", "Voting.sol");
 
 const source = fs.readFileSync(votingPath, "utf8");
-// module.exports = solc.compile(source, 1).contracts[":Voting"];
-
 const input = {
   language: "Solidity",
   sources: {
@@ -244,6 +241,32 @@ const input = {
   },
 };
 const output = JSON.parse(solc.compile(JSON.stringify(input)));
+Object.keys(output.contracts).forEach((symbol) => {
+  Object.keys(output.contracts[symbol]).forEach((name) => {
+    const contractName = name.replace(/^:/, "");
+    const filePath = path.resolve(
+      __dirname,
+      "./compiled",
+      `${contractName}.json`
+    );
+    fs.unlink(filePath, (err) => {
+      if (!err) {
+        fs.writeFile(
+          filePath,
+          JSON.stringify(output.contracts[symbol][name]),
+          "utf8",
+          (err) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(`save compiled`);
+            }
+          }
+        );
+      }
+    });
+  });
+});
 module.exports = output.contracts["Voting.sol"].Voting;
 
 /// create_contract.js  创建 及 使用 合约
@@ -402,28 +425,6 @@ n.js"></script>
 var http = require("http");
 var fs = require("fs");
 var url = require("url");
-http
-  .createServer(function (req, res) {
-    var pathName = url.parse(req.url).pathname;
-    console.log("request for: " + pathName + " received. ");
-    fs.readFileSync(pathName.substr(1), function (err, data) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.write(data.toString());
-      }
-    });
-    res.end();
-  })
-  .listen(3000);
-```
-
-```js
-// server.js
-var http = require("http");
-var fs = require("fs");
-var url = require("url");
 var path = require("path");
 http
   .createServer(function (req, res) {
@@ -438,6 +439,42 @@ http
     res.end();
   })
   .listen(3000);
+```
+
+```js
+// web3.js
+// web3.js
+const Web3 = require("web3");
+const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+const fs = require("fs-extra");
+const path = require("path");
+const filePath = path.resolve(__dirname, "./compiled/Voting.json");
+const {
+  abi,
+  evm: {
+    bytecode: { object },
+  },
+} = require(filePath);
+(async () => {
+  let accounts = await web3.eth.getAccounts();
+  //
+  let result = await new web3.eth.Contract(abi)
+    .deploy({
+      data: object,
+      arguments: [
+        [
+          web3.utils.fromAscii("Alice", 32),
+          web3.utils.fromAscii("Bob", 32),
+          web3.utils.fromAscii("Cary", 32),
+        ],
+      ],
+    })
+    .send({
+      from: accounts[0],
+      gas: "1000000",
+    });
+  console.log("合约部署成功：", result);
+})();
 ```
 
 参考地址 https://github.com/XiangXaoLong/EthereumWorkshop/tree/43d4d11cea737780a7baaac8ba70ad0dbc466c03/DApp
