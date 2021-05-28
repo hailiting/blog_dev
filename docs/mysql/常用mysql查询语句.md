@@ -59,7 +59,7 @@ CREATE TABLE table_name(
 DEFAULT charset=utf8; // 设置默认编码，防止数据库中的乱码
 ```
 
-```mysql
+```js
 # 在忘记去设定数据库的情况下，`db_test`.`t_student` 可以自动创建或查找到所需要的数据库
 CREATE TABLE `db_test`.`t_student` (
   # 名称  类型   非空   自动增长   注释
@@ -168,19 +168,19 @@ ALTER TABLE tb_name CHANGE score score SMALLINT(4) NOT NULL;
 
 #### HAVING 语句
 
-```mysql
+```js
 # * 代表所有字段
 SELECT * FROM tb_name GROUP BY score HAVING count(*)>2;
 ```
 
 #### 查询数量
 
-```mysql
+```js
 #  db_test.t_student 表里有几个男同学
 SELECT COUNT(*) FROM db_test.t_student WHERE gender="M";
 ```
 
-```mysql
+```js
 # min 求最小值
 SELECT min(birthdate) FROM db_test.t_student;
 SELECT max(birthdate) FROM db_test.t_student;
@@ -194,7 +194,7 @@ SELECT concat(id, "  ", name) FROM t_student;
 
 方法一：
 
-```mysql
+```js
 SELECT * FROM t_student
 WHERE birthdate >= "1991-01-01"
 AND birthdate <= "1993-12-31"
@@ -204,7 +204,7 @@ AND birthdate <= "1993-12-31"
 `BETWEEN ... AND ...`在...之间
 `--`mysql 注释
 
-```mysql
+```js
 SELECT * FROM t_student
 WHERE birthdate BETWEEN "1991-01-01" AND "1993-12-31";
 ```
@@ -214,7 +214,7 @@ WHERE birthdate BETWEEN "1991-01-01" AND "1993-12-31";
 通配符`%`
 `%`代表任意字符
 
-```mysql
+```js
 SELECT * FROM t_student
 -- where name LIKE "王%";
 where name LIKE "%六%";  -- 名字中有六的
@@ -224,7 +224,7 @@ where name LIKE "%六%";  -- 名字中有六的
 
 对单表排序
 
-```mysql
+```js
 SELECT * FROM t_student
 -- DESC 逆序 大-小   ASC 顺序 小-大
 ORDER BY birthdate DESC | ASC
@@ -232,7 +232,7 @@ ORDER BY birthdate DESC | ASC
 
 #### 表与表查询
 
-```mysql
+```js
 -- 查询两个表的字段
 -- 查询指定字段，节约宽带
 SELECT t_student.id,t_student.name,t_class.class_id,t_class.class_name
@@ -244,7 +244,7 @@ WHERE t_student.class_id=t_class.class_id;
 
 左连接
 
-```mysql
+```js
 SELECT t_student.id,t_student.name,t_class.class_id,t_class.class_name
 FROM t_student JOIN t_class
 ON t_student.class_id = t_class.class_id;
@@ -254,7 +254,7 @@ ON t_student.class_id = t_class.class_id;
 
 ## 自定义函数
 
-```msql
+```js
 CREATE FUNCTION `new_function` ()
 RETURNS INTEGER
 BEGIN

@@ -35,7 +35,7 @@ sudo su
 
 修改数据库名或修改数据表字段
 
-```mysql
+```js
 # 修改用户口令，将用户口令修改为新密码
 mysql> ALTER USER role_name IDENTIFIED BY password REPLACE pre_password;
 ```
@@ -79,7 +79,7 @@ mysql> flush privileges;
 
 ## 修改密码规则
 
-```mysql
+```js
 use mysql;
 show tables;
 select user, host from user;
@@ -105,7 +105,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';
 FLUSH PRIVILEGES;
 ```
 
-```mysql
+```js
 ALTER USER 'root'@'localhost' IDENTIFIED BY '123456' PASSWORD EXPIRE NEVER; #修改加密规则 
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'; #更新一下用户的密码 
@@ -119,7 +119,7 @@ alter user 'root'@'localhost' identified by 'xzx123456';#重置密码，xzx12345
 
 ### 一 mysql 设置
 
-```mysql
+```js
 # 进入mysql
 mysql -uroot -p123456
 use mysql;
@@ -210,7 +210,7 @@ kill -9 46912
 
 ### `Plugin caching_sha2_password could not be loaded:`
 
-```mysql
+```js
 ALTER USER 'root'@'localhost' IDENTIFIED BY '123456' PASSWORD EXPIRE NEVER; #修改加密规则 
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'; #更新一下用户的密码 

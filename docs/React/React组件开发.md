@@ -15,7 +15,7 @@
 
 ### 代码结构
 
-```file
+```js
 mycomp/
   README.md
   node_modules/

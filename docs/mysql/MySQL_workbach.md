@@ -12,7 +12,7 @@ create Schema
 命名规则 `db_name` -> 数据库， `t_name`-> 数据表  
 `Default Collation`-> 选择字符集 -> `utf8-default collation`
 
-```mysql
+```js
 // 创建数据库的语句
 CREATE SCHEMA `db_test` DEFAULT CHARACTER SET utd8;
 ```
