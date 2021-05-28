@@ -625,4 +625,4 @@ void main(){
 }
 ```
 
-![tero动画.gif](./img/tero动画.gif)
+![tero_animation.gif](./img/tero_animation.gif)
