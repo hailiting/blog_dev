@@ -273,9 +273,6 @@ module.exports = output.contracts["Voting.sol"].Voting;
 const Web3 = require("web3");
 const compiledFile = require("./compile");
 
-const interface = compiledFile.abi;
-const bytecode = compiledFile.evm.bytecode.object;
-
 const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
 const accounts = web3.eth.accounts;
@@ -373,7 +370,7 @@ n.js"></script>
           );
           const candidateNames = Object.keys(candidates);
           for (var i = 0; i < candidateNames.length; i++) {
-            (function (i) {
+            (function(i) {
               let name = candidateNames[i];
               contractInstace.methods
                 .totalVotesFor(web3.utils.fromAscii(name, 32))
@@ -427,7 +424,7 @@ var fs = require("fs");
 var url = require("url");
 var path = require("path");
 http
-  .createServer(function (req, res) {
+  .createServer(function(req, res) {
     var pathName = url.parse(req.url).pathname;
     console.log("request for: " + pathName + " received. ");
     const _path = path.resolve(__dirname, pathName.substr(1));
