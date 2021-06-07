@@ -137,3 +137,216 @@ rm contracts/ConvertLib.sol contracts/MetaCoin.sol
 ## Migration
 
 ### Migration 概念
+
+迁移文件用于将合约部署到区块链上。truffle 将会部署和跟踪所有的部署。
+`Migrations`(迁移)是 JavaScript 文件，这些文件负责暂存部署的任务，并假定部署需求会随着时间的推移而改变。随着项目的发展，我们应该创建新的迁移脚本，来改变链上的合约状态。所有运行过的 migration 历史记录，都会通过特殊迁移合约记录在链上。
+**1_initial_migration.js**
+第一个迁移`1_inital_migration.js`向区块链部署一个叫`Migration`的合约，并用于存储你已经部署的最新合约。每次你运行 migration 时，truffle 会向区块链查询获取最新已部署好的合约，然后部署尚未部署的任何合约。然后会更新`Migrations`合约中的`last_completed_migration`字段指向最新部署的合约。可以简单的当他是一个数据库表。里面有一列`last_completed_migration`，该列总是保持最新状态。
+**migration 文件命名要求**
+
+- 前缀必须是一个数字，用于标记迁移是否运行成功
+- 后缀是一个描述词汇，只是单纯为提高可读性，方便理解
+
+在脚本的开始，我们用`artifacts.require()`方法告诉 truffle 需要进行部署迁移的合约，这跟 node 里的 require 很类似。不过需要注意 ，最新的官方文档告诫，应该传入定义的合约名称，而不要给 文件名称，因为一个`.sol`文件中可能包含多个 contract。
+`migration js`里的`exports`的函数，需要接收一个`deployer`对象作为第一个参数。这个对象在部署发布的过程中，主要用来提供清晰的语法支持，同时提供一些通用的合约部署职责，比如保存部署的文件以备稍后使用。deployer 对象是用来暂存（stage）部署任务的主要操作接口。
+像所有其它 Truffle 中的代码一样，Truffle 提供了代码的合约抽象层（contract abstractions），并且进行初始化，以方便可以便利与以太坊的网络交互。这些抽象接口都是部署流程的一部分。
+
+```js
+// 2_deploy_contracts.js
+var Voting = artifacts.require("./Voting.sol");
+module.exports = function(deployer) {
+  deployer.deploy(Voting, ["Alice", "Bob", "Cary"], {gas: 290000}
+};
+```
+
+### 更新 truffle 配置文件
+
+```js
+// truffle.js
+// 应用到所有migration 全局变量
+// 2_deploy_contracts.js 如果不设置gas  将是470000
+require("babel-register");
+module.exports = {
+  networks: {
+    development: {
+      host: "localhost",
+      port: 8545,
+      network_id: "*",
+      gas: 470000,
+    },
+  },
+};
+```
+
+## 合约代码
+
+```js
+> cp ../simple_voting_dapp/Voting.sol contracts/
+> ls contracts/
+Migrations.sol Voting.sol
+```
+
+```js
+// Voting.sol
+pragma solidity >0.4.18;
+contract Voting {
+  struct voter{
+    address voterAddress;
+    uint tokensBough;
+    uint[] tokensUsedPerCandidate;
+  }
+  mapping(address=>voter) public voterInfo;
+  mapping(bytes32 => uint) public votesReceived;
+  bytes32[] public candidateList;
+  uint public totalTokens;
+  uint public balanceTokens;
+  uint public tokenPrices;
+  constructor(uint tokens, uint  pricePerToken, bytes32[] candidateNames) {
+    candidateList = candidateNames;
+    totalTokens = tokens;
+    balanceTokens = tokens;
+    tokenPrice = pricePerToken;
+  }
+  function buy() payable public returns (uint){
+    uint tokensToBuy = msg.value/tokenPrice;
+    require(tokensToBuy<=balanceTokens);
+    voterInfo[msg.sender].voterAddress=msg.sender;
+    voterInfo[msg.sender].tokensBought += tokensToBuy;
+    balanceTokens-=tokensToBuy;
+    return tokensToBuy;
+  }
+  function totalVotesFor(bytes32 candidate) view public returns (uint){
+    return votesReceived[candidate];
+  }
+  function voteForCandidate(bytes32 candidate,uint votesInTokens) public {
+    uint index = indexOfCandidate(candidate);
+    require(index!=uint(-1));
+    if(voterInfo[msg.sender].tokensUsedPerCandidate.length ==0){
+      for(uint i=0;i<candidateList.length; i++){
+        voterInfo[msg.sender].tokensUsedPerCandidate.push(0);
+      }
+    }
+    // todo
+    // uint a
+  }
+}
+```
+
+## 创建账户
+
+```js
+> truffle console
+> web3.personal.newAccount("verystrongpassword")
+> web3.eth.getBalance("xx")
+> web3.personal.unlockAccount("xxx","verystrongpassword", 15000)
+```
+
+## 部署
+
+```js
+> truffle compile
+Compiling Migrations.sol...Compiling Voting.sol...Writing
+> truffle migrate
+```
+
+### 出现问题和解决方案
+
+1. 如果由于 gas 不足而部署失败，尝试将`migrations/2_deploy_contracts.js`里面的`gas account`增加至 500000。比如：`deployer.deploy(Voting, ["Rama","Nick","Jose"], {gas: 500000})`;
+2. 如果有多个账户，并且更喜欢自选一个账户，而不是`accounts[0]`，可以在`truffle.js`中指定想要使用的账户地址，在 network_id 后面添加`from: your address`，truffle 将会使用你指定的地址来部署和交互。
+
+## 控制台和网页交互
+
+如果部署顺利，可以通过控制台和网页与合约进行交互。
+
+**app/index.html**
+用上个`index.html`替换`app/index.html`内容。
+**app/scripts/index.js**
+
+```js
+import "../styles/app.css";
+import { default as Web3 } from "web3";
+import { default as contract } from "truffle-contract";
+import voting_artifacts from "../../build/contracts/Voting.json";
+var Voting = contract(voting_artifacts);
+let candidates = {
+  Alice: "candidate-1",
+  Bob: "candidate-2",
+  Cary: "candidate-3",
+};
+window.voteForCandidate = function(candidate) {
+  let candidateName = $("#candidate").val();
+  try {
+    $("#msg").html(
+      "Vote has been submitted. The vote count will  increment as soon as the vote is recorded on the blockchain. Please wait."
+    );
+    $("#candidate").val("");
+    Voting.deployed().then(function(contractInstance) {
+      contractInstance
+        .voteForCandidate(candidateName, {
+          gas: 140000,
+          from: web3.eth.accounts[0],
+        })
+        .then(function() {
+          let div_id = candidates[candidateName];
+          return contractInstance.totalVotesFor
+            .call(candidateName)
+            .then(function(v) {
+              $("#" + div_id).html(v.toString());
+              $("#msg").html("");
+            });
+        });
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+$(document).ready(function() {
+  if (typeof web3 !== "undefined") {
+    console.warn("Using web3 detected from external source like Metamask");
+    window.web3 = new Web3(web3.currentProvider);
+  } else {
+    console.warn(
+      "No web3 detected. Falling back to http://localhost:8545. You should remove this fallback when you deploy live, as it's inherently insecure. Consider switching to Metamask  for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask"
+    );
+    window.web3 = new Web3(
+      new Web3.providers.HttpProvider("http://localhost:8545");
+    );
+  }
+  Voting.setProvider(web3.currentProvider);
+  let candidateNames = Object.keys(candidates);
+  for(var i=0;i<candidateNames.length;i++){
+    let name = candidateNames[i];
+    Voting.deployed().then(function(contractInstance){
+      contractInstance.totalVotesFor.call(name).then(function(v){
+        $("#"+candidates[name]).html(v.toString());
+      })
+    })
+  }
+});
+```
+
+**Voting.deployed()**
+`Voting.deployed()`返回一个合约实例，truffle 的每一个调用会返回一个`promise`，所以使用`.then()`。
+
+### 控制台交互
+
+需要重新打开一个新的 console
+
+```js
+> truffle console
+> Voting.deployed()
+.then(function(contractInstance){
+  contractInstance.voteForCandidate("Alice")
+  .then(function(v){
+      console.log(v);
+    });
+});
+> Voting.deployed()
+  .then(function(contractInstance){
+    contractInstance.totalVotesFor
+      .call("Alice")
+      .then(function(v){
+        console.log(v);
+      });
+  });
+```
