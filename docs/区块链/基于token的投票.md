@@ -226,11 +226,48 @@ contract Voting {
         voterInfo[msg.sender].tokensUsedPerCandidate.push(0);
       }
     }
-    // todo
-    // uint a
+    uint availableTokens = voterInfo[msg.sender].tokensBought - totalTokensUsed(voterInfo[msg.sender].tokensUsedPerCandidate);
+    require(availableTokens >= votesInTokens);
+    votesReceived[candidate] += votesInTokens;
+    voterInfo[msg.sender].tokensUsedPerCandidate[index]+= votesInTokens;
+  }
+  function totalTokensUsed(uint[] _tokensUsedPerCandidate) private pure returns (uint){
+    uint totalUsedTokens = 0;
+    for(uint i=0;i<_tokensUsedPerCandidate.length; i++){
+      totalUsedTokens += _tokensUsedPerCandidate[i];
+    }
+    return totalUsedTokens;
+  }
+  function indexOfCandidate(bytes32 candidate) view public returns(uint){
+    for(uint i=0;i<candidateList.length;i++){
+      if(candidateList[i] == candidate){
+        return i;
+      }
+    }
+    return uint(-1);
+  }
+  function tokensSold() view public returns (uint) {
+    return totalTokens - balanceTokens;
+  }
+  function voterDetails(address user) view public returns(uint, uint[]){
+    return (voterInfo[user].tokensBought, voterInfo[user].tokensUsedPerCandidate);
+  }
+  function transferTo(address account) public {
+    account.transfer(this.balance);
+  }
+  function allCandidates() view public returns(bytes32[]){
+    return candidateList;
   }
 }
 ```
+
+- `candidateList`储存所有候选者
+- 定义一个 voter 是`struct`数据类型，`struct`类型里有`getter`和 `setter`方法获取这些属性
+  - address voterAddress
+  - uint tokensBough 已经购买的所有 token
+  - uint[] tokensUsedPerCandidate 候选者投票所用的 token
+- voterInfo 是一个 mapping, 给定一个投票人的账户地址，就可以显示他的信息
+- Tokens: 需要有存储发行 token 总量的合约变量，还需要存储所有剩余 token 和每个 token 价格
 
 ## 创建账户
 
@@ -241,12 +278,126 @@ contract Voting {
 > web3.personal.unlockAccount("xxx","verystrongpassword", 15000)
 ```
 
+#### buy 函数
+
+```js
+  function buy() payable public returns (uint){
+    uint tokensToBuy = msg.value/tokenPrice;
+    require(tokensToBuy<=balanceTokens);
+    voterInfo[msg.sender].voterAddress=msg.sender;
+    voterInfo[msg.sender].tokensBought += tokensToBuy;
+    balanceTokens-=tokensToBuy;
+    return tokensToBuy;
+  }
+```
+
+- tokenPrice 每一个 token 的价钱
+- balanceTokens 合约可用 token 总和
+- msg.value 以太的值
+- tokensToBuy 基于以太的值和 token 的价格，可以计算出你所有的 token，并 将这些 token 赋予购买人，购买人的地址通过 msg.sender 可以获取
+- 返回总共买了多少 token
+
+##### 用 truffle 控制台调用 buy 的一个案例，参数传入一个 options 对象
+
+- web3 v0.2.x 的用法
+
+```js
+truffle(development) >
+  Voting.deployed().then(function(contract) {
+    contract.buy({
+      value: web3.toWei("1", "ether"),
+      from: web3.eth.accounts[1],
+    });
+  });
+```
+
+- web3 v1.0
+
+```js
+contract.buy().send({ options });
+```
+
+如果是消息调用的话应该是
+
+```js
+contract.method().call({ options });
+```
+
 ## 部署
 
 ```js
 > truffle compile
 Compiling Migrations.sol...Compiling Voting.sol...Writing
 > truffle migrate
+```
+
+```js
+var Voting = artifacts.require("./Votiong.sol");
+module.exports = function(deployer) {
+  deployer.deploy(Voting, 10000, web3.toWei("0,01", ether), [
+    "Alice",
+    "Bob",
+    "Cary",
+  ]);
+};
+```
+
+- 1. 一个候选人(比如 Alice)有多少投票?
+- 2. 一共初始化了多少 token?
+- 3. 已经售出了多少 token?
+- 4. 购买 100 token
+- 5. 购买以后账户余额是多少?
+- 6. 已经售出了多少?
+- 7. 给 Alice 投 25 个 token，给 Bob 和 Cary 各投 10 个 token。
+- 8. 查询你所投账户的投票人信息(除非用了其他账户，否则你的账户默认是 web3.eth.accounts[0])
+- 9. 现在每个候选人有多少投票?
+- 10. 合约里有多少 ETH?(当你通过 ETH 购买 token 时，合约接收到的 ETH)
+
+```js
+Voting.deployed().then(function(instance) {
+  instance.totalVotesFor.call("Alice").then(function(i) {
+    console.log(i);
+  });
+  console.log(
+    instance.totalTokens.call().then(function(v) {
+      console.log(v);
+    })
+  );
+  console.log(
+    instance.tokensSold.call().then(function(v) {
+      console.log(v);
+    })
+  );
+  console.log(
+    instance.buy({ value: web3.toWei("1", "ether") }).then(function(v) {
+      console.log(v);
+    })
+  );
+});
+web3.eth.getBalance(web3.eth.accounts[0]);
+Voting.deloyed().then(function(instance) {
+  console.log(
+    instance.voteForCandidate("Alice", 25).then(function(v) {
+      console.log(v);
+    })
+  );
+  console.log(
+    instance.voteForCandidate("Cary", 10).then(function(v) {
+      console.log(v);
+    })
+  );
+  console.log(
+    instance.voterDetails.call(web3.eth.accounts[0]).then(function(v) {
+      console.log(v);
+    })
+  );
+  function(instance){
+    instance.totalVotesFor.call("Alice").then(function(i){
+      console.log(i)
+    })
+  }
+});
+web3.eth.getBalance(Voting.address).toNumber()
 ```
 
 ### 出现问题和解决方案
@@ -260,6 +411,165 @@ Compiling Migrations.sol...Compiling Voting.sol...Writing
 
 **app/index.html**
 用上个`index.html`替换`app/index.html`内容。
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Decentralized Voting App</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+San
+s:400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/ css/bootstrap.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style></style>
+  </head>
+  <body class="row">
+    <h1 class="text-center banner">
+      Decentralized Voting Application (Ropsten Testnet)
+    </h1>
+    <div class="container">
+      <div class="row margin-top-3">
+        <div class="col-sm-12">
+          <h3>How to use the app</h3>
+          <strong>Step 1</strong>: Install the
+          <a href="https://metamask.io/" target="_blank">metamask plugin</a>
+          and create an account on Ropsten Test Network and load some Ether.
+          <br />
+          <strong>Step 2</strong>: Purchase tokens below by entering the total
+          number of tokens you like to buy.
+          <br />
+          <strong>Step 3</strong>: Vote for candidates by entering their name
+          and no. of tokens to vote with.
+          <br />
+          <strong>Step 4</strong>: Enter your account address to look up your
+          voting activity.
+        </div>
+      </div>
+      <div class="row margin-top-3">
+        <div class="col-sm-7">
+          <h2>Candidates</h2>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Candidate</th>
+                  <th>Votes</th>
+                </tr>
+              </thead>
+              <tbody id="candidate-rows"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-sm-offset-1 col-sm-4">
+          <h2>Tokens</h2>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tr>
+                <th>Tokens Info</th>
+                <th>Value</th>
+              </tr>
+              <tr>
+                <td>Tokens For Sale</td>
+                <td id="tokens-total"></td>
+              </tr>
+              <tr>
+                <td>Tokens Sold</td>
+                <td id="tokens-sold"></td>
+              </tr>
+              <tr>
+                <td>Price Per Token</td>
+                <td id="token-cost"></td>
+              </tr>
+              <tr>
+                <td>Balance in the contract</td>
+                <td id="contract-balance"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="row margin-bottom-3">
+        <div class="col-sm-7 form">
+          <h2>Vote for Candidate</h2>
+          <div id="msg"></div>
+          <input
+            type="text"
+            id="candidate"
+            class="form-control"
+            placeholder="Enter the candidate name"
+          />
+          <br />
+          <br />
+          <input
+            type="text"
+            id="vote-tokens"
+            class="form-control"
+            placeholder="Total no. of tokens to vote"
+          />
+          <br />
+          <br />
+          <a
+            href="#"
+            onclick="voteForCandidate(); return false;"
+            class="btn btn-primary"
+            >Vote</a
+          >
+        </div>
+        <div class="col-sm-offset-1 col-sm-4">
+          <div class="col-sm-12 form">
+            <h2>Purchase Tokens</h2>
+            <div id="buy-msg"></div>
+            <input
+              type="text"
+              id="buy"
+              class="col-sm-8"
+              placeholder="Number of tokens to buy"
+            />
+            <a
+              href="#"
+              onclick="buyTokens(); return false;"
+              class="btn btn-primary"
+              >Buy</a
+            >
+          </div>
+          <div class="col-sm-12 margin-top-3 form">
+            <h2 class="">Lookup Voter Info</h2>
+            <input
+              type="text"
+              id="voter-info"
+              ,
+              class="col-sm-8"
+              placeholder="Enter the voter address"
+            />
+            <a
+              href="#"
+              onclick="lookupVoterInfo(); return
+false;"
+              class="btn btn-primary"
+              >Lookup</a
+            >
+            <div class="voter-details row text-left">
+              <div id="tokens-bought" class="margin-top-3 col-md-12"></div>
+              <div id="votes-cast" class="col-md-12"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+  <script src="app.js"></script>
+</html>
+```
+
 **app/scripts/index.js**
 
 ```js
@@ -350,3 +660,94 @@ $(document).ready(function() {
       });
   });
 ```
+
+## 测试
+
+**solidity 写单元测试**
+**JavaScript 写功能测试**
+
+### solidity
+
+```js
+// TestVoting.sol
+// SPDX-License-Identifier: MIT
+pragma solidity >0.4.22 <0.6.0;
+import "truffle/Assert.sol";
+import "truffle/DeloyedAddress.sol";
+import "../contracts/Voting.sol";
+contract TestVoting {
+  uint public initialBalance = 2 ether;
+  function testInitialTokenBalanceUsingDeployedContract() public {
+    Voting voting = Voting(DeployedAddresses.Voting());
+    uint expected= 10000;
+    Assert.equal(voting.balanceTokens(), expected, "1000 Tokens not  initialized for sale");
+  }
+  function testBuyTokens() public {
+    Voting voting = Voting(DeployedAddresses.Voting());
+    voting.buy.value(1 ether)();
+    Assert.equal(voting.balanceTokens(), 9900, "9900 tokens should have been available");
+  }
+}
+```
+
+- `Assert.sol`: 断言库，常用方法：`equal`,`notEqual`,`isAbove`,`isBelow`,`isAtLeast`,`isAtMost`,`isZero`,`isNotZero`
+- `DeloyedAddress`: 一个 truffle 框架的帮助库，调用`DeployedAddress.()`即可获取部署合约的地址
+- `truffle test test/TestVoting.sol`运行测试
+
+### JavaScript
+
+Truffle 使用了 Mocha 测试框架和 Chai 用于断言
+
+```js
+// voting.js
+var Voting = artifacts.require("./Voting.sol");
+contract("Voting", function(accounts) {
+  it("should be able to buy tokens", function() {
+    var instance;
+    var tokensSold;
+    var userTokens;
+    return Voting.deployed()
+      .then(function(i) {
+        instance = i;
+        return i.bug({
+          value: web3.toWei(1, "ether"),
+        });
+      })
+      .then(function() {
+        return instance.tokensSold.call();
+      })
+      .then(function() {
+        tokensSold = balance;
+        return instance.voterDetails.call(web3.eth.accounts[0]);
+      })
+      .then(function(tokenDetails) {
+        userTokens = tokenDetails[0];
+      });
+    assert.equal(balance.valueOf(), 100, "100 tokens were not sold");
+    assert.equal(userTokens.valueOf(), 100, "100 tokens were not sold");
+  });
+  it("should be able to vote for candidates", function() {
+    var instance;
+    return Voting.deployed()
+      .then(function(i) {
+        instance = i;
+        return i.buy({ value: web3.toWei(1, "ether") });
+      })
+      .then(function() {
+        return instance.voteForCandidate("Alice", 3);
+      })
+      .then(function() {
+        return instance.voterDetails.call(web3.eth.accounts[0]);
+      })
+      .then(function(tokenDetails) {
+        assert.equal(
+          tokenDetails[1][0].valueOf(),
+          3,
+          "3 tokens were not used for voting to Alice"
+        );
+      });
+  });
+});
+```
+
+- `truffle test test/voting.js`
