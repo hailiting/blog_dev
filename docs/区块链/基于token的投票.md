@@ -64,6 +64,9 @@ truffle 是一个 dapp 的开发框架，它可以使得 dapp 的构建和管理
 
 ```js
 > npm install -g truffle
+> truffle -v                           ──(四, 610)─┘
+Truffle v5.3.9 - a development framework for Ethereum
+
 ```
 
 然后我们创建一个空目录，在下面创建 truffle 项目
@@ -153,26 +156,39 @@ rm contracts/ConvertLib.sol contracts/MetaCoin.sol
 
 ```js
 // 2_deploy_contracts.js
-var Voting = artifacts.require("./Voting.sol");
+const ConvertLib = artifacts.require("ConvertLib");
+const MetaCoin = artifacts.require("MetaCoin");
+
 module.exports = function(deployer) {
-  deployer.deploy(Voting, ["Alice", "Bob", "Cary"], {gas: 290000}
+  deployer.deploy(ConvertLib);
+  deployer.link(ConvertLib, MetaCoin);
+  deployer.deploy(MetaCoin);
 };
 ```
 
 ### 更新 truffle 配置文件
 
 ```js
-// truffle.js
+// truffle-config.js
 // 应用到所有migration 全局变量
 // 2_deploy_contracts.js 如果不设置gas  将是470000
-require("babel-register");
 module.exports = {
   networks: {
     development: {
       host: "localhost",
       port: 8545,
-      network_id: "*",
-      gas: 470000,
+      network_id: "*", // Match any network id
+      gas: 5000000,
+    },
+  },
+  compilers: {
+    solc: {
+      settings: {
+        optimizer: {
+          enabled: true, // Default: false
+          runs: 200, // Default: 200
+        },
+      },
     },
   },
 };
@@ -188,76 +204,105 @@ Migrations.sol Voting.sol
 
 ```js
 // Voting.sol
-pragma solidity >0.4.18;
+// SPDX-License-Identifier: MIT
+pragma solidity >0.4.22;
+
 contract Voting {
-  struct voter{
-    address voterAddress;
-    uint tokensBough;
-    uint[] tokensUsedPerCandidate;
-  }
-  mapping(address=>voter) public voterInfo;
-  mapping(bytes32 => uint) public votesReceived;
-  bytes32[] public candidateList;
-  uint public totalTokens;
-  uint public balanceTokens;
-  uint public tokenPrices;
-  constructor(uint tokens, uint  pricePerToken, bytes32[] candidateNames) {
-    candidateList = candidateNames;
-    totalTokens = tokens;
-    balanceTokens = tokens;
-    tokenPrice = pricePerToken;
-  }
-  function buy() payable public returns (uint){
-    uint tokensToBuy = msg.value/tokenPrice;
-    require(tokensToBuy<=balanceTokens);
-    voterInfo[msg.sender].voterAddress=msg.sender;
-    voterInfo[msg.sender].tokensBought += tokensToBuy;
-    balanceTokens-=tokensToBuy;
-    return tokensToBuy;
-  }
-  function totalVotesFor(bytes32 candidate) view public returns (uint){
-    return votesReceived[candidate];
-  }
-  function voteForCandidate(bytes32 candidate,uint votesInTokens) public {
-    uint index = indexOfCandidate(candidate);
-    require(index!=uint(-1));
-    if(voterInfo[msg.sender].tokensUsedPerCandidate.length ==0){
-      for(uint i=0;i<candidateList.length; i++){
-        voterInfo[msg.sender].tokensUsedPerCandidate.push(0);
-      }
+    struct voter {
+        address voterAddress;
+        uint256 tokensBought;
+        uint256[] tokensUsedPerCandidate;
     }
-    uint availableTokens = voterInfo[msg.sender].tokensBought - totalTokensUsed(voterInfo[msg.sender].tokensUsedPerCandidate);
-    require(availableTokens >= votesInTokens);
-    votesReceived[candidate] += votesInTokens;
-    voterInfo[msg.sender].tokensUsedPerCandidate[index]+= votesInTokens;
-  }
-  function totalTokensUsed(uint[] _tokensUsedPerCandidate) private pure returns (uint){
-    uint totalUsedTokens = 0;
-    for(uint i=0;i<_tokensUsedPerCandidate.length; i++){
-      totalUsedTokens += _tokensUsedPerCandidate[i];
+    mapping(address => voter) public voterInfo;
+    mapping(bytes32 => uint256) public votesReceived;
+    bytes32[] public candidateList;
+    uint256 public totalTokens;
+    uint256 public balanceTokens;
+    uint256 public tokenPrice;
+
+    constructor(
+        uint256 tokens,
+        uint256 pricePerToken,
+        bytes32[] memory candidateNames
+    ) public {
+        candidateList = candidateNames;
+        totalTokens = tokens;
+        balanceTokens = tokens;
+        tokenPrice = pricePerToken;
     }
-    return totalUsedTokens;
-  }
-  function indexOfCandidate(bytes32 candidate) view public returns(uint){
-    for(uint i=0;i<candidateList.length;i++){
-      if(candidateList[i] == candidate){
-        return i;
-      }
+
+    function buy() public payable returns (uint256) {
+        uint256 tokensToBuy = msg.value / tokenPrice;
+        require(tokensToBuy <= balanceTokens);
+        voterInfo[msg.sender].voterAddress = msg.sender;
+        voterInfo[msg.sender].tokensBought += tokensToBuy;
+        balanceTokens -= tokensToBuy;
+        return tokensToBuy;
     }
-    return uint(-1);
-  }
-  function tokensSold() view public returns (uint) {
-    return totalTokens - balanceTokens;
-  }
-  function voterDetails(address user) view public returns(uint, uint[]){
-    return (voterInfo[user].tokensBought, voterInfo[user].tokensUsedPerCandidate);
-  }
-  function transferTo(address account) public {
-    account.transfer(this.balance);
-  }
-  function allCandidates() view public returns(bytes32[]){
-    return candidateList;
-  }
+
+    function totalVotesFor(bytes32 candidate) public view returns (uint256) {
+        return votesReceived[candidate];
+    }
+
+    function voteForCandidate(bytes32 candidate, uint256 votesInTokens) public {
+        uint256 index = indexOfCandidate(candidate);
+        require(index != uint256(-1));
+        if (voterInfo[msg.sender].tokensUsedPerCandidate.length == 0) {
+            for (uint256 i = 0; i < candidateList.length; i++) {
+                voterInfo[msg.sender].tokensUsedPerCandidate.push(0);
+            }
+        }
+        uint256 availableTokens =
+            voterInfo[msg.sender].tokensBought -
+                totalTokensUsed(voterInfo[msg.sender].tokensUsedPerCandidate);
+        require(availableTokens >= votesInTokens);
+        votesReceived[candidate] += votesInTokens;
+        voterInfo[msg.sender].tokensUsedPerCandidate[index] += votesInTokens;
+    }
+
+    function totalTokensUsed(uint256[] memory _tokensUsedPerCandidate)
+        private
+        pure
+        returns (uint256)
+    {
+        uint256 totalUsedTokens = 0;
+        for (uint256 i = 0; i < _tokensUsedPerCandidate.length; i++) {
+            totalUsedTokens += _tokensUsedPerCandidate[i];
+        }
+        return totalUsedTokens;
+    }
+
+    function indexOfCandidate(bytes32 candidate) public view returns (uint256) {
+        for (uint256 i = 0; i < candidateList.length; i++) {
+            if (candidateList[i] == candidate) {
+                return i;
+            }
+        }
+        return uint256(-1);
+    }
+
+    function tokensSold() public view returns (uint256) {
+        return totalTokens - balanceTokens;
+    }
+
+    function voterDetails(address user)
+        public
+        view
+        returns (uint256, uint256[] memory)
+    {
+        return (
+            voterInfo[user].tokensBought,
+            voterInfo[user].tokensUsedPerCandidate
+        );
+    }
+
+    function transferTo(address payable account) public {
+        account.transfer(address(this).balance);
+    }
+
+    function allCandidates() public view returns (bytes32[] memory) {
+        return candidateList;
+    }
 }
 ```
 
@@ -268,6 +313,12 @@ contract Voting {
   - uint[] tokensUsedPerCandidate 候选者投票所用的 token
 - voterInfo 是一个 mapping, 给定一个投票人的账户地址，就可以显示他的信息
 - Tokens: 需要有存储发行 token 总量的合约变量，还需要存储所有剩余 token 和每个 token 价格
+
+## 编译智能合约
+
+```js
+> truffle compile
+```
 
 ## 创建账户
 
@@ -635,6 +686,41 @@ $(document).ready(function() {
 });
 ```
 
+```js
+// app.js  web3 1.+
+const App = {
+  initWeb3: async function() {
+    if (window.ethereum) {
+      App.web3Provider = window.ethereum;
+      try {
+        await window.ethereum.enable();
+      } catch (err) {
+        console.error("User denied account access");
+      }
+    } else if (window.web3) {
+      App.web3Provider = window.web3.currentProvider;
+    } else {
+      App.web3Provider = new Web3.providers.HttpProvider(
+        "http://localhost:7545"
+      );
+    }
+    web3 = new Web3(App.web3Provider);
+    return App.initContract();
+  },
+  // 实例化合约
+  initContract: function() {
+    $.getJSON("Voting.json", function(data) {
+      var VotingArtifact = data;
+      App.contracts.Voting = TruffleContract(VotingArtifact);
+      App.contracts.Adoption.setProvider(App.web3Provider);
+      return App.markAdopted();
+    });
+    return App.bindEvents();
+  },
+};
+```
+
+代码中优先使用 Mist 和 MetaMask 提供的 web3 实例，如果没有则从本地环境创建一个。
 **Voting.deployed()**
 `Voting.deployed()`返回一个合约实例，truffle 的每一个调用会返回一个`promise`，所以使用`.then()`。
 
