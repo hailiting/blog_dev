@@ -17,8 +17,10 @@
 ### 用 Geth 启动私链
 
 ```js
-> nohup geth --datadir ./myChain/ --networkid 15 --rpc --rpcapi db,eth,net,web3,personal,miner --rpcport 8545 --rpcaddr
-127.0.0.1 --rpccorsdomain "*" 2>output.log &
+> nohup geth --datadir ./myChain/ --networkid 15 --rpc --rpcapi="db,eth,net,web3,personal,miner" --rpcport 8545 --rpcaddr 127.0.0.1 --rpccorsdomain "*" 2>output.log --allow-insecure-unlock
+> geth --datadir ./myChain/ --rpc  --rpcapi="db,eth,net,web3,personal,miner" --networkid 523 --nodiscover console 2>eth_output.log --allow-insecure-unlock
+
+
 ```
 
 - `--datadir`: 指定区块链数据的存储目录，这里我们就在`./myChain/`目录启动
@@ -39,7 +41,7 @@
 启用 Rinkeby 测试网络
 
 ```js
-> geth --rinkeby --syncmode "fast" --rpc --rpcapi db,eth,net,web3,personal --cache=1024 --rpcport 8545 --rpcaddr 127.0.0.1 --rpccorsdomain "*"
+> geth --rinkeby --syncmode "fast" --rpc --rpcapi db,eth,net,web3,personal --cache=1024 --rpcport 8545 --rpcaddr 127.0.0.1 --rpccorsdomain "*" --allow-insecure-unlock
 ```
 
 - `Full Sync`: 从周围节点获取 block headers, block bodies,并且从初始化区块开始重演每一步交易以验证每一个状态。
@@ -324,9 +326,9 @@ contract Voting {
 
 ```js
 > truffle console
-> web3.personal.newAccount("verystrongpassword")
-> web3.eth.getBalance("xx")
-> web3.personal.unlockAccount("xxx","verystrongpassword", 15000)
+> web3.eth.personal.newAccount("verystrongpassword")
+> web3.eth.personal.unlockAccount("0xf1DE2d4c9DA3201B82402b4c3cD06E7E128A1430","verystrongpassword", 15000)
+> web3.eth.getBalance("0xf1DE2d4c9DA3201B82402b4c3cD06E7E128A1430").then(function(res){console.log(web3.utils.fromWei(`${res}`, "ether"))})
 ```
 
 #### buy 函数
@@ -383,12 +385,12 @@ Compiling Migrations.sol...Compiling Voting.sol...Writing
 ```
 
 ```js
-var Voting = artifacts.require("./Votiong.sol");
+var Voting = artifacts.require("Voting");
 module.exports = function(deployer) {
-  deployer.deploy(Voting, 10000, web3.toWei("0,01", ether), [
-    "Alice",
-    "Bob",
-    "Cary",
+  deployer.deploy(Voting, 10000, web3.utils.toWei("0.01", "ether"), [
+    web3.utils.fromAscii("Alice", 32),
+    web3.utils.fromAscii("Bob", 32),
+    web3.utils.fromAscii("Cary", 32),
   ]);
 };
 ```
@@ -463,261 +465,289 @@ web3.eth.getBalance(Voting.address).toNumber()
 **app/index.html**
 用上个`index.html`替换`app/index.html`内容。
 
-```html
+````html
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Decentralized Voting App</title>
+    <title>Hello World DApp</title>
     <link
-      href="https://fonts.googleapis.com/css?family=Open+San
-s:400,700"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700"
       rel="stylesheet"
       type="text/css"
     />
     <link
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/ css/bootstrap.min.css"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
       rel="stylesheet"
       type="text/css"
     />
-    <style></style>
+    <style>
+      .margin-top-3 {
+        margin-top: 3em;
+      }
+    </style>
   </head>
-  <body class="row">
-    <h1 class="text-center banner">
-      Decentralized Voting Application (Ropsten Testnet)
-    </h1>
-    <div class="container">
+  <body class="container">
+    <h1>A Simple Hello World Voting Application</h1>
+    <div class="col-sm-7 margin-top-3">
+      <h2>Candidates</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Candidate</th>
+              <th>Votes</th>
+            </tr>
+          </thead>
+          <tbody id="candidate-rows">
+            <tr>
+              <td>Alice</td>
+              <td id="candidate-1"></td>
+            </tr>
+            <tr>
+              <td>Bob</td>
+              <td id="candidate-2"></td>
+            </tr>
+            <tr>
+              <td>Cary</td>
+              <td id="candidate-3"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="container-fluid">
+        <h2>Vote for Candidate</h2>
+        <div id="msg"></div>
+        <input
+          type="text"
+          id="candidate"
+          placeholder="Enter the candidate name"
+        />
+        <br />
+        <br />
+        <input
+          type="text"
+          id="vote-tokens"
+          placeholder="Total no. of tokens to vote"
+        />
+        <br />
+        <br />
+        <a onclick="App.voteForCandidate()" class="btn btn-primary">Vote</a>
+      </div>
+    </div>
+    <div class="col-sm-offset-1 col-sm-4 margin-top-3">
+      <div class="row">
+        <h2>Token Stats</h2>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <td>Tokens For Sale</td>
+              <td id="tokens-total"></td>
+            </tr>
+            <tr>
+              <td>Tokens Sold</td>
+              <td id="tokens-sold"></td>
+            </tr>
+            <tr>
+              <td>Price Per Token</td>
+              <td id="token-cost"></td>
+            </tr>
+            <tr>
+              <td>Balance in the contract</td>
+              <td id="contract-balance"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
       <div class="row margin-top-3">
+        <h2>Purchase Tokens</h2>
         <div class="col-sm-12">
-          <h3>How to use the app</h3>
-          <strong>Step 1</strong>: Install the
-          <a href="https://metamask.io/" target="_blank">metamask plugin</a>
-          and create an account on Ropsten Test Network and load some Ether.
-          <br />
-          <strong>Step 2</strong>: Purchase tokens below by entering the total
-          number of tokens you like to buy.
-          <br />
-          <strong>Step 3</strong>: Vote for candidates by entering their name
-          and no. of tokens to vote with.
-          <br />
-          <strong>Step 4</strong>: Enter your account address to look up your
-          voting activity.
+          <div id="buy-msg"></div>
+          <input
+            type="text"
+            id="buy"
+            class="col-sm-8"
+            placeholder="Number of tokens to buy"
+          />&nbsp;
+          <div onclick="App.buyTokens()" class="btn btn-primary">Buy</div>
         </div>
       </div>
       <div class="row margin-top-3">
-        <div class="col-sm-7">
-          <h2>Candidates</h2>
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Candidate</th>
-                  <th>Votes</th>
-                </tr>
-              </thead>
-              <tbody id="candidate-rows"></tbody>
-            </table>
-          </div>
-        </div>
-        <div class="col-sm-offset-1 col-sm-4">
-          <h2>Tokens</h2>
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <tr>
-                <th>Tokens Info</th>
-                <th>Value</th>
-              </tr>
-              <tr>
-                <td>Tokens For Sale</td>
-                <td id="tokens-total"></td>
-              </tr>
-              <tr>
-                <td>Tokens Sold</td>
-                <td id="tokens-sold"></td>
-              </tr>
-              <tr>
-                <td>Price Per Token</td>
-                <td id="token-cost"></td>
-              </tr>
-              <tr>
-                <td>Balance in the contract</td>
-                <td id="contract-balance"></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-      <hr />
-      <div class="row margin-bottom-3">
-        <div class="col-sm-7 form">
-          <h2>Vote for Candidate</h2>
-          <div id="msg"></div>
+        <h2>Lookup Voter Info</h2>
+        <div class="col-sm-12">
           <input
             type="text"
-            id="candidate"
-            class="form-control"
-            placeholder="Enter the candidate name"
-          />
-          <br />
-          <br />
-          <input
-            type="text"
-            id="vote-tokens"
-            class="form-control"
-            placeholder="Total no. of tokens to vote"
-          />
-          <br />
-          <br />
-          <a
-            href="#"
-            onclick="voteForCandidate(); return false;"
-            class="btn btn-primary"
-            >Vote</a
+            id="voter-info"
+            class="col-sm-8"
+            placeholder="Enter the voter address"
+          />&nbsp;
+          <a href="#" onclick="App.lookupVoterInfo()" class="btn btn-primary"
+            >Lookup</a
           >
-        </div>
-        <div class="col-sm-offset-1 col-sm-4">
-          <div class="col-sm-12 form">
-            <h2>Purchase Tokens</h2>
-            <div id="buy-msg"></div>
-            <input
-              type="text"
-              id="buy"
-              class="col-sm-8"
-              placeholder="Number of tokens to buy"
-            />
-            <a
-              href="#"
-              onclick="buyTokens(); return false;"
-              class="btn btn-primary"
-              >Buy</a
-            >
-          </div>
-          <div class="col-sm-12 margin-top-3 form">
-            <h2 class="">Lookup Voter Info</h2>
-            <input
-              type="text"
-              id="voter-info"
-              ,
-              class="col-sm-8"
-              placeholder="Enter the voter address"
-            />
-            <a
-              href="#"
-              onclick="lookupVoterInfo(); return
-false;"
-              class="btn btn-primary"
-              >Lookup</a
-            >
-            <div class="voter-details row text-left">
-              <div id="tokens-bought" class="margin-top-3 col-md-12"></div>
-              <div id="votes-cast" class="col-md-12"></div>
-            </div>
+          <div class="voter-details row text-left">
+            <div id="tokens-bought" class="margin-top-3 col-md-12"></div>
+            <div id="votes-cast" class="col-md-12"></div>
           </div>
         </div>
       </div>
     </div>
   </body>
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
-  <script src="app.js"></script>
+  <script src="./index.js"></script>
 </html>
-```
 
-**app/scripts/index.js**
+**app/scripts/index.js** ```js import "../styles/app.css"; import { default as
+Web3 } from "web3"; import { default as contract } from "truffle-contract";
+import voting_artifacts from "../../build/contracts/Voting.json"; var Voting =
+contract(voting_artifacts); let candidates = { Alice: "candidate-1", Bob:
+"candidate-2", Cary: "candidate-3", }; window.voteForCandidate =
+function(candidate) { let candidateName = $("#candidate").val(); try {
+$("#msg").html( "Vote has been submitted. The vote count will increment as soon
+as the vote is recorded on the blockchain. Please wait." );
+$("#candidate").val(""); Voting.deployed().then(function(contractInstance) {
+contractInstance .voteForCandidate(candidateName, { gas: 140000, from:
+web3.eth.accounts[0], }) .then(function() { let div_id =
+candidates[candidateName]; return contractInstance.totalVotesFor
+.call(candidateName) .then(function(v) { $("#" + div_id).html(v.toString());
+$("#msg").html(""); }); }); }); } catch (err) { console.log(err); } };
+$(document).ready(function() { if (typeof web3 !== "undefined") {
+console.warn("Using web3 detected from external source like Metamask");
+window.web3 = new Web3(web3.currentProvider); } else { console.warn( "No web3
+detected. Falling back to http://localhost:8545. You should remove this fallback
+when you deploy live, as it's inherently insecure. Consider switching to
+Metamask for development. More info here:
+http://truffleframework.com/tutorials/truffle-and-metamask" ); window.web3 = new
+Web3( new Web3.providers.HttpProvider("http://localhost:8545"); ); }
+Voting.setProvider(web3.currentProvider); let candidateNames =
+Object.keys(candidates); for(var i=0;i<candidateNames.length;i++){ let name =
+candidateNames[i]; Voting.deployed().then(function(contractInstance){
+contractInstance.totalVotesFor.call(name).then(function(v){
+$("#"+candidates[name]).html(v.toString()); }) }) } });
+````
 
 ```js
-import "../styles/app.css";
-import { default as Web3 } from "web3";
-import { default as contract } from "truffle-contract";
-import voting_artifacts from "../../build/contracts/Voting.json";
-var Voting = contract(voting_artifacts);
+// app.js  web3 1.+
+import Web3 from "web3";
+import votingArtifact from "../../build/contracts/Voting.json";
+
 let candidates = {
   Alice: "candidate-1",
   Bob: "candidate-2",
   Cary: "candidate-3",
 };
-window.voteForCandidate = function(candidate) {
-  let candidateName = $("#candidate").val();
-  try {
+const App = {
+  web3: null,
+  account: null,
+  voting: null,
+  tokenPrice: null,
+  start: async function() {
+    const { web3 } = this;
+    try {
+      const networkId = await web3.eth.net.getId();
+      const deployedNetwork = votingArtifact.networks[networkId];
+      this.voting = new web3.eth.Contract(
+        votingArtifact.abi,
+        deployedNetwork.address
+      );
+      const accounts = await web3.eth.getAccounts();
+      this.account = accounts[0];
+      this.loadCandidatesAndVotes();
+    } catch (error) {
+      console.error("Нет подключения", error);
+    }
+  },
+  loadCandidatesAndVotes: async function() {
+    const { totalVotesFor } = this.voting.methods;
+    let candidateNames = Object.keys(candidates);
+    for (var i = 0; i < candidateNames.length; i++) {
+      let name = candidateNames[i];
+      var count = await totalVotesFor(this.web3.utils.asciiToHex(name)).call();
+      console.log(count);
+      $("#" + candidates[name]).html(count);
+    }
+  },
+  lookupVoterInfo: function() {
+    let address = $("#voter-info").val();
+    const { voterDetails } = this.voting.methods;
+    console.log(address);
+    voterDetails(address)
+      .call()
+      .then(function(v) {
+        $("#tokens-bought").html("Total Tokens bought: " + v[0].toString());
+        let votesPerCandidate = v[1];
+        $("#votes-cast").empty();
+        $("#votes-cast").append("Votes cast per candidate: <br>");
+        let allCandidates = Object.keys(candidates);
+        for (let i = 0; i < allCandidates.length; i++) {
+          $("#votes-cast").append(
+            allCandidates[i] + ": " + votesPerCandidate[i] + "<br>"
+          );
+        }
+      });
+  },
+  buyTokens: async function() {
+    let tokensToBuy = $("#buy").val();
+    const { tokenPrice, buy } = this.voting.methods;
+    tokenPrice()
+      .call()
+      .then(function(v) {
+        App.tokenPrice = parseFloat(App.web3.utils.fromWei(v.toString()));
+        $("#token-cost").html(App.tokenPrice + " Ether");
+
+        let price = tokensToBuy * App.tokenPrice;
+        $("#buy-msg").html("Purchase order has been submitted. Please wait.");
+        buy()
+          .send({
+            value: App.web3.utils.toWei(`${price}`, "ether"),
+            from: App.account,
+          })
+          .then(function(v) {
+            console.log(v);
+            $("#buy-msg").html(``);
+            App.web3.eth.getBalance(App.account, function(error, result) {
+              $("#contract-balance").html(
+                App.web3.utils.fromWei(result.toString()) + " Ether"
+              );
+            });
+          });
+      });
+  },
+  voteForCandidate: async function() {
+    let candidateName = $("#candidate").val();
+    let voteTokens = $("#vote-tokens").val();
     $("#msg").html(
-      "Vote has been submitted. The vote count will  increment as soon as the vote is recorded on the blockchain. Please wait."
+      "Vote has been submitted. The vote count will increment as soon as the vote is recorded on the blockchain. Please wait."
     );
     $("#candidate").val("");
-    Voting.deployed().then(function(contractInstance) {
-      contractInstance
-        .voteForCandidate(candidateName, {
-          gas: 140000,
-          from: web3.eth.accounts[0],
-        })
-        .then(function() {
-          let div_id = candidates[candidateName];
-          return contractInstance.totalVotesFor
-            .call(candidateName)
-            .then(function(v) {
-              $("#" + div_id).html(v.toString());
-              $("#msg").html("");
-            });
-        });
+    $("#vote-tokens").val("");
+    const { totalVotesFor, voteForCandidate } = this.voting.methods;
+    await voteForCandidate(
+      this.web3.utils.asciiToHex(candidateName),
+      this.web3.utils.toHex(voteTokens)
+    ).send({
+      gas: 140000,
+      from: App.account,
     });
-  } catch (err) {
-    console.log(err);
-  }
+    let div_id = candidates[candidateName];
+    var count = await totalVotesFor(
+      this.web3.utils.asciiToHex(candidateName)
+    ).call();
+    $("#" + div_id).html(count);
+    $("#msg").html("");
+  },
 };
-$(document).ready(function() {
-  if (typeof web3 !== "undefined") {
-    console.warn("Using web3 detected from external source like Metamask");
-    window.web3 = new Web3(web3.currentProvider);
+window.App = App;
+window.addEventListener("load", function() {
+  if (window.ethereum) {
+    App.web3 = new Web3(window.ethereum);
+    window.ethereum.enable();
   } else {
-    console.warn(
-      "No web3 detected. Falling back to http://localhost:8545. You should remove this fallback when you deploy live, as it's inherently insecure. Consider switching to Metamask  for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask"
-    );
-    window.web3 = new Web3(
-      new Web3.providers.HttpProvider("http://localhost:8545");
+    console.warn("Нет web3 провайдера!");
+    App.web3 = new Web3(
+      new Web3.providers.HttpProvider("http://127.0.0.1:8545")
     );
   }
-  Voting.setProvider(web3.currentProvider);
-  let candidateNames = Object.keys(candidates);
-  for(var i=0;i<candidateNames.length;i++){
-    let name = candidateNames[i];
-    Voting.deployed().then(function(contractInstance){
-      contractInstance.totalVotesFor.call(name).then(function(v){
-        $("#"+candidates[name]).html(v.toString());
-      })
-    })
-  }
+  App.start();
 });
-```
-
-```js
-// app.js  web3 1.+
-const App = {
-  initWeb3: async function() {
-    if (window.ethereum) {
-      App.web3Provider = window.ethereum;
-      try {
-        await window.ethereum.enable();
-      } catch (err) {
-        console.error("User denied account access");
-      }
-    } else if (window.web3) {
-      App.web3Provider = window.web3.currentProvider;
-    } else {
-      App.web3Provider = new Web3.providers.HttpProvider(
-        "http://localhost:7545"
-      );
-    }
-    web3 = new Web3(App.web3Provider);
-    return App.initContract();
-  },
-  // 实例化合约
-  initContract: function() {
-    $.getJSON("Voting.json", function(data) {
-      var VotingArtifact = data;
-      App.contracts.Voting = TruffleContract(VotingArtifact);
-      App.contracts.Adoption.setProvider(App.web3Provider);
-      return App.markAdopted();
-    });
-    return App.bindEvents();
-  },
-};
 ```
 
 代码中优先使用 Mist 和 MetaMask 提供的 web3 实例，如果没有则从本地环境创建一个。

@@ -1,37 +1,128 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MetaCoin | Truffle Webpack Demo w/ Frontend</title>
-  </head>
-  <style>
-    input {
-      display: block;
-      margin-bottom: 12px;
-    }
-  </style>
-  <body>
-    <h1>MetaCoin — Example Truffle Dapp</h1>
-    <p>You have <strong class="balance">loading...</strong> META</p>
-
-    <h1>Send MetaCoin</h1>
-
-    <label for="amount">Amount:</label>
-    <input type="text" id="amount" placeholder="e.g. 95" />
-
-    <label for="receiver">To address:</label>
-    <input
-      type="text"
-      id="receiver"
-      placeholder="e.g. 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"
+    <title>Hello World DApp</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+      rel="stylesheet"
+      type="text/css"
     />
-
-    <button onclick="App.sendCoin()">Send MetaCoin</button>
-
-    <p id="status"></p>
-    <p>
-      <strong>Hint:</strong> open the browser developer console to view any
-      errors and warnings.
-    </p>
-    <script src="index.js"></script>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      .margin-top-3 {
+        margin-top: 3em;
+      }
+    </style>
+  </head>
+  <body class="container">
+    <h1>A Simple Hello World Voting Application</h1>
+    <div class="col-sm-7 margin-top-3">
+      <h2>Candidates</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Candidate</th>
+              <th>Votes</th>
+            </tr>
+          </thead>
+          <tbody id="candidate-rows">
+            <tr>
+              <td>Alice</td>
+              <td id="candidate-1"></td>
+            </tr>
+            <tr>
+              <td>Bob</td>
+              <td id="candidate-2"></td>
+            </tr>
+            <tr>
+              <td>Cary</td>
+              <td id="candidate-3"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="container-fluid">
+        <h2>Vote for Candidate</h2>
+        <div id="msg"></div>
+        <input
+          type="text"
+          id="candidate"
+          placeholder="Enter the candidate name"
+        />
+        <br />
+        <br />
+        <input
+          type="text"
+          id="vote-tokens"
+          placeholder="Total no. of tokens to vote"
+        />
+        <br />
+        <br />
+        <a onclick="App.voteForCandidate()" class="btn btn-primary">Vote</a>
+      </div>
+    </div>
+    <div class="col-sm-offset-1 col-sm-4 margin-top-3">
+      <div class="row">
+        <h2>Token Stats</h2>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <td>Tokens For Sale</td>
+              <td id="tokens-total"></td>
+            </tr>
+            <tr>
+              <td>Tokens Sold</td>
+              <td id="tokens-sold"></td>
+            </tr>
+            <tr>
+              <td>Price Per Token</td>
+              <td id="token-cost"></td>
+            </tr>
+            <tr>
+              <td>Balance in the contract</td>
+              <td id="contract-balance"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row margin-top-3">
+        <h2>Purchase Tokens</h2>
+        <div class="col-sm-12">
+          <div id="buy-msg"></div>
+          <input
+            type="text"
+            id="buy"
+            class="col-sm-8"
+            placeholder="Number of tokens to buy"
+          />&nbsp;
+          <div onclick="App.buyTokens()" class="btn btn-primary">Buy</div>
+        </div>
+      </div>
+      <div class="row margin-top-3">
+        <h2>Lookup Voter Info</h2>
+        <div class="col-sm-12">
+          <input
+            type="text"
+            id="voter-info"
+            class="col-sm-8"
+            placeholder="Enter the voter address"
+          />&nbsp;
+          <a href="#" onclick="App.lookupVoterInfo()" class="btn btn-primary"
+            >Lookup</a
+          >
+          <div class="voter-details row text-left">
+            <div id="tokens-bought" class="margin-top-3 col-md-12"></div>
+            <div id="votes-cast" class="col-md-12"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+  <script src="./index.js"></script>
 </html>

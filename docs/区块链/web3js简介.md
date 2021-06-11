@@ -289,7 +289,10 @@ batch.add(
   )
 );
 batch.add(
-  web3.eth.contract(abi).at(address).balance.request(address, callback2)
+  web3.eth
+    .contract(abi)
+    .at(address)
+    .balance.request(address, callback2)
 );
 batch.execute();
 ```
@@ -634,7 +637,8 @@ var result = web3.eth.call({
   // 向谁发出来的调用
   to: "0xc4abd0339eb8d57087278718986382264244252f",
   // 32位的字节 前8  函数的选择器
-  data: "0xc6888fa1000000000000000000000000000000000000000000000000000 0000000000003",
+  data:
+    "0xc6888fa1000000000000000000000000000000000000000000000000000 0000000000003",
 });
 console.log(result);
 ```
@@ -651,14 +655,14 @@ console.log(result);
 // 或者可以填入一个日志过滤
 var filter = web3.eth.filter("latest");
 // 监听日志变化
-filter.watch(function (error, result) {
+filter.watch(function(error, result) {
   if (!error) {
     console.log(result);
   }
 });
 filter.stopWatch();
 // 还可以用传入回调函数的方法，立即开始监听日志
-web3.eth.filter(options, function (error, result) {
+web3.eth.filter(options, function(error, result) {
   if (!error) {
     console.log(result);
   }
@@ -819,7 +823,7 @@ contractInstance.balances("0x9cab180d378005f9ecea4869e77cdde2bdb06ff5")
 var event = myContractInstance.MyEvent(
   { valueA: 23 },
   [, additionalFill],
-  function (error, result) {
+  function(error, result) {
     if (!error) console.log(result);
   }
 );
