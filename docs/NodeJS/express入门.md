@@ -1,5 +1,7 @@
 # Express 基础
 
+Express 是对 node 进行一层封装，是一个简洁而灵活的 Nodejs web 应用框架。
+
 ## express 能干啥
 
 - 1，可以设置中间件来响应 HTTP 请求
@@ -17,6 +19,7 @@
 ```js
 var express = require("express");
 var app = express();
+
 app.get("/", function(req, res) {
   res.send("hello world");
 });
@@ -39,6 +42,7 @@ app.get("/", function(req, res) {
   res.send("qweqw" + req.query.username);
 });
 app.get("/:id", function(req, res) {
+  // 伪静态
   res.send("hello" + req.params.id);
   res.json({
     id: res.params.id,
@@ -77,13 +81,13 @@ app.get("/:id", function(req, res) {
 - 6，res.clearCookie(): 清除 cookie
 - 7，res.download(): 传送指定路径文件
 - 8，res.get(): 返回指定的 HTTP 头
-- 9，res.json(): 传送 JSON 响应
+- 9，**res.json()**: 传送 JSON 响应
 - 10，res.jsonp(): 传送 JSONP 响应
 - 11，res.location(): 只设置响应的 Location HTTP 头，不设置状态码或 close response
 - 12，res.redirect(): 设置响应的 Location HTTP 头，并设置状态码 302
-- 13，res.render(view,[loacals],callback): 渲染一个 view 同时向 callback 传递渲染后的字符串，如果渲染过程中有错误发生 next(err)将会被自动调用。callback 将会被传入一个可能发生的错误以及渲染后的页面，这样就不会自动输出了。
-- 14，res.send(): 传送 HTTP 响应
-- 15，res,sendFeil(path[,options][,fn]): 传送指定路径文件 -会自动根据文件 extension 设定 Content-Type
+- 13，**res.render**(view,[loacals],callback): 渲染一个 view 同时向 callback 传递渲染后的字符串，如果渲染过程中有错误发生 next(err)将会被自动调用。callback 将会被传入一个可能发生的错误以及渲染后的页面，这样就不会自动输出了。
+- 14，**res.send()**: 传送 HTTP 响应
+- 15，res.sendFeil(path[,options][,fn]): 传送指定路径文件 -会自动根据文件 extension 设定 Content-Type
 - 16，res.set(): 设置 HTTP 头，传入 object 可以一次设置多个头
 - 17，res.status(): 设置 HTTP 状态码
 - 18，res.type(): 设置 Content-Type 的 MIME 类型
@@ -128,6 +132,7 @@ var server = app.listen(8081, function() {
 var express = require("express");
 var app = express();
 // http://localhost:8081/css/index.css
+// app.use 中间件 访问静态文件目录
 app.use(express.static("public"));
 app.get("/index.html", function(req, res) {
   res.sendFile(__dirname + "/views/" + "index.html");

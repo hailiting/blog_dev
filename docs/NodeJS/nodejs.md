@@ -51,7 +51,7 @@ web app 小程序 【token/cookie/session】
 数据访问 SqlServer 封装层 (SQL server data access layer) =》封装数据库接口去访问数据库
 数据库集群
 
-```
+```js
 - BLL 实现业务逻辑
 - controllers  暴露接口
   import xxx from "../BLL/xxxBLL"
@@ -107,18 +107,20 @@ AOP 切面层
 
 ###### Hello World!
 
-```
-var http = require('http');
-http.createServer(function(req,res){
-  // 定义http头
-  res.writeHead(200,{'Content-Type':'text/plan'});
+```js
+var http = require("http");
+http
+  .createServer(function(req, res) {
+    // 定义http头
+    res.writeHead(200, { "Content-Type": "text/plan" });
 
-  // 发送相应数据
-  res.end('Hello World!\n');
-}).listen(8000);
+    // 发送相应数据
+    res.end("Hello World!\n");
+  })
+  .listen(8000);
 
 // 服务运行后输出的一行信息
-console.log('server is ok')
+console.log("server is ok");
 ```
 
 #### 回调
@@ -135,18 +137,18 @@ console.log('server is ok')
 
 ##### 非阻塞是你先做，我先看看有没有其他事情可以做，完了吗告诉我一声
 
-```
+```js
 // 同步调用
-var fs = require('fs');
-var numbers = fs.readFileSync('numbers.txt');
+var fs = require("fs");
+var numbers = fs.readFileSync("numbers.txt");
 // 阻塞 Sync()
 console.log(numbers.toString());
 
 // 非阻塞
-var fs = require('fs');
-var numbers = fs.readFile('numbers.txt',function(err,data){
+var fs = require("fs");
+var numbers = fs.readFile("numbers.txt", function(err, data) {
   // dosthing;
-  console.log(err,data)
+  console.log(err, data);
 });
 ```
 
@@ -162,19 +164,19 @@ var numbers = fs.readFile('numbers.txt',function(err,data){
 | (事件循环) |
 |<------------|
 
-```
+```js
 // 引入Event模块，并创建eventsEmitter对象
-var events = require('events');
+var events = require("events");
 var eventEmitter = new events.EventEmitter();
 // 绑定事件处理函数
-var connctHandler = function connected(){
-  console.log('connected被调用了!');
-}
+var connctHandler = function connected() {
+  console.log("connected被调用了!");
+};
 // 完成事件绑定
-eventEmitter.on('connection',connctHandler);
+eventEmitter.on("connection", connctHandler);
 // 触发事件
-eventEmitter.emit('connection');
-console.log('程序执行完毕')
+eventEmitter.emit("connection");
+console.log("程序执行完毕");
 ```
 
 #### Node.js 模块化
@@ -183,94 +185,99 @@ console.log('程序执行完毕')
 
 ##### Node.js 中存在 4 类模块（原生模块和 3 种文件模块）
 
-```
+```js
 // main.js
 // node.js默认后缀为.js
-var hello = require('./hello');
+var hello = require("./hello");
 hello.world();
 
 // hello.js
-exports.world = function(){
-  console.log('hello world');
-}
+exports.world = function() {
+  console.log("hello world");
+};
 ```
 
 ###### Nodejs 模块的加载方式
 
-####### 从文件模块缓存中加载
-####### 从原生模块加载
-####### 从文件加载
+###### 从文件模块缓存中加载
+
+###### 从原生模块加载
+
+###### 从文件加载
 
 #### Nodejs 函数
 
-```
-function say(word){
+```js
+function say(word) {
   console.log(word);
 }
-function execute(someFunction,value){
+function execute(someFunction, value) {
   someFunction(value);
 }
-execute(say,'hello')
-execute(function(world){console.log('this is'+world)},'aaa')
+execute(say, "hello");
+execute(function(world) {
+  console.log("this is" + world);
+}, "aaa");
 
 // 同样功能，不同的实现方式
 // 匿名函数
-var http = require('http');
-http.createServer(function(req,res){
-	res.writeHead(200,{'Content-Type':'text/plain'});
-	res.write('hello world');
-	res.end()
-}).listen(8000);
+var http = require("http");
+http
+  .createServer(function(req, res) {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.write("hello world");
+    res.end();
+  })
+  .listen(8000);
 
 // 回调函数
-var http = require('http');
-function onReq(req,res){
-	res.writeHead(200,{'Content-Type':'text/plain'});
-	res.write('asa');
-	res.end();
+var http = require("http");
+function onReq(req, res) {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.write("asa");
+  res.end();
 }
-http.createServer(onReq).listen(3000)
+http.createServer(onReq).listen(3000);
 ```
 
 #### Nodejs 路由
 
-```
+```js
 //  server.js
-'use strict'
-var http = require('http');
-var url = require('url');
-function start(route){
-	function onRequest(req,res){
-		// url.parse(string).query
-		// querystring=>post的参数
-		// query =>get的参数
-		// url.parse(string).pathname
-		var pathname = url.parse(req.url).pathname;
-		route(pathname,res);
-	}
-	http.createServer(onRequest).listen(3000);
-	// console.log('server has started.');
+"use strict";
+var http = require("http");
+var url = require("url");
+function start(route) {
+  function onRequest(req, res) {
+    // url.parse(string).query
+    // querystring=>post的参数
+    // query =>get的参数
+    // url.parse(string).pathname
+    var pathname = url.parse(req.url).pathname;
+    route(pathname, res);
+  }
+  http.createServer(onRequest).listen(3000);
+  // console.log('server has started.');
 }
 exports.start = start;
 
 //   router.js
 function route(pathname, res) {
-    if (pathname === "/") {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.write('Hell World');
-        res.end();
-    }else if(pathname === '/index/data' ){
-    	res.end('index');
-    }else{
-    	res.end('404');
-    }
+  if (pathname === "/") {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.write("Hell World");
+    res.end();
+  } else if (pathname === "/index/data") {
+    res.end("index");
+  } else {
+    res.end("404");
+  }
 }
 exports.route = route;
 
-
 // index.js
-var server = require('./server');
-var router = require('./router');
+var server = require("./server");
+var router = require("./router");
 server.start(router.route);
 ```
 
@@ -278,7 +285,7 @@ server.start(router.route);
 
 ### GET 请求=》url 模块里的 parse
 
-```
+```js
 var http = require('http');
 var url = require('url');
 var util = require('util');
@@ -291,67 +298,71 @@ http.createServer(function(req,res){
 
 ###### post
 
-######### nodejs 默认不会解析请求体，需要手动来做
+###### nodejs 默认不会解析请求体，需要手动来做
 
-```
+```js
 // 基本语法结构说明
-var http = require('http');
-var querystring = require('querystring');
-http.createServer(function(req,res){
-  // 定义一个post用于暂存请求体的信息
-  var post = '';
-  // 通过req的data事件来监听函数，每当接受到请求体的数据，就会累加到post里
-  req.on('data',function(chunk){
-    post += chunk;
+var http = require("http");
+var querystring = require("querystring");
+http
+  .createServer(function(req, res) {
+    // 定义一个post用于暂存请求体的信息
+    var post = "";
+    // 通过req的data事件来监听函数，每当接受到请求体的数据，就会累加到post里
+    req.on("data", function(chunk) {
+      post += chunk;
+    });
+    // 在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回
+    req.on("end", function() {
+      post = querystring.parsr(post);
+      res.end(util.inspect(post));
+    });
   })
-  // 在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回
-  req.on('end',function(){
-    post = querystring.parsr(post);
-    res.end(util.inspect(post));
-  })
-}).listen(3000)
+  .listen(3000);
 
 // ep
-var http = require('http');
-var querystring = require('querystring');
+var http = require("http");
+var querystring = require("querystring");
 var postHTML =
-    '<html><head><meta charset="utf-8"><title>菜鸟教程 Node.js 实例</title></head>' +
-    '<body>' +
-    '<form method="post">' +
-    '网站名： <input name="name"><br>' +
-    '网站 URL： <input name="url"><br>' +
-    '<input type="submit">' +
-    '</form>' +
-    '</body></html>';
-http.createServer(function(req, res) {
-    var body = '';
-    req.on('data', function(chunk) {
-        body += chunk;
-    })
-    req.on('end', function() {
-        body = querystring.parse(body);
-        res.writeHead(200, { 'Content-type': 'text/html;charset=utf8' });
-        res.writeHead(200, {'Content-Type': 'text/html; charset=utf8'});
-        if (body.name && body.url) {
-            // 输出提交的数据
-            res.write('网络名：' + body.name);
-            res.write('<br>');
-            res.write('网站url：' + body.url);
-        } else {
-            res.write(postHTML);
-        }
-    	res.end();
-    })
-}).listen(3000);
+  '<html><head><meta charset="utf-8"><title>菜鸟教程 Node.js 实例</title></head>' +
+  "<body>" +
+  '<form method="post">' +
+  '网站名： <input name="name"><br>' +
+  '网站 URL： <input name="url"><br>' +
+  '<input type="submit">' +
+  "</form>" +
+  "</body></html>";
+http
+  .createServer(function(req, res) {
+    var body = "";
+    req.on("data", function(chunk) {
+      body += chunk;
+    });
+    req.on("end", function() {
+      body = querystring.parse(body);
+      res.writeHead(200, { "Content-type": "text/html;charset=utf8" });
+      res.writeHead(200, { "Content-Type": "text/html; charset=utf8" });
+      if (body.name && body.url) {
+        // 输出提交的数据
+        res.write("网络名：" + body.name);
+        res.write("<br>");
+        res.write("网站url：" + body.url);
+      } else {
+        res.write(postHTML);
+      }
+      res.end();
+    });
+  })
+  .listen(3000);
 ```
 
 #### nodejs 全局对象
 
 ##### nodejs 的全局变量是 global,浏览器的请求变量是 window
 
-```
+```js
 // 输出全局变量 __filename 的值（如果在模块中，返回的是模块文件的路径，如果在当前执行的脚本里，返回的是文件所在路径的绝对路径）
-console.log(__filename)
+console.log(__filename);
 
 // process  用于描述nodejs进程状态的对象 ***
 ```
@@ -360,20 +371,20 @@ console.log(__filename)
 
 ##### 文件模块的方法都有异步和同步
 
-```
-var fs = require('fs');
+```js
+var fs = require("fs");
 // fs.readFile()
 // 异步读取
-fs.readFile('input.txt',function(err,data){
-  if(err){
+fs.readFile("input.txt", function(err, data) {
+  if (err) {
     return console.log(err);
   }
-  console.log('异步读取：'+data.toString());
-})
+  console.log("异步读取：" + data.toString());
+});
 // 同步读取
-var data = fs.readFileSync('input.txt');
-console.log('同步读取：'+ data.toString());
-console.log('程序执行完毕');
+var data = fs.readFileSync("input.txt");
+console.log("同步读取：" + data.toString());
+console.log("程序执行完毕");
 
 // fs.open(path,flags[,mode],callback)
 // path: 文件的路径
@@ -381,67 +392,67 @@ console.log('程序执行完毕');
 // mode 设置文件模式（权限），文件创建默认权限为0666（可读，可写
 // callback 回调，带有两个参数 callback(err,fd)
 // 打开文件
-var fs = require('fs');
-console.log('to be open file')
-fs.open('input.txt','r+',function(err,fd){
-  if(err){
-    return console.log(err)
+var fs = require("fs");
+console.log("to be open file");
+fs.open("input.txt", "r+", function(err, fd) {
+  if (err) {
+    return console.log(err);
   }
-  console.log('the file is opened')
-})
+  console.log("the file is opened");
+});
 
 // fs.stat(path,callback) // callback(err,stats)  stats 是 fs.Stats 对象
 // 获取文件信息
-var fs = require('fs');
-fs.stat('input.txt',function(err,stats){
-  if(err){
+var fs = require("fs");
+fs.stat("input.txt", function(err, stats) {
+  if (err) {
     return console.log(err);
   }
-  console.log(stats)
+  console.log(stats);
   console.log(stats.isFile());
   console.log(stats.isDirectory());
-})
+});
 
 // fs.writeFile(file,data[,options],callback)
 ```
 
 #### nodejs 常用工具 => util
 
-```
+```js
 // util.inherits
-var util = require('util');
-function Base(){
-  this.name = 'base';
+var util = require("util");
+function Base() {
+  this.name = "base";
   this.base = 1232;
-  this.sayHello = function(){
-    console.log('hello'+this.name);
+  this.sayHello = function() {
+    console.log("hello" + this.name);
   };
 }
-Base.prototype.showName = function(){
+Base.prototype.showName = function() {
   console.log(this.name);
+};
+function Sub() {
+  this.name = "sub";
 }
-function Sub(){
-  this.name = 'sub';
-}
-util.inherits(Sub,Base);   // Sub仅仅继承了Base原型中的函数
+util.inherits(Sub, Base); // Sub仅仅继承了Base原型中的函数
 var objSub = new Sub();
 objSub.showName();
 // objSub.sayHello(); err  找不到构造函数里的内容
-var objBase=new Base();
+var objBase = new Base();
 objBase.sayHello();
 objBase.showName();
 
 // util.inspect  =>将任意东西转换成字符串
-var util = require('util');
-function Person(){
-  this.name = 'sadf';
-  this.toString = function(){
-    return this.name
-  }
+var util = require("util");
+function Person() {
+  this.name = "sadf";
+  this.toString = function() {
+    return this.name;
+  };
 }
 var obj = new Person();
 console.log(util.inspect(obj));
-console.log(util.inspect(obj,true))
+console.log(util.inspect(obj, true));
 
 // 检测数据类型 =》返回值为true or false
 util.isArray(object);
