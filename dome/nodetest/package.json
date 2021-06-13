@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start:app_swig": "supervisor app_swig.js",
     "start:dev": "supervisor app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "supervisor": "^0.12.0"
+    "supervisor": "^0.12.0",
+    "swig": "^1.4.2"
   }
 }
