@@ -196,3 +196,54 @@ app.use(async (ctx) => {
 ```
 
 为了方便起见，很多访问器和方法直接委托给`ctx.request`或`ctx.response`，不然的话，他们是相同的。例如`ctx.type`和`ctx.length`委托给`response`对象，`ctx.path`和`ctx.method`委托给 request.
+
+### Context 具体方法和访问器
+
+**ctx.req**
+Node 的 request 对象
+**ctx.res**
+Node 的 response 对象  
+绕过 Koa 的 response 处理是不被支持的，应避免使用以下 Node 属性
+
+- res.statusCode
+- res.writeHead()
+- res.write()
+- res.end()
+
+**ctx.request**
+koa 的 request 对象
+**ctx.state**
+推荐的命名空间，用于通过中间件传递信息和前端视图
+
+```js
+ctx.state.user = await User.find(id);
+```
+
+**ctx.app**
+应用程序实例引用
+**ctx.app.emit**
+Koa 应用扩展了内部 `EventEmitter`。`ctx.app.emit`发出一个类型由第一个参数定义的事件。对于每个事件，我们可以用`listeners`连接，这是在发出事件时调用的函数。
+**`ctx.cookies.get(name, [options])`**
+通过 options 获取 cookie name:
+
+- signed 所请求的 cookie 应该被签名
+  **`ctx.cookies.set(name, value, [options])`**
+  通过 options 设置 cookie name 的 value
+- maxAge: 一个数字，表示从`Date.now()`得到的毫秒数
+- expires: 一个 Date 对象，表示 cookie 的到期日期（默认情况下在会话结束时过期）
+- path: 一个字符串，表示 cookie 的路径，(默认是 /)
+- domain: 一个字符串，指示 cookie 的域（无默认值）
+- secure: 一个布尔值，表示 cookie 是否仅通过 HTTPS 发送（http 默认为 false，HTTPS 下默认为 true）
+- httpOnly: 一个布尔值，表示 cookie 是否仅通过 HTTP(s)发送，且不提供客户端 JavaScript(默认为 true).
+- sameSite: 一个布尔值，表示 cookie 是否为"相同站点"cookie(默认为 false)，可设置为"strict", "lax", "none",或 true(映射为"strict")
+- signed: 一个布尔值，表示是否要对 cookie 进行签名（默认为 false），如果为 true，则还会发送另一个后端为`.sig`的同名 cookie，使用一个 27-byte url-safe base64 SHA1 值来表示针对第一个 `Keygrip`键的 cookie-name=cookie-value 的哈希值。此签名密钥用于检测下次接收 cookie 时的篡改
+- overwrite: 一个布尔值，表示是否覆盖以前设置的同名 cookie（默认为 false），如果是 true，在同一个请求中设置相同名称的所有 Cookie（无论路径或域）是否在设置此 Cookie 时从 Set-Cookie 消息头中过滤
+
+**`ctx.throw([status],[msg],[properties])`**
+用来抛出一个包含`.status`属性错误的帮助方法，其默认值为 500，这样 Koa 就可以做出适当的响应。
+
+```js
+ctx.throw(400);
+ctx.throw(400, "name required");
+ctx.throw(400, "name required", { user: uers });
+```
