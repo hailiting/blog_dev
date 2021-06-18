@@ -1,5 +1,20 @@
 # MongoDB 概念解析
 
+## MongoDB 是什么
+
+- 由 C++编写，是一个基于分布式文件存储的开源数据库系统
+- 旨在为 WEB 应用提供可扩展的高性能数据存储解决方案
+- 在高负载的情况下，可以添加更多的节点来保证服务器性能
+- MongoDB 将数据存储为一个文档，数据结构由键值（key=>value）对组成。MongoDB 文档类似于 json 对象。字段值可以包含其他文档，数组及文档数组
+
+## MongoDB 特性
+
+- 层级 Database-Collection-Document
+- 灵活的类 JSON 数据存储，每条文档的字段可以完全不同
+- 方便的即席查询(`ad hoc queries`)、索引(`indexing`)和实时聚合(`aggregation`)
+- 使用`update()`命令可以实现替换完成的文档（数据）或者一些指定的数据字段
+- MongoDB 允许在服务端执行脚本
+
 ## 文档、集合、数据库
 
 | SQL 术语/概念 | MongoDB 术语/概念 | 解释/说明                               |
@@ -92,6 +107,96 @@ local
 集合就是 MongDB 文档组，类似于`RDBMS`(关系型数据库管理系统：Relational Database Management System)中的表格。
 集合存在于数据库中，集合没有固定的结构，这意味着你对集合可以插入不同格式或类型的数据，但通常情况下我们插入集合数据都会有一定的关联性。
 
-```json
+- `db.COLLECTION_NAME.insert(document)`
+  这里的 document 是一个文档对象，如`document=({name: "iPhone", category:"cellphone",value: 5000})`
 
+**db.COLLECTION_NAME.remove**
+
+```js
+> db.COLLECTION_NAME.remove(
+<query>,
+{
+  justOne: <boolean>,
+  writeConcern: <document>
+})
 ```
+
+- `query`: 可选，删除的文档的条件
+- `justOne`: 可选，如果设为 true 或 1,则只删除一个文档
+- `writeConcern`: 可选，抛出异常的级别
+
+**db.COLLECTION_NAME.update**
+
+```js
+db.COLLECTION_NAME.update(<query>, <update>, {
+  upset: <boolean>,
+  multi: <boolean>,
+  writeConcern: <document>
+})
+```
+
+- query: update 的查询条件
+- update: update 的对象和一些更新的操作符(如：$set, $inc)
+- upsert: 可选，这个参数的意思是：如果不存在 update 的记录，是否插入，true 为插入，false 为不插入
+- multi: 可选，MongoDB 默认为 false，只更新找到的第一条记录，如果这个参数为 true，就把按条件查出来多条记录全部更新
+- writeConcern: 可选，抛出异常级别
+
+```js
+db.col.update({
+  "name: "iPhone"
+}, {
+  $set: {
+    "value": 6000
+  }
+}, {
+  multi: true
+})
+```
+
+**db.COLLECTION_NAME.save**
+
+```js
+db.COLLECTION_NAME.save(
+  <document>,
+  {
+    writeConcern: <document>
+  }
+)
+```
+
+**db.COLLECTION_NAME.fine**
+
+```js
+db.COLLECTION_NAME.fine(query, project);
+```
+
+- query: 可选，使用查询操作符指定查询条件
+- projection: 可选，使用投影操作指定返回的键。查询时返回文档中所有键值，只需省略该参数即可（默认省略）
+
+```json
+db.COLLECTION_NAME.find(
+  {
+    "name": "iPhone"
+  },
+  {
+    "name": 1
+  },
+  {
+    "_id": 0
+  }
+)
+```
+
+- MongoDB 的 find() 方法可以传入多个键(key)，每个键(key)以逗号隔 开，即常规 SQL 的 AND 条件
+  `db.COLLECTION_NAME.find({key1:value1, key2:value2})`
+- MongoDB OR 条件语句使用了关键字 \$or
+  `db.COLLECTION_NAME.find( { $or: [ {key1: value1}, {key2:value2} ] } )`
+- 联合使用示例:
+  `db.col.find({"value": {$gt:2000}, $or: [{"category": "cellphone"},{"name": "iPhone"}]}).pretty()`
+- 排序(sort)
+  - 在 MongoDB 中使用 sort() 方法对数据进行排序，可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式，其中 1 为升序排列，而 -1 是用于 降序
+  - `db.COLLECTION_NAME.find().sort({KEY:1})`
+- 索引(index)
+  - MongoDB 使用 createIndex() 方法来创建索引
+  - `db. COLLECTION_NAME.createIndex( keys, options )`
+  - db.col.createIndex({"title":1,"description":-1})
