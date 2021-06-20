@@ -246,4 +246,43 @@ Koa 应用扩展了内部 `EventEmitter`。`ctx.app.emit`发出一个类型由�
 ctx.throw(400);
 ctx.throw(400, "name required");
 ctx.throw(400, "name required", { user: uers });
+
+// 等效于
+const err = new Error("name required");
+err.status = 400;
+err.expose = true;
+throw error;
+```
+
+这些是用户级错误，并用`err.expose`标记，这意味着消息适用于客户端响应，这通常不是错误信息的内容，因为不想泄露故障详细信息。  
+可以根据需要将 properties 对象传递到错误中，对于装载上传给请求者的机器友好的错误是有用的。这用于修饰其人机友好型错误并向上游的请求者报告非常有用。
+
+```js
+ctx.throw(401, "access_denied", { user: user });
+```
+
+koa 使用`http-errors`来创建错误。status 只作为第一个参数传递。
+**`ctx.assert(value, [status], [msg], [properties])`**
+当`!value`时抛出类似`.throw`错误的帮助方法。这与 node 的`assert()`方法类似。  
+koa 使用`http-assert`作为断言。
+
+```js
+ctx.assert(ctx.state.user, 401, "User not found, Please login!");
+```
+
+**`ctx.respond`**
+为了绕过 Koa 的内置 response 处理，你可以显示设置`ctx.respond = false;`。如果您想要写入原始的 res 对象，而不是让 Koa 处理你的`response`，就使用这个参数。  
+使用这个属性被认为是一个 hack，只是便于那些希望在 Koa 中使用传统的`fn(req, res)`功能和中间件的人。
+
+### 常用 API
+
+```js
+ctx.request.origin;
+// 获取URL的来源，包括protocol和host
+// => http://example.com
+ctx.request.href;
+// 完整的请求URL，包括protocol, host和url
+// => http://example.com/foo/bar?q=1
+ctx.request.path;
+// 请求路径名
 ```
