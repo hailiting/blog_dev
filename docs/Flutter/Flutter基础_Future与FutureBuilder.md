@@ -148,7 +148,7 @@ class _MyAppState extends State<MyApp>{
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('FutureBuilder dome'),
+          title: Text('FutureBuilder demo'),
         ),
         body: FutureBuilder<CommonModel>(
           future: fetchPost(),

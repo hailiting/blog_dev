@@ -37,5 +37,5 @@ bit tag --all 1.0.0
 
 ```
 bit export user_name.collextion_name
-bit export zgtest.bitdome
+bit export zgtest.bitdemo
 ```

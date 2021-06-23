@@ -1,0 +1,33 @@
+{
+  "name": "koa2_demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "init_sql": "node ./init/index.js",
+    "dev": "npm run dev_server & npm run dev_static",
+    "dev_server": "nodemon --harmony ./server/app",
+    "dev_static": "webpack --watch --config ./static/build/webpack.dev.config.js",
+    "start_static": "webpack --config ./static/build/webpack.prod.config.js",
+    "start_server": "node ./server/app.js",
+    "start": "npm run start_static & npm run start_server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "busboy": "^0.3.1",
+    "fs": "0.0.1-security",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-logger": "^3.2.1",
+    "koa-mysql-session": "0.0.2",
+    "koa-session-minimal": "^4.0.1",
+    "koa-static": "^5.0.0",
+    "koa-views": "^7.0.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.7",
+    "path": "^0.12.7",
+    "validator": "^13.6.0"
+  }
+}

@@ -62,7 +62,7 @@ render(){
 				ref={webView=>this.webView=webView}
 				startInLoadingState={true}
 				onNavigationStateChange={e=>this.onNavigationStateChange(e)}
-				source={{html:'<h1>Dome</h1>'}}
+				source={{html:'<h1>demo</h1>'}}
 			/>
 		</View>
 	)

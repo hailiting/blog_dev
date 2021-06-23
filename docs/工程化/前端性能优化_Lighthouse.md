@@ -49,7 +49,7 @@ encoding 常见的编码有：
 - 西欧字符: UTF-8;  
   Encoding 是服务器和客户端即浏览器约定好的压缩算法来压缩发送内容，起到加快下载速度的作用。使用 encoding 能更加从根源上解决问题。【先设置 nginx encoding，如果不达标就调整 webpack 设置】
 
-```t
+```txt
 # nginx的配置
 # nginx.conf
 http {

@@ -3,8 +3,8 @@
 ## 全局安装
 
 ```js
-mkdir expressDome
-cd expressDome
+mkdir expressdemo
+cd expressdemo
 npm init -y
 npm i express --save
 ```

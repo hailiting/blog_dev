@@ -4,7 +4,7 @@
 - [workbench](http://dev.mysql.com/downloads/workbench/)官方管理 MySQL 图形 app
   tips: MySQL 不能用简单的密码，而是 8 位以上密友复杂度
 
-## brew 下载
+## brew 下载及安装过程
 
 ```sh
 brew install mysql

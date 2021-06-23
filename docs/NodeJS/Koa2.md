@@ -130,7 +130,7 @@ const htmlText = (body) => {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>dome</title>
+        <title>demo</title>
       </head>
       <body>
         ${body}
@@ -140,7 +140,7 @@ const htmlText = (body) => {
 };
 app.use(async (ctx) => {
   if (ctx.url === "/" && ctx.method === "GET") {
-    let html = htmlText("<h1>body parser dome</h1>");
+    let html = htmlText("<h1>body parser demo</h1>");
     ctx.body = html;
   } else if (ctx.url === "/" && ctx.method === "POST") {
     let postData = ctx.request.body;
@@ -280,9 +280,9 @@ npm i koa-session --save
 
 文档
 
-```
+```js
 app.keys = ["some secret hurr"];
-const CONFIG ={
+const CONFIG = {
   key: "koa:sess", // cookie key (default is koa:sess)
   maxAge: 86400000, // cookie的过期时间 (default is 1 days)
   overwrite: true, // 是否可以overwrite
@@ -290,13 +290,13 @@ const CONFIG ={
   signed: true, // 签名默认true
   rolling: false, // 在每次请求时强行设置cookie，这将重置cookie过期时间
   renew: false,
-}
+};
 app.use(session(CONFIG, app));
 ```
 
 使用
 
-```
+```js
 设置值 ctx.session.username="周三"
 获取值 ctx.session.username
 ```
@@ -325,7 +325,7 @@ app.use(session(CONFIG, app));
 
 #### 可选择参数
 
-```javascript
+```js
 declare function jwt(options: jwt.Options): jwt.Middleware;
 declare namespace jwt {
   export interface Options {

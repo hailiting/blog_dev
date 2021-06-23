@@ -117,10 +117,10 @@ void main(){
 ```dart
 // navigator/tab_navigator.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_dome/pages/home_page.dart';
-import 'package:flutter_dome/pages/my_page.dart';
-import 'package:flutter_dome/pages/search_page.dart';
-import 'package:flutter_dome/pages/travel_page.dart';
+import 'package:flutter_demo/pages/home_page.dart';
+import 'package:flutter_demo/pages/my_page.dart';
+import 'package:flutter_demo/pages/search_page.dart';
+import 'package:flutter_demo/pages/travel_page.dart';
 
 class TabNavigator extends StatefulWidget{
   @override
@@ -219,7 +219,7 @@ class _TabNavigatorState extends State<TabNavigator> with SingleTickerProviderSt
 }
 // main.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_dome/navigator/tab_navigator.dart';
+import 'package:flutter_demo/navigator/tab_navigator.dart';
 
 void main() => runApp(MyApp());
 
@@ -243,7 +243,7 @@ class MyApp extends StatelessWidget {
 import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 class MyApp extends StatelessWidget{
-    final appTitle = 'Drawer Dome';
+    final appTitle = 'Drawer demo';
     @override
     Widget build(BuildContext context){
         return MaterialApp(

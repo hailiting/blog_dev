@@ -238,7 +238,7 @@ class MyApp extends StatelessWidget{
       ),
     );
     return MaterialApp(
-      title: "Layout Dome",
+      title: "Layout demo",
       home: Scaffold(
           body: ListView(
             children: [

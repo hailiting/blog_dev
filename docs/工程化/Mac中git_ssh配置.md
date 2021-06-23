@@ -71,7 +71,7 @@ cat ~/.ssh/id_rsa.pub
 
 ### 7. 添加配置文件`config`【有就编辑，没有就创建，路径`~/.ssh/config`】,配置的写法如下：
 
-```text
+```txt
 # github
 Host github.com
 HostName github.com

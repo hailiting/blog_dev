@@ -155,7 +155,7 @@ class MyApp extends StatelessWidget{
   // 当前build函数中使用的context，是当前widget所创建的Element对象
   Widget build(BuildContext context){
     return MaterialApp(
-      title: "Flutter Dome",
+      title: "Flutter demo",
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,

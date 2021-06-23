@@ -47,7 +47,7 @@ ListView(
 ```dart
 class ListViewDemo extends StatefulWidget{
   @override
-  _ListViewDemoState createState()=>_ListViewDomeState();
+  _ListViewDemoState createState()=>_ListViewdemoState();
 }
 class _ListViewDemoState extends State<ListViewDemo> {
   ScrollController _controller;

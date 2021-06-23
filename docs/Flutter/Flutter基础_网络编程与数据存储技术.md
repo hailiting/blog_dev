@@ -324,7 +324,7 @@ class _NetWorkPageState extends State<NetWorkPage>{
       body:Container(
         child: RaisedButton(
           onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>PageDome()))
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Pagedemo()))
           },
           text: Text("测试"),
         )
@@ -332,11 +332,11 @@ class _NetWorkPageState extends State<NetWorkPage>{
     )
   }
 }
-class PageDome = extends StatefulWidget{
+class Pagedemo = extends StatefulWidget{
   @override
-  _PageDomeState createState()=>_PageDomeState();
+  _PagedemoState createState()=>_PagedemoState();
 }
-class _PageDomeState extends State<PageDemo>{
+class _PagedemoState extends State<PageDemo>{
   StreamSubscriptio<ConnectivityResult> subscription;
   String nowNetWork = "";
   @override

@@ -25,7 +25,7 @@ Flutter 中用 Image 来展示图片的 widget
 
 Image 支持以下类型的图片： JPEG, PNG, Gif, Animated GIF, WebP, Animated WebP, BMP 和 WBMP
 
-### Dome
+### demo
 
 #### 加载网络图片
 

@@ -700,7 +700,7 @@ Brightness _brightness = Brightness.light;  // Brightness.dark
 @overrider
 Widget build(BuildContext context){
     return MaterialApp(
-        title: 'Flutter Dome',
+        title: 'Flutter demo',
         theme: ThemeDate(
             brightness: _brightness,
             primarySwatch: Colors.blue,
@@ -762,7 +762,7 @@ child: Text("切换主题abc", style: TextStyle(fontFamily: 'RubikMonoOne'),),
 android
 
 ```dart
-- flutterdome
+- flutterdemo
   - android
     - app
       - src
@@ -770,7 +770,7 @@ android
         -AndroidManifest.xml
           <application
             ...
-            android:label="ABCdome"
+            android:label="ABCdemo"
             ...
           >
 ```
@@ -778,14 +778,14 @@ android
 ios
 
 ```dart
-- flutterdome
+- flutterdemo
   - ios
     - Runner
       - info.plist
         ...
         <string>6.0</string>
 	      <key>CFBundleName</key>
-        <string>ABCdome</string>
+        <string>ABCdemo</string>
         ...
 ```
 
@@ -795,8 +795,8 @@ android
 
 ```dart
 // 放icon图标的文件地址
-domename/android/app/src/main/res/mipmap-hdpi
-// domename/android/app/src/main AndroidManifest.xml
+demoname/android/app/src/main/res/mipmap-hdpi
+// demoname/android/app/src/main AndroidManifest.xml
 ...
 android:icon="@mipmap/icon_logo"
 ...
@@ -806,7 +806,7 @@ ios
 
 ```dart
 // 放icon图标的文件地址
-domename/ios/Runner/Assets.xcassets/AppIcon.appiconset
+demoname/ios/Runner/Assets.xcassets/AppIcon.appiconset
 Icon-App-20*20@1x.png
 ```
 
