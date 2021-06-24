@@ -1,6 +1,6 @@
-const allConfig = require("./../../config");
-const config = allConfig.database;
 const mysql = require("mysql");
+const config = require("./../../config");
+const dbConfig = config.database;
 
 const pool = mysql.createPool({
   host: dbConfig.HOST,

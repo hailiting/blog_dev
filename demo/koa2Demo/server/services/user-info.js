@@ -72,7 +72,8 @@ const user = {
       result.message = userCode.ERROR_EMAIL;
       return result;
     }
-    if (!/[\w+]{6, 16}/.test(userInfo.password)) {
+    if (!/[\w+]{6,16}/.test(userInfo.password)) {
+      // if (!/[\w+]{6, 16}/.test(userInfo.password)) {
       result.message = userCode.ERROR_PASSWORD;
       return result;
     }
