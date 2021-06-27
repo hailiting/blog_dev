@@ -1,6 +1,8 @@
 # Express 基础
 
 Express 是对 node 进行一层封装，是一个简洁而灵活的 Nodejs web 应用框架。
+`npm install -g express-generator`
+express 脚手架
 
 ## express 能干啥
 
