@@ -21,9 +21,9 @@ function deviceMotionHandler(eventData) {
 }
 ```
 
-## 3ddemo01
+## 3dDemo01
 
-![3ddemo01](./img/3ddemo01.gif)
+![3dDemo01](./img/3dDemo01.gif)
 
 ```html
 <!DOCTYPE html>
@@ -68,7 +68,7 @@ function deviceMotionHandler(eventData) {
         transform-origin: left center;
         transition: transfrom 150ms ease-in-out;
         background-size: 300px 170px;
-        background-image: url("./3ddemo01.png");
+        background-image: url("./3dDemo01.png");
         background-repeat: no-repeat;
       }
       .view .s1 {
