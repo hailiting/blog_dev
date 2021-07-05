@@ -2,6 +2,8 @@
 
 ## SPA 和 MPA
 
+MPA(SSR) -> spa + (csr) mpa -> mpa -> spa
+
 ### SPA 单页应用 SinglePage Application
 
 - 指只有一个主页面的应用，一开始只需要加载一次 js,css 等资源。所有资源都包含在主页面，对每个功能模块组件化。单页应用的跳转，就是组件之间的切换，只刷新局部资源。
