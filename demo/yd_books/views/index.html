@@ -1,7 +1,8 @@
 {% extends "./layout.html"%} {% block title %} 图书馆首页📚{%endblock%} {% block
 styles %}<link rel="stylesheet" href="./css/index.css" /> {% endblock %} {%
-block content %}
-<h1>[[data]]</h1>
+block content %} {%for item in data%}
+<h2>[[item.mid]]</h2>
+{%endfor%}
 <div id="index">
   <p>{{message}}</p>
   <input v-model="message" />

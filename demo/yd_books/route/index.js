@@ -8,6 +8,7 @@ module.exports = (app) => {
     router((_) => {
       // 伪静态
       _.get("/index.html", indexController.actionIndexHtml());
+      _.get("/add.html", indexController.actionAddHtml());
       _.get("/index", indexController.actionIndex());
     })
   );

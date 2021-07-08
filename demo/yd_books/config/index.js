@@ -1,14 +1,18 @@
 const _ = require("lodash");
 let config;
 if (process.env.NODE_ENV === "development") {
-  config = {
+  const localConfig = {
     port: 3000,
+    baseUrl: "http://localhost/basic/web/index.php?r=",
   };
+  config = _.extend(config, localConfig);
 }
 if (process.env.NODE_ENV === "production") {
-  config = {
-    port: 8080,
+  const prodConfig = {
+    port: 3000,
+    baseUrl: "http://localhost/basic/web/index.php?r=",
   };
+  config = _.extend(config, localConfig);
 }
 
 module.exports = config;

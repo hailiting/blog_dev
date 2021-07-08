@@ -21,7 +21,8 @@ app.context.render = co.wrap(
     root: path.join(__dirname, "views"),
     autoescape: true,
     // SSR渲染的瓶颈都在cache里
-    cache: "memory", // disable, set to false
+    // cache: "memory", // disable, set to false
+    cache: false,
     ext: "html",
     locals: "zh",
     varControls: ["[[", "]]"],
@@ -40,5 +41,4 @@ app.context.render = co.wrap(
 );
 
 require("./route/index")(app);
-console.log(config.port);
 app.listen(config.port);

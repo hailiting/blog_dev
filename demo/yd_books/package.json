@@ -8,7 +8,8 @@
   },
   "scripts": {
     "servedev": "cross-env NODE_ENV=development supervisor app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel ./assets/js/add.js  --out-file ./assets/js/add_bound.js",
+    "docs": "jsdoc ./**/*.js -d ./docs/jsdocs"
   },
   "keywords": [],
   "author": "",
@@ -18,10 +19,16 @@
     "koa": "^2.13.1",
     "koa-simple-router": "^0.2.0",
     "log4js": "^6.3.0",
-    "path": "^0.12.7"
+    "node-fetch": "^2.6.1",
+    "path": "^0.12.7",
+    "url": "^0.11.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/plugin-transform-modules-systemjs": "^7.14.5",
+    "@babel/preset-env": "^7.14.7",
     "co": "^4.6.0",
+    "jsdoc": "^3.6.7",
     "koa-static": "^5.0.0",
     "koa-swig": "^2.2.1",
     "lodash": "^4.17.21",

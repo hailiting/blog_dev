@@ -1,0 +1,36 @@
+{% extends "./layout.html"%} {% block title %} 图书馆添加页📚{%endblock%} {%
+block styles %}<link rel="stylesheet" href="./css/add.css" /> {% endblock %} {%
+block content %}
+<h1>[[data]]</h1>
+<div id="index">
+  <p>{{message}}</p>
+  <input v-model="message" />
+</div>
+<div id="test">asdaddtest</div>
+{% endblock %} {% block scripts %}
+<script type="nomodule">
+  console.log("sssee  me");
+  import("/js/add.js").then((_)=>{
+    const create = new _.default();
+    create.fn();
+  })
+</script>
+<script
+  type="module"
+  src="https://lib.baomitu.com/systemjs/6.10.2/system.js"
+></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="/js/utils.js"></script>
+<script type="module">
+  System.import("/js/add_bound.js").then((_) => {
+    console.log(_);
+    const create = new _.default();
+    create.fn();
+  });
+  $("#test").click(
+    utils.throttle(function() {
+      console.log(1111);
+    }, 10000)
+  );
+</script>
+{% endblock %}
