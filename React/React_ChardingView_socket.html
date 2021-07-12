@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ReactChardingViewsocket | hailiting Blog</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/blog_dev/logo.png">
+    <meta name="description" content="hailiting Blog">
+    
+    <link rel="preload" href="/blog_dev/assets/css/0.styles.e9faf17d.css" as="style"><link rel="preload" href="/blog_dev/assets/js/app.f5aac5a7.js" as="script"><link rel="preload" href="/blog_dev/assets/js/2.fcf59071.js" as="script"><link rel="preload" href="/blog_dev/assets/js/159.9fe16a02.js" as="script"><link rel="prefetch" href="/blog_dev/assets/js/10.0b74acaa.js"><link rel="prefetch" href="/blog_dev/assets/js/100.51473976.js"><link rel="prefetch" href="/blog_dev/assets/js/101.064a2c83.js"><link rel="prefetch" href="/blog_dev/assets/js/102.aecdd5a9.js"><link rel="prefetch" href="/blog_dev/assets/js/103.1fcdf1a6.js"><link rel="prefetch" href="/blog_dev/assets/js/104.1ee7ed66.js"><link rel="prefetch" href="/blog_dev/assets/js/105.930d6585.js"><link rel="prefetch" href="/blog_dev/assets/js/106.6c9a70f1.js"><link rel="prefetch" href="/blog_dev/assets/js/107.763f70be.js"><link rel="prefetch" href="/blog_dev/assets/js/108.ece6982e.js"><link rel="prefetch" href="/blog_dev/assets/js/109.8f51c4f8.js"><link rel="prefetch" href="/blog_dev/assets/js/11.c8d44958.js"><link rel="prefetch" href="/blog_dev/assets/js/110.6a9677da.js"><link rel="prefetch" href="/blog_dev/assets/js/111.a3c35ba2.js"><link rel="prefetch" href="/blog_dev/assets/js/112.92b77bde.js"><link rel="prefetch" href="/blog_dev/assets/js/113.44d02011.js"><link rel="prefetch" href="/blog_dev/assets/js/114.b873e4e0.js"><link rel="prefetch" href="/blog_dev/assets/js/115.5ab49f91.js"><link rel="prefetch" href="/blog_dev/assets/js/116.628ee277.js"><link rel="prefetch" href="/blog_dev/assets/js/117.72c78c9b.js"><link rel="prefetch" href="/blog_dev/assets/js/118.4a78f2a1.js"><link rel="prefetch" href="/blog_dev/assets/js/119.b5f8ec1a.js"><link rel="prefetch" href="/blog_dev/assets/js/12.2e2c4962.js"><link rel="prefetch" href="/blog_dev/assets/js/120.2e6fc4ea.js"><link rel="prefetch" href="/blog_dev/assets/js/121.cc99b124.js"><link rel="prefetch" href="/blog_dev/assets/js/122.1edc66d7.js"><link rel="prefetch" href="/blog_dev/assets/js/123.ed78fd8d.js"><link rel="prefetch" href="/blog_dev/assets/js/124.0ea7d468.js"><link rel="prefetch" href="/blog_dev/assets/js/125.cea2b46a.js"><link rel="prefetch" href="/blog_dev/assets/js/126.c87902ad.js"><link rel="prefetch" href="/blog_dev/assets/js/127.39ab36bb.js"><link rel="prefetch" href="/blog_dev/assets/js/128.1a14de05.js"><link rel="prefetch" href="/blog_dev/assets/js/129.499a4d50.js"><link rel="prefetch" href="/blog_dev/assets/js/13.bbd4355e.js"><link rel="prefetch" href="/blog_dev/assets/js/130.9aeee40d.js"><link rel="prefetch" href="/blog_dev/assets/js/131.b0e9d457.js"><link rel="prefetch" href="/blog_dev/assets/js/132.f4cc1d43.js"><link rel="prefetch" href="/blog_dev/assets/js/133.6c6788d9.js"><link rel="prefetch" href="/blog_dev/assets/js/134.aee6b217.js"><link rel="prefetch" href="/blog_dev/assets/js/135.0341fcac.js"><link rel="prefetch" href="/blog_dev/assets/js/136.b18c376d.js"><link rel="prefetch" href="/blog_dev/assets/js/137.ece51a33.js"><link rel="prefetch" href="/blog_dev/assets/js/138.3f8084db.js"><link rel="prefetch" href="/blog_dev/assets/js/139.3a32ec96.js"><link rel="prefetch" href="/blog_dev/assets/js/14.3c8c4978.js"><link rel="prefetch" href="/blog_dev/assets/js/140.874f1bc0.js"><link rel="prefetch" href="/blog_dev/assets/js/141.bcc47467.js"><link rel="prefetch" href="/blog_dev/assets/js/142.e8f96163.js"><link rel="prefetch" href="/blog_dev/assets/js/143.03567441.js"><link rel="prefetch" href="/blog_dev/assets/js/144.8a1aa46e.js"><link rel="prefetch" href="/blog_dev/assets/js/145.2761bd9e.js"><link rel="prefetch" href="/blog_dev/assets/js/146.2c2b36f8.js"><link rel="prefetch" href="/blog_dev/assets/js/147.36b85b55.js"><link rel="prefetch" href="/blog_dev/assets/js/148.39621b6e.js"><link rel="prefetch" href="/blog_dev/assets/js/149.6adb586d.js"><link rel="prefetch" href="/blog_dev/assets/js/15.8ad6684f.js"><link rel="prefetch" href="/blog_dev/assets/js/150.60ecc899.js"><link rel="prefetch" href="/blog_dev/assets/js/151.849e2ff8.js"><link rel="prefetch" href="/blog_dev/assets/js/152.d2b977d1.js"><link rel="prefetch" href="/blog_dev/assets/js/153.af5bd1b4.js"><link rel="prefetch" href="/blog_dev/assets/js/154.a29c77f6.js"><link rel="prefetch" href="/blog_dev/assets/js/155.77049fb5.js"><link rel="prefetch" href="/blog_dev/assets/js/156.15fafdab.js"><link rel="prefetch" href="/blog_dev/assets/js/157.5ec4881d.js"><link rel="prefetch" href="/blog_dev/assets/js/158.432b77f9.js"><link rel="prefetch" href="/blog_dev/assets/js/16.c02cf2b5.js"><link rel="prefetch" href="/blog_dev/assets/js/160.3fa8b56a.js"><link rel="prefetch" href="/blog_dev/assets/js/161.59351c30.js"><link rel="prefetch" href="/blog_dev/assets/js/162.15bcc08b.js"><link rel="prefetch" href="/blog_dev/assets/js/163.0dfed31d.js"><link rel="prefetch" href="/blog_dev/assets/js/164.9894ca37.js"><link rel="prefetch" href="/blog_dev/assets/js/165.74edf68b.js"><link rel="prefetch" href="/blog_dev/assets/js/166.b9876c4c.js"><link rel="prefetch" href="/blog_dev/assets/js/167.7ea74ad7.js"><link rel="prefetch" href="/blog_dev/assets/js/168.f40e2a6c.js"><link rel="prefetch" href="/blog_dev/assets/js/169.7e06ef32.js"><link rel="prefetch" href="/blog_dev/assets/js/17.569f6f37.js"><link rel="prefetch" href="/blog_dev/assets/js/170.4c3cdf52.js"><link rel="prefetch" href="/blog_dev/assets/js/171.d612c864.js"><link rel="prefetch" href="/blog_dev/assets/js/172.dd82b6ce.js"><link rel="prefetch" href="/blog_dev/assets/js/173.a97d4658.js"><link rel="prefetch" href="/blog_dev/assets/js/174.e087d006.js"><link rel="prefetch" href="/blog_dev/assets/js/175.aa386489.js"><link rel="prefetch" href="/blog_dev/assets/js/176.04b2ef5f.js"><link rel="prefetch" href="/blog_dev/assets/js/177.9890e20d.js"><link rel="prefetch" href="/blog_dev/assets/js/178.397964c8.js"><link rel="prefetch" href="/blog_dev/assets/js/179.6351b9fc.js"><link rel="prefetch" href="/blog_dev/assets/js/18.38f29704.js"><link rel="prefetch" href="/blog_dev/assets/js/180.404ed7bb.js"><link rel="prefetch" href="/blog_dev/assets/js/181.c9995cc4.js"><link rel="prefetch" href="/blog_dev/assets/js/182.62c5c7a9.js"><link rel="prefetch" href="/blog_dev/assets/js/183.04508149.js"><link rel="prefetch" href="/blog_dev/assets/js/184.8f232429.js"><link rel="prefetch" href="/blog_dev/assets/js/185.cdd4ae77.js"><link rel="prefetch" href="/blog_dev/assets/js/186.92211450.js"><link rel="prefetch" href="/blog_dev/assets/js/187.05e269ca.js"><link rel="prefetch" href="/blog_dev/assets/js/188.993c1025.js"><link rel="prefetch" href="/blog_dev/assets/js/189.2f2e7771.js"><link rel="prefetch" href="/blog_dev/assets/js/19.c1996888.js"><link rel="prefetch" href="/blog_dev/assets/js/190.ca98c216.js"><link rel="prefetch" href="/blog_dev/assets/js/191.cd0e626c.js"><link rel="prefetch" href="/blog_dev/assets/js/192.5838aca4.js"><link rel="prefetch" href="/blog_dev/assets/js/193.002b8975.js"><link rel="prefetch" href="/blog_dev/assets/js/194.2e14ffd7.js"><link rel="prefetch" href="/blog_dev/assets/js/195.58cf8fd5.js"><link rel="prefetch" href="/blog_dev/assets/js/196.aa6cface.js"><link rel="prefetch" href="/blog_dev/assets/js/197.b142379e.js"><link rel="prefetch" href="/blog_dev/assets/js/198.6991422c.js"><link rel="prefetch" href="/blog_dev/assets/js/199.aefdc354.js"><link rel="prefetch" href="/blog_dev/assets/js/20.4cb1ceef.js"><link rel="prefetch" href="/blog_dev/assets/js/200.87dc0167.js"><link rel="prefetch" href="/blog_dev/assets/js/201.f1521379.js"><link rel="prefetch" href="/blog_dev/assets/js/202.6109df1e.js"><link rel="prefetch" href="/blog_dev/assets/js/203.1ff3ff76.js"><link rel="prefetch" href="/blog_dev/assets/js/204.ae398426.js"><link rel="prefetch" href="/blog_dev/assets/js/205.03e1487d.js"><link rel="prefetch" href="/blog_dev/assets/js/206.e8c1331e.js"><link rel="prefetch" href="/blog_dev/assets/js/207.37b85601.js"><link rel="prefetch" href="/blog_dev/assets/js/208.028993ec.js"><link rel="prefetch" href="/blog_dev/assets/js/209.00aded1e.js"><link rel="prefetch" href="/blog_dev/assets/js/21.80c98ffa.js"><link rel="prefetch" href="/blog_dev/assets/js/210.4d7d46c6.js"><link rel="prefetch" href="/blog_dev/assets/js/211.9e68160c.js"><link rel="prefetch" href="/blog_dev/assets/js/212.b2896159.js"><link rel="prefetch" href="/blog_dev/assets/js/213.0950df68.js"><link rel="prefetch" href="/blog_dev/assets/js/214.bddc9d2d.js"><link rel="prefetch" href="/blog_dev/assets/js/215.bf73e987.js"><link rel="prefetch" href="/blog_dev/assets/js/216.648c4bad.js"><link rel="prefetch" href="/blog_dev/assets/js/217.d248ee3a.js"><link rel="prefetch" href="/blog_dev/assets/js/218.76d203ab.js"><link rel="prefetch" href="/blog_dev/assets/js/219.d66dd003.js"><link rel="prefetch" href="/blog_dev/assets/js/22.4dcf4f16.js"><link rel="prefetch" href="/blog_dev/assets/js/220.9a6f13c6.js"><link rel="prefetch" href="/blog_dev/assets/js/221.bc6c133a.js"><link rel="prefetch" href="/blog_dev/assets/js/222.37029025.js"><link rel="prefetch" href="/blog_dev/assets/js/223.40da7ef7.js"><link rel="prefetch" href="/blog_dev/assets/js/224.5601fe71.js"><link rel="prefetch" href="/blog_dev/assets/js/225.d69527cf.js"><link rel="prefetch" href="/blog_dev/assets/js/226.9950c88e.js"><link rel="prefetch" href="/blog_dev/assets/js/227.f0f58336.js"><link rel="prefetch" href="/blog_dev/assets/js/228.0443d812.js"><link rel="prefetch" href="/blog_dev/assets/js/229.a30c407e.js"><link rel="prefetch" href="/blog_dev/assets/js/23.1c854f2c.js"><link rel="prefetch" href="/blog_dev/assets/js/230.1f1f3c69.js"><link rel="prefetch" href="/blog_dev/assets/js/231.de2964de.js"><link rel="prefetch" href="/blog_dev/assets/js/232.8c0d447c.js"><link rel="prefetch" href="/blog_dev/assets/js/233.d7f29b14.js"><link rel="prefetch" href="/blog_dev/assets/js/234.b556b2cc.js"><link rel="prefetch" href="/blog_dev/assets/js/235.2757c550.js"><link rel="prefetch" href="/blog_dev/assets/js/236.ca7b7c7d.js"><link rel="prefetch" href="/blog_dev/assets/js/237.5757b73a.js"><link rel="prefetch" href="/blog_dev/assets/js/238.3c973654.js"><link rel="prefetch" href="/blog_dev/assets/js/239.965ed686.js"><link rel="prefetch" href="/blog_dev/assets/js/24.2767ea77.js"><link rel="prefetch" href="/blog_dev/assets/js/240.08c2fb9b.js"><link rel="prefetch" href="/blog_dev/assets/js/241.8d347368.js"><link rel="prefetch" href="/blog_dev/assets/js/242.5509706e.js"><link rel="prefetch" href="/blog_dev/assets/js/243.20eb9fa0.js"><link rel="prefetch" href="/blog_dev/assets/js/244.47bb2ab8.js"><link rel="prefetch" href="/blog_dev/assets/js/245.39c621ec.js"><link rel="prefetch" href="/blog_dev/assets/js/246.1820d92f.js"><link rel="prefetch" href="/blog_dev/assets/js/247.62edfd29.js"><link rel="prefetch" href="/blog_dev/assets/js/248.a483766a.js"><link rel="prefetch" href="/blog_dev/assets/js/249.3f130b31.js"><link rel="prefetch" href="/blog_dev/assets/js/25.fcaadf72.js"><link rel="prefetch" href="/blog_dev/assets/js/250.f2c3eaf4.js"><link rel="prefetch" href="/blog_dev/assets/js/251.a2d3b471.js"><link rel="prefetch" href="/blog_dev/assets/js/252.fd2dbbd1.js"><link rel="prefetch" href="/blog_dev/assets/js/253.e21a2b1f.js"><link rel="prefetch" href="/blog_dev/assets/js/254.a33cc858.js"><link rel="prefetch" href="/blog_dev/assets/js/255.477885a7.js"><link rel="prefetch" href="/blog_dev/assets/js/256.aa6e208d.js"><link rel="prefetch" href="/blog_dev/assets/js/257.f7ff402e.js"><link rel="prefetch" href="/blog_dev/assets/js/258.3ea6da22.js"><link rel="prefetch" href="/blog_dev/assets/js/259.63d7147b.js"><link rel="prefetch" href="/blog_dev/assets/js/26.ccb1e3b1.js"><link rel="prefetch" href="/blog_dev/assets/js/260.ec7d9d68.js"><link rel="prefetch" href="/blog_dev/assets/js/261.54147591.js"><link rel="prefetch" href="/blog_dev/assets/js/262.b5dacc77.js"><link rel="prefetch" href="/blog_dev/assets/js/263.0eace37e.js"><link rel="prefetch" href="/blog_dev/assets/js/264.d1205d4e.js"><link rel="prefetch" href="/blog_dev/assets/js/265.8678ed17.js"><link rel="prefetch" href="/blog_dev/assets/js/266.31770a82.js"><link rel="prefetch" href="/blog_dev/assets/js/267.1a49a7eb.js"><link rel="prefetch" href="/blog_dev/assets/js/268.66960a34.js"><link rel="prefetch" href="/blog_dev/assets/js/269.cc756326.js"><link rel="prefetch" href="/blog_dev/assets/js/27.d9a8a6ca.js"><link rel="prefetch" href="/blog_dev/assets/js/270.5330e798.js"><link rel="prefetch" href="/blog_dev/assets/js/271.a43c5d9b.js"><link rel="prefetch" href="/blog_dev/assets/js/272.90a11977.js"><link rel="prefetch" href="/blog_dev/assets/js/273.5f7f9e38.js"><link rel="prefetch" href="/blog_dev/assets/js/274.51ae597c.js"><link rel="prefetch" href="/blog_dev/assets/js/275.df299ca7.js"><link rel="prefetch" href="/blog_dev/assets/js/276.ed915d34.js"><link rel="prefetch" href="/blog_dev/assets/js/277.fc17683b.js"><link rel="prefetch" href="/blog_dev/assets/js/278.fc6ccad8.js"><link rel="prefetch" href="/blog_dev/assets/js/279.533213fc.js"><link rel="prefetch" href="/blog_dev/assets/js/28.436a903e.js"><link rel="prefetch" href="/blog_dev/assets/js/280.6a54a280.js"><link rel="prefetch" href="/blog_dev/assets/js/281.e94574d6.js"><link rel="prefetch" href="/blog_dev/assets/js/282.276f9e90.js"><link rel="prefetch" href="/blog_dev/assets/js/283.44dd4c0c.js"><link rel="prefetch" href="/blog_dev/assets/js/284.df9cac23.js"><link rel="prefetch" href="/blog_dev/assets/js/285.c36476d7.js"><link rel="prefetch" href="/blog_dev/assets/js/286.971e05b5.js"><link rel="prefetch" href="/blog_dev/assets/js/287.d8be7609.js"><link rel="prefetch" href="/blog_dev/assets/js/288.440ed066.js"><link rel="prefetch" href="/blog_dev/assets/js/289.851639e1.js"><link rel="prefetch" href="/blog_dev/assets/js/29.911cf524.js"><link rel="prefetch" href="/blog_dev/assets/js/3.8c43b06f.js"><link rel="prefetch" href="/blog_dev/assets/js/30.ecf59ce1.js"><link rel="prefetch" href="/blog_dev/assets/js/31.c744c533.js"><link rel="prefetch" href="/blog_dev/assets/js/32.9df30e0c.js"><link rel="prefetch" href="/blog_dev/assets/js/33.f056e921.js"><link rel="prefetch" href="/blog_dev/assets/js/34.d419fd4d.js"><link rel="prefetch" href="/blog_dev/assets/js/35.9046af1b.js"><link rel="prefetch" href="/blog_dev/assets/js/36.078c2afd.js"><link rel="prefetch" href="/blog_dev/assets/js/37.02b33b24.js"><link rel="prefetch" href="/blog_dev/assets/js/38.75f208b3.js"><link rel="prefetch" href="/blog_dev/assets/js/39.992f37f6.js"><link rel="prefetch" href="/blog_dev/assets/js/4.b10c79af.js"><link rel="prefetch" href="/blog_dev/assets/js/40.707b2414.js"><link rel="prefetch" href="/blog_dev/assets/js/41.99c553e7.js"><link rel="prefetch" href="/blog_dev/assets/js/42.f5055bf8.js"><link rel="prefetch" href="/blog_dev/assets/js/43.4251a70f.js"><link rel="prefetch" href="/blog_dev/assets/js/44.e1cd23b5.js"><link rel="prefetch" href="/blog_dev/assets/js/45.7ec7d160.js"><link rel="prefetch" href="/blog_dev/assets/js/46.add19165.js"><link rel="prefetch" href="/blog_dev/assets/js/47.2b988c64.js"><link rel="prefetch" href="/blog_dev/assets/js/48.bcfbdd9e.js"><link rel="prefetch" href="/blog_dev/assets/js/49.65ae5aba.js"><link rel="prefetch" href="/blog_dev/assets/js/5.2b0be055.js"><link rel="prefetch" href="/blog_dev/assets/js/50.251b4a96.js"><link rel="prefetch" href="/blog_dev/assets/js/51.032ab4af.js"><link rel="prefetch" href="/blog_dev/assets/js/52.2db4dfed.js"><link rel="prefetch" href="/blog_dev/assets/js/53.c4c1ddca.js"><link rel="prefetch" href="/blog_dev/assets/js/54.1a3e619a.js"><link rel="prefetch" href="/blog_dev/assets/js/55.ea3ccb97.js"><link rel="prefetch" href="/blog_dev/assets/js/56.de8d0a52.js"><link rel="prefetch" href="/blog_dev/assets/js/57.097288ef.js"><link rel="prefetch" href="/blog_dev/assets/js/58.d6981cef.js"><link rel="prefetch" href="/blog_dev/assets/js/59.650ba727.js"><link rel="prefetch" href="/blog_dev/assets/js/6.f13d49e3.js"><link rel="prefetch" href="/blog_dev/assets/js/60.f01476a2.js"><link rel="prefetch" href="/blog_dev/assets/js/61.1c285f09.js"><link rel="prefetch" href="/blog_dev/assets/js/62.76b21a5f.js"><link rel="prefetch" href="/blog_dev/assets/js/63.6db1243f.js"><link rel="prefetch" href="/blog_dev/assets/js/64.40bec010.js"><link rel="prefetch" href="/blog_dev/assets/js/65.a0010ed1.js"><link rel="prefetch" href="/blog_dev/assets/js/66.adb2797f.js"><link rel="prefetch" href="/blog_dev/assets/js/67.80607e9b.js"><link rel="prefetch" href="/blog_dev/assets/js/68.990cfec1.js"><link rel="prefetch" href="/blog_dev/assets/js/69.94c53803.js"><link rel="prefetch" href="/blog_dev/assets/js/7.af91cabf.js"><link rel="prefetch" href="/blog_dev/assets/js/70.ca09c151.js"><link rel="prefetch" href="/blog_dev/assets/js/71.1d79f4c2.js"><link rel="prefetch" href="/blog_dev/assets/js/72.ac1aa0f5.js"><link rel="prefetch" href="/blog_dev/assets/js/73.f6510a99.js"><link rel="prefetch" href="/blog_dev/assets/js/74.96b210d2.js"><link rel="prefetch" href="/blog_dev/assets/js/75.9085b6b8.js"><link rel="prefetch" href="/blog_dev/assets/js/76.19a6dd2a.js"><link rel="prefetch" href="/blog_dev/assets/js/77.35ca8a92.js"><link rel="prefetch" href="/blog_dev/assets/js/78.e02bfa3d.js"><link rel="prefetch" href="/blog_dev/assets/js/79.d098ba24.js"><link rel="prefetch" href="/blog_dev/assets/js/8.68d379c2.js"><link rel="prefetch" href="/blog_dev/assets/js/80.ddaa2d29.js"><link rel="prefetch" href="/blog_dev/assets/js/81.373daf14.js"><link rel="prefetch" href="/blog_dev/assets/js/82.5ec4b200.js"><link rel="prefetch" href="/blog_dev/assets/js/83.a70736f1.js"><link rel="prefetch" href="/blog_dev/assets/js/84.ef0afc09.js"><link rel="prefetch" href="/blog_dev/assets/js/85.2b0f1da5.js"><link rel="prefetch" href="/blog_dev/assets/js/86.2fa3416a.js"><link rel="prefetch" href="/blog_dev/assets/js/87.873e69a5.js"><link rel="prefetch" href="/blog_dev/assets/js/88.56124909.js"><link rel="prefetch" href="/blog_dev/assets/js/89.f6ec01f1.js"><link rel="prefetch" href="/blog_dev/assets/js/9.168d9c00.js"><link rel="prefetch" href="/blog_dev/assets/js/90.5fe5b9a9.js"><link rel="prefetch" href="/blog_dev/assets/js/91.d4424016.js"><link rel="prefetch" href="/blog_dev/assets/js/92.e005b8b7.js"><link rel="prefetch" href="/blog_dev/assets/js/93.abf1a2d2.js"><link rel="prefetch" href="/blog_dev/assets/js/94.593a4ca5.js"><link rel="prefetch" href="/blog_dev/assets/js/95.72bf3e24.js"><link rel="prefetch" href="/blog_dev/assets/js/96.a5f43e4a.js"><link rel="prefetch" href="/blog_dev/assets/js/97.ceeb6d85.js"><link rel="prefetch" href="/blog_dev/assets/js/98.23fbe436.js"><link rel="prefetch" href="/blog_dev/assets/js/99.d8cd8078.js">
+    <link rel="stylesheet" href="/blog_dev/assets/css/0.styles.e9faf17d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog_dev/" class="home-link router-link-active"><!----> <span class="site-name">hailiting Blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>CSS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Demo笔记</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Flutter</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>HTML</span> <span class="arrow right"></span></p> <!----></section></li><li><a href="/blog_dev/HTTP协议和反向代理.html" class="sidebar-link">浏览器行为与HTTP协议</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Java</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JavaScript</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>NodeJS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>PHP</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>React</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog_dev/React/React_ChardingView_socket.html" aria-current="page" class="active sidebar-link">ReactChardingViewsocket</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog_dev/React/React_ChardingView_socket.html#文件结构" class="sidebar-link">文件结构</a></li><li class="sidebar-sub-header"><a href="/blog_dev/React/React_ChardingView_socket.html#常见问题" class="sidebar-link">常见问题</a></li><li class="sidebar-sub-header"><a href="/blog_dev/React/React_ChardingView_socket.html#方法一-npm-trader-view" class="sidebar-link">方法一： npm trader-view</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog_dev/React/React_ChardingView_socket.html#tradingview-初始化图标" class="sidebar-link">TradingView 初始化图标</a></li><li class="sidebar-sub-header"><a href="/blog_dev/React/React_ChardingView_socket.html#websocket-链接获取数据" class="sidebar-link">websocket 链接获取数据</a></li><li class="sidebar-sub-header"><a href="/blog_dev/React/React_ChardingView_socket.html#更新-tradingview" class="sidebar-link">更新 tradingview</a></li></ul></li></ul></li><li><a href="/blog_dev/React/React_Hooks.html" class="sidebar-link">React Hooks</a></li><li><a href="/blog_dev/React/React_ts.html" class="sidebar-link">React_ts</a></li><li><a href="/blog_dev/React/React上拉加载和下拉刷新.html" class="sidebar-link">React 上拉加载和下拉刷新</a></li><li><a href="/blog_dev/React/React优化_ReactLoadable.html" class="sidebar-link">React 优化_ReactLoadable</a></li><li><a href="/blog_dev/React/React源码学习.html" class="sidebar-link">React 源码学习</a></li><li><a href="/blog_dev/React/React组件开发.html" class="sidebar-link">React 组件开发</a></li><li><a href="/blog_dev/React/React组件生命周期及单向数据流.html" class="sidebar-link">React 组件生命周期及单向数据流</a></li><li><a href="/blog_dev/React/React里怎么做单元测试.html" class="sidebar-link">React里怎么做单元测试</a></li><li><a href="/blog_dev/React/React项目搭建.html" class="sidebar-link">React项目搭建</a></li><li><a href="/blog_dev/React/UmiJS_路由.html" class="sidebar-link">UmiJS_路由</a></li><li><a href="/blog_dev/React/antd使用经验.html" class="sidebar-link">antd 使用经验</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>ReactNative</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>TypeScript</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Wechat</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>mongodb</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>mysql</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>npm</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>redis</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>区块链</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>工程化</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>微信公众号</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>每日一道前端面试题</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>浏览器</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>算法与数据结构</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>计算机服务基础</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>课程笔记</span> <span class="arrow right"></span></p> <!----></section></li><li><a href="/blog_dev/课程表.html" class="sidebar-link">/课程表.html</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>面试之道</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="react-chardingview-socket"><a href="#react-chardingview-socket" class="header-anchor">#</a> React_ChardingView_socket</h1> <p>中文文档地址 https://b.aitrade.ga/books/tradingview/</p> <h2 id="文件结构"><a href="#文件结构" class="header-anchor">#</a> 文件结构</h2> <div class="language- extra-class"><pre class="language-text"><code>src
+  |- service
+  |     |- socket.js    // 链接ws，ws监听 推送 取消订阅 更新最新ticker 等的方法
+  |- root.component.js  // 引用socket
+  |- pages
+  |    |-kLine
+  |        |-index.js   // socket 订阅历史
+</code></pre></div><h2 id="常见问题"><a href="#常见问题" class="header-anchor">#</a> 常见问题</h2> <div class="language- extra-class"><pre class="language-text"><code>// 设置图标价格精度
+const e = chart.priceFormatter();
+e.format = (v) =&gt; new bigNumber(v).toFixed(1, 1);
+</code></pre></div><h2 id="方法一-npm-trader-view"><a href="#方法一-npm-trader-view" class="header-anchor">#</a> 方法一： npm trader-view</h2> <div class="language- extra-class"><pre class="language-text"><code>import {TradingView, Datafeed } from &quot;trader-view&quot;;
+</code></pre></div><h3 id="tradingview-初始化图标"><a href="#tradingview-初始化图标" class="header-anchor">#</a> TradingView 初始化图标</h3> <div class="language- extra-class"><pre class="language-text"><code>// params ={symbol, resolution, from, to, firstDataRequest}
+// list为数组 ep: [ {time,close,high,low,open,volume} ... ]
+   initDatafeed() {
+    const { symbol } = this.props;
+
+    this.datafeed = new Datafeed({
+      history: (params) =&gt; {
+        return this.getHistData(
+          params.symbol,
+          params.resolution,
+          params.from,
+          params.to,
+          params.firstDataRequest
+        );
+      },
+      time: () =&gt; new Promise((resolve) =&gt; resolve(1)),
+      config: () =&gt;
+        new Promise((resolve) =&gt;
+          resolve({
+            supports_search: true,
+            supports_group_request: false,
+            supported_resolutions: [
+              ...new Set(periods.map((item) =&gt; item.interval)),
+            ],
+            supports_marks: false,
+            supports_timescale_marks: false,
+            supports_time: true,
+          })
+        ),
+      symbols: () =&gt;
+        new Promise((resolve) =&gt; resolve(createSymbolInfo(symbol))),
+    });
+
+    this.datafeed.subscribeBars = (
+      symbolInfo,
+      resolution,
+      onRealtimeCallback,
+      subscribeUID,
+      onResetCacheNeededCallback
+    ) =&gt; {
+      this.onRealtimeCallback = onRealtimeCallback;
+      this.onResetCacheNeededCallback = onResetCacheNeededCallback;
+    };
+    /**
+     * 解析商品信息
+     */
+    this.datafeed.resolveSymbol = (symbol, onResolve, onError) =&gt; {
+      onResolve(createSymbolInfo(symbol));
+    };
+    this.datafeed.getBars = (
+      symbolInfo,
+      resolution,
+      from,
+      to,
+      onHistoryCallback,
+      onErrorCallback,
+      firstDataRequest
+    ) =&gt; {
+      this.onHistoryCallback = onHistoryCallback;
+      this.from = from;
+      this.to = to;
+      const { symbol, currentPeriod } = this.props;
+      const { period, interval, count } = periods[currentPeriod];
+      socket.subscribe(&quot;subHis&quot;, symbol, period, from);
+      // this.initWebSocket().then((res) =&gt; {
+      //   res.onopen = () =&gt; {
+      //     const { symbol, currentPeriod } = this.props;
+      //     const { period, interval, count } = periods[currentPeriod];
+      //     if (res) {
+      //       res.send(
+      //         subscribe.subHis(
+      //           symbol,
+      //           period,
+      //           from,
+      //           Math.ceil((to - from) / 60 / count)
+      //         )
+      //       );
+      //     }
+      //   };
+      // });
+    };
+  }
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>this.widget = new TradingView({
+  // debug: true,
+  // fullscreen: true,
+  custom_css_url: host + &quot;charting_library/static/chardingView.css&quot;, // 自定义tradingview样式
+  symbol: &quot;BTC&quot;, // 商品名
+  interval: &quot;D&quot;, // 周期  1s 1m 1h 1W 1M 1Y ....
+  preset: &quot;mobile&quot;,
+  container_id: &quot;tv_chart_container&quot;,
+  // datafeed JavaScript对象的实现接口，以反馈数据显示在图表上 必须项
+  datafeed: this.datafeed,
+  height: &quot;100%&quot;,
+  width: &quot;100%&quot;,
+  library_path: host+&quot;charting_library/&quot;,
+  locale: &quot;zh&quot;,
+  loading_screen:{
+    backgroundColor: &quot;#fff&quot;,
+    foregroundColor: &quot;#fff&quot;,
+  },
+  // 禁用自带的一些功能
+  disabled_features: [
+    &quot;left_toolbar&quot;,
+    &quot;volume_force_overlay&quot;,
+    &quot;create_volume_indicator_by_default&quot;,
+    &quot;create_volume_indicator_by_default_once&quot;,
+    &quot;format_button_in_legend&quot;,
+    &quot;hide_left_toolbar_by_default&quot;,
+    &quot;go_to_date&quot;,
+    &quot;use_localstorage_for_settings&quot;,
+    &quot;save_chart_properties_to_local_storage&quot;,
+    &quot;main_series_scale_menu&quot;,
+    &quot;show_logo_on_all_charts&quot; // 在多图表布局的每个图表上显示微标
+    &quot;header_settings&quot;,
+    &quot;timeframes_toolbar&quot;,
+    &quot;chart_property_page_background&quot;,
+    &quot;compare_symbol&quot;,
+    &quot;go_to_date&quot;,
+    &quot;header_chart_type&quot;,
+    &quot;header_compare&quot;,
+    &quot;header_interval_dialog_button&quot;,
+    &quot;header_screenshot&quot;,
+    &quot;header_symbol_search&quot;, // 头部搜索
+    &quot;header_widget_dom_node&quot;, // 隐藏头部组件
+    &quot;source_selection_markers&quot;, // 禁用系列和指示器的选择标记
+    &quot;header_indicators&quot;, // 图标指标
+    &quot;adaptive_logo&quot;, // 移动端隐藏logo
+    &quot;header_undo_redo&quot;, // 撤销返回
+    &quot;show_hide_button_in_legend&quot;,
+    &quot;show_interval_dialog_on_key_press&quot;,
+    &quot;snapshot_trading_drawings&quot;,
+    &quot;symbol_info&quot;,
+    &quot;border_around_the_chart&quot;,
+    &quot;remove_library_container_border&quot;,
+    &quot;header_saveload&quot;,
+    &quot;header_resolutions&quot;,
+  ],
+  overrides: getOverrides(&quot;white&quot;),
+  studies_overrides: {
+    &quot;volume.volume.color.0&quot;: &quot;#eb4d5c&quot;,
+    &quot;volume.valume.color.1&quot;: &quot;#53b987&quot;,
+    &quot;volume.volume.transparency&quot;: 70,
+    &quot;volume.options.showStudyArguments&quot;: !1,
+    &quot;MA Cross.short:plot.color&quot;: &quot;#6b3798&quot;,
+    &quot;MA Cross.long:plot.color&quot;: &quot;#708957&quot;,
+  },
+  enabled_features: [&quot;hide_last_na_study_output&quot;],
+  charts_storage_url: &quot;http://saveload.tradingview.com&quot;,
+  charts_storage_api_version:&quot;1.1&quot;,
+  client_id: &quot;tradingview.com&quot;,
+  user_id:&quot;public_user_id&quot;,
+  theme: &quot;Light&quot;,
+  timezone: &quot;Asia/Shannghai&quot;
+});
+this.widget.onChartReady(()=&gt;{
+  const chart = this.widget.chart();
+  chart.setResolution(inte, ()=&gt;{});
+  chart.setChartType(chartType);
+  // 每当十字线位置改变时，图标库将会调用回调函数
+  chart.crossHairMoved(({time})=&gt;{
+    if(!time){
+      return;
+    }
+  })
+})
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>export const getOverrides = (theme) =&gt; {
+  const themes = {
+    white: {
+      up: &quot;#1dc6ac&quot;,
+      down: &quot;#e8506c&quot;,
+      bg: &quot;rgba(255, 255, 255, 0)&quot;,
+      grid: &quot;#EDF1F7&quot;,
+      cross: &quot;#CAD1E7&quot;,
+      border: &quot;#EDF1F7&quot;,
+      text: &quot;#CAD1E7&quot;,
+      areatop: &quot;rgba(71, 78, 112, 0.1)&quot;,
+      areadown: &quot;rgba(71, 78, 112, 0.02)&quot;,
+      line: &quot;#EDF1F7&quot;,
+    },
+    black: {
+      //url: &quot;night.css&quot;,
+      up: &quot;#589065&quot;,
+      down: &quot;#ae4e54&quot;,
+      bg: &quot;#181B2A&quot;,
+      grid: &quot;#1f2943&quot;,
+      cross: &quot;#9194A3&quot;,
+      border: &quot;#4e5b85&quot;,
+      text: &quot;#61688A&quot;,
+      areatop: &quot;rgba(122, 152, 247, .1)&quot;,
+      areadown: &quot;rgba(122, 152, 247, .02)&quot;,
+      line: &quot;#737375&quot;,
+    },
+    mobile: {
+      //url: &quot;mobile.css&quot;,
+      up: &quot;#03C087&quot;,
+      down: &quot;#E76D42&quot;,
+      bg: &quot;#ffffff&quot;,
+      grid: &quot;#f7f8fa&quot;,
+      cross: &quot;#23283D&quot;,
+      border: &quot;#C5CFD5&quot;,
+      text: &quot;#8C9FAD&quot;,
+      areatop: &quot;rgba(71, 78, 112, 0.1)&quot;,
+      areadown: &quot;rgba(71, 78, 112, 0.02)&quot;,
+      showLegend: !0,
+    },
+  };
+  const t = themes[theme];
+  return {
+    volumePaneSize: &quot;medium&quot;,
+    &quot;scalesProperties.lineColor&quot;: t.text,
+    &quot;scalesProperties.textColor&quot;: t.text,
+    &quot;paneProperties.background&quot;: t.bg,
+    &quot;paneProperties.vertGridProperties.color&quot;: t.grid,
+    &quot;paneProperties.horzGridProperties.color&quot;: t.grid,
+    &quot;paneProperties.crossHairProperties.color&quot;: t.cross,
+    &quot;paneProperties.legendProperties.showLegend&quot;: !!t.showLegend,
+    &quot;paneProperties.legendProperties.showStudyArguments&quot;: !0,
+    &quot;paneProperties.legendProperties.showStudyTitles&quot;: !0,
+    &quot;paneProperties.legendProperties.showStudyValues&quot;: !0,
+    &quot;paneProperties.legendProperties.showSeriesTitle&quot;: !0,
+    &quot;paneProperties.legendProperties.showSeriesOHLC&quot;: !0,
+    &quot;mainSeriesProperties.candleStyle.upColor&quot;: t.up,
+    &quot;mainSeriesProperties.candleStyle.downColor&quot;: t.down,
+    &quot;mainSeriesProperties.candleStyle.drawWick&quot;: !0,
+    &quot;mainSeriesProperties.candleStyle.drawBorder&quot;: !0,
+    &quot;mainSeriesProperties.candleStyle.borderColor&quot;: t.border,
+    &quot;mainSeriesProperties.candleStyle.borderUpColor&quot;: t.up,
+    &quot;mainSeriesProperties.candleStyle.borderDownColor&quot;: t.down,
+    &quot;mainSeriesProperties.candleStyle.wickUpColor&quot;: t.up,
+    &quot;mainSeriesProperties.candleStyle.wickDownColor&quot;: t.down,
+    &quot;mainSeriesProperties.candleStyle.barColorsOnPrevClose&quot;: !1,
+    &quot;mainSeriesProperties.hollowCandleStyle.upColor&quot;: t.up,
+    &quot;mainSeriesProperties.hollowCandleStyle.downColor&quot;: t.down,
+    &quot;mainSeriesProperties.hollowCandleStyle.drawWick&quot;: !0,
+    &quot;mainSeriesProperties.hollowCandleStyle.drawBorder&quot;: !0,
+    &quot;mainSeriesProperties.hollowCandleStyle.borderColor&quot;: t.border,
+    &quot;mainSeriesProperties.hollowCandleStyle.borderUpColor&quot;: t.up,
+    &quot;mainSeriesProperties.hollowCandleStyle.borderDownColor&quot;: t.down,
+    &quot;mainSeriesProperties.hollowCandleStyle.wickColor&quot;: t.line,
+    &quot;mainSeriesProperties.haStyle.upColor&quot;: t.up,
+    &quot;mainSeriesProperties.haStyle.downColor&quot;: t.down,
+    &quot;mainSeriesProperties.haStyle.drawWick&quot;: !0,
+    &quot;mainSeriesProperties.haStyle.drawBorder&quot;: !0,
+    &quot;mainSeriesProperties.haStyle.borderColor&quot;: t.border,
+    &quot;mainSeriesProperties.haStyle.borderUpColor&quot;: t.up,
+    &quot;mainSeriesProperties.haStyle.borderDownColor&quot;: t.down,
+    &quot;mainSeriesProperties.haStyle.wickColor&quot;: t.border,
+    &quot;mainSeriesProperties.haStyle.barColorsOnPrevClose&quot;: !1,
+    &quot;mainSeriesProperties.barStyle.upColor&quot;: t.up,
+    &quot;mainSeriesProperties.barStyle.downColor&quot;: t.down,
+    &quot;mainSeriesProperties.barStyle.barColorsOnPrevClose&quot;: !1,
+    &quot;mainSeriesProperties.barStyle.dontDrawOpen&quot;: !1,
+    &quot;mainSeriesProperties.lineStyle.color&quot;: t.border,
+    &quot;mainSeriesProperties.lineStyle.linewidth&quot;: 1,
+    &quot;mainSeriesProperties.lineStyle.priceSource&quot;: &quot;close&quot;,
+    &quot;mainSeriesProperties.areaStyle.color1&quot;: t.areatop,
+    &quot;mainSeriesProperties.areaStyle.color2&quot;: t.areadown,
+    &quot;mainSeriesProperties.areaStyle.linecolor&quot;: t.border,
+    &quot;mainSeriesProperties.areaStyle.linewidth&quot;: 1,
+    &quot;mainSeriesProperties.areaStyle.priceSource&quot;: &quot;close&quot;,
+  };
+};
+</code></pre></div><h4 id="设置图表背景"><a href="#设置图表背景" class="header-anchor">#</a> 设置图表背景</h4> <div class="language- extra-class"><pre class="language-text"><code>// chardingView.css
+table.chart-markup-table {
+  background-color: #fafafd;
+  background: url(&quot;./images/logo.png&quot;) #fafafd no-repeat center center;
+  background-size: 251px 51px;
+}
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>export const resolveSymbol = ({
+  Sec: t,
+  PrzClose: c,
+  PrzHigh: h,
+  PrzLow: l,
+  PrzOpen: o,
+  Volume: v,
+}) =&gt; ({
+  time: t * 1000,
+  close: toNumber(c),
+  high: toNumber(h),
+  low: toNumber(l),
+  open: toNumber(o),
+  volume: toNumber(v),
+});
+
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>export const createSymbolInfo =(symbol)=&gt;({
+  name: symbol,
+  full_name: symbol,
+  description: symbol,
+  ticker: symbol,
+  session: &quot;24x7&quot;,
+  exchange: &quot;&quot;,
+  listed_exchange: &quot;&quot;,
+  timezone: &quot;Asia/Shanghai&quot;,
+  format: &quot;price&quot;,
+  pricescale: 100,
+  minmov: 1,
+  minmov2: 2,
+  has_intraday: true,
+  has_no_valume: false,
+  has_daily: true,
+  has_weekly_and_monthly: true,
+  has_empty_bars: true,
+  supported_resolutions: periods.map((item)=&gt; item.interval),
+  intraday_multipliers: periods.map((item)=&gt; item.interval),
+})
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>export const getOverrides = (theme) =&gt; {
+  const themes = {
+    white: {
+      //url: &quot;day.css&quot;,
+      up: &quot;#03c087&quot;,
+      down: &quot;#ef5555&quot;,
+      bg: &quot;rgba(0, 0, 0, 0)&quot;,
+      grid: &quot;#EDF1F7&quot;,
+      cross: &quot;#CAD1E7&quot;,
+      border: &quot;#EDF1F7&quot;,
+      text: &quot;#CAD1E7&quot;,
+      areatop: &quot;rgba(71, 78, 112, 0.1)&quot;,
+      areadown: &quot;rgba(71, 78, 112, 0.02)&quot;,
+      line: &quot;#EDF1F7&quot;,
+    },
+    black: {
+      //url: &quot;night.css&quot;,
+      up: &quot;#589065&quot;,
+      down: &quot;#ae4e54&quot;,
+      bg: &quot;#181B2A&quot;,
+      grid: &quot;#1f2943&quot;,
+      cross: &quot;#9194A3&quot;,
+      border: &quot;#4e5b85&quot;,
+      text: &quot;#61688A&quot;,
+      areatop: &quot;rgba(122, 152, 247, .1)&quot;,
+      areadown: &quot;rgba(122, 152, 247, .02)&quot;,
+      line: &quot;#737375&quot;,
+    },
+    mobile: {
+      //url: &quot;mobile.css&quot;,
+      up: &quot;#03C087&quot;,
+      down: &quot;#E76D42&quot;,
+      bg: &quot;#ffffff&quot;,
+      grid: &quot;#f7f8fa&quot;,
+      cross: &quot;#23283D&quot;,
+      border: &quot;#C5CFD5&quot;,
+      text: &quot;#8C9FAD&quot;,
+      areatop: &quot;rgba(71, 78, 112, 0.1)&quot;,
+      areadown: &quot;rgba(71, 78, 112, 0.02)&quot;,
+      showLegend: !0,
+    },
+  };
+  const t = themes[theme];
+  return {
+    volumePaneSize: &quot;medium&quot;,
+    &quot;scalesProperties.lineColor&quot;: t.text,
+    &quot;scalesProperties.textColor&quot;: t.text,
+    &quot;paneProperties.background&quot;: t.bg,
+    &quot;paneProperties.vertGridProperties.color&quot;: t.grid,
+    &quot;paneProperties.horzGridProperties.color&quot;: t.grid,
+    &quot;paneProperties.crossHairProperties.color&quot;: t.cross,
+    &quot;paneProperties.legendProperties.showLegend&quot;: !!t.showLegend,
+    &quot;paneProperties.legendProperties.showStudyArguments&quot;: !0,
+    &quot;paneProperties.legendProperties.showStudyTitles&quot;: !0,
+    &quot;paneProperties.legendProperties.showStudyValues&quot;: !0,
+    &quot;paneProperties.legendProperties.showSeriesTitle&quot;: !0,
+    &quot;paneProperties.legendProperties.showSeriesOHLC&quot;: !0,
+    &quot;mainSeriesProperties.candleStyle.upColor&quot;: t.up,
+    &quot;mainSeriesProperties.candleStyle.downColor&quot;: t.down,
+    &quot;mainSeriesProperties.candleStyle.drawWick&quot;: !0,
+    &quot;mainSeriesProperties.candleStyle.drawBorder&quot;: !0,
+    &quot;mainSeriesProperties.candleStyle.borderColor&quot;: t.border,
+    &quot;mainSeriesProperties.candleStyle.borderUpColor&quot;: t.up,
+    &quot;mainSeriesProperties.candleStyle.borderDownColor&quot;: t.down,
+    &quot;mainSeriesProperties.candleStyle.wickUpColor&quot;: t.up,
+    &quot;mainSeriesProperties.candleStyle.wickDownColor&quot;: t.down,
+    &quot;mainSeriesProperties.candleStyle.barColorsOnPrevClose&quot;: !1,
+    &quot;mainSeriesProperties.hollowCandleStyle.upColor&quot;: t.up,
+    &quot;mainSeriesProperties.hollowCandleStyle.downColor&quot;: t.down,
+    &quot;mainSeriesProperties.hollowCandleStyle.drawWick&quot;: !0,
+    &quot;mainSeriesProperties.hollowCandleStyle.drawBorder&quot;: !0,
+    &quot;mainSeriesProperties.hollowCandleStyle.borderColor&quot;: t.border,
+    &quot;mainSeriesProperties.hollowCandleStyle.borderUpColor&quot;: t.up,
+    &quot;mainSeriesProperties.hollowCandleStyle.borderDownColor&quot;: t.down,
+    &quot;mainSeriesProperties.hollowCandleStyle.wickColor&quot;: t.line,
+    &quot;mainSeriesProperties.haStyle.upColor&quot;: t.up,
+    &quot;mainSeriesProperties.haStyle.downColor&quot;: t.down,
+    &quot;mainSeriesProperties.haStyle.drawWick&quot;: !0,
+    &quot;mainSeriesProperties.haStyle.drawBorder&quot;: !0,
+    &quot;mainSeriesProperties.haStyle.borderColor&quot;: t.border,
+    &quot;mainSeriesProperties.haStyle.borderUpColor&quot;: t.up,
+    &quot;mainSeriesProperties.haStyle.borderDownColor&quot;: t.down,
+    &quot;mainSeriesProperties.haStyle.wickColor&quot;: t.border,
+    &quot;mainSeriesProperties.haStyle.barColorsOnPrevClose&quot;: !1,
+    &quot;mainSeriesProperties.barStyle.upColor&quot;: t.up,
+    &quot;mainSeriesProperties.barStyle.downColor&quot;: t.down,
+    &quot;mainSeriesProperties.barStyle.barColorsOnPrevClose&quot;: !1,
+    &quot;mainSeriesProperties.barStyle.dontDrawOpen&quot;: !1,
+    &quot;mainSeriesProperties.lineStyle.color&quot;: t.border,
+    &quot;mainSeriesProperties.lineStyle.linewidth&quot;: 1,
+    &quot;mainSeriesProperties.lineStyle.priceSource&quot;: &quot;close&quot;,
+    &quot;mainSeriesProperties.areaStyle.color1&quot;: t.areatop,
+    &quot;mainSeriesProperties.areaStyle.color2&quot;: t.areadown,
+    &quot;mainSeriesProperties.areaStyle.linecolor&quot;: t.border,
+    &quot;mainSeriesProperties.areaStyle.linewidth&quot;: 1,
+    &quot;mainSeriesProperties.areaStyle.priceSource&quot;: &quot;close&quot;,
+  };
+};
+</code></pre></div><h3 id="websocket-链接获取数据"><a href="#websocket-链接获取数据" class="header-anchor">#</a> websocket 链接获取数据</h3> <div class="language- extra-class"><pre class="language-text"><code>let _cache = {}; // 暂存所有交易对信息
+initWebSocket(isFirst = false){
+  this.socket = new WebSocket(&quot;wss://ss....&quot;);
+  // 最基础的需要订阅k线数据，最新ticker
+  this.socket.onmessage=(e)=&gt;{
+    this.onSocketMessage(e.data);
+  }
+}
+onSocketMessage(data){
+  try{
+    if(!data){
+      return;
+    }
+    if(data === &quot;PONG&quot;){
+      return;
+    }
+    const _data = JSON.parse(data);
+    if(_data.subj===&quot;index&quot;){
+      if(this.onRealtimeCallback){
+        const bars = Object.entries(_cache).sort((a,b)=&gt;a[0]-b[0]);
+        // 最后一条数据用最新数据
+        const item = bars[bars.length-1];
+        if(item){
+          const bar = item[1];
+          bar.close = _data.data.Prz;
+          bar.time = item[0]/1;
+          this.onRealtimeCallback(bar);
+        }
+      }
+    } else if(_data.subj === &quot;kline&quot;){
+      const bars = resolveSymbol(_data.data);
+      _cache[bar.time] = bar;
+      _lastBar = {...bar};
+      if(this.onRealtimeCallback){
+        setTimeout(()=&gt;{
+          this.onRealtimeCallback(bar);
+        }, 100);
+      }
+    } else if(_data.data.Count){
+      if(this.onHistoryCallback){
+        const {
+          Sec, PrzOpen, PrzClose, PrzHigh, PrzLow, Volume, Count
+        } = _data.data;
+        const {symbol, currentPeriod} = this.props;
+        const {period, interval} = periods[currentPeriod];
+        const list = [];
+        for(let i=0;i&lt;Count; i++){
+          const bar = {
+            time: Sec[i]*1000,
+            close: toNumber(PrzClose[i]),
+            high: toNumber(PrzHigh[i]),
+            low: toNumber(PrzLow[i]),
+            open: toNumber(PrzOpen[i]),
+            volume: toNumber(Volume[i]),
+          }
+          list.push(bar);
+          _cache[bar.time] = bar;
+          if(i===Count-1){
+            _lastBar = {...bar};
+            console.log(&quot;last&quot;, bar.time);
+          }
+        }
+        this.onHistoryCallback(list, {
+          noData: !list.length,
+          nextTime: Sec[Sec.length -1]*1000,
+        });
+        if(this.socket){
+          this.socket.send(subscribe.sub(symbol, period));
+        }
+      }
+    }
+  }
+}
+</code></pre></div><p>websock 订阅的参数</p> <div class="language- extra-class"><pre class="language-text"><code>let hisPage = &quot;1&quot;;
+const subscribe = {
+  sub: (symbol, period) =&gt;{
+    ++hisPage;
+    return JSON.stringify({
+      req: &quot;Sub&quot;,
+      rid: `${hisPage}`,
+      args: [
+        `kline_${period}_GMEX_CI_${symbol}`,
+        `index_GMEX_CI_${symbol}`,
+        '__slow__',
+      ],
+      expires: +new Date(),
+    })
+  },
+  unsub: (symbol, period, all=true){
+    ++hisPage;
+    return JSON.stringify({
+      req: &quot;Unsub&quot;,
+      rid: `${hisPage}`,
+      args: all ? [
+          `index_GMEX_CI_${symbol}`,
+          `kline_${period}_GMEX_CI_${symbol}`,
+          `GMEX_CI_${symbol}`,
+        ]
+        : [`GMEX_CI_${symbol}`],
+      expires: +new Date(),
+    });
+  },
+  subHis: (symbol, period, Sec, Count) =&gt; {
+    ++hisPage;
+    return JSON.stringify({
+      req: &quot;GetHistKLine&quot;,
+      rid: `${hisPage}`,
+      args: {
+        Sym: `GMEX_CI_${symbol}`,
+        Typ: period,
+        Sec,
+        Offset: 0,
+        Count,
+      },
+      expires: +new Date(),
+    });
+  },
+}
+</code></pre></div><h4 id="生命周期销毁的时候"><a href="#生命周期销毁的时候" class="header-anchor">#</a> 生命周期销毁的时候</h4> <div class="language- extra-class"><pre class="language-text"><code>
+</code></pre></div><h3 id="更新-tradingview"><a href="#更新-tradingview" class="header-anchor">#</a> 更新 tradingview</h3> <div class="language- extra-class"><pre class="language-text"><code>componentWillUpdate(nextProps) {
+  const { currentPeriod, symbol } = nextProps;
+  const { currentPeriod: c, symbol: s } = this.props;
+  const period = periods[currentPeriod];
+  if (!this.widget) {
+    return;
+  }
+
+  if (c !== currentPeriod) {
+    this.widget.chart().setResolution(period.interval, () =&gt; { });
+    this.widget.chart().setChartType(period.chartType);
+    // this.onResetCacheNeededCallback &amp;&amp; this.onResetCacheNeededCallback();
+    // this.widget.chart().resetData();
+    _cache = {};
+    this.socket.send(subscribe.unsub(s, periods[c].period));
+    // this.initSub(nextProps);
+  }
+}
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>// kLine/index.js
+import React from &quot;react&quot;;
+import moment from &quot;moment&quot;;
+import { connect } from &quot;react-redux&quot;;
+import { Scoped } from &quot;kremling&quot;;
+import { TradingView, Datafeed } from &quot;trader-view&quot;;
+import {
+  periods,
+  studys,
+  resolveSymbol,
+  createSymbolInfo,
+  toNumber,
+  getOverrides,
+} from &quot;@/utils/tradingviewHelper&quot;;
+import socket from &quot;@/service/socket&quot;;
+import Text from &quot;@/components/text&quot;;
+import styles from &quot;./index.krem.scss&quot;;
+
+// http://localhost:9001
+const host = process.env.NODE_ENV === &quot;development&quot; ? &quot;/&quot; : &quot;/micro/contract/&quot;;
+
+// 暂存所以交易对信息
+let _cache = {};
+let _lastBar = null;
+let _selectTime = &quot;&quot;;
+@connect(({ allSymbolsContract: { currentPeriod, symbol } }) =&gt; {
+  return {
+    currentPeriod,
+    symbol,
+  };
+})
+export default class Kline extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+      minTime: 0, // 不在此范围内，弹层将被隐藏
+      maxTime: 0, // 不在此范围内，弹层将被隐藏
+      bar: {}, // 当前选中的bar
+      prevBar: {}, // 当前选中bar的前一个bar
+    };
+  }
+  /**
+   * 初始订阅
+   */
+  async initSub({ symbol, currentPeriod }) {
+    const { period, interval, count } = periods[currentPeriod];
+    await socket.subscribe(&quot;subHis&quot;, symbol, period, this.from);
+  }
+
+  /**
+   * 监听WebSocket响应
+   * @param msg string
+   */
+  onSocketMessage = (data) =&gt; {
+    if (data.subj === &quot;index&quot;) {
+      // 更新最后一条数据
+      if (this.onRealtimeCallback) {
+        const bars = Object.entries(_cache).sort((a, b) =&gt; a[0] - b[0]); //;
+        const item = bars[bars.length - 1];
+        if (item) {
+          const bar = item[1];
+          bar.close = data.data.Prz;
+          bar.time = item[0] / 1;
+          this.onRealtimeCallback(bar);
+        }
+      }
+    } else if (data.subj === &quot;kline&quot;) {
+      const bar = resolveSymbol(data.data);
+      // 存入缓存
+      _cache[bar.time] = bar;
+      _lastBar = { ...bar };
+      // console.log(&quot;kline&quot;, _lastBar);
+      console.log(&quot;put&quot;, bar.time);
+      if (this.onRealtimeCallback) {
+        setTimeout(() =&gt; {
+          this.onRealtimeCallback(bar);
+        }, 100);
+      }
+    } else if (data.data.Count) {
+      if (this.onHistoryCallback) {
+        const {
+          Sec,
+          PrzOpen,
+          PrzClose,
+          PrzHigh,
+          PrzLow,
+          Volume,
+          Count,
+        } = data.data;
+
+        const { symbol, currentPeriod } = this.props;
+        const { period, interval } = periods[currentPeriod];
+        const list = [];
+
+        for (let i = 0; i &lt; Count; i++) {
+          const bar = {
+            time: Sec[i] * 1000,
+            close: toNumber(PrzClose[i]),
+            high: toNumber(PrzHigh[i]),
+            low: toNumber(PrzLow[i]),
+            open: toNumber(PrzOpen[i]),
+            volume: toNumber(Volume[i]),
+          };
+          list.push(bar);
+          // 存入缓存
+          _cache[bar.time] = bar;
+          if (i === Count - 1) {
+            _lastBar = { ...bar };
+            console.log(&quot;last&quot;, bar.time);
+          }
+        }
+
+        this.onHistoryCallback(list, {
+          noData: !list.length,
+          nextTime: Sec[Sec.length - 1] * 1000,
+        });
+
+        socket.subscribe(&quot;sub&quot;, symbol, period);
+      }
+    }
+  };
+
+  /**
+   * 初始化 JS API
+   */
+  initDatafeed() {
+    const { symbol } = this.props;
+
+    this.datafeed = new Datafeed({
+      history: (params) =&gt; {
+        return this.getHistData(
+          params.symbol,
+          params.resolution,
+          params.from,
+          params.to,
+          params.firstDataRequest
+        );
+      },
+      time: () =&gt; new Promise((resolve) =&gt; resolve(1)),
+      config: () =&gt;
+        new Promise((resolve) =&gt;
+          resolve({
+            supports_search: true,
+            supports_group_request: false,
+            supported_resolutions: [
+              ...new Set(periods.map((item) =&gt; item.interval)),
+            ],
+            supports_marks: false,
+            supports_timescale_marks: false,
+            supports_time: true,
+          })
+        ),
+      symbols: () =&gt;
+        new Promise((resolve) =&gt; resolve(createSymbolInfo(symbol))),
+    });
+
+    this.datafeed.subscribeBars = (
+      symbolInfo,
+      resolution,
+      onRealtimeCallback,
+      subscribeUID,
+      onResetCacheNeededCallback
+    ) =&gt; {
+      this.onRealtimeCallback = onRealtimeCallback;
+      this.onResetCacheNeededCallback = onResetCacheNeededCallback;
+    };
+    /**
+     * 解析商品信息
+     */
+    this.datafeed.resolveSymbol = (symbol, onResolve, onError) =&gt; {
+      onResolve(createSymbolInfo(symbol));
+    };
+    this.datafeed.getBars = (
+      symbolInfo,
+      resolution,
+      from,
+      to,
+      onHistoryCallback,
+      onErrorCallback,
+      firstDataRequest
+    ) =&gt; {
+      this.onHistoryCallback = onHistoryCallback;
+      this.from = from;
+      this.to = to;
+      const { symbol, currentPeriod } = this.props;
+      const { period, interval, count } = periods[currentPeriod];
+      socket.subscribe(&quot;subHis&quot;, symbol, period, from);
+      // this.initWebSocket().then((res) =&gt; {
+      //   res.onopen = () =&gt; {
+      //     const { symbol, currentPeriod } = this.props;
+      //     const { period, interval, count } = periods[currentPeriod];
+      //     if (res) {
+      //       res.send(
+      //         subscribe.subHis(
+      //           symbol,
+      //           period,
+      //           from,
+      //           Math.ceil((to - from) / 60 / count)
+      //         )
+      //       );
+      //     }
+      //   };
+      // });
+    };
+  }
+  async getHistData() {
+    const list = await new Promise();
+    return {
+      bars: [],
+      meta: { noData: false },
+    };
+  }
+  /**
+   * 初始化图表
+   */
+  initTradingView = () =&gt; {
+    if (!this.datafeed) {
+      return;
+    }
+    const { currentPeriod, symbol } = this.props;
+    const { time: interval, chartType, interval: inte } = periods[
+      currentPeriod
+    ];
+    const localeMap = {
+      &quot;zh-CN&quot;: &quot;zh&quot;,
+      &quot;ko-KR&quot;: &quot;ko&quot;,
+      &quot;en-US&quot;: &quot;en&quot;,
+    };
+    this.widget = new TradingView({
+      // debug: true, // uncomment this line to see Library errors and warnings in the console
+      // fullscreen: true,
+      custom_css_url: host + &quot;charting_library/static/style.css&quot;,
+      symbol,
+      interval,
+      preset: &quot;mobile&quot;,
+      container_id: &quot;tv_chart_container&quot;,
+      datafeed: this.datafeed,
+      height: &quot;100%&quot;,
+      width: &quot;100%&quot;,
+      library_path: host + &quot;charting_library/&quot;,
+      locale: &quot;zh&quot;,
+      loading_screen: {
+        // backgroundColor: &quot;#fff&quot;,
+        // foregroundColor: &quot;#fff&quot;
+      },
+      disabled_features: [
+        &quot;left_toolbar&quot;,
+        &quot;volume_force_overlay&quot;,
+        &quot;create_volume_indicator_by_default&quot;,
+        &quot;create_volume_indicator_by_default_once&quot;,
+        &quot;format_button_in_legend&quot;,
+        &quot;hide_left_toolbar_by_default&quot;,
+        &quot;go_to_date&quot;,
+        &quot;use_localstorage_for_settings&quot;,
+        &quot;save_chart_properties_to_local_storage&quot;,
+        &quot;main_series_scale_menu&quot;,
+        &quot;show_logo_on_all_charts&quot;,
+        &quot;header_settings&quot;,
+        &quot;timeframes_toolbar&quot;,
+        &quot;chart_property_page_background&quot;,
+        &quot;timeframes_toolbar&quot;,
+        &quot;compare_symbol&quot;,
+        &quot;go_to_date&quot;,
+        &quot;header_chart_type&quot;, // k线样式
+        &quot;header_compare&quot;,
+        &quot;header_interval_dialog_button&quot;,
+        &quot;header_screenshot&quot;, // 截图
+        &quot;header_symbol_search&quot;,
+        &quot;header_undo_redo&quot;,
+        &quot;show_hide_button_in_legend&quot;,
+        &quot;show_interval_dialog_on_key_press&quot;,
+        &quot;snapshot_trading_drawings&quot;,
+        &quot;symbol_info&quot;,
+        &quot;border_around_the_chart&quot;,
+        &quot;remove_library_container_border&quot;,
+        &quot;header_saveload&quot;,
+        &quot;header_resolutions&quot;,
+      ],
+      overrides: getOverrides(&quot;white&quot;),
+      studies_overrides: {
+        &quot;volume.volume.color.0&quot;: &quot;#eb4d5c&quot;,
+        &quot;volume.volume.color.1&quot;: &quot;#53b987&quot;,
+        &quot;volume.volume.transparency&quot;: 70,
+        &quot;volume.options.showStudyArguments&quot;: !1,
+        &quot;MA Cross.short:plot.color&quot;: &quot;#6B3798&quot;,
+        &quot;MA Cross.long:plot.color&quot;: &quot;#708957&quot;,
+      },
+      enabled_features: [&quot;hide_last_na_study_output&quot;],
+      charts_storage_url: &quot;http://saveload.tradingview.com&quot;,
+      charts_storage_api_version: &quot;1.1&quot;,
+      client_id: &quot;tradingview.com&quot;,
+      user_id: &quot;public_user_id&quot;,
+      theme: &quot;Light&quot;,
+      timezone: &quot;Asia/Shanghai&quot;,
+    });
+
+    this.widget.onChartReady(() =&gt; {
+      // 辅助线
+      const chart = this.widget.chart();
+      chart.setResolution(inte, () =&gt; {});
+      chart.setChartType(chartType);
+
+      // 每当十字线位置改变时，图表库将会调用回调函数。
+      chart.crossHairMoved(({ time }) =&gt; {
+        if (!time) {
+          return;
+        }
+        const bars = Object.entries(_cache).sort((a, b) =&gt; a[0] - b[0]); //;
+        const index = bars.findIndex((item) =&gt; item[1].time === time * 1000);
+        const bar = bars[index]?.[1];
+        // console.log(&quot;111&quot;, time, bar, _cache);
+        if (bar) {
+          const { minTime, maxTime } = this.state;
+          let show = true;
+          if (minTime &amp;&amp; maxTime) {
+            show = bar.time &lt;= maxTime &amp;&amp; bar.time &gt;= minTime;
+          }
+          this.setState(
+            {
+              show,
+              bar: bar,
+              prevBar: bars[index - 1]?.[1] || {},
+              minTime: show ? bars[index - 2]?.[1]?.time || 0 : 0,
+              maxTime: show ? bars[index + 2]?.[1]?.time || 0 : 0,
+            },
+            () =&gt; {
+              _selectTime = time;
+            }
+          );
+        } else {
+          this.setState({
+            show: false,
+          });
+        }
+      });
+
+      for (let i = 0, l = studys.length; i &lt; l; i++) {
+        chart.createStudy(...studys[i]);
+      }
+    });
+  };
+  componentWillUnmount() {
+    const { currentPeriod, symbol } = this.props;
+    socket.unsubscribe(symbol, currentPeriod);
+  }
+  componentWillReceiveProps(nextProps) {
+    const { currentPeriod, symbol } = nextProps;
+    const { currentPeriod: c, symbol: s } = this.props;
+    const period = periods[currentPeriod];
+    if (!this.widget) {
+      return;
+    }
+
+    if (c !== currentPeriod) {
+      this.widget.chart().setResolution(period.interval, () =&gt; {});
+      this.widget.chart().setChartType(period.chartType);
+      _cache = {};
+      socket.unsubscribe(s, periods[c].period);
+    }
+  }
+
+  async componentDidMount() {
+    // onmessage事件
+    socket.onMessage(this.onSocketMessage);
+    this.initDatafeed();
+    // this.initWebSocket();
+    this.initTradingView();
+  }
+
+  render() {
+    const {
+      show,
+      prevBar,
+      bar: { time, close, high, low, open, volume },
+    } = this.state;
+    const pClose = prevBar.close || 0;
+    const num = close - pClose;
+    const percent = ((close - pClose) / close) * 100;
+    return (
+      &lt;Scoped css={styles}&gt;
+        &lt;div className=&quot;contract-home-kline&quot;&gt;
+          {show ? (
+            &lt;ul className=&quot;float-panle&quot;&gt;
+              &lt;li&gt;
+                &lt;Text type=&quot;date&quot; format=&quot;YYYY-MM-DD HH:mm&quot;&gt;
+                  {time}
+                &lt;/Text&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;div&gt;开:&lt;/div&gt;
+                &lt;Text type=&quot;number&quot;&gt;{open}&lt;/Text&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;div&gt;高:&lt;/div&gt;
+                &lt;Text type=&quot;number&quot;&gt;{high}&lt;/Text&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;div&gt;低:&lt;/div&gt;
+                &lt;Text type=&quot;number&quot;&gt;{low}&lt;/Text&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;div&gt;收:&lt;/div&gt;
+                &lt;Text type=&quot;number&quot;&gt;{close}&lt;/Text&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;div&gt;涨跌额: &lt;/div&gt;
+                &lt;span className={num &gt;= 0 ? &quot;green&quot; : &quot;red&quot;}&gt;
+                  {num &gt;= 0 ? &quot;+&quot; : &quot;&quot;}
+                  &lt;Text type=&quot;number&quot;&gt;{num}&lt;/Text&gt;
+                &lt;/span&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;div&gt;涨跌幅: &lt;/div&gt;
+                &lt;span className={percent &gt;= 0 ? &quot;green&quot; : &quot;red&quot;}&gt;
+                  {percent &gt;= 0 ? &quot;+&quot; : &quot;&quot;}
+                  &lt;Text type=&quot;number&quot;&gt;{percent}&lt;/Text&gt;%
+                &lt;/span&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          ) : null}
+          &lt;div
+            className=&quot;kline-percentage&quot;
+            ref={(ref) =&gt; (this.percentage = ref)}
+          &gt;
+            111%
+          &lt;/div&gt;
+          &lt;div id=&quot;tv_chart_container&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/Scoped&gt;
+    );
+  }
+}
+import React from &quot;react&quot;;
+import moment from &quot;moment&quot;;
+import { connect } from &quot;react-redux&quot;;
+import { Scoped } from &quot;kremling&quot;;
+import { TradingView, Datafeed } from &quot;trader-view&quot;;
+import {
+  periods,
+  studys,
+  resolveSymbol,
+  createSymbolInfo,
+  toNumber,
+  getOverrides,
+} from &quot;@/utils/tradingviewHelper&quot;;
+import socket from &quot;@/service/socket&quot;;
+import Text from &quot;@/components/text&quot;;
+import styles from &quot;./index.krem.scss&quot;;
+
+// http://localhost:9001
+const host = process.env.NODE_ENV === &quot;development&quot; ? &quot;/&quot; : &quot;/micro/contract/&quot;;
+
+// 暂存所以交易对信息
+let _cache = {};
+let _lastBar = null;
+let _selectTime = &quot;&quot;;
+@connect(({ allSymbolsContract: { currentPeriod, symbol } }) =&gt; {
+  return {
+    currentPeriod,
+    symbol,
+  };
+})
+export default class Kline extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+      minTime: 0, // 不在此范围内，弹层将被隐藏
+      maxTime: 0, // 不在此范围内，弹层将被隐藏
+      bar: {}, // 当前选中的bar
+      prevBar: {}, // 当前选中bar的前一个bar
+    };
+  }
+  /**
+   * 初始订阅
+   */
+  async initSub({ symbol, currentPeriod }) {
+    const { period, interval, count } = periods[currentPeriod];
+    await socket.subscribe(&quot;subHis&quot;, symbol, period, this.from);
+  }
+
+  /**
+   * 监听WebSocket响应
+   * @param msg string
+   */
+  onSocketMessage = (data) =&gt; {
+    if (data.subj === &quot;index&quot;) {
+      // 更新最后一条数据
+      if (this.onRealtimeCallback) {
+        const bars = Object.entries(_cache).sort((a, b) =&gt; a[0] - b[0]); //;
+        const item = bars[bars.length - 1];
+        if (item) {
+          const bar = item[1];
+          bar.close = data.data.Prz;
+          bar.time = item[0] / 1;
+          this.onRealtimeCallback(bar);
+        }
+      }
+    } else if (data.subj === &quot;kline&quot;) {
+      const bar = resolveSymbol(data.data);
+      // 存入缓存
+      _cache[bar.time] = bar;
+      _lastBar = { ...bar };
+      // console.log(&quot;kline&quot;, _lastBar);
+      console.log(&quot;put&quot;, bar.time);
+      if (this.onRealtimeCallback) {
+        setTimeout(() =&gt; {
+          this.onRealtimeCallback(bar);
+        }, 100);
+      }
+    } else if (data.data.Count) {
+      if (this.onHistoryCallback) {
+        const {
+          Sec,
+          PrzOpen,
+          PrzClose,
+          PrzHigh,
+          PrzLow,
+          Volume,
+          Count,
+        } = data.data;
+
+        const { symbol, currentPeriod } = this.props;
+        const { period, interval } = periods[currentPeriod];
+        const list = [];
+
+        for (let i = 0; i &lt; Count; i++) {
+          const bar = {
+            time: Sec[i] * 1000,
+            close: toNumber(PrzClose[i]),
+            high: toNumber(PrzHigh[i]),
+            low: toNumber(PrzLow[i]),
+            open: toNumber(PrzOpen[i]),
+            volume: toNumber(Volume[i]),
+          };
+          list.push(bar);
+          // 存入缓存
+          _cache[bar.time] = bar;
+          if (i === Count - 1) {
+            _lastBar = { ...bar };
+            console.log(&quot;last&quot;, bar.time);
+          }
+        }
+
+        this.onHistoryCallback(list, {
+          noData: !list.length,
+          nextTime: Sec[Sec.length - 1] * 1000,
+        });
+
+        socket.subscribe(&quot;sub&quot;, symbol, period);
+      }
+    }
+  };
+
+  /**
+   * 初始化 JS API
+   */
+  initDatafeed() {
+    const { symbol } = this.props;
+
+    this.datafeed = new Datafeed({
+      history: (params) =&gt; {
+        return this.getHistData(
+          params.symbol,
+          params.resolution,
+          params.from,
+          params.to,
+          params.firstDataRequest
+        );
+      },
+      time: () =&gt; new Promise((resolve) =&gt; resolve(1)),
+      config: () =&gt;
+        new Promise((resolve) =&gt;
+          resolve({
+            supports_search: true,
+            supports_group_request: false,
+            supported_resolutions: [
+              ...new Set(periods.map((item) =&gt; item.interval)),
+            ],
+            supports_marks: false,
+            supports_timescale_marks: false,
+            supports_time: true,
+          })
+        ),
+      symbols: () =&gt;
+        new Promise((resolve) =&gt; resolve(createSymbolInfo(symbol))),
+    });
+
+    this.datafeed.subscribeBars = (
+      symbolInfo,
+      resolution,
+      onRealtimeCallback,
+      subscribeUID,
+      onResetCacheNeededCallback
+    ) =&gt; {
+      this.onRealtimeCallback = onRealtimeCallback;
+      this.onResetCacheNeededCallback = onResetCacheNeededCallback;
+    };
+    /**
+     * 解析商品信息
+     */
+    this.datafeed.resolveSymbol = (symbol, onResolve, onError) =&gt; {
+      onResolve(createSymbolInfo(symbol));
+    };
+    this.datafeed.getBars = (
+      symbolInfo,
+      resolution,
+      from,
+      to,
+      onHistoryCallback,
+      onErrorCallback,
+      firstDataRequest
+    ) =&gt; {
+      this.onHistoryCallback = onHistoryCallback;
+      this.from = from;
+      this.to = to;
+      const { symbol, currentPeriod } = this.props;
+      const { period, interval, count } = periods[currentPeriod];
+      socket.subscribe(&quot;subHis&quot;, symbol, period, from);
+      // this.initWebSocket().then((res) =&gt; {
+      //   res.onopen = () =&gt; {
+      //     const { symbol, currentPeriod } = this.props;
+      //     const { period, interval, count } = periods[currentPeriod];
+      //     if (res) {
+      //       res.send(
+      //         subscribe.subHis(
+      //           symbol,
+      //           period,
+      //           from,
+      //           Math.ceil((to - from) / 60 / count)
+      //         )
+      //       );
+      //     }
+      //   };
+      // });
+    };
+  }
+  async getHistData() {
+    const list = await new Promise();
+    return {
+      bars: [],
+      meta: { noData: false },
+    };
+  }
+  /**
+   * 初始化图表
+   */
+  initTradingView = () =&gt; {
+    if (!this.datafeed) {
+      return;
+    }
+    const { currentPeriod, symbol } = this.props;
+    const { time: interval, chartType, interval: inte } = periods[
+      currentPeriod
+    ];
+    const localeMap = {
+      &quot;zh-CN&quot;: &quot;zh&quot;,
+      &quot;ko-KR&quot;: &quot;ko&quot;,
+      &quot;en-US&quot;: &quot;en&quot;,
+    };
+    this.widget = new TradingView({
+      // debug: true, // uncomment this line to see Library errors and warnings in the console
+      // fullscreen: true,
+      custom_css_url: host + &quot;charting_library/static/style.css&quot;,
+      symbol,
+      interval,
+      preset: &quot;mobile&quot;,
+      container_id: &quot;tv_chart_container&quot;,
+      datafeed: this.datafeed,
+      height: &quot;100%&quot;,
+      width: &quot;100%&quot;,
+      library_path: host + &quot;charting_library/&quot;,
+      locale: &quot;zh&quot;,
+      loading_screen: {
+        // backgroundColor: &quot;#fff&quot;,
+        // foregroundColor: &quot;#fff&quot;
+      },
+      disabled_features: [
+        &quot;header_fullscreen_button&quot;, // 全屏
+        &quot;property_pages&quot;,  // 禁用所有属性页
+        &quot;left_toolbar&quot;,
+        &quot;volume_force_overlay&quot;,  // 防止重叠
+        &quot;create_volume_indicator_by_default&quot;,
+        &quot;create_volume_indicator_by_default_once&quot;,
+        &quot;format_button_in_legend&quot;,
+        &quot;hide_left_toolbar_by_default&quot;,
+        &quot;go_to_date&quot;,
+        &quot;use_localstorage_for_settings&quot;,
+        &quot;save_chart_properties_to_local_storage&quot;,
+        &quot;main_series_scale_menu&quot;,
+        &quot;show_logo_on_all_charts&quot;,
+        &quot;header_settings&quot;,  // 设置
+        &quot;timeframes_toolbar&quot;, // 下面的时间
+        &quot;chart_property_page_background&quot;,
+        &quot;compare_symbol&quot;,
+        &quot;go_to_date&quot;,
+        &quot;header_chart_type&quot;,
+        &quot;header_compare&quot;, // 图标对比
+        &quot;header_interval_dialog_button&quot;,
+        &quot;header_screenshot&quot;,
+        &quot;header_symbol_search&quot;,
+        &quot;header_undo_redo&quot;,
+        &quot;show_hide_button_in_legend&quot;,
+        &quot;show_interval_dialog_on_key_press&quot;,
+        &quot;snapshot_trading_drawings&quot;,
+        &quot;symbol_info&quot;,
+        &quot;border_around_the_chart&quot;,
+        &quot;remove_library_container_border&quot;,
+        &quot;header_saveload&quot;,
+        &quot;header_resolutions&quot;, // 头部时间s
+      ],
+      overrides: getOverrides(&quot;white&quot;),
+      studies_overrides: {
+        &quot;volume.volume.color.0&quot;: &quot;#eb4d5c&quot;,
+        &quot;volume.volume.color.1&quot;: &quot;#53b987&quot;,
+        &quot;volume.volume.transparency&quot;: 70,
+        &quot;volume.options.showStudyArguments&quot;: !1,
+        &quot;MA Cross.short:plot.color&quot;: &quot;#6B3798&quot;,
+        &quot;MA Cross.long:plot.color&quot;: &quot;#708957&quot;,
+      },
+      enabled_features: [&quot;hide_last_na_study_output&quot;],
+      charts_storage_url: &quot;http://saveload.tradingview.com&quot;,
+      charts_storage_api_version: &quot;1.1&quot;,
+      client_id: &quot;tradingview.com&quot;,
+      user_id: &quot;public_user_id&quot;,
+      theme: &quot;Light&quot;,
+      timezone: &quot;Asia/Shanghai&quot;,
+    });
+
+    this.widget.onChartReady(() =&gt; {
+      // 辅助线
+      const chart = this.widget.chart();
+      chart.setResolution(inte, () =&gt; {});
+      chart.setChartType(chartType);
+
+      // 每当十字线位置改变时，图表库将会调用回调函数。
+      chart.crossHairMoved(({ time }) =&gt; {
+        if (!time) {
+          return;
+        }
+        const bars = Object.entries(_cache).sort((a, b) =&gt; a[0] - b[0]); //;
+        const index = bars.findIndex((item) =&gt; item[1].time === time * 1000);
+        const bar = bars[index]?.[1];
+        // console.log(&quot;111&quot;, time, bar, _cache);
+        if (bar) {
+          const { minTime, maxTime } = this.state;
+          let show = true;
+          if (minTime &amp;&amp; maxTime) {
+            show = bar.time &lt;= maxTime &amp;&amp; bar.time &gt;= minTime;
+          }
+          this.setState(
+            {
+              show,
+              bar: bar,
+              prevBar: bars[index - 1]?.[1] || {},
+              minTime: show ? bars[index - 2]?.[1]?.time || 0 : 0,
+              maxTime: show ? bars[index + 2]?.[1]?.time || 0 : 0,
+            },
+            () =&gt; {
+              _selectTime = time;
+            }
+          );
+        } else {
+          this.setState({
+            show: false,
+          });
+        }
+      });
+
+      for (let i = 0, l = studys.length; i &lt; l; i++) {
+        chart.createStudy(...studys[i]);
+      }
+    });
+  };
+  componentWillUnmount() {
+    const { currentPeriod, symbol } = this.props;
+    socket.unsubscribe(symbol, currentPeriod);
+  }
+  componentWillReceiveProps(nextProps) {
+    const { currentPeriod, symbol } = nextProps;
+    const { currentPeriod: c, symbol: s } = this.props;
+    const period = periods[currentPeriod];
+    if (!this.widget) {
+      return;
+    }
+
+    if (c !== currentPeriod) {
+      this.widget.chart().setResolution(period.interval, () =&gt; {});
+      this.widget.chart().setChartType(period.chartType);
+      _cache = {};
+      socket.unsubscribe(s, periods[c].period);
+    }
+  }
+
+  async componentDidMount() {
+    // onmessage事件
+    socket.onMessage(this.onSocketMessage);
+    this.initDatafeed();
+    // this.initWebSocket();
+    this.initTradingView();
+  }
+
+  render() {
+    const {
+      show,
+      prevBar,
+      bar: { time, close, high, low, open, volume },
+    } = this.state;
+    const pClose = prevBar.close || 0;
+    const num = close - pClose;
+    const percent = ((close - pClose) / close) * 100;
+    return (
+      &lt;Scoped css={styles}&gt;
+          &lt;div
+            className=&quot;kline-percentage&quot;
+            ref={(ref) =&gt; (this.percentage = ref)}
+          &gt;
+            111%
+          &lt;/div&gt;
+          &lt;div id=&quot;tv_chart_container&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/Scoped&gt;
+    );
+  }
+}
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>// service/socket.js
+import { tickerSymbol, periods } from &quot;@/utils/tradingviewHelper&quot;;
+let ws = &quot;wss://XXX/market&quot;;
+let index = 1;
+let socket = null;
+let onMessageFn = null;
+let dispatch = null;
+let state = null;
+let timer = null;
+let subQueue = []; // 订阅队列
+
+export const subscribeTypeMap = {
+  sub: (symbol, period) =&gt;
+    JSON.stringify({
+      req: &quot;Sub&quot;,
+      rid: `${++index}`,
+      args: [`kline_${period}_GMEX_CI_${symbol}`],
+      expires: +new Date(),
+    }),
+  unSub: (symbol, period, all = true) =&gt;
+    JSON.stringify({
+      req: &quot;UnSub&quot;,
+      rid: `${++index}`,
+      args: all
+        ? [`kline_${period}_GMEX_CI_${symbol}`, `GMEX_CI_${symbol}`]
+        : [`GMEX_CI_${symbol}`],
+      expires: +new Date(),
+    }),
+  subHis: (symbol, period, Sec) =&gt;
+    JSON.stringify({
+      req: &quot;GetHistKLine&quot;,
+      rid: `${++index}`,
+      args: {
+        Sym: `GMEX_CI_${symbol}`,
+        Typ: period,
+        Sec: Sec,
+        Offset: 0,
+        Count: 10000000,
+      },
+      expires: +new Date(),
+    }),
+};
+
+const throwErr = () =&gt; {
+  throw &quot;先执行service/socket.js的run方法&quot;;
+};
+/**
+ * 提供给外界使用
+ * @param {*} fn
+ */
+export const onMessage = (fn) =&gt; {
+  if (socket) {
+    onMessageFn = fn;
+  } else {
+    throwErr();
+  }
+};
+
+/**
+ * 启动，初始化
+ */
+export const run = (d, s) =&gt;
+  new Promise(function (resolve, reject) {
+    if (socket) {
+      const { readyState, OPEN, CLOSED, CLOSING } = socket;
+      if (readyState === OPEN) {
+        resolve(socket);
+      } else if (readyState === CLOSING || readyState === CLOSED) {
+        socket = new WebSocket(ws);
+      }
+    } else {
+      socket = new WebSocket(ws);
+    }
+    // 给重连时使用
+    dispatch = d;
+    state = s;
+    // 进入正常逻辑
+    const {
+      allSymbolsContract: { currentPeriod, symbol },
+    } = state;
+    const { period } = periods[currentPeriod];
+
+    socket.onmessage = (e) =&gt; {
+      try {
+        const data = JSON.parse(e.data);
+        // 对外提供onmessage方法
+        if (onMessageFn) {
+          onMessageFn(data);
+        }
+        // 存储数据
+        if (data.subj === &quot;index&quot;) {
+          dispatch({
+            type: &quot;global/updateState&quot;,
+            state: {
+              kline: tickerSymbol(data.data),
+            },
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    /**
+     * 链接出错
+     */
+    socket.onerror = (e) =&gt; {
+      reject(e);
+    };
+    /**
+     * 订阅k线
+     */
+    socket.onopen = () =&gt; {
+      // 链接打开成功
+      resolve(socket);
+      /**
+       * 大部分页面都会使用，所以全局开启订阅
+       */
+      socket.send(
+        JSON.stringify({
+          req: &quot;Sub&quot;,
+          rid: `${++index}`,
+          expires: Date.now() + 500 + 30000,
+          args: [&quot;index_GMEX_CI_BTC&quot;, &quot;__slow__&quot;],
+        })
+      );
+    };
+  });
+
+/**
+ * 连接成功后，发送订阅队列
+ * 调用之前必需保证连接成功
+ */
+const send = (resolve) =&gt; {
+  for (let subString of subQueue) {
+    socket.send(subString);
+  }
+  resolve(socket);
+  // 订阅成功后清除对列
+  subQueue = [];
+};
+export const subscribe = (sub, ...args) =&gt;
+  new Promise(function (resolve, reject) {
+    // 订阅的字符串
+    subQueue.push(subscribeTypeMap[sub] ? subscribeTypeMap[sub](...args) : sub);
+    if (socket) {
+      const { readyState, OPEN, CLOSED, CLOSING } = socket;
+
+      // 连接成功
+      if (readyState === OPEN) {
+        send(resolve);
+      } else if (readyState === CLOSED || readyState === CLOSING) {
+        // 连接关闭
+        if (dispatch &amp;&amp; state) {
+          run(dispatch, state)
+            .then(() =&gt; {
+              send(resolve);
+            })
+            .catch(reject);
+        } else {
+          throwErr();
+        }
+      } else {
+        // 链接中
+        timer = setInterval(() =&gt; {
+          /**
+           * 开启定时器检测状态
+           * 连接成功后关闭定时器并订阅所有订阅
+           */
+          const { OPEN, readyState } = socket;
+          if (OPEN === readyState) {
+            clearInterval(timer);
+            timer = null;
+            send(resolve);
+          }
+        }, 100);
+      }
+    } else {
+      throwErr();
+    }
+  });
+
+/**
+ * 取消订阅，在使用之前保证连接成功
+ * @param {*} sub
+ * @param  {...any} args
+ */
+export const unsubscribe = (...args) =&gt; {
+  if (socket) {
+    const subString = subscribeTypeMap.unSub(...args);
+    socket.send(subString);
+  } else {
+    throwErr();
+  }
+};
+export default { run, onMessage, subscribe, unsubscribe };
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>// root.component.js
+async componentDidMount() {
+  const { store } = this.props;
+  await socket.run(store.dispatch, store.getState());
+}
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/blog_dev/PHP/php连接数据库的基本方法.html" class="prev">
+        php 连接数据库的基本方法
+      </a></span> <span class="next"><a href="/blog_dev/React/React_Hooks.html">
+        React Hooks
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/blog_dev/assets/js/app.f5aac5a7.js" defer></script><script src="/blog_dev/assets/js/2.fcf59071.js" defer></script><script src="/blog_dev/assets/js/159.9fe16a02.js" defer></script>
+  </body>
+</html>

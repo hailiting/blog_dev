@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CSS3 绘制特殊图形的技巧 | hailiting Blog</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/blog_dev/logo.png">
+    <meta name="description" content="hailiting Blog">
+    
+    <link rel="preload" href="/blog_dev/assets/css/0.styles.e9faf17d.css" as="style"><link rel="preload" href="/blog_dev/assets/js/app.f5aac5a7.js" as="script"><link rel="preload" href="/blog_dev/assets/js/2.fcf59071.js" as="script"><link rel="preload" href="/blog_dev/assets/js/20.4cb1ceef.js" as="script"><link rel="prefetch" href="/blog_dev/assets/js/10.0b74acaa.js"><link rel="prefetch" href="/blog_dev/assets/js/100.51473976.js"><link rel="prefetch" href="/blog_dev/assets/js/101.064a2c83.js"><link rel="prefetch" href="/blog_dev/assets/js/102.aecdd5a9.js"><link rel="prefetch" href="/blog_dev/assets/js/103.1fcdf1a6.js"><link rel="prefetch" href="/blog_dev/assets/js/104.1ee7ed66.js"><link rel="prefetch" href="/blog_dev/assets/js/105.930d6585.js"><link rel="prefetch" href="/blog_dev/assets/js/106.6c9a70f1.js"><link rel="prefetch" href="/blog_dev/assets/js/107.763f70be.js"><link rel="prefetch" href="/blog_dev/assets/js/108.ece6982e.js"><link rel="prefetch" href="/blog_dev/assets/js/109.8f51c4f8.js"><link rel="prefetch" href="/blog_dev/assets/js/11.c8d44958.js"><link rel="prefetch" href="/blog_dev/assets/js/110.6a9677da.js"><link rel="prefetch" href="/blog_dev/assets/js/111.a3c35ba2.js"><link rel="prefetch" href="/blog_dev/assets/js/112.92b77bde.js"><link rel="prefetch" href="/blog_dev/assets/js/113.44d02011.js"><link rel="prefetch" href="/blog_dev/assets/js/114.b873e4e0.js"><link rel="prefetch" href="/blog_dev/assets/js/115.5ab49f91.js"><link rel="prefetch" href="/blog_dev/assets/js/116.628ee277.js"><link rel="prefetch" href="/blog_dev/assets/js/117.72c78c9b.js"><link rel="prefetch" href="/blog_dev/assets/js/118.4a78f2a1.js"><link rel="prefetch" href="/blog_dev/assets/js/119.b5f8ec1a.js"><link rel="prefetch" href="/blog_dev/assets/js/12.2e2c4962.js"><link rel="prefetch" href="/blog_dev/assets/js/120.2e6fc4ea.js"><link rel="prefetch" href="/blog_dev/assets/js/121.cc99b124.js"><link rel="prefetch" href="/blog_dev/assets/js/122.1edc66d7.js"><link rel="prefetch" href="/blog_dev/assets/js/123.ed78fd8d.js"><link rel="prefetch" href="/blog_dev/assets/js/124.0ea7d468.js"><link rel="prefetch" href="/blog_dev/assets/js/125.cea2b46a.js"><link rel="prefetch" href="/blog_dev/assets/js/126.c87902ad.js"><link rel="prefetch" href="/blog_dev/assets/js/127.39ab36bb.js"><link rel="prefetch" href="/blog_dev/assets/js/128.1a14de05.js"><link rel="prefetch" href="/blog_dev/assets/js/129.499a4d50.js"><link rel="prefetch" href="/blog_dev/assets/js/13.bbd4355e.js"><link rel="prefetch" href="/blog_dev/assets/js/130.9aeee40d.js"><link rel="prefetch" href="/blog_dev/assets/js/131.b0e9d457.js"><link rel="prefetch" href="/blog_dev/assets/js/132.f4cc1d43.js"><link rel="prefetch" href="/blog_dev/assets/js/133.6c6788d9.js"><link rel="prefetch" href="/blog_dev/assets/js/134.aee6b217.js"><link rel="prefetch" href="/blog_dev/assets/js/135.0341fcac.js"><link rel="prefetch" href="/blog_dev/assets/js/136.b18c376d.js"><link rel="prefetch" href="/blog_dev/assets/js/137.ece51a33.js"><link rel="prefetch" href="/blog_dev/assets/js/138.3f8084db.js"><link rel="prefetch" href="/blog_dev/assets/js/139.3a32ec96.js"><link rel="prefetch" href="/blog_dev/assets/js/14.3c8c4978.js"><link rel="prefetch" href="/blog_dev/assets/js/140.874f1bc0.js"><link rel="prefetch" href="/blog_dev/assets/js/141.bcc47467.js"><link rel="prefetch" href="/blog_dev/assets/js/142.e8f96163.js"><link rel="prefetch" href="/blog_dev/assets/js/143.03567441.js"><link rel="prefetch" href="/blog_dev/assets/js/144.8a1aa46e.js"><link rel="prefetch" href="/blog_dev/assets/js/145.2761bd9e.js"><link rel="prefetch" href="/blog_dev/assets/js/146.2c2b36f8.js"><link rel="prefetch" href="/blog_dev/assets/js/147.36b85b55.js"><link rel="prefetch" href="/blog_dev/assets/js/148.39621b6e.js"><link rel="prefetch" href="/blog_dev/assets/js/149.6adb586d.js"><link rel="prefetch" href="/blog_dev/assets/js/15.8ad6684f.js"><link rel="prefetch" href="/blog_dev/assets/js/150.60ecc899.js"><link rel="prefetch" href="/blog_dev/assets/js/151.849e2ff8.js"><link rel="prefetch" href="/blog_dev/assets/js/152.d2b977d1.js"><link rel="prefetch" href="/blog_dev/assets/js/153.af5bd1b4.js"><link rel="prefetch" href="/blog_dev/assets/js/154.a29c77f6.js"><link rel="prefetch" href="/blog_dev/assets/js/155.77049fb5.js"><link rel="prefetch" href="/blog_dev/assets/js/156.15fafdab.js"><link rel="prefetch" href="/blog_dev/assets/js/157.5ec4881d.js"><link rel="prefetch" href="/blog_dev/assets/js/158.432b77f9.js"><link rel="prefetch" href="/blog_dev/assets/js/159.9fe16a02.js"><link rel="prefetch" href="/blog_dev/assets/js/16.c02cf2b5.js"><link rel="prefetch" href="/blog_dev/assets/js/160.3fa8b56a.js"><link rel="prefetch" href="/blog_dev/assets/js/161.59351c30.js"><link rel="prefetch" href="/blog_dev/assets/js/162.15bcc08b.js"><link rel="prefetch" href="/blog_dev/assets/js/163.0dfed31d.js"><link rel="prefetch" href="/blog_dev/assets/js/164.9894ca37.js"><link rel="prefetch" href="/blog_dev/assets/js/165.74edf68b.js"><link rel="prefetch" href="/blog_dev/assets/js/166.b9876c4c.js"><link rel="prefetch" href="/blog_dev/assets/js/167.7ea74ad7.js"><link rel="prefetch" href="/blog_dev/assets/js/168.f40e2a6c.js"><link rel="prefetch" href="/blog_dev/assets/js/169.7e06ef32.js"><link rel="prefetch" href="/blog_dev/assets/js/17.569f6f37.js"><link rel="prefetch" href="/blog_dev/assets/js/170.4c3cdf52.js"><link rel="prefetch" href="/blog_dev/assets/js/171.d612c864.js"><link rel="prefetch" href="/blog_dev/assets/js/172.dd82b6ce.js"><link rel="prefetch" href="/blog_dev/assets/js/173.a97d4658.js"><link rel="prefetch" href="/blog_dev/assets/js/174.e087d006.js"><link rel="prefetch" href="/blog_dev/assets/js/175.aa386489.js"><link rel="prefetch" href="/blog_dev/assets/js/176.04b2ef5f.js"><link rel="prefetch" href="/blog_dev/assets/js/177.9890e20d.js"><link rel="prefetch" href="/blog_dev/assets/js/178.397964c8.js"><link rel="prefetch" href="/blog_dev/assets/js/179.6351b9fc.js"><link rel="prefetch" href="/blog_dev/assets/js/18.38f29704.js"><link rel="prefetch" href="/blog_dev/assets/js/180.404ed7bb.js"><link rel="prefetch" href="/blog_dev/assets/js/181.c9995cc4.js"><link rel="prefetch" href="/blog_dev/assets/js/182.62c5c7a9.js"><link rel="prefetch" href="/blog_dev/assets/js/183.04508149.js"><link rel="prefetch" href="/blog_dev/assets/js/184.8f232429.js"><link rel="prefetch" href="/blog_dev/assets/js/185.cdd4ae77.js"><link rel="prefetch" href="/blog_dev/assets/js/186.92211450.js"><link rel="prefetch" href="/blog_dev/assets/js/187.05e269ca.js"><link rel="prefetch" href="/blog_dev/assets/js/188.993c1025.js"><link rel="prefetch" href="/blog_dev/assets/js/189.2f2e7771.js"><link rel="prefetch" href="/blog_dev/assets/js/19.c1996888.js"><link rel="prefetch" href="/blog_dev/assets/js/190.ca98c216.js"><link rel="prefetch" href="/blog_dev/assets/js/191.cd0e626c.js"><link rel="prefetch" href="/blog_dev/assets/js/192.5838aca4.js"><link rel="prefetch" href="/blog_dev/assets/js/193.002b8975.js"><link rel="prefetch" href="/blog_dev/assets/js/194.2e14ffd7.js"><link rel="prefetch" href="/blog_dev/assets/js/195.58cf8fd5.js"><link rel="prefetch" href="/blog_dev/assets/js/196.aa6cface.js"><link rel="prefetch" href="/blog_dev/assets/js/197.b142379e.js"><link rel="prefetch" href="/blog_dev/assets/js/198.6991422c.js"><link rel="prefetch" href="/blog_dev/assets/js/199.aefdc354.js"><link rel="prefetch" href="/blog_dev/assets/js/200.87dc0167.js"><link rel="prefetch" href="/blog_dev/assets/js/201.f1521379.js"><link rel="prefetch" href="/blog_dev/assets/js/202.6109df1e.js"><link rel="prefetch" href="/blog_dev/assets/js/203.1ff3ff76.js"><link rel="prefetch" href="/blog_dev/assets/js/204.ae398426.js"><link rel="prefetch" href="/blog_dev/assets/js/205.03e1487d.js"><link rel="prefetch" href="/blog_dev/assets/js/206.e8c1331e.js"><link rel="prefetch" href="/blog_dev/assets/js/207.37b85601.js"><link rel="prefetch" href="/blog_dev/assets/js/208.028993ec.js"><link rel="prefetch" href="/blog_dev/assets/js/209.00aded1e.js"><link rel="prefetch" href="/blog_dev/assets/js/21.80c98ffa.js"><link rel="prefetch" href="/blog_dev/assets/js/210.4d7d46c6.js"><link rel="prefetch" href="/blog_dev/assets/js/211.9e68160c.js"><link rel="prefetch" href="/blog_dev/assets/js/212.b2896159.js"><link rel="prefetch" href="/blog_dev/assets/js/213.0950df68.js"><link rel="prefetch" href="/blog_dev/assets/js/214.bddc9d2d.js"><link rel="prefetch" href="/blog_dev/assets/js/215.bf73e987.js"><link rel="prefetch" href="/blog_dev/assets/js/216.648c4bad.js"><link rel="prefetch" href="/blog_dev/assets/js/217.d248ee3a.js"><link rel="prefetch" href="/blog_dev/assets/js/218.76d203ab.js"><link rel="prefetch" href="/blog_dev/assets/js/219.d66dd003.js"><link rel="prefetch" href="/blog_dev/assets/js/22.4dcf4f16.js"><link rel="prefetch" href="/blog_dev/assets/js/220.9a6f13c6.js"><link rel="prefetch" href="/blog_dev/assets/js/221.bc6c133a.js"><link rel="prefetch" href="/blog_dev/assets/js/222.37029025.js"><link rel="prefetch" href="/blog_dev/assets/js/223.40da7ef7.js"><link rel="prefetch" href="/blog_dev/assets/js/224.5601fe71.js"><link rel="prefetch" href="/blog_dev/assets/js/225.d69527cf.js"><link rel="prefetch" href="/blog_dev/assets/js/226.9950c88e.js"><link rel="prefetch" href="/blog_dev/assets/js/227.f0f58336.js"><link rel="prefetch" href="/blog_dev/assets/js/228.0443d812.js"><link rel="prefetch" href="/blog_dev/assets/js/229.a30c407e.js"><link rel="prefetch" href="/blog_dev/assets/js/23.1c854f2c.js"><link rel="prefetch" href="/blog_dev/assets/js/230.1f1f3c69.js"><link rel="prefetch" href="/blog_dev/assets/js/231.de2964de.js"><link rel="prefetch" href="/blog_dev/assets/js/232.8c0d447c.js"><link rel="prefetch" href="/blog_dev/assets/js/233.d7f29b14.js"><link rel="prefetch" href="/blog_dev/assets/js/234.b556b2cc.js"><link rel="prefetch" href="/blog_dev/assets/js/235.2757c550.js"><link rel="prefetch" href="/blog_dev/assets/js/236.ca7b7c7d.js"><link rel="prefetch" href="/blog_dev/assets/js/237.5757b73a.js"><link rel="prefetch" href="/blog_dev/assets/js/238.3c973654.js"><link rel="prefetch" href="/blog_dev/assets/js/239.965ed686.js"><link rel="prefetch" href="/blog_dev/assets/js/24.2767ea77.js"><link rel="prefetch" href="/blog_dev/assets/js/240.08c2fb9b.js"><link rel="prefetch" href="/blog_dev/assets/js/241.8d347368.js"><link rel="prefetch" href="/blog_dev/assets/js/242.5509706e.js"><link rel="prefetch" href="/blog_dev/assets/js/243.20eb9fa0.js"><link rel="prefetch" href="/blog_dev/assets/js/244.47bb2ab8.js"><link rel="prefetch" href="/blog_dev/assets/js/245.39c621ec.js"><link rel="prefetch" href="/blog_dev/assets/js/246.1820d92f.js"><link rel="prefetch" href="/blog_dev/assets/js/247.62edfd29.js"><link rel="prefetch" href="/blog_dev/assets/js/248.a483766a.js"><link rel="prefetch" href="/blog_dev/assets/js/249.3f130b31.js"><link rel="prefetch" href="/blog_dev/assets/js/25.fcaadf72.js"><link rel="prefetch" href="/blog_dev/assets/js/250.f2c3eaf4.js"><link rel="prefetch" href="/blog_dev/assets/js/251.a2d3b471.js"><link rel="prefetch" href="/blog_dev/assets/js/252.fd2dbbd1.js"><link rel="prefetch" href="/blog_dev/assets/js/253.e21a2b1f.js"><link rel="prefetch" href="/blog_dev/assets/js/254.a33cc858.js"><link rel="prefetch" href="/blog_dev/assets/js/255.477885a7.js"><link rel="prefetch" href="/blog_dev/assets/js/256.aa6e208d.js"><link rel="prefetch" href="/blog_dev/assets/js/257.f7ff402e.js"><link rel="prefetch" href="/blog_dev/assets/js/258.3ea6da22.js"><link rel="prefetch" href="/blog_dev/assets/js/259.63d7147b.js"><link rel="prefetch" href="/blog_dev/assets/js/26.ccb1e3b1.js"><link rel="prefetch" href="/blog_dev/assets/js/260.ec7d9d68.js"><link rel="prefetch" href="/blog_dev/assets/js/261.54147591.js"><link rel="prefetch" href="/blog_dev/assets/js/262.b5dacc77.js"><link rel="prefetch" href="/blog_dev/assets/js/263.0eace37e.js"><link rel="prefetch" href="/blog_dev/assets/js/264.d1205d4e.js"><link rel="prefetch" href="/blog_dev/assets/js/265.8678ed17.js"><link rel="prefetch" href="/blog_dev/assets/js/266.31770a82.js"><link rel="prefetch" href="/blog_dev/assets/js/267.1a49a7eb.js"><link rel="prefetch" href="/blog_dev/assets/js/268.66960a34.js"><link rel="prefetch" href="/blog_dev/assets/js/269.cc756326.js"><link rel="prefetch" href="/blog_dev/assets/js/27.d9a8a6ca.js"><link rel="prefetch" href="/blog_dev/assets/js/270.5330e798.js"><link rel="prefetch" href="/blog_dev/assets/js/271.a43c5d9b.js"><link rel="prefetch" href="/blog_dev/assets/js/272.90a11977.js"><link rel="prefetch" href="/blog_dev/assets/js/273.5f7f9e38.js"><link rel="prefetch" href="/blog_dev/assets/js/274.51ae597c.js"><link rel="prefetch" href="/blog_dev/assets/js/275.df299ca7.js"><link rel="prefetch" href="/blog_dev/assets/js/276.ed915d34.js"><link rel="prefetch" href="/blog_dev/assets/js/277.fc17683b.js"><link rel="prefetch" href="/blog_dev/assets/js/278.fc6ccad8.js"><link rel="prefetch" href="/blog_dev/assets/js/279.533213fc.js"><link rel="prefetch" href="/blog_dev/assets/js/28.436a903e.js"><link rel="prefetch" href="/blog_dev/assets/js/280.6a54a280.js"><link rel="prefetch" href="/blog_dev/assets/js/281.e94574d6.js"><link rel="prefetch" href="/blog_dev/assets/js/282.276f9e90.js"><link rel="prefetch" href="/blog_dev/assets/js/283.44dd4c0c.js"><link rel="prefetch" href="/blog_dev/assets/js/284.df9cac23.js"><link rel="prefetch" href="/blog_dev/assets/js/285.c36476d7.js"><link rel="prefetch" href="/blog_dev/assets/js/286.971e05b5.js"><link rel="prefetch" href="/blog_dev/assets/js/287.d8be7609.js"><link rel="prefetch" href="/blog_dev/assets/js/288.440ed066.js"><link rel="prefetch" href="/blog_dev/assets/js/289.851639e1.js"><link rel="prefetch" href="/blog_dev/assets/js/29.911cf524.js"><link rel="prefetch" href="/blog_dev/assets/js/3.8c43b06f.js"><link rel="prefetch" href="/blog_dev/assets/js/30.ecf59ce1.js"><link rel="prefetch" href="/blog_dev/assets/js/31.c744c533.js"><link rel="prefetch" href="/blog_dev/assets/js/32.9df30e0c.js"><link rel="prefetch" href="/blog_dev/assets/js/33.f056e921.js"><link rel="prefetch" href="/blog_dev/assets/js/34.d419fd4d.js"><link rel="prefetch" href="/blog_dev/assets/js/35.9046af1b.js"><link rel="prefetch" href="/blog_dev/assets/js/36.078c2afd.js"><link rel="prefetch" href="/blog_dev/assets/js/37.02b33b24.js"><link rel="prefetch" href="/blog_dev/assets/js/38.75f208b3.js"><link rel="prefetch" href="/blog_dev/assets/js/39.992f37f6.js"><link rel="prefetch" href="/blog_dev/assets/js/4.b10c79af.js"><link rel="prefetch" href="/blog_dev/assets/js/40.707b2414.js"><link rel="prefetch" href="/blog_dev/assets/js/41.99c553e7.js"><link rel="prefetch" href="/blog_dev/assets/js/42.f5055bf8.js"><link rel="prefetch" href="/blog_dev/assets/js/43.4251a70f.js"><link rel="prefetch" href="/blog_dev/assets/js/44.e1cd23b5.js"><link rel="prefetch" href="/blog_dev/assets/js/45.7ec7d160.js"><link rel="prefetch" href="/blog_dev/assets/js/46.add19165.js"><link rel="prefetch" href="/blog_dev/assets/js/47.2b988c64.js"><link rel="prefetch" href="/blog_dev/assets/js/48.bcfbdd9e.js"><link rel="prefetch" href="/blog_dev/assets/js/49.65ae5aba.js"><link rel="prefetch" href="/blog_dev/assets/js/5.2b0be055.js"><link rel="prefetch" href="/blog_dev/assets/js/50.251b4a96.js"><link rel="prefetch" href="/blog_dev/assets/js/51.032ab4af.js"><link rel="prefetch" href="/blog_dev/assets/js/52.2db4dfed.js"><link rel="prefetch" href="/blog_dev/assets/js/53.c4c1ddca.js"><link rel="prefetch" href="/blog_dev/assets/js/54.1a3e619a.js"><link rel="prefetch" href="/blog_dev/assets/js/55.ea3ccb97.js"><link rel="prefetch" href="/blog_dev/assets/js/56.de8d0a52.js"><link rel="prefetch" href="/blog_dev/assets/js/57.097288ef.js"><link rel="prefetch" href="/blog_dev/assets/js/58.d6981cef.js"><link rel="prefetch" href="/blog_dev/assets/js/59.650ba727.js"><link rel="prefetch" href="/blog_dev/assets/js/6.f13d49e3.js"><link rel="prefetch" href="/blog_dev/assets/js/60.f01476a2.js"><link rel="prefetch" href="/blog_dev/assets/js/61.1c285f09.js"><link rel="prefetch" href="/blog_dev/assets/js/62.76b21a5f.js"><link rel="prefetch" href="/blog_dev/assets/js/63.6db1243f.js"><link rel="prefetch" href="/blog_dev/assets/js/64.40bec010.js"><link rel="prefetch" href="/blog_dev/assets/js/65.a0010ed1.js"><link rel="prefetch" href="/blog_dev/assets/js/66.adb2797f.js"><link rel="prefetch" href="/blog_dev/assets/js/67.80607e9b.js"><link rel="prefetch" href="/blog_dev/assets/js/68.990cfec1.js"><link rel="prefetch" href="/blog_dev/assets/js/69.94c53803.js"><link rel="prefetch" href="/blog_dev/assets/js/7.af91cabf.js"><link rel="prefetch" href="/blog_dev/assets/js/70.ca09c151.js"><link rel="prefetch" href="/blog_dev/assets/js/71.1d79f4c2.js"><link rel="prefetch" href="/blog_dev/assets/js/72.ac1aa0f5.js"><link rel="prefetch" href="/blog_dev/assets/js/73.f6510a99.js"><link rel="prefetch" href="/blog_dev/assets/js/74.96b210d2.js"><link rel="prefetch" href="/blog_dev/assets/js/75.9085b6b8.js"><link rel="prefetch" href="/blog_dev/assets/js/76.19a6dd2a.js"><link rel="prefetch" href="/blog_dev/assets/js/77.35ca8a92.js"><link rel="prefetch" href="/blog_dev/assets/js/78.e02bfa3d.js"><link rel="prefetch" href="/blog_dev/assets/js/79.d098ba24.js"><link rel="prefetch" href="/blog_dev/assets/js/8.68d379c2.js"><link rel="prefetch" href="/blog_dev/assets/js/80.ddaa2d29.js"><link rel="prefetch" href="/blog_dev/assets/js/81.373daf14.js"><link rel="prefetch" href="/blog_dev/assets/js/82.5ec4b200.js"><link rel="prefetch" href="/blog_dev/assets/js/83.a70736f1.js"><link rel="prefetch" href="/blog_dev/assets/js/84.ef0afc09.js"><link rel="prefetch" href="/blog_dev/assets/js/85.2b0f1da5.js"><link rel="prefetch" href="/blog_dev/assets/js/86.2fa3416a.js"><link rel="prefetch" href="/blog_dev/assets/js/87.873e69a5.js"><link rel="prefetch" href="/blog_dev/assets/js/88.56124909.js"><link rel="prefetch" href="/blog_dev/assets/js/89.f6ec01f1.js"><link rel="prefetch" href="/blog_dev/assets/js/9.168d9c00.js"><link rel="prefetch" href="/blog_dev/assets/js/90.5fe5b9a9.js"><link rel="prefetch" href="/blog_dev/assets/js/91.d4424016.js"><link rel="prefetch" href="/blog_dev/assets/js/92.e005b8b7.js"><link rel="prefetch" href="/blog_dev/assets/js/93.abf1a2d2.js"><link rel="prefetch" href="/blog_dev/assets/js/94.593a4ca5.js"><link rel="prefetch" href="/blog_dev/assets/js/95.72bf3e24.js"><link rel="prefetch" href="/blog_dev/assets/js/96.a5f43e4a.js"><link rel="prefetch" href="/blog_dev/assets/js/97.ceeb6d85.js"><link rel="prefetch" href="/blog_dev/assets/js/98.23fbe436.js"><link rel="prefetch" href="/blog_dev/assets/js/99.d8cd8078.js">
+    <link rel="stylesheet" href="/blog_dev/assets/css/0.styles.e9faf17d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog_dev/" class="home-link router-link-active"><!----> <span class="site-name">hailiting Blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>CSS</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog_dev/CSS/CSS3D的应用.html" class="sidebar-link">CSS3D 的应用</a></li><li><a href="/blog_dev/CSS/CSS3绘制特殊图形的技巧.html" class="active sidebar-link">CSS3 绘制特殊图形的技巧</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog_dev/CSS/CSS3绘制特殊图形的技巧.html#具体事例" class="sidebar-link">具体事例</a></li></ul></li><li><a href="/blog_dev/CSS/CSS叠加效果.html" class="sidebar-link">CSS 叠加效果</a></li><li><a href="/blog_dev/CSS/CSS格式化上下文.html" class="sidebar-link">CSS 格式化上下文 - Formatting Context</a></li><li><a href="/blog_dev/CSS/CSS贝塞尔曲线.html" class="sidebar-link">CSS 贝塞尔曲线</a></li><li><a href="/blog_dev/CSS/CSS面试题.html" class="sidebar-link">CSS 面试题</a></li><li><a href="/blog_dev/CSS/" aria-current="page" class="sidebar-link">my CSS</a></li><li><a href="/blog_dev/CSS/css与数学.html" class="sidebar-link">CSS 与数学</a></li><li><a href="/blog_dev/CSS/scope.html" class="sidebar-link">css_scope</a></li><li><a href="/blog_dev/CSS/scss.html" class="sidebar-link">scss</a></li><li><a href="/blog_dev/CSS/vscode下改变css语法.html" class="sidebar-link">vscode 下改变 css 语法</a></li><li><a href="/blog_dev/CSS/实现上下左右居中布局.html" class="sidebar-link">实现上下左右居中布局</a></li><li><a href="/blog_dev/CSS/消除不同浏览器的默认样式.html" class="sidebar-link">消除不同浏览器的默认样式</a></li><li><a href="/blog_dev/CSS/重温双飞翼布局和圣杯布局.html" class="sidebar-link">重温双飞翼布局和圣杯布局</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Demo笔记</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Flutter</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>HTML</span> <span class="arrow right"></span></p> <!----></section></li><li><a href="/blog_dev/HTTP协议和反向代理.html" class="sidebar-link">浏览器行为与HTTP协议</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Java</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JavaScript</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>NodeJS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>PHP</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>React</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>ReactNative</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>TypeScript</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Wechat</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>mongodb</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>mysql</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>npm</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>redis</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>区块链</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>工程化</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>微信公众号</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>每日一道前端面试题</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>浏览器</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>算法与数据结构</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>计算机服务基础</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>课程笔记</span> <span class="arrow right"></span></p> <!----></section></li><li><a href="/blog_dev/课程表.html" class="sidebar-link">/课程表.html</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>面试之道</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="css3-绘制特殊图形的技巧"><a href="#css3-绘制特殊图形的技巧" class="header-anchor">#</a> CSS3 绘制特殊图形的技巧</h1> <p><img src="/blog_dev/assets/img/cssSpe.1b85cd91.png" alt="cssSpe"></p> <h2 id="具体事例"><a href="#具体事例" class="header-anchor">#</a> 具体事例</h2> <h4 id="弯尾箭头-curved-tail-arrow"><a href="#弯尾箭头-curved-tail-arrow" class="header-anchor">#</a> 弯尾箭头 Curved Tail Arrow</h4> <h4 id="梯形-trapezoid"><a href="#梯形-trapezoid" class="header-anchor">#</a> 梯形 Trapezoid</h4> <h4 id="平行四边形-parallelogram"><a href="#平行四边形-parallelogram" class="header-anchor">#</a> 平行四边形 Parallelogram</h4> <h4 id="五角星-star-5-points"><a href="#五角星-star-5-points" class="header-anchor">#</a> 五角星 Star 5-points</h4> <h4 id="五边形-pentagon"><a href="#五边形-pentagon" class="header-anchor">#</a> 五边形 Pentagon</h4> <h4 id="六边形-hexagon"><a href="#六边形-hexagon" class="header-anchor">#</a> 六边形 Hexagon</h4> <h4 id="八边形-octagon"><a href="#八边形-octagon" class="header-anchor">#</a> 八边形 Octagon</h4> <h4 id="心形-heart"><a href="#心形-heart" class="header-anchor">#</a> 心形 Heart</h4> <h4 id="无限符图形-infinity"><a href="#无限符图形-infinity" class="header-anchor">#</a> 无限符图形 Infinity</h4> <h4 id="菱形-diamond-square"><a href="#菱形-diamond-square" class="header-anchor">#</a> 菱形 Diamond Square</h4> <h4 id="钻石盾牌-diamond-shield"><a href="#钻石盾牌-diamond-shield" class="header-anchor">#</a> 钻石盾牌 Diamond Shield</h4> <h4 id="窄菱形-diamond-narrow"><a href="#窄菱形-diamond-narrow" class="header-anchor">#</a> 窄菱形 Diamond Narrow</h4> <h4 id="钻石型-cut-diamond"><a href="#钻石型-cut-diamond" class="header-anchor">#</a> 钻石型 Cut Diamond</h4> <h4 id="鸡蛋-egg"><a href="#鸡蛋-egg" class="header-anchor">#</a> 鸡蛋 Egg</h4> <h4 id="吃豆人-pac-man"><a href="#吃豆人-pac-man" class="header-anchor">#</a> 吃豆人 Pac-Man</h4> <h4 id="聊天框-talk-bubble"><a href="#聊天框-talk-bubble" class="header-anchor">#</a> 聊天框 Talk Bubble</h4> <h4 id="爆炸形状-point-burst"><a href="#爆炸形状-point-burst" class="header-anchor">#</a> 爆炸形状 Point Burst</h4> <h4 id="阴阳八卦-yin-yang"><a href="#阴阳八卦-yin-yang" class="header-anchor">#</a> 阴阳八卦 Yin Yang</h4> <h4 id="徽章丝带-badge-ribbon"><a href="#徽章丝带-badge-ribbon" class="header-anchor">#</a> 徽章丝带 Badge Ribbon</h4> <h4 id="太空入侵者-space-invader"><a href="#太空入侵者-space-invader" class="header-anchor">#</a> 太空入侵者 Space Invader</h4> <h4 id="电视屏幕-tv-screen"><a href="#电视屏幕-tv-screen" class="header-anchor">#</a> 电视屏幕 TV Screen</h4> <h4 id="雪佛龙-chevron"><a href="#雪佛龙-chevron" class="header-anchor">#</a> 雪佛龙 Chevron</h4> <h4 id="放大镜-magnifying-glass"><a href="#放大镜-magnifying-glass" class="header-anchor">#</a> 放大镜 Magnifying Glass</h4> <h4 id="圆锥形-cone"><a href="#圆锥形-cone" class="header-anchor">#</a> 圆锥形 Cone</h4> <h4 id="月亮-moon"><a href="#月亮-moon" class="header-anchor">#</a> 月亮 Moon</h4> <div class="language- extra-class"><pre class="language-text"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+  &lt;style&gt;
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .icon {
+      padding: 20px;
+    }
+
+    .icon i {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    .Curved_Tail_Arrow {
+      position: relative;
+      width: 0;
+      height: 0;
+      border-top: 9px solid transparent;
+      border-right: 9px solid red;
+      transform: rotate(10deg);
+    }
+
+    .Curved_Tail_Arrow::after {
+      content: &quot;&quot;;
+      position: absolute;
+      border: 0 solid transparent;
+      border-top: 3px solid red;
+      top: -12px;
+      left: -9px;
+      width: 12px;
+      height: 12px;
+      border-radius: 20px 0 0 0;
+      transform: rotate(45deg);
+    }
+
+    .Trapezoid {
+      width: 10px;
+      height: 0;
+      border-bottom: 25px solid red;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+    }
+
+    .Parallelogram {
+      width: 15px;
+      height: 10px;
+      transform: skew(20deg);
+      background-color: red;
+    }
+
+    .Star_5 {
+      margin: 5px 0;
+      position: relative;
+      width: 0;
+      height: 0;
+      border-right: 10px solid transparent;
+      border-bottom: 7px solid red;
+      border-left: 10px solid transparent;
+      transform: rotate(35deg);
+    }
+
+    .Star_5::before,
+    .Star_5::after {
+      content: &quot;&quot;;
+      width: 0;
+      height: 0;
+      border-right: 10px solid transparent;
+      border-bottom: 7px solid red;
+      border-left: 10px solid transparent;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .Star_5::before {
+      transform: rotate(-140deg);
+      top: 0;
+      left: -10px;
+    }
+
+    .Star_5::after {
+      transform: rotate(-70deg);
+      top: 0;
+      left: -10px;
+    }
+
+    .Star_6 {
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 10px solid red;
+      position: relative;
+    }
+
+    .Star_6::after {
+      content: &quot;&quot;;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 10px solid red;
+      position: absolute;
+      top: 3px;
+      left: -5px;
+    }
+
+    .Pentagon {
+      position: relative;
+      width: 10px;
+      border-width: 11px 6px 0;
+      border-style: solid;
+      border-color: red transparent;
+    }
+
+    .Pentagon::before {
+      content: &quot;&quot;;
+      position: absolute;
+      height: 0;
+      width: 0;
+      top: -19px;
+      left: -6px;
+      border-width: 0 11px 8px;
+      border-style: solid;
+      border-color: transparent transparent red transparent;
+    }
+
+    .Hexagon {
+      position: relative;
+      width: 20px;
+      height: 10px;
+      background-color: red;
+    }
+
+    .Hexagon:before,
+    .Hexagon::after {
+      content: &quot;&quot;;
+      position: absolute;
+      height: 0;
+      width: 0;
+      border-style: solid;
+      left: 0;
+    }
+
+    .Hexagon:before {
+      top: -6px;
+      border-width: 0 10px 6px;
+      border-color: transparent transparent red transparent;
+    }
+
+    .Hexagon:after {
+      bottom: -6px;
+      border-width: 6px 10px 0;
+      border-color: red transparent transparent transparent;
+    }
+
+    .Octagon {
+      width: 100px;
+      height: 100px;
+      background: red;
+      position: relative;
+    }
+
+    .Octagon:before {
+      content: &quot;&quot;;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-bottom: 29px solid red;
+      border-left: 29px solid #fff;
+      border-right: 29px solid #fff;
+      width: 42px;
+      height: 0;
+    }
+
+    .Octagon:after {
+      content: &quot;&quot;;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-top: 29px solid red;
+      border-left: 29px solid #fff;
+      border-right: 29px solid #fff;
+      width: 42px;
+      height: 0;
+    }
+
+    .Heart {
+      position: relative;
+      width: 100px;
+      height: 90px;
+    }
+
+    .Heart:before,
+    .Heart:after {
+      position: absolute;
+      content: &quot;&quot;;
+      left: 50px;
+      top: 0;
+      width: 50px;
+      height: 80px;
+      background: red;
+      -moz-border-radius: 50px 50px 0 0;
+      border-radius: 50px 50px 0 0;
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      -webkit-transform-origin: 0 100%;
+      -moz-transform-origin: 0 100%;
+      -ms-transform-origin: 0 100%;
+      -o-transform-origin: 0 100%;
+      transform-origin: 0 100%;
+    }
+
+    .Heart:after {
+      left: 0;
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      transform: rotate(45deg);
+      -webkit-transform-origin: 100% 100%;
+      -moz-transform-origin: 100% 100%;
+      -ms-transform-origin: 100% 100%;
+      -o-transform-origin: 100% 100%;
+      transform-origin: 100% 100%;
+    }
+
+    .Infinity {
+      position: relative;
+      width: 212px;
+      height: 100px;
+    }
+
+    .Infinity:before,
+    .Infinity:after {
+      content: &quot;&quot;;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60px;
+      height: 60px;
+      border: 20px solid red;
+      -moz-border-radius: 50px 50px 0 50px;
+      border-radius: 50px 50px 0 50px;
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+    }
+
+    .Infinity:after {
+      left: auto;
+      right: 0;
+      -moz-border-radius: 50px 50px 50px 0;
+      border-radius: 50px 50px 50px 0;
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+
+    .Diamond_Square {}
+
+    .Diamond_Shield {}
+
+    .Diamond_Narrow {}
+
+    .Cut_Diamond {}
+
+    .Egg {
+      display: block;
+      width: 126px;
+      height: 180px;
+      background-color: red;
+      /* border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; */
+      border-top-left-radius: 50% 60%;
+      border-top-right-radius: 50% 60%;
+      border-bottom-right-radius: 50% 40%;
+      border-bottom-left-radius: 50% 40%;
+      /*
+        is equivalent to:width:
+        border-top-left-radius: 50% 60%;
+        border-top-right-radius: 50% 60%;
+        border-bottom-right-radius: 50% 40%;
+        border-bottom-left-radius: 50% 40%;
+        */
+    }
+
+    .Pac_Man {}
+
+    .Talk_Bubble {}
+
+    .Point_Burst {}
+
+    .Yin_Yang {
+      position: relative;
+      width: 96px;
+      height: 48px;
+      background-color: #eee;
+      border-style: solid;
+      border-color: red;
+      border-width: 2px 2px 50px 2px;
+      border-radius: 100%;
+    }
+
+    .Yin_Yang::before,
+    .Yin_Yang::after {
+      content: &quot;&quot;;
+      top: 50%;
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 100%;
+    }
+
+    .Yin_Yang::before {
+      left: 0;
+      background-color: #eee;
+      border: 18px solid red;
+    }
+
+    .Yin_Yang::after {
+      right: 0;
+      background-color: red;
+      border: 18px solid #eee;
+    }
+
+    .Badge_Ribbon {}
+
+    .Space_Invader {
+      box-shadow:
+        0 0 0 1em red,
+        0 1em 0 1em red,
+        -2.5em 1.5em 0 .5em red;
+      background: red;
+      width: 1em;
+      height: 1em;
+      overflow: hidden;
+      margin: 50px 0 70px 65px;
+    }
+
+    .TV_Screen {
+      position: relative;
+      width: 200px;
+      height: 150px;
+      margin: 20px 0;
+      background: red;
+      border-radius: 50% / 10%;
+      color: white;
+      text-align: center;
+      text-indent: .1em;
+    }
+
+    .TV_Screen:before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      bottom: 10%;
+      right: -5%;
+      left: -5%;
+      background: inherit;
+      border-radius: 5% / 50%;
+    }
+
+    .Chevron {}
+
+    .Magnifying_Glass {}
+
+    .Cone {}
+
+    .Moon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      box-shadow: 15px 15px 0 0 red;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;div class=&quot;icon&quot;&gt;
+    &lt;i class=&quot;Curved_Tail_Arrow&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Trapezoid&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Parallelogram&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Star_5&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Star_6&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Pentagon&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Hexagon&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Octagon&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Heart&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Infinity&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Diamond_Square&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Diamond_Shield&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Diamond_Narrow&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Cut_Diamond&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Egg&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Pac_Man&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Talk_Bubble&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Point_Burst&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Yin_Yang&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Badge_Ribbon&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Space_Invader&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;TV_Screen&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Chevron&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Magnifying_Glass&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Cone&quot;&gt;&lt;/i&gt;
+    &lt;i class=&quot;Moon&quot;&gt;&lt;/i&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/blog_dev/CSS/CSS3D的应用.html" class="prev">
+        CSS3D 的应用
+      </a></span> <span class="next"><a href="/blog_dev/CSS/CSS叠加效果.html">
+        CSS 叠加效果
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/blog_dev/assets/js/app.f5aac5a7.js" defer></script><script src="/blog_dev/assets/js/2.fcf59071.js" defer></script><script src="/blog_dev/assets/js/20.4cb1ceef.js" defer></script>
+  </body>
+</html>
