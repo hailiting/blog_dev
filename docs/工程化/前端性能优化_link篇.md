@@ -1,4 +1,4 @@
-# 前端性能优化\_link 篇.md
+# 前端性能优化\_link 篇
 
 ## link 标签`rel="alternate"`属性的作用及用法
 
@@ -79,7 +79,7 @@
 prefetch 与 preload 不同之处：
 
 - 1. prefetch 的优先级很低，低到浏览器可以不加载
-- 2. prefetch 的优先级很高，浏览器一定要加载
+- 2. preload 的优先级很高，浏览器一定要加载
 - 3. prefetch 加载的资源用于`将来`的某个页面，这意味着它可能不会被用到
 - 4. Preload 加载的资源用于`当前`页面
 
