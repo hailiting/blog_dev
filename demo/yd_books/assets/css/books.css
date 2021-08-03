@@ -1,0 +1,21 @@
+.books .item li {
+  font-size: 13px;
+  padding: 10px 15px;
+  list-style: none;
+  display: inline-block;
+  /* border-right: 1px solid #3c3c3c; */
+  margin-bottom: 15px;
+}
+
+.border {
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background: #ccc;
+  position: relative;
+  top: 2px;
+}
+
+.books item {
+  float: left;
+}

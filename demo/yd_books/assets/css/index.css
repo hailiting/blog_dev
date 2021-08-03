@@ -1,6 +1,11 @@
 body {
-  background-color: orange;
+  background: rebeccapurple;
 }
+
 h1 {
-  color: #fff;
+  color: black;
+}
+
+p {
+  color: red;
 }
