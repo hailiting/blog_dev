@@ -4,5 +4,5 @@ const app6 = new Vue({
     message: "Hello Vue!",
   },
 });
-const data = "🎋 ^s";
+const data = "🎋s";
 export default data;
