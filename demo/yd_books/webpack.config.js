@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const htmlAfterPlugin = require("./config/htmlAfterPlugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 // 取命令行参数
 const argv = require("yargs-parser")(process.argv.slice(2));
 const _mode = argv.mode || "development"; // 区分开发环境还是线上环境
@@ -33,18 +33,18 @@ for (let item of files) {
         filename: `../views/${dist}/pages/${template}.html`,
         // 指定生成文件所依赖的html模板
         template: `src/client/views/${dist}/pages/${template}.html`,
-        // 生成的js放哪   
+        // 生成的js放哪
         // true || body    body底部
         // head 在head中
         // false 不插入
-        favicon: "./favicon.ico"
+        // favicon: "./favicon.ico"
         inject: false,
         // 指定当前html要使用哪些js
         chunks: [entryKey],
         // html-webpack-plugin集成了html-minifier
         minify: {
           // removeAttributeQuotes: true,
-        }
+        },
       })
     );
   }
@@ -67,9 +67,9 @@ const webpackConfig = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env"]
-          }
-        }
+            presets: ["@babel/preset-env"],
+          },
+        },
       },
       {
         test: /\.css$/,
@@ -80,13 +80,13 @@ const webpackConfig = {
           {
             loader: "css-loader",
             options: {
-              importLoaders: 1
-            }
+              importLoaders: 1,
+            },
           },
-          "postcss-loader"
-        ]
-      }
-    ]
+          "postcss-loader",
+        ],
+      },
+    ],
   },
   plugins: [
     ..._plugins,
@@ -94,8 +94,8 @@ const webpackConfig = {
       filename: "styles/[name].css",
       chunkFilename: "styles/[id].css",
     }),
-    new htmlAfterPlugin
+    new htmlAfterPlugin(),
   ],
-  watch: __modeFlag
-}
+  watch: __modeFlag,
+};
 module.exports = merge(webpackConfig, _mergeConfig);

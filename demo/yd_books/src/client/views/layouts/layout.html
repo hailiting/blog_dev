@@ -9,15 +9,19 @@
   </head>
   <body>
     <div class="container" id="app">
-      {%block content%} {%endblock%}
+      {% include "../../components/banner/index.html" %} {%block content%}
+      {%endblock%}
     </div>
-    <!-- <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script> -->
-    <script src="https://cdn.staticfile.org/x-tag/1.1.13/x-tag-core.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
     <script src="https://cdn.staticfile.org/jquery/1.10.0/jquery.js"></script>
     <script src="https://cdn.staticfile.org/jquery.pjax/0.9/jquery.pjax.js"></script>
+    <script src="https://unpkg.com/quicklink@1.0.0/dist/quicklink.umd.js"></script>
+
     <script>
       // 把所有的a都绑定上
       $(document).pjax("a", "#app");
+      // 资源预加载
+      quicklink();
     </script>
     {%block scripts%} {%endblock%}
   </body>

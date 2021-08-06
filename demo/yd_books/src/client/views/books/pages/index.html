@@ -1,0 +1,66 @@
+{% extends '../../layouts/layout.html' %} {% block title %}[[ title ]]{%
+endblock %} {% block head %}
+<link rel="stylesheet" href="styles/index.css" />
+{% endblock %} {% block content %}
+<!-- 页面vue渲染  csr -->
+<div id="app-6">
+  <p>{{ message }}</p>
+  <input v-model="message" />
+</div>
+<!-- 服务端渲染 ssr -->
+<h1>[[ data ]]</h1>
+
+<!-- 测试节流函数 -->
+<input type="button" value="函数式编程节流" id="jsBtn" />
+{% endblock %} {% block script %}
+<!-- <script src="https://cdn.bootcss.com/lodash.js/4.17.12-pre/lodash.min.js"></script> -->
+<!-- 如果浏览器支持es6+语法的执行环境 -->
+<script type="module">
+  import("/scripts/index.js").then((_) => {
+    console.log(_.default); // 拿到export defalut 出来的东西了
+  });
+</script>
+
+<!--  如果浏览器不支持 -->
+<!-- 
+        需要安装 @babel/core @babel/cli @babel/preset-env 包 
+        yarn add @babel/core  @babel/cli @babel/preset-env --save-dev
+        执行 npm run build
+     -->
+<script
+  type="nomodule"
+  src="https://cdn.bootcss.com/systemjs/3.1.6/system.min.js"
+></script>
+<script type="nomodule">
+  System.import('/scripts/index-bundle.js').then(_ => {
+      console.log(_.default); // 拿到export defalut 出来的东西了
+  });
+</script>
+<!-- 直接引不支持export语法 -->
+<!-- <script src="scripts/index.js"></script> -->
+
+<script src="/scripts/yd.js"></script>
+<script>
+  // 支持两种调用方式 仿照lodash
+  var str = "杨帅最帅";
+
+  console.log(_("xx"));
+  _("杨帅最帅").map(function() {
+    console.log(1);
+  });
+
+  _.map(str, function() {
+    console.log(1);
+  });
+
+  // 测试写的函数式编程
+  var jsBtn = document.querySelector("#jsBtn");
+
+  jsBtn.addEventListener(
+    "click",
+    _.throttle(function() {
+      console.log(1);
+    })
+  );
+</script>
+{% endblock %}

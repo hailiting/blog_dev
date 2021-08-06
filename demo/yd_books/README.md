@@ -12,7 +12,7 @@ v12.22.1
 - npm run server:dev
 - npm run server:start
 
-http://localhost:8082/books/list
+http://localhost:8081/books/list
 
 ## 亮点
 
