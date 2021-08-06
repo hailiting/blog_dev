@@ -16,12 +16,16 @@ class SafeRequest {
       fetch(this.baseUrl + this.url, {
         ...this.options,
         headers: {
-          "Content-Type": "application/json",
-          "Content-Length": 100,
+          // "Content-Type": "application/json",
+          // "Content-Length": 100,
         },
       })
         .then((res) => {
-          console.log(1);
+          console.log(this.url);
+          if (this.url.indexOf("create") > -1) {
+            console.log("sss", res);
+          }
+
           let _json = {};
           try {
             return res.json();

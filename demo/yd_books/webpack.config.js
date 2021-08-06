@@ -17,7 +17,6 @@ let _entry = {};
 let _plugins = [];
 
 for (let item of files) {
-  console.log(item, "-------");
   if (/.+\/([a-zA-Z]+-[a-zA-Z]+)(\.entry\.js$)/g.test(item) === true) {
     const entryKey = RegExp.$1;
 
