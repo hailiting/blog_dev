@@ -1,5 +1,3 @@
-import list from "@/components/list/list.js";
-import banner from "@/components/banner/banner.js";
+import list from "@/list/list.js";
 
 list.init();
-banner.init();

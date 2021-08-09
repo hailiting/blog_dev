@@ -9,6 +9,7 @@ setTitle("🍊开发环境配置");
 setIterm2Badge("8081");
 
 module.exports = {
+  // output:
   devServer: {
     contentBase: join(__dirname, "../dist"),
     hot: true,
@@ -21,8 +22,17 @@ module.exports = {
           from: join(__dirname, "../", "src/client/views/layouts/layout.html"),
           to: "../views/layouts/layout.html",
         },
+        {
+          from: join(__dirname, "../", "assets/scripts"),
+          to: "../assets/scripts",
+        },
+        {
+          from: join(__dirname, "../", "assets/styles"),
+          to: "../assets/styles",
+        },
       ],
     }),
+
     new CopyPlugin(
       {
         patterns: [
@@ -39,6 +49,7 @@ module.exports = {
       logo: join(__dirname, "../dogs.png"),
       suppressSuccess: true,
     }),
+
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
         // 启动成功

@@ -8,10 +8,12 @@
     {%block styles%} {%endblock%}
   </head>
   <body>
+    {% include "../../components/banner/banner.html" %}
     <div class="container" id="app">
-      {% include "../../components/banner/banner.html" %} {%block content%}
-      {%endblock%}
+      {%block content%} {%endblock%}
     </div>
+    <script src="https://cdn.staticfile.org/x-tag/2.0.9-alpha/x-tag-raw.js"></script>
+    <script src="https://cdn.bootcss.com/systemjs/3.1.6/system.min.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
     <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>

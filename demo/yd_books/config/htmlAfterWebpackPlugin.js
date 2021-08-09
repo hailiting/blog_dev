@@ -1,5 +1,5 @@
 // 改变 生成的HTML上script标签的属性（module或noModule)
-const pluginName = "htmlAfterPlugin";
+const pluginName = "htmlAfterWebpackPlugin";
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const assetsHelp = (data) => {
   let js = [];
@@ -19,7 +19,7 @@ const assetsHelp = (data) => {
     css,
   };
 };
-class HtmlAfterPlugin {
+class htmlAfterWebpackPlugin {
   constructor() {
     this.jsArr = [];
   }
@@ -29,22 +29,24 @@ class HtmlAfterPlugin {
     compiler.hooks.compilation.tap(pluginName, (compilation) => {
       // HtmlWebpackPlugin提供的钩子
       HtmlWebpackPlugin.getHooks(compilation).beforeAssetTagGeneration.tapAsync(
-        "HtmlAfterPlugin", // <-- Set a meaningful name here for stacktraces
+        "htmlAfterWebpackPlugin", // <-- Set a meaningful name here for stacktraces
         (data, cb) => {
           // 获取需要替换的js
-          const { js } = assetsHelp(data.assets);
+          const { js, css } = assetsHelp(data.assets);
           this.jsArr = js;
+          this.jsCss = css;
 
           // Tell webpack to move on
           cb(null, data);
         }
       );
       HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync(
-        "HtmlAfterPlugin", // <-- Set a meaningful name here for stacktraces
+        "htmlAfterWebpackPlugin", // <-- Set a meaningful name here for stacktraces
         (data, cb) => {
           // 替换<!-- injectjs -->
           let _html = data.html;
-          _html = _html.replace("<!-- injectjs -->", this.jsArr.join(""));
+          _html = _html.replace("<!--injectcss-->", this.jsCss.join(""));
+          _html = _html.replace("<!--injectjs-->", this.jsArr.join(""));
           // 替换@layouts和@components
           _html = _html.replace(/@layouts/g, "../../layouts");
           _html = _html.replace(/@components/g, "../../../components");
@@ -59,4 +61,4 @@ class HtmlAfterPlugin {
   }
 }
 
-module.exports = HtmlAfterPlugin;
+module.exports = htmlAfterWebpackPlugin;

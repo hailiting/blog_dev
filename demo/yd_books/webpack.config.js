@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const htmlAfterPlugin = require("./config/htmlAfterPlugin");
+const htmlAfterWebpackPlugin = require("./config/htmlAfterWebpackPlugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const path = require("path");
+const { join, resolve } = require("path");
 const { merge } = require("webpack-merge");
 // 取命令行参数
 const argv = require("yargs-parser")(process.argv.slice(2));
@@ -19,57 +19,41 @@ let _plugins = [];
 for (let item of files) {
   if (/.+\/([a-zA-Z]+-[a-zA-Z]+)(\.entry\.js$)/g.test(item) === true) {
     const entryKey = RegExp.$1;
-
-    const [dist, template] = entryKey.split("-");
-
-    _entry[entryKey] = item;
-    // 打包多页，去获取每个页面需要用到的js
+    console.log("🍌🍌🍌", item);
+    let [dist, template] = entryKey.split("-");
     _plugins.push(
       new HtmlWebpackPlugin({
-        // 生成的html文件的标题
-        title: "sss",
-        // html文件的文件名
         filename: `../views/${dist}/pages/${template}.html`,
-        // 指定生成文件所依赖的html模板
+        chunks: ["runtime", entryKey],
         template: `src/client/views/${dist}/pages/${template}.html`,
-        // 生成的js放哪
-        // true || body    body底部
-        // head 在head中
-        // false 不插入
-        // favicon: "./favicon.ico"
         inject: false,
-        // 指定当前html要使用哪些js
-        chunks: [entryKey],
-        // html-webpack-plugin集成了html-minifier
-        minify: {
-          // removeAttributeQuotes: true,
-        },
       })
     );
+    _entry[entryKey] = item;
   }
 }
 
-console.log(_entry, "entry");
+console.log("entry", _entry);
 
 const webpackConfig = {
   entry: _entry,
   output: {
-    path: path.join(__dirname, "./dist/assets"),
+    path: join(__dirname, "./dist/assets"),
     publicPath: "/",
     filename: "scripts/[name].bundle.js",
   },
   module: {
     rules: [
-      {
-        test: /\.?js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
-          },
-        },
-      },
+      // {
+      //   test: /\.?js$/,
+      //   exclude: /(node_modules|bower_components)/,
+      //   use: {
+      //     loader: "babel-loader",
+      //     options: {
+      //       presets: ["@babel/preset-env"],
+      //     },
+      //   },
+      // },
       {
         test: /\.css$/,
         use: [
@@ -93,8 +77,13 @@ const webpackConfig = {
       filename: "styles/[name].css",
       chunkFilename: "styles/[id].css",
     }),
-    new htmlAfterPlugin(),
+    new htmlAfterWebpackPlugin(),
   ],
+  resolve: {
+    alias: {
+      "@": resolve("src/client/components"),
+    },
+  },
   watch: __modeFlag,
 };
 module.exports = merge(webpackConfig, _mergeConfig);

@@ -8,7 +8,7 @@ v12.22.1
 
 启动 xampp 8080 端口
 
-- npm run client:deves5
+- npm run client:dev
 - npm run server:dev
 - npm run server:start
 

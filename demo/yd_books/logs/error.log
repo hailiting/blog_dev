@@ -1,7 +1,0 @@
-[2021-07-08T17:18:06.370] [ERROR] cheese - { code: 1, message: 'node-fetch error', data: [] }
-[2021-07-08T17:19:32.242] [ERROR] cheese - { code: 1, message: 'node-fetch error', data: [] }
-[2021-07-08T17:19:52.565] [ERROR] cheese - { code: 1, message: 'node-fetch error', data: [] }
-[2021-08-01T20:30:52.703] [ERROR] cheese - { code: 1, message: 'node-fetch error', data: [] }
-[2021-08-01T20:31:43.901] [ERROR] cheese - { code: 1, message: 'node-fetch error', data: [] }
-[2021-08-01T20:32:44.526] [ERROR] cheese - { code: 1, message: 'node-fetch error', data: [] }
-[2021-08-01T20:32:48.307] [ERROR] cheese - { code: 1, message: 'node-fetch error', data: [] }
