@@ -1,6 +1,31 @@
-# scss
+# scss 和 less
 
-## `each`
+## less
+
+```less
+@base: #f938ab;
+.box-shadow(@style, @c) when (iscolor(@c)) {
+  box-shadow: @style @c;
+  -webkit-box-shadow: @style @c;
+  -moz-box-shadow: @style @c;
+}
+.box-shadow(@style, @alpha: 50%) when (isnumber(@alpha)) {
+  .box-shadow(@style, rgba(0, 0, 0, @alpha));
+}
+.box {
+  color: saturate(@base, 5%);
+  border-color: lighten(@base, 30%);
+  div {
+    .box-shadow(0 0 5px, 30%);
+  }
+}
+```
+
+监视模式： `#!watch`
+
+## scss
+
+### `each`
 
 ```scss
 $size: 40px, 50px, 80px;
