@@ -1,0 +1,22 @@
+{
+  "name": "auto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer-core": "^6.0.1",
+    "css-mqpacker": "^7.0.0",
+    "csswring": "^7.0.0",
+    "gulp": "^4.0.2",
+    "gulp-less": "^5.0.0",
+    "gulp-postcss": "^9.0.0",
+    "path": "^0.12.7"
+  }
+}
