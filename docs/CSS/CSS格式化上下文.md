@@ -3,9 +3,13 @@
 `Formatting Context`: 指页面中的一个渲染区域，并拥有一套渲染规则，他决定了子元素如何定位，以及与其他元素的相互关系和作用。他是 W3C CSS2.1 规范中的一个概念。
 常见的 Formatting Context 有 BFC、IFC、GFC 和 FFC.
 
+Box 是 css 布局的对象和基本单位，直观点说，就是一个页面是由很多个 Box 组成。元素的类型和 display 属性，决定了这个 box 的类型，不同类型的 Box，会参与不同的 Formatting Context(决定如何渲染文档的容器)，因此 Box 内的元素会以不同的方式渲染。
+
+所有带 FC 的都会渲染成一个独立的区域
+
 ## BFC
 
-BFC 全称为 `块格式化上下文`（Block Formatting Context），是 web 页面的可视化 CSS 渲染出的一部分。
+BFC 全称为 `块级格式化上下文`（Block Formatting Context），是 web 页面的可视化 CSS 渲染出的一部分。
 它是块级盒布局出现的区域，也是浮动层元素进行交互的区域。
 一个 BFC 由以下之一创建：
 
@@ -22,9 +26,10 @@ BFC 全称为 `块格式化上下文`（Block Formatting Context），是 web �
 
 ### BFC 特性（解决的问题）
 
-1. 使 BFC 内部浮动元素不会到处乱跑，解决父元素塌陷问题
-2. 和浮动元素产生边界，两个相邻的块级盒子之间垂直向上的外边距会塌陷
-   margin 或只改问题【overflow:hidden】
+- 1. 使 BFC 内部浮动元素不会到处乱跑，解决父元素塌陷问题
+- 2. 和浮动元素产生边界，两个相邻的块级盒子之间垂直向上的外边距会塌陷
+     margin 或只改问题【overflow:hidden】
+  - box 重置方向的距离由 margin 决定，属于同一个 BFC 的两个相邻的 Box 的 margin 会发生重叠
 
 #### 使 BFC 内部浮动元素不会到处乱跑
 
@@ -199,6 +204,7 @@ BFC 全称为 `块格式化上下文`（Block Formatting Context），是 web �
 ## GFC
 
 GFC(`GridLayout Formatting Contexts`): 网格布局式上下文
+为了处理 table
 
 ### GFC 产生条件
 
