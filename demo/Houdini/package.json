@@ -1,0 +1,16 @@
+{
+  "name": "Houdini",
+  "version": "1.0.0",
+  "description": "",
+  "main": "arc.js",
+  "scripts": {
+    "start": "http-server ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^13.0.0"
+  }
+}

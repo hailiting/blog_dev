@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS houdini</title>
+    <style>
+      .el {
+        --elUnit: 500px;
+        --arcColor: #8266ff;
+        height: var(--elUnit);
+        width: var(--elUnit);
+        --background-canvas: (ctx, geom) => {
+            ctx.strokeStyle = `var(--arcColor)`;
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.arc(200, 200, 50, 0, 2*Math.PI);
+            ctx.stroke();
+            ctx.closePath();
+        };
+        background:paint(background-canvas);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="el"></div>
+    <script>
+      CSS.paintWorklet.addModule("./arc.js");
+    </script>
+  </body>
+</html>
