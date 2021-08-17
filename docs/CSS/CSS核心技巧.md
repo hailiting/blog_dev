@@ -32,10 +32,12 @@ OO CSS 将页面可重用的元素抽象成一个类，用 Class 加以描述，
 <div class="container simpleExt"></div>
 <style>
   .container {
-    ... // 控制结构的class;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ...
+      // 控制结构的class;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   }
   .simpleExt {
-    ... // 控制皮肤的;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ...
+      // 控制皮肤的;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   }
 </style>
 
@@ -262,4 +264,224 @@ html {
    grid-area: grid-row-start/grid-column-start/grid-row-end/grid-column-end
    */
 }
+```
+
+## 色相
+
+```html
+<style>
+  .btn {
+    background: yellow;
+    width: 100px;
+    height: 100px;
+    filter: hue-rotate(97deg);
+  }
+</style>
+<div class="btn"></div>
+```
+
+## 流光字体
+
+```html
+<style>
+  @keyframes hue {
+    from {
+      filter: hue-rotate(0deg);
+    }
+    to {
+      filter: hue-rotate(360deg);
+    }
+  }
+  h1 {
+    font-size: 120px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(
+      to right,
+      red,
+      orange,
+      yellow,
+      green,
+      cyan,
+      blue,
+      purple
+    );
+    animation: hue 3s linear infinite;
+  }
+</style>
+<h1>sad静安寺快递费静安寺冷冻机房</h1>
+```
+
+## 分栏 css
+
+```html
+<style>
+  .column {
+    overflow: hidden;
+    border: 1px solid #eee;
+  }
+  .column-left {
+    height: 400px;
+    background-color: #fff;
+    position: relative;
+    float: left;
+  }
+  .column-right {
+    height: 400px;
+    padding: 16px;
+    background-color: #eee;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .resize-save {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    bottom: 0;
+    left: 0;
+    padding: 16px;
+    overflow-x: hidden;
+  }
+  .resize-bar {
+    width: 200px;
+    height: inherit;
+    resize: horizontal;
+    cursor: ew-resize;
+    opacity: 0;
+    overflow: scroll;
+  }
+  /* 拖拽线 */
+  .resize-line {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-right: 2px solid #eee;
+    border-left: 1px solid #bbb;
+    pointer-events: none;
+  }
+  .resize-bar:hover ~ .resize-line,
+  .resize-bar:active ~ .resize-line {
+    border-left: 1px dashed skyblue;
+  }
+  .resize-bar::-webkit-scrollbar {
+    width: 200px;
+    height: inherit;
+  }
+</style>
+<div class="column">
+  <div class="column-left">
+    <div class="resize-bar"></div>
+    <div class="resize-line"></div>
+    <div class="resize-save">
+      左侧的内容，左侧的内容，左侧的内容，左侧的内容
+    </div>
+  </div>
+  <div class="column-right">右侧的内容，右侧的内容，右侧的内容，右侧的内容</div>
+</div>
+```
+
+## 遮罩
+
+```html
+<style>
+  .mask-image {
+    width: 260px;
+    height: 250px;
+    -webkit-mask-image: url("./mask.png");
+  }
+</style>
+<img src="./assets/bg.jpeg" width="800px" class="mask-image" />
+```
+
+## 遮罩调色
+
+```html
+<style>
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  input {
+    padding: 0;
+    border: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: hue;
+    cursor: pointer;
+  }
+</style>
+```
+
+```html
+<style>
+  img {
+    width: 200px;
+    height: 200px;
+    background: rgba(0, 0, 0, 0.6);
+    background-blend-mode: darken;
+    filter: brightness(80%) grayscale(20%) constrast(1.2);
+  }
+</style>
+```
+
+## banner
+
+```html
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  .ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    max-width: 200px;
+    height: 500px;
+    width: 200px;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+
+  /* mandatory: 通常在 CSS 代码中我们都会使用这个，mandatory 的英文意思是强制性的，表示滚动结束后，滚动停止点一定会强制停在我们指定的地方
+proximity: 英文意思是接近、临近、大约，在这个属性中的意思是滚动结束后，滚动停止点可能就是滚动停止的地方，也可能会再进行额外移动，停在我们指定的地方 */
+
+  .li {
+    display: inline-block;
+    scroll-snap-align: center;
+    /* scroll-snap-align:end;
+      scroll-snap-align: start; */
+    height: 100%;
+    flex-basis: 200px;
+    flex-shrink: 0;
+  }
+
+  .li:nth-of-type(odd) {
+    background-color: snow;
+  }
+
+  .li:nth-of-type(even) {
+    background-color: skyblue;
+  }
+</style>
+<body>
+  <div class="ul">
+    <div class="li">test1</div>
+    <div class="li">test2</div>
+    <div class="li">test3</div>
+    <div class="li">test4</div>
+    <div class="li">test5</div>
+    <div class="li">test6</div>
+    <div class="li">test7</div>
+    <div class="li">test8</div>
+    <div class="li">test9</div>
+    <div class="li">test10</div>
+  </div>
+</body>
 ```
