@@ -2,5 +2,5 @@
   "presets": [
     "@babel/preset-env"
   ],
-  "plugins": ["@babel/plugin-transform-modules-systemjs"]
+  "plugins": ["@babel/plugin-transform-modules-systemjs","@babel/plugin-proposal-decorators"]
 }

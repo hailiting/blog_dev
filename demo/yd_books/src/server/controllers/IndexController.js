@@ -1,19 +1,13 @@
-const { URLSearchParams } = require("url");
-const cheerio = require("cheerio"); // 把字符串解释为jquery
+import { route, GET } from "awilix-koa";
+@route("/")
 class IndexController {
-  constructor() {}
-  actionIndexHtml() {
-    return async (ctx, next) => {
-      const result = await index.getData();
-      ctx.body = await ctx.render("books/pages/index", {
-        data: data,
-      });
-    };
-  }
-  actionAddHtml() {
-    return async (ctx, next) => {
-      ctx.body = await ctx.render("books/pages/add", { data: "add" });
-    };
+  // constructor({ indexService }) {
+  // this.indexService = indexService;
+  // }
+  @route("/")
+  @GET()
+  async actionAdd(ctx, next) {
+    ctx.body = "这是首页！";
   }
 }
 module.exports = IndexController;
