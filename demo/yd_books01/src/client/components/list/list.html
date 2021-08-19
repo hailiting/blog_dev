@@ -1,0 +1,16 @@
+<div class="components-list">
+  <table>
+    <tr>
+      <th>编号</th>
+      <th>书名</th>
+      <th>作者</th>
+    </tr>
+    {%for item in data%}
+    <tr>
+      <td>[[item.id]]</td>
+      <td>[[item.name]]</td>
+      <td>[[item.auther]]</td>
+    </tr>
+    {%endfor%}
+  </table>
+</div>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{%block title%}{%endblock%}</title>
+    {%block styles%} {%endblock%}
+  </head>
+  <body>
+    {% include "../../components/banner/banner.html" %}
+    <div class="container" id="app">
+      {%block content%} {%endblock%}
+    </div>
+    <script src="https://cdn.staticfile.org/x-tag/2.0.9-alpha/x-tag-raw.js"></script>
+    <script src="https://cdn.bootcss.com/systemjs/3.1.6/system.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+    <script src="https://unpkg.com/quicklink@1.0.0/dist/quicklink.umd.js"></script>
+
+    <script>
+      // 把所有的a都绑定上
+      $(document).pjax("a", "#app");
+      // 资源预加载
+      quicklink();
+    </script>
+    {%block scripts%} {%endblock%}
+  </body>
+</html>

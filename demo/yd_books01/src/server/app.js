@@ -40,4 +40,5 @@ app.context.render = co.wrap(
   })
 );
 
+require("./route/index")(app);
 app.listen(config.port);
