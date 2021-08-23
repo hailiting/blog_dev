@@ -466,3 +466,64 @@ const todo: TodoPreview = {
   completed: false,
 };
 ```
+
+## 接口设置默认值
+
+```ts
+type ListNode = {
+  data: string | number;
+  next?: ListNode;
+};
+function init(node: ListNode, value: number) {
+  node.next!.data = value;
+  console.log(node.data);
+}
+init(
+  {
+    data: 11,
+  },
+  "32w43"
+);
+init(
+  {
+    data: 11,
+    next: 222,
+  },
+  "32w43"
+);
+```
+
+```ts
+// 泛型上加length属性
+interface Yideng {
+  length: number
+}
+function identity<T extends Yideng>(args T):T{
+  console.log(args.length)
+  return args;
+}
+identity("sss");
+```
+
+```ts
+// 元数据 + 注入
+import "reflect-metadata";
+function inject(serviceIdentifier) {
+  return function(target, targetKey, index) {
+    // Reflect 是一个内置对象，它提供拦截JavaScript操作的方法，与proxy相似
+    Reflect.defineMetadata(serviceIdentifier, "xxxx", target);
+  };
+}
+class IndexController {
+  public indexService;
+  constructor(@inject("indexService") indexService) {
+    this.indexService = indexService;
+  }
+}
+const indexController = new IndexController("经陈毅等");
+console.log("----1111---", indexController.indexService);
+console.log(
+  "----2222---",
+  Reflect.defineMetadata("indexService", IndexController)
+);
+```
