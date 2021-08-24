@@ -162,6 +162,31 @@ aaa = 123; // err
 aaa = "asdfds"; // ok
 ```
 
+### 多个参数
+
+```ts
+function aa(s: string, ...rest: string[]) {
+  return s + " " + rest.join(" ");
+}
+```
+
+### 重载
+
+```ts
+function attr(name: string): string;
+function attr(age: number): number;
+function attr(nameorage: string | number): string | number {
+  if (nameorage && typeof nameorage === "string") {
+    console.log("姓名" + nameorage);
+  } else {
+    console.log("年龄" + nameorage);
+  }
+  return nameorage;
+}
+attr(111);
+attr("sdass");
+```
+
 ## 类 class
 
 - 类（Class）: 定义了一切事物的抽象特点
@@ -175,6 +200,7 @@ class Animal {
   // private namecopy01: string; // private 子类也不能访问
   // protected namecopy02: string; // protected 子类能访问 外部不能访问
   // readonly name: string; // name就不能修改了
+  // static  静态的  通过类名访问
   constructor(name: string) {
     this.name = name;
   }
@@ -221,7 +247,30 @@ const maiomiao = new Cat("maiomiao");
 // console.log(maiomiao.run())
 ```
 
+#### set get
+
+```ts
+// tsc index.ts --target ES5
+class Hello {
+  private _name: string;
+  tell() {
+    return this._name;
+  }
+  get name(): string {
+    return this._name;
+  }
+  set name(newName: string) {
+    this._name = newName;
+  }
+}
+var h = new Hello();
+h.name = "hello";
+alert(h.tell());
+```
+
 ### interface implements 抽象类的属性和方法
+
+接口的检查不针对名称，只针对类型
 
 ```ts
 // 用interface抽象属性类和方法
@@ -247,6 +296,16 @@ class Cellphone implements RadioWithBattery {
   switchRadio() {}
   checkBatteryStatus() {}
 }
+```
+
+接口的数组类型
+
+```ts
+interface IArr {
+  [index: number]: string;
+}
+var myArr: IArr = ["ss", "ddd"];
+alert(myArr[1]);
 ```
 
 ## 枚举(Enum)
@@ -305,19 +364,20 @@ if (value === Direction.up) {
 为了是代码量最少，应用的更灵活
 
 ```ts
+// bad any 没有明显的规范，容易造成类型转换错误
 function echo01(arg: any): any {
   return arg;
 }
 const result: string = echo01(123);
-// 泛型
+// good 泛型
 function echo02<T>(arg: T): T {
   return arg;
 }
 const str: string = "str";
 const wnum: number = 123;
-const resultstr = echo02(str);
-const resultnum = echo02(wnum);
-const resultbol = echo02(true);
+const resultstr = echo02<string>(str);
+const resultnum = echo02<number>(wnum);
+const resultbol = echo02<bool>(true);
 
 // <T, U> 更像一个占位符
 function swap<T, U>(tuple: [T, U]): [U, T] {
