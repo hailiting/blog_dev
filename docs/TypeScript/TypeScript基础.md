@@ -308,6 +308,67 @@ var myArr: IArr = ["ss", "ddd"];
 alert(myArr[1]);
 ```
 
+## Modules
+
+```ts
+interface StringValidator {
+  isAcceptable(s: string): boolean;
+}
+var lettersRegexp = /^[A-Za-z]+$]/;
+var numberRegexp = /^[0-9]+$]/;
+class LettersOnlyValidator implements StringValidator {
+  isAcceptable(s: string): boolean {
+    return lettersRegexp.test(s);
+  }
+}
+class ZipCodeValidator implements StringValidator {
+  isAcceptable(s: string): boolean {
+    return s.length === 5 && numberRegexp.test(s);
+  }
+}
+// module 写法
+module Time {
+  export class Test {
+    element: HTMLElement;
+    span: HTMLElement;
+    timer: any;
+    constructor(e: HTMLElement) {
+      this.element = e;
+      this.element.innerHTML = "现在的时间是： ";
+      this.span = document.createElement("span");
+      this.element.appendChild(this.span);
+      this.span.innerHTML = new Date().toTimeString();
+    }
+    start() {
+      this.timer = setInterval(
+        () => (this.span.innerHTML = new Date().toTimeString()),
+        500
+      );
+    }
+    stop() {
+      clearInterval(this.timer);
+    }
+  }
+}
+// jsTimer.js
+var div = document.createElement("div");
+document.body.appendChild(div);
+var obj = new Time.Test(div);
+var button = document.createElement("button");
+button.innerHTML = "start";
+button.onclick = function() {
+  obj.start();
+};
+document.body.appendChild(button);
+
+var button2 = document.createElement("button");
+button2.innerHTML = "stop";
+button2.onclick = function() {
+  obj.stop();
+};
+document.body.appendChild(button2);
+```
+
 ## 枚举(Enum)
 
 取值被限定到一定范围
@@ -452,6 +513,19 @@ function plusstr(a: string, b: string): string {
   return a + b;
 }
 const plusstr1: IPlus<string> = plusstr;
+```
+
+```ts
+// 泛型类
+class HelloNumber<T> {
+  Ten: T;
+  add: (a: T, b: T) => T;
+}
+var myHelloNumber = new HelloNumber<string>();
+myHelloNumber.Ten = "Hello";
+myHelloNumber.add = function(x, y) {
+  return a + b;
+};
 ```
 
 ### 类型别名
