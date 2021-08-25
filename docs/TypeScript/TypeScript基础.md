@@ -661,3 +661,119 @@ console.log(
   Reflect.defineMetadata("indexService", IndexController)
 );
 ```
+
+## namespaces
+
+## 装饰器
+
+```ts
+// tsc --sourcemap index.ts --target ES5 --experimentalDecorators
+function hello(target) {
+  console.log("dddd");
+}
+@hello
+class APP {}
+```
+
+```ts
+// 装饰器执行顺序 -> 符合   f(g())
+function f() {
+  console.log("f(): evaluated");
+  return function(target, propertyKey: string, descriptor: PropertyDescriptor) {
+    console.log("f(): called");
+  };
+}
+function g() {
+  console.log("g(): evaluated");
+  return function(target, propertyKey: string, descriptor: PropertyDescriptor) {
+    console.log("g(): called");
+  };
+}
+class C {
+  @f()
+  @g()
+  method() {}
+}
+// f(): evaluated
+// g(): evaluated
+// g(): called
+// f(): called
+```
+
+```ts
+// 这是一个装饰器工厂
+function color(value: string) {
+  // 这是装饰器
+  return function(target) {
+    // do something with target and value
+  };
+}
+```
+
+```ts
+// 参数修饰符
+function configurable(value: boolean) {
+  return function(target: any, propertyKey: string) {
+    console.log("target: ", target);
+    console.log("属性", value);
+  };
+}
+function require(value: boolean) {
+  return function(target: any, propertyKey: string, index: number) {
+    console.log("参数", value);
+  };
+}
+class Hello {
+  @configurable(true)
+  name: string;
+  yideng(@require(false) age: string) {}
+}
+```
+
+## Mixins
+
+```ts
+class Apple {
+  isDisposed: boolean;
+  dispose() {
+    this.isDisposed = true;
+  }
+}
+class Peach {
+  isActive: boolean;
+  activate() {
+    this.isActive = true;
+  }
+  deactivate() {
+    this.isActive = false;
+  }
+}
+class SmartObject implements Apple, Peach {
+  constructor() {
+    setTimeout(() => {
+      console.log(
+        "like peach?" + this.isActive + " ; like Apple? " + this.isDisposed
+      );
+    }, 500);
+  }
+  interact() {
+    console.log("starting change");
+    this.activate();
+  }
+  isDisposed: boolean = false;
+  dispose: () => void;
+  isActive: boolean = false;
+  activate: () => void;
+  deactivate: () => void;
+}
+applyMixins(SmartObject, [Apple, Peach]);
+function applyMixins(derivedCtor: any, baseCtors: any[]): void {
+  baseCtors.forEach((baseCtor) => {
+    Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
+      derivedCtor.prototype[name] = baseCtor.prototype[name];
+    });
+  });
+}
+let smartObj = new SmartObject();
+setTimeout(() => smartObj.interact(), 1000);
+```
