@@ -1,0 +1,1 @@
+[{"constant":true,"inputs":[{"internalType":"bytes4","name":"_interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"_supported","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"}]
