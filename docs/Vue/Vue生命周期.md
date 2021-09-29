@@ -8,7 +8,7 @@
 // 构造函数生成Vue实例
 var app = new Vue({
   el: "#app",
-  data: function() {
+  data() {
     return {
       rendered: false,
     };
