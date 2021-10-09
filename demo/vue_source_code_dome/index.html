@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue</title>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" id="a" v-model="text" />
+      <br />
+      {{text}}
+    </div>
+    <script type="text/javascript">
+      window.batcher = "";
+    </script>
+    <script src="src/Batcher.js"></script>
+    <script src="src/Dep.js"></script>
+    <script src="src/Observe.js"></script>
+    <script src="src/Watcher.js"></script>
+    <script src="src/Compile.js"></script>
+    <script src="src/MVVM.js"></script>
+    <script type="text/javascript">
+      var vm = new Vue({
+        el: "app",
+        data: {
+          text: "abcdefg",
+        },
+      });
+      // for (var i = 0; i < 100; i++) {
+      //   vm["text"] = i;
+      // }
+    </script>
+  </body>
+</html>
