@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>proxyVue</title>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model="num" />
+      <input
+        id="btn"
+        type="button"
+        value="添加到Todolist"
+        v-click="addList"
+      /><br />
+      <span>num:</span> <span v-bind="num"></span>
+      <ul id="list"></ul>
+    </div>
+    <script>
+      class proxyVue {
+        constructor(options) {
+          this.$options = options || {};
+          this.$methods = this._methods = this.$options.methods;
+          const data = (this._data = this.$options.data);
+          this.subscribe = {};
+          this.observe(data);
+          this.compile(options.el);
+        }
+        publish(watcher) {
+          if (!this.subscribe[watcher.property]) {
+            this.subscribe[watcher.property] = [];
+          }
+          this.subscribe[watcher.property].push(watcher);
+        }
+        observe(data) {
+          const that = this;
+          let handler = {
+            get(target, property) {
+              return target[property];
+            },
+            set(target, property, value) {
+              // console.log({ target, property, value });
+              let res = Reflect.set(target, property, value);
+              // console.log(target[property]);
+              that.subscribe[property].map((item) => {
+                item.update();
+              });
+              return res;
+            },
+          };
+          this.$data = new Proxy(data, handler);
+        }
+        compile(el) {
+          const nodes = Array.prototype.slice.call(
+            document.querySelector(el).children
+          );
+          let data = this.$data;
+          nodes.map((node) => {
+            // console.log({ node });
+            if (node.children.length > 0) {
+              this._complie(node);
+            }
+            if (node.hasAttribute("v-bind")) {
+              let property = node.getAttribute("v-bind");
+              this.publish(new Watcher(node, "innerHTML", data, property));
+            }
+            if (node.hasAttribute("v-model")) {
+              let property = node.getAttribute("v-model");
+              this.publish(new Watcher(node, "value", data, property));
+              node.addEventListener("input", () => {
+                data[property] = node.value;
+              });
+            }
+            if (node.hasAttribute("v-click")) {
+              let methodName = node.getAttribute("v-click");
+              let mothod = this.$methods[methodName].bind(data);
+              node.addEventListener("click", mothod);
+            }
+          });
+        }
+      }
+      class Watcher {
+        constructor(node, attr, data, property) {
+          this.node = node;
+          this.attr = attr;
+          this.data = data;
+          this.property = property;
+
+          console.log(this.node, this.attr, this.data, this.property);
+        }
+        update() {
+          this.node[this.attr] = this.data[this.property];
+        }
+      }
+      const Render = {
+        init: function(arr) {
+          const fragment = document.createDocumentFragment();
+          for (let i = 0; i < arr.length; i++) {
+            const li = document.createElement("li");
+            li.textContent = arr[i];
+            fragment.appendChild(li);
+          }
+        },
+        addList: function(val) {
+          const li = document.createElement("li");
+          li.textContent = val;
+          list.appendChild(li);
+        },
+      };
+      window.onload = function() {
+        let vm = new proxyVue({
+          el: "#app",
+          data: {
+            num: 0,
+            arr: [],
+          },
+          methods: {
+            addList() {
+              this.arr.push(this.num);
+              Render.addList(this.num);
+            },
+          },
+        });
+      };
+    </script>
+  </body>
+</html>

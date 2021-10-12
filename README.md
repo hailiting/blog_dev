@@ -1,5 +1,14 @@
 # https://hailiting.github.io/blog_dev/
 
+## 怎么读源码
+
+- 1. 可以看 commit
+- 2. 国外的文章，大致了解一下当下框架的过程
+- 3. path.js -> 简单的学习一遍->试着做一个简易的版本
+- 4. debug 一步步
+- 5. 带着下一个问题再去看，最后一步搬砖
+- 6. github 的 issue【讨论的人多说明有质量】
+
 ## 好用的  工具网站
 
 ### https://www.snapmail.cc/#/
@@ -22,9 +31,13 @@
 
 手机号
 
+### Tunnelblick vpn 挂载工具
+
 ### mac 终端美化
 
 #### `oh-my-zsh`
+
+### octotree github 侧边栏文件夹
 
 ##### 1. 升级本地 zsh 版本
 

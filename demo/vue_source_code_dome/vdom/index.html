@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vdom</title>
+  </head>
+  <body>
+    <script src="./elemment.js"></script>
+    <script>
+      var ul1 = createElement("ul", { class: "list" }, [
+        createElement("li", { class: "item" }, [1]),
+        createElement("li", { class: "item" }, [2]),
+        createElement("li", { class: "item" }, [3]),
+      ]);
+      console.log(ul1);
+      let root = ul1.render();
+      document.body.appendChild(root);
+    </script>
+  </body>
+</html>
