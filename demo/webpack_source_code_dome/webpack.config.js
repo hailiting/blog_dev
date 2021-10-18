@@ -1,6 +1,10 @@
 const path = require("path");
 const ConsoleLogOnBuildWebpackPlugin = require("./plugin/ConsoleLogOnBuildWebpackPlugin");
 module.exports = {
+  optimization: {
+    moduleIds: "deterministic",
+    chunkIds: "deterministic",
+  },
   module: {
     rules: [
       {
