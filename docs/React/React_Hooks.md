@@ -21,7 +21,7 @@ function Welcome(props) {
 
 ### 组件很难复用状态逻辑，代码量大
 
-    HOC会返回空的节点
+    HOC（高阶组件）会返回空的节点
 
 ### 漫天 class 导致热重载和性能问题
 
@@ -88,14 +88,27 @@ React Hooks 的意思是：组件尽量写成函数，如果需要外部功能�
 React 可以使用自定义钩子，也可以用默认提供的钩子。  
 所有的钩子都是为函数引入外部功能，所以 React 约定，钩子一律使用`use`为前缀，便于识别。钩子就命名为 `useXXXX`
 
+- 只能在函数组件中使用 hooks
+- 函数组件业务变更无需修改成 class 组件
+- 告别繁杂的 this 和难以记忆的生命周期
+- 合并的生命周期 componentDidMount, componentDidUpdate, 和 ComponentWillUnmount
+- 包装自己的 hooks，是基于纯命令式的 api
+- 更好的完成状态之间的共享，解决原来 class 组件内部封装问题。也解决了高阶组件和函数组件嵌套过深的问题
+- useReducer 集成 redux
+- useEffect 接收脏操作等到 react 更新了 DOM 之后，他在依次执行我们定义的副作用函数，这里就是一个 io 且异步的操作
+
 ### 常用的钩子
 
-- `useState()`
-- `useContext()`
-- `useReducer()`
-- `useEffect()`
-- `useRef()`
-- `useCallback()`
+- `useState()` 返回有状态值，以及更新这个状态值的函数
+- `useEffect()` 接受包含命令式，可能有副作用代码的函数
+- `useContext()`接受上下文对象（从`React.createContext`返回值）并返回当前上下文值
+- `useReducer()` useState 的替代方案，接受类型为`(state, action)=>newState`的 reducer,并返回与 dispatch 方法配对的当前状态
+- `useCallback()`返回一个回忆的`memoized`版本，该版本仅在其中一个输入发生更改时才会变更，纯函数输入输出确定性
+- `useMemo()` 纯的一个记忆函数
+- `useRef()` 返回一个可变的 ref 对象，其`.current`属性被初始化为传递的参数
+- `useImperativeMethods` 自定义使用 ref 时公开给组件的实例值
+- `useMutationEffect` 更新兄弟组件之前，它在 React 执行其 DOM 改变的同一阶段同步触发
+- `useLayoutEffect` DOM 改变后同步触发，使用它来从 DOM 读取布局并同步重新渲染
 
 ## useState() 状态钩子
 
@@ -589,4 +602,24 @@ const useURLLoader = (url: string, data: any[] = []) => {
 };
 // use useURLLoader
 const [data, loading] = useURLLoader("https://dog.ceo/api/breeds/image/random");
+```
+
+## useCallback
+
+```js
+import React, { useState, useCallback } from "react";
+export default function A() {
+  const [compName, setCompName] = useState("ddd");
+  const compCallback = useCallback((value) => {
+    console.log("我走到了这");
+    setCompName(value);
+  }, []);
+  return (
+    <>
+      <h1>{compName}</h1>
+      <div onClick={() => compCallback("ddd")}>ddd</div>
+      <div onClick={() => compCallback("aaa")}>aaa</div>
+    </>
+  );
+}
 ```

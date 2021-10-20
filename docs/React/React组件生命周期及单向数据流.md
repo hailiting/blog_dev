@@ -16,6 +16,35 @@
 `componentWillReceviesProps`
 `componentWillUpdate`
 
+#### 新增
+
+`getSnapshotBeforeUpdate`,
+`getDerivedStateFromProps`
+
+#### getSnapshotBeforeUpdate
+
+dom 渲染前保存快照，以便后续使用
+
+```js
+getSnapshotBeforeUpdate(prevProps, prevState){
+  // 保存滚动位置的快照
+  if(prevProps.list.length < this.props.list.length){
+    const list = this.listRef.current;
+    return list.scrollHeight-list.scrollTop;
+  }
+  return null;
+}
+componentDidUpdate(prevProps,prevState,snapshot ){
+  // 如果有快照值，说明已经增加的新的项
+  // 调整滚动位置使得新的项不会挤走老的项
+  // 快照是从getSnapshotBeforeUpdate返回出来的
+  if(snapshot!==null){
+    const list = this.listRef.current;
+    list.scrollTop = list.scrollHeight-snapshot;
+  }
+}
+```
+
 ### 17 版本直接弃用，但保留使用
 
 `UNSAFE_componentWillMount`
