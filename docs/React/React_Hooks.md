@@ -258,7 +258,7 @@ const [state, dispatch] = useReducer(reducer, initialState);
 // reducer
 const myReducer = (state, action){
     switch(action.type){
-        case("countUp"):
+        case "countUp":
             return {
                 ...state,
                 count: state.count+1
