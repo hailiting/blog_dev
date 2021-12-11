@@ -671,7 +671,8 @@ contract Caller {
 - 函数 assert 和 require 可用于判断条件，并在不满足条件时抛出异常
 - assert() 一般只应用于测试内部错误，并检查常量
 - require() 应用于确保满足条件（如收入或合约状态变量），或验证调用外部合约的返回值
-- revert() 用于抛出异常，它可以标记一个错误并将当前调用回退
+- revert 用于标记错误并回滚当前的调用
+- throw 关键字也可以用作 `revert()` 的替代方法
 
 ## Solidity 中的单位
 
@@ -708,6 +709,40 @@ contract Caller {
 function f(uint start,uint daysAfter) public {
   if(now>= start  + daysAfter* 1 days){
     // ...
+  }
+}
+```
+
+## 使用汇编 Assembly 代码
+
+与 c/c++类似，solability 程序中，可以使用 EVM 汇编语言
+
+### 内联汇编
+
+使用内联汇编，可以在 Solidity 源程序中嵌入汇编代码，对 EVM 要更细粒度的控制，在编写库函数时很有用
+
+```js
+pragma solidity ^0.8.0;
+library Sum {
+  function sumUsingInlineAssembly(uint[] memory _data) public pure returns (uint o_sum){
+    for(uint i=0;i<_data.length; ++i){
+      assembly {
+        o_sum := add(o_sum, mload(add(add(_data, 0x20), mul(i, 0x20))))
+      }
+    }
+  }
+}
+contract Test {
+  uint[] data;
+  constructor() public {
+    data.push(1);
+    data.push(2);
+    data.push(3);
+    data.push(4);
+    data.push(5);
+  }
+  function sum() external view returns(uint){
+    return Sum.sumUsingInlineAssembly(data);
   }
 }
 ```
