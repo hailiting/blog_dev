@@ -18,6 +18,7 @@
 
 `https://app.element.io/#/room/#westend_faucet:matrix.org`
 发送 !drip xxxx 到对话框
+!drip 5CFuXNqoVGTjgBUYR2xb145ju9cWdLHABdeYaQQq85Jdewck
 
 ## 质押矿池的浏览页
 
@@ -41,7 +42,6 @@ validators 这些矿池
 
 controller 账号 用于提交交易
 stash 账号
-
 
 MPOS
 

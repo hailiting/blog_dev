@@ -161,7 +161,7 @@ rm contracts/ConvertLib.sol contracts/MetaCoin.sol
 const ConvertLib = artifacts.require("ConvertLib");
 const MetaCoin = artifacts.require("MetaCoin");
 
-module.exports = function(deployer) {
+module.exports = function (deployer) {
   deployer.deploy(ConvertLib);
   deployer.link(ConvertLib, MetaCoin);
   deployer.deploy(MetaCoin);
@@ -356,7 +356,7 @@ contract Voting {
 
 ```js
 truffle(development) >
-  Voting.deployed().then(function(contract) {
+  Voting.deployed().then(function (contract) {
     contract.buy({
       value: web3.toWei("1", "ether"),
       from: web3.eth.accounts[1],
@@ -386,7 +386,7 @@ Compiling Migrations.sol...Compiling Voting.sol...Writing
 
 ```js
 var Voting = artifacts.require("Voting");
-module.exports = function(deployer) {
+module.exports = function (deployer) {
   deployer.deploy(Voting, 10000, web3.utils.toWei("0.01", "ether"), [
     web3.utils.fromAscii("Alice", 32),
     web3.utils.fromAscii("Bob", 32),
@@ -465,7 +465,7 @@ web3.eth.getBalance(Voting.address).toNumber()
 **app/index.html**
 用上个`index.html`替换`app/index.html`内容。
 
-````html
+```html
 <!DOCTYPE html>
 <html>
   <head>
@@ -594,35 +594,69 @@ web3.eth.getBalance(Voting.address).toNumber()
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
   <script src="./index.js"></script>
 </html>
+```
 
-**app/scripts/index.js** ```js import "../styles/app.css"; import { default as
-Web3 } from "web3"; import { default as contract } from "truffle-contract";
-import voting_artifacts from "../../build/contracts/Voting.json"; var Voting =
-contract(voting_artifacts); let candidates = { Alice: "candidate-1", Bob:
-"candidate-2", Cary: "candidate-3", }; window.voteForCandidate =
-function(candidate) { let candidateName = $("#candidate").val(); try {
-$("#msg").html( "Vote has been submitted. The vote count will increment as soon
-as the vote is recorded on the blockchain. Please wait." );
-$("#candidate").val(""); Voting.deployed().then(function(contractInstance) {
-contractInstance .voteForCandidate(candidateName, { gas: 140000, from:
-web3.eth.accounts[0], }) .then(function() { let div_id =
-candidates[candidateName]; return contractInstance.totalVotesFor
-.call(candidateName) .then(function(v) { $("#" + div_id).html(v.toString());
-$("#msg").html(""); }); }); }); } catch (err) { console.log(err); } };
-$(document).ready(function() { if (typeof web3 !== "undefined") {
-console.warn("Using web3 detected from external source like Metamask");
-window.web3 = new Web3(web3.currentProvider); } else { console.warn( "No web3
-detected. Falling back to http://localhost:8545. You should remove this fallback
-when you deploy live, as it's inherently insecure. Consider switching to
-Metamask for development. More info here:
-http://truffleframework.com/tutorials/truffle-and-metamask" ); window.web3 = new
-Web3( new Web3.providers.HttpProvider("http://localhost:8545"); ); }
-Voting.setProvider(web3.currentProvider); let candidateNames =
-Object.keys(candidates); for(var i=0;i<candidateNames.length;i++){ let name =
-candidateNames[i]; Voting.deployed().then(function(contractInstance){
-contractInstance.totalVotesFor.call(name).then(function(v){
-$("#"+candidates[name]).html(v.toString()); }) }) } });
-````
+**app/scripts/index.js**
+
+```js
+import "../styles/app.css";
+import { default as Web3 } from "web3";
+import { default as contract } from "truffle-contract";
+import voting_artifacts from "../../build/contracts/Voting.json";
+var Voting = contract(voting_artifacts);
+let candidates = {
+  Alice: "candidate-1",
+  Bob: "candidate-2",
+  Cary: "candidate-3",
+};
+window.voteForCandidate = function(candidate) {
+  let candidateName = $("#candidate").val();
+  try {
+    $("#msg").html( "Vote has been submitted. The vote count will increment as soon as the vote is recorded on the blockchain. Please wait." );
+    $("#candidate").val("");
+    Voting.deployed()
+      .then(function(contractInstance) {
+        contractInstance.voteForCandidate(candidateName,
+          {
+            gas: 140000,
+            from: web3.eth.accounts[0],
+          },
+        ).then(function() {
+          let div_id = candidates[candidateName];
+          return contractInstance.totalVotesFor.call(candidateName)
+                  .then(function(v) {
+                    $("#" + div_id).html(v.toString());
+                    $("#msg").html(""); });
+          });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+};
+$(document).ready(
+  function() {
+    if (typeof web3 !== "undefined") {
+        console.warn("Using web3 detected from external source like Metamask");
+        window.web3 = new Web3(web3.currentProvider);
+    } else {
+      console.warn( "No web3 detected. Falling back to http://localhost:8545. You should remove this fallback when you deploy live, as it's inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask" );
+      window.web3 = new Web3( new Web3.providers.HttpProvider("http://localhost:8545"); );
+    }
+    Voting.setProvider(web3.currentProvider);
+    let candidateNames = Object.keys(candidates);
+    for(var i=0;i<candidateNames.length;i++){
+      let name = candidateNames[i];
+      Voting.deployed()
+            .then(function(contractInstance){
+                contractInstance.totalVotesFor
+                  .call(name)
+                  .then(function(v){
+                    $("#"+candidates[name]).html(v.toString());
+                  })
+            })
+    }
+  });
+```
 
 ```js
 // app.js  web3 1.+
@@ -639,7 +673,7 @@ const App = {
   account: null,
   voting: null,
   tokenPrice: null,
-  start: async function() {
+  start: async function () {
     const { web3 } = this;
     try {
       const networkId = await web3.eth.net.getId();
@@ -655,7 +689,7 @@ const App = {
       console.error("Нет подключения", error);
     }
   },
-  loadCandidatesAndVotes: async function() {
+  loadCandidatesAndVotes: async function () {
     const { totalVotesFor } = this.voting.methods;
     let candidateNames = Object.keys(candidates);
     for (var i = 0; i < candidateNames.length; i++) {
@@ -665,13 +699,13 @@ const App = {
       $("#" + candidates[name]).html(count);
     }
   },
-  lookupVoterInfo: function() {
+  lookupVoterInfo: function () {
     let address = $("#voter-info").val();
     const { voterDetails } = this.voting.methods;
     console.log(address);
     voterDetails(address)
       .call()
-      .then(function(v) {
+      .then(function (v) {
         $("#tokens-bought").html("Total Tokens bought: " + v[0].toString());
         let votesPerCandidate = v[1];
         $("#votes-cast").empty();
@@ -684,12 +718,12 @@ const App = {
         }
       });
   },
-  buyTokens: async function() {
+  buyTokens: async function () {
     let tokensToBuy = $("#buy").val();
     const { tokenPrice, buy } = this.voting.methods;
     tokenPrice()
       .call()
-      .then(function(v) {
+      .then(function (v) {
         App.tokenPrice = parseFloat(App.web3.utils.fromWei(v.toString()));
         $("#token-cost").html(App.tokenPrice + " Ether");
 
@@ -700,10 +734,10 @@ const App = {
             value: App.web3.utils.toWei(`${price}`, "ether"),
             from: App.account,
           })
-          .then(function(v) {
+          .then(function (v) {
             console.log(v);
             $("#buy-msg").html(``);
-            App.web3.eth.getBalance(App.account, function(error, result) {
+            App.web3.eth.getBalance(App.account, function (error, result) {
               $("#contract-balance").html(
                 App.web3.utils.fromWei(result.toString()) + " Ether"
               );
@@ -711,7 +745,7 @@ const App = {
           });
       });
   },
-  voteForCandidate: async function() {
+  voteForCandidate: async function () {
     let candidateName = $("#candidate").val();
     let voteTokens = $("#vote-tokens").val();
     $("#msg").html(
@@ -736,7 +770,7 @@ const App = {
   },
 };
 window.App = App;
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
   if (window.ethereum) {
     App.web3 = new Web3(window.ethereum);
     window.ethereum.enable();
@@ -817,45 +851,45 @@ Truffle 使用了 Mocha 测试框架和 Chai 用于断言
 ```js
 // voting.js
 var Voting = artifacts.require("./Voting.sol");
-contract("Voting", function(accounts) {
-  it("should be able to buy tokens", function() {
+contract("Voting", function (accounts) {
+  it("should be able to buy tokens", function () {
     var instance;
     var tokensSold;
     var userTokens;
     return Voting.deployed()
-      .then(function(i) {
+      .then(function (i) {
         instance = i;
         return i.bug({
           value: web3.toWei(1, "ether"),
         });
       })
-      .then(function() {
+      .then(function () {
         return instance.tokensSold.call();
       })
-      .then(function() {
+      .then(function () {
         tokensSold = balance;
         return instance.voterDetails.call(web3.eth.accounts[0]);
       })
-      .then(function(tokenDetails) {
+      .then(function (tokenDetails) {
         userTokens = tokenDetails[0];
       });
     assert.equal(balance.valueOf(), 100, "100 tokens were not sold");
     assert.equal(userTokens.valueOf(), 100, "100 tokens were not sold");
   });
-  it("should be able to vote for candidates", function() {
+  it("should be able to vote for candidates", function () {
     var instance;
     return Voting.deployed()
-      .then(function(i) {
+      .then(function (i) {
         instance = i;
         return i.buy({ value: web3.toWei(1, "ether") });
       })
-      .then(function() {
+      .then(function () {
         return instance.voteForCandidate("Alice", 3);
       })
-      .then(function() {
+      .then(function () {
         return instance.voterDetails.call(web3.eth.accounts[0]);
       })
-      .then(function(tokenDetails) {
+      .then(function (tokenDetails) {
         assert.equal(
           tokenDetails[1][0].valueOf(),
           3,

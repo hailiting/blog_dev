@@ -78,3 +78,51 @@ https://testnet.binance.org/faucet-smart
 #### 水龙头
 
 https://faucet.fantom.network/
+
+## Etherc
+
+https://infura.io/ 注册登录
+
+### Ropsten 测试网
+
+- Network Name
+  Ropsten
+- New RPC URL
+  https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161
+- Chain ID
+  3
+- Currency Symbol
+  ETH
+- Block Explorer URL
+  https://ropsten.etherscan.io/
+
+#### 水龙头
+
+https://faucet.dimensions.network/
+https://faucet.ropsten.be/
+
+### Rinkeby 测试网
+
+- Network Name
+  Rinkeby
+- New RPC URL
+  https://rinkeby.infura.io/v3/
+- Chain ID
+  4
+- Currency Symbol
+  ETH
+- Block Explorer URL
+  https://rinkeby.etherscan.io/
+
+### Kovan 测试网
+
+- Network Name
+  Kovan
+- New RPC URL
+  https://kovan.infura.io/v3/
+- Chain ID
+  4
+- Currency Symbol
+  ETH
+- Block Explorer URL
+  https://kovan.etherscan.io/
