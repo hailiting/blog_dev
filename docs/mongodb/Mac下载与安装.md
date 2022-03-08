@@ -116,3 +116,12 @@ cd /usr/local/mongodb/bin
 sudo mongo
 > exit; # 退出
 ```
+
+## 关闭 mongodb
+
+```shell
+ps -ef | grep mongo
+kill mongo
+ 501
+5645
+```

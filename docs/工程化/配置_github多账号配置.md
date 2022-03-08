@@ -16,6 +16,7 @@ ssh-keygen -t rsa -f github2 -C "xxx@163.com"
 
 ssh-keygen -t rsa -f hailiting -C "hailiting@yeah.net"  
 ssh-keygen -t rsa -f github_do -C "github_do@163.com"
+githubDo111
 
 ## 2. 生成公钥添加到 github 上，设置 ssh-key, new ssh
 
@@ -34,10 +35,17 @@ Host *
 # 其中Host是主机别名，HostName是github服务器地址，User是GitHub服务器用户名
 # IdentityFile是和GitHub服务器通信的ssh私钥，通过IdentityFile就可以区分
 # 不同的账号
-Host *
+Host github
+   HostName github.com
+   User git
    UseKeychain yes
    AddKeysToAgent yes
    IdentityFile ~/.ssh/hailiting
+Host github
+   HostName github.com
+   User git
+   UseKeychain yes
+   AddKeysToAgent yes
    IdentityFile ~/.ssh/github_do
 ```
 
@@ -45,8 +53,8 @@ Host *
 
 ```
 # 使用 -K 可以将私钥添加到钥匙串，不用每次开机后还要再次输入这次命令了
-ssh-add --apple-use-keychain ~/.ssh/hailiting
-ssh-add --apple-use-keychain ~/.ssh/github_do
+ssh-add -K ~/.ssh/hailiting
+ssh-add -K ~/.ssh/github_do
 
 # 可以在添加前使用下面命令删除所有的key
 ssh-add -D
@@ -56,3 +64,7 @@ ssh-add -l
 ```
 
 ## 5. git remote set-url origin account1:github 账号/xxx.git
+
+git clone git@github.com:ADAOTOP/adao_ui.git --origin github_do
+
+git remote set-url origin github_do git@github.com:ADAOTOP/adao_ui.git

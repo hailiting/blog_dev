@@ -21,6 +21,11 @@ cat id_rsa.pub
 `git config --global user.name 'account name'` =>用户名，建议英文或拼音  
 `git config --global user.email 'account email'` =>邮箱地址
 
+`git config --global user.name 'hailiting'` =>用户名，建议英文或拼音  
+`git config --global user.email 'hailiting@yeah.net'` =>邮箱地址
+`git config --global user.name 'githubDo111'` =>用户名，建议英文或拼音  
+`git config --global user.email 'github_do@163.com'` =>邮箱地址
+
 #### 2，生成密钥
 
 `ssh-keygen -t rsa -C 'account email'` =>上面的邮箱地址  
@@ -47,6 +52,8 @@ cd ~/.ssh
 
 ```shell
 ssh-keygen -t rsa -C "自己的github账户" -f github_rsa
+
+ssh-keygen -t rsa -C "github_do@163.com" -f github_do
 ```
 
 ### 3. 输入 Github 账户密码
