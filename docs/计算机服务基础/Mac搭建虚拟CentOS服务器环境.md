@@ -29,9 +29,10 @@ tips: 在配置资源的时候，最好多给一点「10G」左右，要不然�
 
 4.1 VirtualBox 当前虚拟机下 【设置】【网络】【连接方式：桥接网卡】
 4.2 查看本机的 ip【我是 mac ifconfig】【window ipconfig/all】
-4.3 修改虚拟机的网络配置 `vi /etc/sysconfig/network-scripts/ifcfg-enp0s3`
+4.3 修改虚拟机的网络配置 `vi /etc/sysconfig/network-scripts/ifcfg-enp0s3` （网卡）
 
 ```
+BOOTPROTO="dhcp"
 ONBOOT=yes
 DNS1="192.168.12.11"
 ```

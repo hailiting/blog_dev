@@ -43,6 +43,10 @@
 - Block Explorer URL (optional)
   https://testnet.bscscan.com
 
+#### astar 水龙头
+
+https://portal.astar.network/#/balance/wallet
+
 #### 测试网 BNB 水龙头
 
 https://testnet.binance.org/faucet-smart

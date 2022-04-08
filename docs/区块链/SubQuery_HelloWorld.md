@@ -15,17 +15,24 @@
   - 运行了`docker-compose up` 分别启动了：`postgres`, `subquery-node`和`graphql-engine(或subql-query)`
 - 9. `subql init --starter myProject` 以 starter 为模板创建一个新的 SubQuery 项目，并命名`myProject`
 - 10. 读取本地 schema `npm i @subql/node` `subql-node -f`
+- 11. postgre 数据库
+- 12. `npm install @subql/query -g` 前端服务
 
-```
+```shell
+postgre
+# @subql/node 安装路径
 /usr/local/lib/node_modules/@subql/node/dist
 
+# postgre 安装路径
 /Library/PostgreSQL/14/scripts/runpsql.sh
 
-123456hai
-
-locate pg_hba.conf
-
+# 改变权限
 alter role zhangsan password '123456';
+
+# 跑起来
+# ./serve_config.sh
+export DB_PASS=123456
+subql-node -f
 ```
 
 ### `yarn 升级`
@@ -52,6 +59,15 @@ Substrate 链上数据包括：区块 Block, 事件 Events, 外部信息 Extrins
 - 数据库启动成功后，Subql-node 会根据用户的 schema 文件，让数据库生成正确的数据库表。
 - Subql-node 按照用户项目定义的 mapping，来转换链上数据，并存储在数据库表中。
 - subql-query 即我们的 Graphql-engine，访问数据库，让我们通过 playground 和 Api 来查询数据
+
+### 有些主要的文件
+
+- `project.yaml`
+  - 定义项目配置，项目启动时会读取其中的各项配置信息，如调用 api 地址，注册 handler 等
+- `mapping`
+  - 定义原始数据和数据库实体之间的映射关系和处理代码
+- `schema`
+  - 定义了实体及关联关系
 
 ### 查询条件
 
@@ -197,7 +213,7 @@ query {
 }
 ```
 
-## 问题
+### 问题
 
 数据库没安装
 
@@ -212,3 +228,164 @@ ERROR Unable to connect to the database SequelizeConnectionRefusedError: connect
 ```
 postgresql
 ```
+
+## 第三课 SubQuert 映射
+
+- 介绍 polkadot.js 调取 event/extrinsic 方法，以及类型处理
+- 映射（mapping）之 区块处理 block handler
+- 映射（mapping）之 事件处理 event handler
+- 字典的使用
+- 映射（mapping）之 外部信息处理 call handler
+
+#### 方案一
+
+- 检索 balances.transfer 事件
+
+#### 方案二
+
+- 检索所有相关联的 extrinsics:
+  - balances.forceTransfer
+  - Balances.transfer
+  - balances.transferAll
+  - balances.transferKeepAlive
+  - Utility 模块下所有可能进行的以上 calls
+
+## 具体开发
+
+- 1. 启动 node，允许使用异步方法
+     `node --experimental-repl-await`
+- 2. 启动 polkadot api
+  ```js
+  const { ApiPromise, WsProvieder } = require("@polkadot/api");
+  const provider = new WsProvider("wss://polkadot.api.onfinality.io/public-ws");
+  const api = await ApiPromise.create({ provider });
+  // 获取区块哈希
+  const blockHash = await api.rpc.chain.getBlockHash(h); // h 为确切的区块高度
+  // 获取此高度events
+  const apiAt = await api.at(blockHash); // 代表这我们的api将返回此高度的数据
+  const events = await apiAt.query.system.events();
+  events.toHuman(); // 变成友好的可读数据
+  // 查看 transfer event
+  const transferEvent = events[4];
+  transferEvent.event.toHuman(); // 检查的event类型和数据
+  transferEvent.event.meta.toHuman();
+  ```
+
+#### Polkadot api 和 Subquery
+
+- 1. Subquery 同样利用 polkadot api 来获取历史高度数据
+- 2. 使用 polkadot api 调取 block event 和 extrisinc 缺乏整合
+- 3. 需要重复锁定高度
+- 4. Api 获取原始数据，subquery 过滤和提供所需数据
+
+### 查询交易
+
+```yaml
+# project.yaml
+handlers:
+  - handler: handleTransfer
+    kind: substrate/EventHandler
+    filter:
+      module: balances
+      method: Transfer
+```
+
+```js
+// schema.graphql
+type transfer @entity {
+  id: ID! # block height + event id
+  from: String!
+  to: String!
+  amount: BigInt!
+}
+// yarn codegen
+```
+
+```ts
+import { SubstrateEvent } from "@subql/types";
+import { Transfer } from "../types";
+import { Balance, AccountId } from "@polkadot/types/interfaces";
+
+export async function handleTransfer(event: SubstrateEvent): Promis<void> {
+  const record = new Transfer(
+    `${event.block.block.header.number.toString()}-${event.idx}`
+  );
+  const {
+    event: {
+      data: [fromAccount, toAccount, amount],
+    },
+  } = event;
+  record.from = (fromAccount as AccountId).toString();
+  record.to = (toAccount as AccountId).toString();
+  record.amount = (amount as Balance).toBigInt();
+  await record.save();
+}
+```
+
+```yaml
+# project.yaml
+---
+network:
+  genesisHash: ...
+  endpoint: ...
+  # 提高获取数据的速度
+  dictionary: "https://api.subquery/network/sq/subquery/dictionary-polkadot"
+```
+
+```curl
+curl 'http://localhost:3000/' -H 'Accept-Encoding: gzip, deflate, br' -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Connection: keep-alive' -H 'DNT: 1' -H 'Origin: http://localhost:3000' --data-binary '{"query":"# Write your query or mutation here\n{\n  query {\n    transfers(first:50){\n      nodes {\n        id,\n          from,\n        to,\n        amount\n      }\n    }\n  }\n}"}' --compressed
+```
+
+```txt
+query{
+  transfers(first:50,filter:{
+    from:{
+      equalTo: "1mndd9E8kssCxXDacCbKw3iwFQwdABiFrE8fVRKS5SeS4E4"
+    }
+  }){
+    nodes{
+      id,
+      from,
+      to,
+      amount
+    }
+  }
+}
+```
+
+### 检索所有相关联的 extrinsics
+
+```ts
+// mappingHandlers.ts
+export async function handleTransfer(call: SubstrateExtrinsic): Promise<void> {
+  const record = new Transfer(
+    `${call.block.block.header.number.toString}-${call.idx}`
+  );
+  const [toAccount, amount] = call.extrinsic.args;
+  record.from = call.extrinsic.signer.toString();
+  record.to = (toAccount as Account).toString();
+  record.amount = (amount as Balance).toBigInt();
+  await record.save();
+}
+```
+
+```yaml
+# project.yaml
+---
+handler: handleTransfer
+kind: substrate/CallHandler
+filter:
+  module: balance
+  method: transfer
+  success: true
+```
+
+## 第四课：SubQuery 关系
+
+- 一对一关系
+- 一对多关系
+  - schema 中定义一对多关系
+  - 在 mapping 中处理一对多关系
+  - 查询一对多关系的数据
+- 多对多 - 关联表
+- 反向查询【账户转账并使用反向查询】

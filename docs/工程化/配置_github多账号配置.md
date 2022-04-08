@@ -10,7 +10,7 @@ git config --global --unset user.email
 ## 1. 不同账号生成不同密钥
 
 ```
-ssh-keygen -t rsa -f github1 -C "xxx@163.com"
+ssh-keygen -t rsa -f github_do -C " github_do@163.com"
 ssh-keygen -t rsa -f github2 -C "xxx@163.com"
 ```
 

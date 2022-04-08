@@ -19,3 +19,7 @@ Polkadot 是一个可扩展的异构多链区块链。它由一个协作的去�
 提供 staking 流动性的网络
 
 ### Bifrost Eos Bridge
+
+波卡水龙头
+
+https://portal.astar.network/#/balance/wallet
