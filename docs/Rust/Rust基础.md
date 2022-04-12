@@ -1,5 +1,7 @@
 # rust 基础
 
+[线上运行 rust 的网站](!https://play.rust-lang.org/)
+
 ## 准备工作
 
 ### rust 介绍
@@ -20,6 +22,7 @@
 cargo new Hello
 // 跑
 cargo run
+// cargo build --release
 cargo build
 cargo check
 ```
@@ -71,7 +74,7 @@ fn main() {
 Rust 是静态类型语言，也就是说在编译时就必须知道所有变量的类型。  
 当多种类型均有可能时，使用 parse 将 String 转换为数字时，必须增加类型注释
 **四种基本标量类型：整形(u- | i-)、浮点型(f32|64)、布尔类型(bool)和字符类型(char 32 位)**
-**两个原生的复合类型：元祖(tuple)和数组(array)**
+**两个原生的复合类型：元组(tuple)和数组(array)**
 
 ```rs
 // err
@@ -84,15 +87,17 @@ let guess: u32 = "42".parse().expect("Not a number!");
 - char
 - 数字类型
   `i8, i16, i32, i64, u8, u16, u32, u64, f32, f64`
+  - f32 单精度
+  - f64 双精度
 - 数组 `[Type;size]` -> size 也是数组的一部分
 - 自适应类型（和平台有关系）
   `isize`有符号, `usize`无符号 `println!("max = {}", usize::MAX);`
-- 元祖
-  将多个其他类型的值组合进一个复合类型的主要方式。元祖长度固定， 一旦声明，其长度不会增大或缩小
+- 元组
+  将多个其他类型的值组合进一个复合类型的主要方式。元组长度固定， 一旦声明，其长度不会增大或缩小
 
   ```rs
   fn main(){
-    // 元祖类型
+    // 元组类型
     let tup: (i32, f64, u8) = (500, 6.4, 1);
     let (x, y, z) = tup;
     println!("this value of y is: {}", y);
@@ -276,6 +281,13 @@ fn main(){
 所有权（系统）是 Rust 最为与众不同的特征，它让 Rust 无需垃圾回收（garbage collector）即可保障内存安全。
 rust 通过所有权机制来管理内存，编译器在编译就会根据所有权规则对内存的使用进行检查
 
+- 概念与规则
+- 所有权转移
+- Copy & Clone
+- 函数与所有权
+- Reference 和 borrowing
+- Slice 类型
+
 ### 栈（Stack）和堆（Heap）
 
 栈和堆都是代码在运行时可供使用的内存，但是他们的结构不同。  
@@ -294,7 +306,7 @@ rust 通过所有权机制来管理内存，编译器在编译就会根据所有
 
 - String 类型示例
 - 变量交互方式一：移动
-- 变量交互方式二：clone
+- 变量交互方式二：copy & clone
 - 所有权和函数
 
 ```rs
@@ -306,18 +318,30 @@ fn main(){
 } // 结尾时，自动调用 drop
 ```
 
-### 变量与数据交互的方式一： 移动
+### 变量交互方式一：移动，所有权转移（Move）
+
+如果是简单类型比如数值，bool，赋值会发生数据拷贝，而不是转移所有权
 
 ```rs
-let s1 = String::from("hello");
-// 在 let s2=s1之后，Rust认为s1不再有效，rust不需要在s1离开作用域后清理
-let s2 = s1;
-println!("{}, world!", s1); // error: value borrowed here after move
+{
+  let s1 = String::from("hello");
+  // 在 let s2=s1之后，Rust认为s1不再有效，rust不需要在s1离开作用域后清理
+  let s2 = s1;
+  println!("{}, world!", s1); // error: value borrowed here after move
+}
 ```
 
 Rust 永远不会自动创建数据的深拷贝，因此，任何自动的复制可以被认为对运行时性能影响最小
 
-#### 变量与数据交互的方式一：clone
+#### 变量与数据交互的方式一：copy & clone
+
+赋值时可以通过数据拷贝/克隆，不去转移现有数据所有权
+
+- Copy: 适用于基本数据类型或完全由基本类型组成的复杂类型
+  - 如： u32, bool, char, tuples(元祖)
+- Clone: 数据存储在堆上，在堆上克隆一份新的
+  - 如：string, HashMap, Vec
+  - clone 会更慢，`clone()`不可缺省
 
 ```rs
 let s1 = String::from("hello");
@@ -326,15 +350,24 @@ let s2 = s1.clone();
 println!("s1={}, s2={}", s1, s2);
 ```
 
-#### 栈上数据拷贝
+#### 函数与所有权
+
+- 和赋值类似，将值传递给函数也会转移所有权或 copy
+- 返回值可以把函数内变量对应值的所有权转移至函数外
 
 ```rs
 fn main(){
+  // clone
   let s = String::from("hello");
   takes_ownership(s); // s 没了
-
+  // copy
   let x = 5;
   make_copy(x); // x还有 i32是Copy
+
+  let s1 = gives_ownership();
+  let s2= String::from("hello");
+  let s3 = takes_and_gives_back(s2);
+  // s3 移出作用域并被丢弃，s2 也移出作用域，但已被移走，所以什么也不会发生，s1移出作用域并被丢弃
 }
 fn takes_ownership(some_string:String){
   println!("{}", some_string);
@@ -342,17 +375,6 @@ fn takes_ownership(some_string:String){
 fn make_copy(some_integer: i32){
   println!("{}", some_integer);
 }
-```
-
-#### 返回值和作用域
-
-```rs
-fn main(){
-  let s1 = gives_ownership();
-  let s2= String::from("hello");
-  let s3 = takes_and_gives_back(s2);
-}
-// s3 移出作用域并被丢弃，s2 也移出作用域，但已被移走，所以什么也不会发生，s1移出作用域并被丢弃
 
 fn gives_ownership() -> String {
   let some_string = String::from("hello");
@@ -375,10 +397,14 @@ fn calculate_length(s:String)->(String, usize){
 }
 ```
 
-#### 引用`&` 与 借用
+#### 引用`&` 与 借用， Reference 和 Borrowing
 
 - 解引用`*`
 - 引用只是引用， 不能改变其值
+- 在变量名前放置`&`，获取值的引用
+- Borrowing: 函数参数为引用
+- 默认是不可变的(immutable), 可变引用为`&mut`
+- 引用的作用域是在最后使用的地方结束，而不是大括号的末尾
 
 ```rs
 fn main(){
@@ -397,6 +423,7 @@ fn calculate_length(s: &String) -> usize {
 fn main(){
   let mut s = String::from("hello");
   change(&mut s);
+  println!("{:?}", s); // hello, world
 }
 fn change(some_string: &mut String){
   some_string.push_str(", world");
@@ -438,10 +465,20 @@ fn dangle()=>&String {
 
 ### Slice 类型
 
-slice 是没有所有权的数据类型，他允许你引用集合中一段连续的元素序列，而不用引用整个集合
+与引用类似，slice 也不拥有值的所有权，用于引用集合内的部分连续数据
+
+- 与值绑定，当退出作用域，需要清空时，slice 也同时失效
+- 定义 slice: `&name[start..end]`, 不包含 end
+- 类型签名: `&str`为`string slice`, `&[T]`为`Vector/array` slice
 
 ```rs
 fn main(){
+    let ss=String::from("hello world");
+    let hello = &s[0..5]; // hello
+
+    let arr = [1,2,3,4,5,6];
+    let slice = &arr[1..3]; // [2,3]
+
     let s = String::from("dsadsad adfsad");
     let  (a, l) =  first_word(&s);
     s = "ddd ddd";
@@ -451,7 +488,9 @@ fn first_word(s: &String)-> (&String, usize) {
     // as_bytes 将 String 转化为字节数组
     let bytes = s.as_bytes();
     // 使用 iter 方法在字节数组上建立一个迭代器
+    // enumerate 元素的类举
     for(i, &item) in bytes.iter().enumerate() {
+        // 空格字节码
         if item == b' '{
             return (&s, i)
         }
@@ -531,7 +570,7 @@ let user4 = {
 }
 ```
 
-#### 使用没有名字字段的元祖结构来创建不同的类型
+#### 使用没有名字字段的元组结构来创建不同的类型
 
 ```rs
 struct Color(i32, i32, i32);
@@ -605,7 +644,8 @@ fn main(){
 
 ## 枚举与模式匹配
 
-枚举（enumerations | enums)
+枚举（enumerations | enums)  
+枚举也是一种数据类型，可以用来表示多个变体（同一类型的多种可能性）
 
 ### 定义枚举
 
@@ -627,6 +667,25 @@ enum Message {
 }
 ```
 
+#### 可以对枚举定义方法，实现 trait
+
+```rs
+enum TrafficLight {
+  Red,
+  Green,
+  Yellow,
+}
+impl TrafficLight {
+  fn time(&self) -> u8 {
+    60
+  }
+}
+fn main(){
+  let light = TrafficLight::Red;
+  println!("light time is: {}", light.time());
+}
+```
+
 ```rs
 impl Message {
   fn call(&self){
@@ -637,7 +696,70 @@ let m = Message::Write(String::from("hello"));
 m.call();
 ```
 
-### match 控制流运算符
+### match 控制流运算符 模式匹配
+
+- 匹配必须完备
+- `_`可以匹配所有的值
+
+```rs
+let value = 0u8;
+match value {
+  1=> println!("one"),
+  3=> println!("three"),
+  _=>(),
+}
+
+
+
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        None => None,
+        Some(i) => Some(i + 1),
+    }
+}
+
+fn main(){
+    let five = Some(5);
+    // 01
+    let result = plus_one(five);
+    match result {
+        Some(i) => println!("result={}", i),
+        None => println!("none"),
+    }
+    // 02
+    // map接收的是一个函数调用
+    let six = five.map(|i| i+1);
+    println!("six: {:?}", six);
+
+    let none:Option<i32>=None;
+    let none_result = none.map(|i| i+1);
+    println!("none_result: {:?}", none_result);
+
+
+    // 03-01
+    // 模式匹配
+    // if let 语法糖
+    // 只关心一个分支时
+    // 失去了完备性的检查
+    if let Some(six) = plus_one(five){
+            println!("{}", six);
+    };
+    if let Some(none) = plus_one(None) {
+        println!("{}", none);
+     } else {
+        println!("none");
+     };
+    // 03-02
+    let some_u8_value = Some(4u8);
+    match some_u8_value {
+        Some(4)=>println!("three111"),
+        _=>(),
+    }
+    if let Some(3) = some_u8_value {
+        println!("three222");
+    }
+}
+```
 
 ```rs
 fn main(){
@@ -656,7 +778,6 @@ fn main(){
             Coin::Nickel =>5,
             Coin::Dime =>10,
             Coin::Quarter =>25,
-
         }
     }
 }
@@ -938,7 +1059,7 @@ pub mod hosting {
 ## 常见集合
 
 - vector-> 允许我们一个挨着一个地存储一系列数量可变的值
-- 字符串（string）
+- 字符串（string） Unicode 编码 4 个字节
 - 哈希 map (hash map) -> 允许我们将值与一个特定的键（key）相关联
 
 ### vector
@@ -1133,7 +1254,7 @@ scores.insert(String::from("Yellow"), 50);
 use std::collections::HashMap;
 let teams = vec![String::from("Blue"), String::from("Yellow")];
 let initial_scores = vec![10, 50];
-// zip 创建一个元祖 vector
+// zip 创建一个元组 vector
 // <_, _> 是必要的，因为Rust能够根据vector 中数据的类型推断出 HashMap所
 let scores: HashMap<_,_> = teams.iter().zip(initial_scores.iter()).collect();
 ```
@@ -1233,11 +1354,18 @@ fn main(){
 
 ### Result 和可恢复错误
 
+[Result 定义的方法有 `is_ok, map, map_or, unwrap`...](!https://doc.rust-lang.org/std/result/enum.Result.html)
+
 ```rs
 // 使用 Result 类型来处理潜在的错误，这里的T，E都是泛型
 enum Result<T,E> {
   Ok(T),
   Err(E),
+}
+
+enum Result_u8_string {
+  Ok(u8),
+  Err(String),
 }
 ```
 
@@ -1375,6 +1503,26 @@ impl Guess {
 ### 泛型
 
 ```rs
+// 结构体
+struct Point<T>{
+  x:T,
+  y:T,
+}
+// impl<T> 指定结构体
+impl<T> Point<T> {
+  fn x(&self)->&T{
+    &self.x
+  }
+}
+fn main(){
+  let int = Point{x:5, y:10};
+  let float = Point{x:5.0, y:10.0};
+  println!("{:?}", int.x());
+  println!("{:?}", float.x())
+}
+```
+
+```rs
 // 定义了参数类型，其他类型不能共用
 fn largest(list: &[i32])-> i32 {
     let mut largest = list[0];
@@ -1387,7 +1535,7 @@ fn largest(list: &[i32])-> i32 {
 }
 
 
-// 用于任何实现了 PartialOrd和Copy trait的泛型
+// 用于任何实现了 PartialOrd和Copy trait的泛型 trait bound
 fn largest_plus<T: PartialOrd + Copy>(list:&[T])->T{
   let mut largest = list[0];
   for &item in list.iter(){
@@ -1397,14 +1545,15 @@ fn largest_plus<T: PartialOrd + Copy>(list:&[T])->T{
   }
   largest
 }
+
 fn main(){
   let number_list = vec![34, 50, 25, 100, 65];
   let largest01 = largest(&number_list);
-
-
+  println!("largest01: {:?}", largest01);
   let char_list = vec!['y', 'm', 'a', 'q'];
   let largest02 = largest_plus(&number_list);
   let largest03 = largest_plus(&char_list);
+  println!("char_list: {:?}", largest03);
 }
 ```
 
@@ -1422,12 +1571,15 @@ fn main(){
 ```
 
 ```rs
+// 异常处理机制
 // 枚举中定义泛型
 enum Option<T>{
   Some(T),
   None, // 不存在任何值的 None
 }
 ```
+
+[Option 定义的方法有`is_some, map, map_or, unwrap`...](!https://doc.rust-lang.org/std/option/enum.Option.html)
 
 ```rs
 // 方法定义中的泛型
@@ -1470,7 +1622,9 @@ fn main(){
 
 **Rust 通过在编译时进行泛型代码的单态化（monomorphization）来保证效率**
 
-### trait: 定义共享行为
+### trait: 定义共享行为 接口
+
+trait 抽象了某种功能或行为
 
 trait 告诉 Rust 编译器某个特定类型拥有可能与其他类型共享的功能
 
@@ -1478,6 +1632,7 @@ trait 告诉 Rust 编译器某个特定类型拥有可能与其他类型共享�
 
 ```rs
 // 这里的用法和 interfaces 有点像
+// pub 对外可见
 pub trait Summary {
   fn summarize(&self) -> String;
 }
@@ -1486,7 +1641,7 @@ pub trait Summary {
 #### 为类实现 trait
 
 ```rs
-pub trait  Summary {
+pub trait Summary {
     fn summarize(&self) ->String{
         String::from("(Read more...)")
     }
@@ -1531,6 +1686,32 @@ fn main(){
         retweet: false,
     };
     println!("1 new tweet: {}", tweet.summarize());
+}
+```
+
+```rs
+fn main(){
+    let a = Tweet{
+        author: String::from("sss"),
+        text: String::from("eeee"),
+    };
+    notify(&a);
+}
+
+pub trait Summary {
+    fn summarize(&self)->String;
+}
+struct Tweet {
+    author: String,
+    text: String,
+}
+impl Summary for Tweet {
+    fn summarize(&self)->String {
+        format!("{}: {}", self.author, self.text)
+    }
+}
+pub fn notify<T:Summary>(item:&T){
+    println!("{}", item.summarize());
 }
 ```
 
@@ -1615,6 +1796,8 @@ let s = 3.to_string();
 &'a i32 // 带有显示生命周期的引用
 &'a mut i32 // 带有显式生命周期的可变引用
 ```
+
+#### 引用生命周期的缺省规则
 
 ```rs
 // fn longest(x: &str, y: &str)-> &str { // error -> &str 没指定
