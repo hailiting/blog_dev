@@ -15,4 +15,3 @@ Bring!
 ## dem0
 
 - https://github.com/jayluxferro/Cookie-Editor/tree/a76a1915df50072119adf912ca83982fe8db59c4
-- https://github.com/adam-zethraeus/safari-matter-extension/tree/bad85e14df0fb3bd165dae5e81db627f7d4b88a7
