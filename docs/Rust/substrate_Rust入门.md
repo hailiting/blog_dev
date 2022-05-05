@@ -301,3 +301,7 @@ git = 'https://github.com/paritytech/substrate.git'
 tag = 'monthly-2021-12'
 version = '4.0.0-dev'
 ```
+
+## Rust 宏
+
+### Substrate Runtime

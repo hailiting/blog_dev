@@ -22,9 +22,12 @@
 cargo new Hello
 // 跑
 cargo run
+cargo check
 // cargo build --release
 cargo build
-cargo check
+
+
+./target/release/node-template --dev --tmp
 ```
 
 ```rs

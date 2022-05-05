@@ -95,7 +95,7 @@ workb();
 
 socket.io 不是 websocket，它是将 Websocket 和轮询（Polling 机制）以及其它实时通信方法封装成一个通用的接口，并且在服务端实现这些实时机制的相应代码。也就是说 Socket.io 包含 websocket,websocket 仅仅是 socket.io 的一个子集，因此 websocket 客户端连不上 socket.io 服务器，socket.io 客户端也连不上 websock 服务器。
 
-```
+```js
 const server = require("http").createServer();
 const io = require("socket.io")(server,{path:"/socket"});
 io.on("connection", client=>{

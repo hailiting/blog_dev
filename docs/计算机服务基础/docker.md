@@ -103,3 +103,10 @@ docker pull nginx
 # --name docker-nginx 启动后的容器名称为 docker-nginx
 docker run -d -p 8080:80 --name docker-nginx nginx
 ```
+
+## docker secret create
+
+https://docs.docker.com/engine/reference/commandline/secret_create/
+
+- `printf "my super secret password" | docker secret create my_secret -`
+- `docker secret ls`

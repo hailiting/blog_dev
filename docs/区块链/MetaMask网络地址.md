@@ -7,7 +7,7 @@
 - Network Name
   Shiden Network
 - New RPC URL
-  https://rpc.shiden.astar.network:8545
+  https://shiden.api.onfinality.io/public
 - Chain ID
   336
 - Currency Symbol (optional)
