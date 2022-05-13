@@ -36,3 +36,10 @@ Base address: 内存地址
   - 宿主机 ip 填自己电脑的 ip, 客户机 ip 填 linux 虚拟机的 ip
   - | 名称 | 协议 | 主机 IP | 主机端口 |子系统 IP|子系统端口|
   - | Rule1 | TCP | 172.xxx | 2222 | 10.0xxx | 22 |
+
+## ubuntu 常用命令
+
+```shell
+# 查看ubuntu版本号
+lsb_release -a
+```

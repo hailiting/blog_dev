@@ -9,9 +9,9 @@ $ sudo passwd root
 # 切换到root用户
 $ su root
 # 现在下载 vim
-$ apt-get install vim
+$ apt-get -y install vim
 $ rm -rf /var/lib/dpkg/lock # 把啥锁删了
-$ cd /usr/share/lightdn/lightdnm.conf.d/
+$ cd /usr/share/lightdm/lightdm.conf.d/
 # 打开配置文件
 $ gedit 50-unity-greeter.conf &
 # 文件中加入如下内容保存
@@ -36,7 +36,7 @@ tty -s && mesg n || true
 ip addr
 
 # 安装SSH
-sudo apt-get install openssh-server
+sudo apt-get -y install openssh-server
 
 # 关闭防火墙
 ufw disable
@@ -51,13 +51,17 @@ PasswordAuthentication yes
 
 # 重启sshd
 $ service sshd restart
-
+# git
+apt-get -y install git
+vi ~/.gitconfig
+  [https]
+  sslVerify=true
 接下来用CRT
 /Users/hailiting/Library/Application\ Support/VanDyke/SecureCRT
 
 ```
 
-ubuntu ip: 192.168.56.101
+ubuntu ip: 192.168.56.102
 
 ## 配置 go 的环境
 
@@ -94,7 +98,7 @@ mkdir /home/go_work/bin
 mkdir /home/go_work/pkg
 
 # 设置go的根植，告诉Go在哪里查找其文件
-sudo nano ~/.profile
+sudo vi ~/.profile
 
   export GOROOT=/usr/local/go
   export GOPATH=/home/go_work
@@ -127,12 +131,6 @@ go install github.com /user/hello
 which hello
 ```
 
-## 安装 git
-
-```shell
-apt-get install git
-```
-
 ## 安装 beego
 
 ```shell
@@ -159,9 +157,15 @@ cd myapp
 vi conf/app.conf
   ...
   httpaddr=当前容器ip
-  # httpaddr= 192.168.56.101
+  # httpaddr= 192.168.56.102
 # 启动bee 项目
 cd myapp/
 go get myapp
 bee run
+```
+
+## 到虚拟机 启动 bitcoin-qt 客户端
+
+```shell
+bitcoin-qt
 ```
