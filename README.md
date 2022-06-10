@@ -11,6 +11,10 @@
 
 ## 好用的  工具网站
 
+### 图片压缩
+
+https://tinypng.com/
+
 ### https://www.snapmail.cc/#/
 
 邮箱快速注册 
