@@ -1,5 +1,7 @@
 # 用 Geth 搭建以太坊私链
 
+Geth 以太坊客户端
+
 ## 安装 Geth
 
 安装 Geth 有很多方式，这里主要就 Linux 环境给出两种：系统包管理（apt-get）安装和源码安装。更推荐大家源码安装，在整个过程，可以看到 Geth 各组件的构建步骤
@@ -110,16 +112,40 @@ $ geth --testnet --datadir .--syncmode fast
 首先，我们需要创建网络的`创世`(genesis)状态，这写在一个小小的 JSON 文件里（例如我们将其命名为`genesis.json`）
 
 可以去官网查看最新配置，要不然会有坑
+`https://www.json.cn` 检测格式是否有问题
+
+```shell
+# 项目存放目录结构
+ls # []
+  Desktop
+mkdir eth-1801
+cd eth-1801
+mkdir private
+cd private # 私链目录
+touch genesis.json # 存储创世配置
+gedit genesis.json # 生成创世块
+```
 
 ```json
-// chainId
+// 1. chainId 独立的区块链网络ID，在连接到其他节点时可以用到，不同的id是连接不了的
 // 主网的chainId 是 1
 // 测试的chainId 是 3
 
-// difficulty  难度测试
+// 2. homesteadBlock 版本号
+// 值为0 表示当前正在使用homestead版本
+
 // gasLimit 整个区块最多有多少gas
-// alloc
-//  地址  balance   表示在创世纪的时候  这些地址有这些balance   balance单位是wei
+// 3. alloc 预制账号及btc数量
+// 地址  balance   表示在创世纪的时候  这些地址有这些balance   balance单位是wei
+// 4. Coinbase: 挖矿账号 【默认账号列表中的第一个账号】，·setCoinbase· 可以设置
+// 5. difficulty  难度测试
+// 6. extraData 附加信息
+// 7. gasLimit: gas上限
+// 8. 随机数，用于挖矿
+// 9. nonce: 随机数，用于挖矿
+// 10. mixHash: 上一个区块生成的一部分hash 与non结合用于配合挖矿
+// 11. parentHash: 前区块hash
+// 12. timeStamp: 创世区块时间戳
 {
   "config": {
     "chainId": 523,
@@ -155,11 +181,23 @@ $ geth --testnet --datadir .--syncmode fast
 要创建一条以它作为创世块的区块链，我们可以使用下面命令：
 
 ```shell
+# 生成创世区块
 $ geth --datadir ./myChain/ init genesis.json
+# myChain
+# geth  keystore
+# <!-- geth 存储区块链数据等 -->
+# <!-- keystore 存储私钥文件 -->
+# cd keystore
+# 私钥文件
+# cd gath/chaindata/
 ```
 
 在当前目录下运行 geth，就会启动这条私链，注意要将 networked 设置为与创世块配置里 chinaId 一直。
 **下面是必须的，绑定 networkid，要不然不能保证 networkid 和 chainid 是一样的**
+
+```shell
+geth --datadir ./myChain/ console
+```
 
 ```shell
 $ geth --datadir ./myChain/ --networkid 523
@@ -206,16 +244,43 @@ $ sudo killall geth
 
 #### 参数列表
 
-| 参数                   | 作用                                                 |
-| ---------------------- | ---------------------------------------------------- |
-| console                | 启动控制台                                           |
-| 2>eth_output.log       | 日志重定向                                           |
-| -datadir ./dir         | 指定数据目录，其中 ./dir 表示当前目录下的 dir 文件夹 |
-| -nodiscover            | 禁止发现节点                                         |
-| -rpc                   | 启用 rpc 服务，默认端口号 8545                       |
-| -allow-insecure-unlock | 允许 http 的方式 unlock                              |
-| -rpcapi                | 表示可以通过 rpc 调用对象                            |
-| -rpcaddr               | rpc 监听地址，默认为 127.0.0.1,只能本地访问          |
+| 参数                   | 作用                                                         |
+| ---------------------- | ------------------------------------------------------------ |
+| console                | 启动命令行，可以在 geth 中执行命令                           |
+| 2>eth_output.log       | 日志重定向                                                   |
+| -datadir ./dir         | 区块链数据库存放位置，其中 ./dir 表示当前目录下的 dir 文件夹 |
+| -nodiscover            | 禁止发现节点                                                 |
+| -rpc                   | 启用 rpc 服务，可以进行智能合约部署和调试，                  |
+| -rpcapi                | 表示可以通过 rpc 调用对象                                    |
+| -rpcaddr               | rpc 监听地址，默认为 127.0.0.1,只能本地访问                  |
+| -rpcport               | 指定 HTTP-RPC 监听端口，默认端口号 8545                      |
+| -rpccorsdomain         |                                                              |
+| -allow-insecure-unlock | 允许 http 的方式 unlock                                      |
+| -maxpeer               | 允许最大连接数，默认 25 个                                   |
+| -networkid             | 当前区块链中的网络 ID                                        |
+| -port                  | 启动事件服务的端口                                           |
+| -mine                  | 开户挖矿，默认 CPU 挖矿                                      |
+| -minerthreads          | 挖矿的 cpu 线程数，默认是 4                                  |
+| -etherbase             | 矿工的账号（默认第一个账号）                                 |
+| -nodiscover            | 关闭自动链接                                                 |
+
+```shell
+geth
+  --datadir "./db"
+  --rpx
+  --rpcaddr=0.0.0.0
+  --rpcport 8545
+  --rpccorsdomain "*"
+  --rpcapi "eth,net,web3,personal,admin,shh,txpool,debug,miner"
+  --nodiscover
+  --maxpeers 30
+  --networkid 1981
+  --port 30303
+  --mine
+  --minerthreads 1
+  --etherbase "0xf1DE2d4c9DA3201B82402b4c3cD06E7E128A1430"
+  console 2>>tail.log
+```
 
 ## Geth 控制台命令
 
@@ -273,6 +338,11 @@ Passphrase: xxxx
 
 > personal.importRawKey  // 导入原始私钥
 
+
+// 查看挖矿地址
+> eth.coinbase
+// 设置挖矿地址
+> miner.setEtherbase(eth.accounts[1])
 // 挖矿 miner
 > miner.start(1) // 1表示一直挖
 Succesful
@@ -280,16 +350,19 @@ Succesful
 
 > eth.blockNumber // 查看挖矿后 区块的高度
 > eth.getBalance(eth.accounts[0])
-
+// 交易之前要账户解锁
 > eth.sendTransaction({
   from:  eth.accounts[0],
   to: "0xf1DE2d4c9DA3201B82402b4c3cD06E7E128A1430",
   value: web3.toWei(1, "ether")
 })
+// 1 线程数
 > miner.start(1)
 > miner.stop()
 // 发送交易后需要挖矿打包交易才生效
 // 划转后得挖一下矿
+// 获取最新区块
+> eth.getBlock("latest")
 // 查询区块信息
 > eth.getBlock("210")
 // 查询交易
@@ -339,6 +412,18 @@ Succesful
   transactionsRoot: "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
   uncles: []
 }
+
+// 查看当前区块总数
+> eth.blockNumber()
+
+// 查看当前节点信息
+> admin.nodeInfo
+// 节点名称
+> admin.nodeInfo.enode
+// 添加其他节点
+> admin.addPeer(node_name)
+// 查看当前节点
+> admin.peers
 ```
 
 #### eth.sendRawTransaction
