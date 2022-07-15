@@ -1,16 +1,4 @@
-# 基于 token 的投票 - 用 truffle 构建简单投票 DApp
-
-在“简单投票 Dapp”中，我们是构建了一个模拟区块链（ganache）上实现的一个投票合约，并且成功地通过 nodejs 控制台和网页与合约进行交互。  
-在本案例里，将实现以下内容：
-
-- 安装叫 truffle 的以太坊 dapp 框架，它会被用于编译和部署我们的合约。
-- 给“简单的 dapp”上做一些更新来适配 truffle
-- 编译合约，并将其部署到自己的测试私链。
-- 通过 truffle 控制台和网页与合约进行交互
-- 对合约进行扩展，加入 token 并能够购买 token 的功能
-- 对前端进行扩展，通过网页前端购买 token，并用这些 token 为候选者投票
-
-![ep_token_01.png](./img/ep_token_01.png)
+# 用 truffle 构建简单投票 DApp
 
 ## 准备工作
 

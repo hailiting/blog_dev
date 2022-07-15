@@ -267,7 +267,7 @@ $ sudo killall geth
 ```shell
 geth
   --datadir "./db"
-  --rpx
+  --rpc
   --rpcaddr=0.0.0.0
   --rpcport 8545
   --rpccorsdomain "*"

@@ -36,6 +36,17 @@ Solidity 源代码要成为可以运行在以太坊上的智能合约需要经�
 - 2. 通过交易(Transaction)的方式将字节码部署到以太坊网络，每次 成功部署都会产生一个新的智能合约账户;
 - 3. 使用 Javascript 编写的 DApp 通常通过 web3.js + ABI 去调用智能合约中的函数来实现数据的读取和修改。
 
+### abi 字段解释
+
+- type: 方法类型：主要包括 function, constructor, fallback， 默认情况下代表 function
+- constant: 布尔值，如果是 true 指明方法，不会修改合约内部的状态变量
+- name: 方法名
+- inputs: 方法参数，数组，数组中每一个对象都是针对一个参数的说明
+  - name: 参数名称
+  - type: 参数类型
+- outputs: 和 inputs 一样
+- payable: 布尔值，调用 evm 底层，表示方法可接收以太币
+
 ## Solidity 编译器
 
 - Remix
@@ -830,7 +841,7 @@ contract tm {
       - a) 写入状态变量
       - b) 触发事件
       - c) 创建合约
-      - d) 使用自毁函数
+      - d) 使用自毁函数 selfdestruct
       - e) 发送以太币
       - f) 调用任何一个没有被标记为 view 或 pure 的函数
       - g) 底层调用
