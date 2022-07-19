@@ -100,20 +100,24 @@ function binarySearch(nums, target) {
 
 ### 快速排序
 
+递归
+
 ```js
 function quickSort(arr) {
   if (arr.length <= 1) return arr;
   let left = [];
   let right = [];
-  let pivot = arr[0];
+  const midIndex = Math.floor(length / 2);
+  const midValue = arr.splice(midIndex, midIndex + 1)[0];
   for (let i = 1; i < arr.length; i++) {
-    if (arr[i] >= privot) {
+    if (arr[i] >= midValue) {
       right.push(arr[i]);
     } else {
       left.push(arr[i]);
     }
   }
-  return [...quickSort(left), pivot, ...quickSort(right)];
+  return quickSort(left).concat(midValue, quickSort(right));
+  // return [...quickSort(left), midValue, ...quickSort(right)];
 }
 ```
 
@@ -574,7 +578,7 @@ function findTwoNumbers2(arr: number[], n: number): number[] {
 }
 ```
 
-##### 求一个二叉搜索树的第 k 小的值
+##### 求一个二叉搜索树的第 k 小的值（O(logn)）
 
 - 二叉树数据结构`{vaule: any; left?:T; right?:T }`
 
@@ -585,7 +589,7 @@ function findTwoNumbers2(arr: number[], n: number): number[] {
 - 后序遍历: `left->right->root`
 
 ```ts
-const tree: ITreeNode = {
+export const tree: ITreeNode = {
   value: 5,
   left: {
     value: 3,
@@ -595,7 +599,7 @@ const tree: ITreeNode = {
       right: null,
     },
     right: {
-      value: 2,
+      value: 4,
       left: null,
       right: null,
     },
@@ -614,15 +618,295 @@ const tree: ITreeNode = {
     },
   },
 };
-interface ITreeNode {
+export interface ITreeNode {
   value: number;
   left: ITreeNode | null;
   right: ITreeNode | null;
 }
+const arr: number[] = [];
+
 // 二叉树前序遍历
 function preOrderTraverse(node: ITreeNode | null) {
   if (node === null) return;
+  // console.log(node.value);
+  arr.push(node.value);
   preOrderTraverse(node.left);
   preOrderTraverse(node.right);
 }
+/**
+ * 二叉树中序遍历
+ */
+function inOrderTraverse(node: ITreeNode | null) {
+  if (node === null) return;
+  inOrderTraverse(node.left);
+  arr.push(node.value);
+  // console.log(node.value);
+  inOrderTraverse(node.right);
+}
+function postOrderTraverse(node: ITreeNode | null) {
+  if (node === null) return;
+  postOrderTraverse(node.left);
+  postOrderTraverse(node.right);
+  arr.push(node.value);
+  // console.log(node.value);
+}
+/**
+ * 寻找BST里的第k小值
+ */
+
+export function getKthValue(node: ITreeNode, k: number): number | null {
+  inOrderTraverse(node);
+  // console.log(arr);
+  return arr[k] || null;
+}
+// postOrderTraverse(tree);
+getKthValue(tree, 3);
+```
+
+- 二叉树，有 前序，中序，后序 三种遍历方法
+- 二叉搜索树的特点：`left<=root; right>=root`
+- 二叉搜索树的价值：可使用二分法进行快速查找
+- 为什么二叉树重要，而不是三叉树、四叉树
+  - 二叉搜索树 BST: 查询快，增删快 -> 木桶效应
+  - BST 如果不平衡就变成了链表
+  - 所有要尽量平衡，平衡二叉搜索树 BBST
+  - BBST 增删查，时间复杂度都是`O(logn)`，即树的高度
+  - 红黑树（低成本的快速的保持平衡的二叉树）
+  - B 树：物理是多叉树，但逻辑上是二叉树，一般用于高效 I/O，关系型数据库常用 B 树来组织数据
+
+#### 堆栈模型
+
+- js 代码执行时
+  - 值类型变量，存储在栈
+  - 引用类型变量，存储在堆
+- 堆
+  - 完全二叉树
+  - 最大堆：父节点>=子节点
+  - 最小堆：父节点<=子节点
+    堆：逻辑是二叉树，物理是一个数组
+  - 查询比 BST 慢
+  - 增删比 BST 快，维持平衡更快
+  - 整体复杂度为 O(logn)
+
+```js
+     10
+  14   25
+33 81 82 99
+
+const heap = [-1,10,24,25,33,81,82,99] // 忽略0节点
+
+// 节点关系
+const parentIndex = Math.floor(i/2)
+const leftIndex = 2*i
+const rightIndex = 2*i+1
+```
+
+### 移动 0 到数组的末尾-splice 会导致性能问题
+
+splice 的时间复杂度是`O(n)`
+
+- 需要确认：是否必须修改原数组
+- 数组是连续存储空间，要慎用 splice unshift
+- 双指针思路
+
+```js
+// bad
+const arr = [1, 2, 0, 0, 0, 0, 12, 1];
+function moveZero1(arr: number[]): void {
+  const length = arr.length;
+  if (length === 0) return;
+  let zeroLength = 0;
+  // O(n^2)
+  for (let i = 0; i < length - zeroLength; i++) {
+    if (arr[i] === 0) {
+      arr.push(0);
+      arr.splice(i, 1);
+      i--;
+      zeroLength++;
+    }
+  }
+}
+// moveZero1(arr);
+// console.log(arr);
+
+// 双指针
+function moveZero2(arr: number[]): void {
+  const length = arr.length;
+  if (length < 2) return;
+  let i;
+  let j = -1; // 指向第一个0 下标
+  for (i = 0; i < length; i++) {
+    if (arr[i] === 0) {
+      // jj 付过值了
+      if (j < 0) {
+        j = i;
+      }
+    }
+    if (j >= 0 && arr[i] !== 0) {
+      const n = arr[i];
+      arr[i] = arr[j];
+      arr[j] = n;
+      j++;
+    }
+  }
+}
+function moveZero3(arr: number[]): void {
+  const length = arr.length;
+  if (length < 2) return;
+  let i;
+  let j = arr.indexOf(0); // 指向第一个0 下标
+  if (j < 0) return;
+
+  for (i = j; i < length - 1; i++) {
+    if (j >= 0 && arr[i + 1] !== 0) {
+      const n = arr[i + 1];
+      arr[i + 1] = arr[j];
+      arr[j] = n;
+      j++;
+    }
+  }
+}
+// moveZero2(arr);
+// console.log(arr);
+
+const arr1 = [];
+for (let i = 0; i < 20 * 10000; i++) {
+  if (i % 10 === 0) {
+    arr1.push(0);
+  } else {
+    arr1.push(i);
+  }
+}
+console.time("arr1");
+moveZero1(arr1);
+console.timeEnd("arr1");
+const arr2 = [];
+for (let i = 0; i < 20 * 10000; i++) {
+  if (i % 10 === 0) {
+    arr2.push(0);
+  } else {
+    arr2.push(i);
+  }
+}
+console.time("arr2");
+moveZero2(arr2);
+console.timeEnd("arr2");
+```
+
+### 获取字符串中连续最多的字符以及次数 - 使用嵌套循环
+
+跳步`O(n)`
+
+```js
+export function ContinuousChar01(str: string): any {
+  const res: any = {
+    char: null,
+    length: 0,
+  };
+  const len = str.length;
+  for (let i = 0; i < len; i++) {
+    let templength = 0;
+    for (let j = i; j < len; j++) {
+      if (str[i] === str[j]) {
+        templength++;
+      }
+      if (str[i] !== str[j] || j === len - 1) {
+        if (templength > res.length) {
+          res.length = templength;
+          res.char = str[i];
+        }
+        if (i < len - 1) {
+          i = j - 1; // 跳步，因为for最后一步要 i++ 所以这要 -1
+        }
+        break;
+      }
+    }
+  }
+  return res;
+}
+export function ContinuousChar02(str: string) {
+  const res: any = {
+    char: null,
+    length: 0,
+  };
+  const len = str.length;
+  if (!len) return res;
+  let tempLen = 0;
+  let i = 0;
+  let j = 0;
+  for (; i < len; i++) {
+    if (str[i] === str[j]) {
+      tempLen++;
+    }
+    if (str[i] !== str[j] || i === len - 1) {
+      if (res.length < tempLen) {
+        res.length = tempLen;
+        res.char = str[j];
+      }
+      if (i < len - 1) {
+        j = i;
+        i--; // 循环体末尾会++
+      }
+      tempLen = 0;
+    }
+  }
+  return res;
+}
+export const str = "aabbcccddeeee11223";
+console.info(ContinuousChar02(str));
+```
+
+- 正则表达式->效率非常低，慎用
+- 累计各个元素的连续长度，最后求最大值->增加了空间复杂度
+- 算法尽量用最原始的判断和循环，不要用语法糖或看似简单的东西
+
+```js
+const str = "100abc";
+const reg = /^\d+/;
+
+console.time("reg");
+for (let i = 0; i < 10000 * 10000; i++) {
+  reg.test(str);
+}
+console.timeEnd("reg"); // 2600
+
+console.time("indexOf");
+for (let i = 0; i < 10000 * 10000; i++) {
+  str.indexOf("100");
+}
+console.timeEnd("indexOf"); //80
+```
+
+```js
+const arr1 = [];
+for (let i = 0; i < 10 * 10000; i++) {
+  arr1.push(Math.floor(Math.random() * 1000000));
+}
+function sortFn(arr: number[]): number[] {
+  if (arr.length < 2) return arr;
+  const left = [];
+  const right = [];
+  const midIndex = Math.floor(arr.length / 2);
+  const midValue = arr[midIndex];
+  for (let i = 0; i < arr.length; i++) {
+    if (i !== midIndex) {
+      const item = arr[i];
+      if (item < midValue) {
+        left.push(item);
+      } else {
+        right.push(item);
+      }
+    }
+  }
+  return sortFn(left).concat([midValue], sortFn(right));
+}
+console.time("sort");
+sortFn(arr1);
+console.timeEnd("sort");
+```
+
+### 获取 1-10000 之间所有的对称数（回文数）
+
+```ts
+
 ```
