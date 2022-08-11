@@ -1,5 +1,18 @@
 # Cloudflare Postgres
 
+## Argo Tunnel
+
+[官方文档](!https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation/)  
+[参考网站](!https://blog.csdn.net/alex_yangchuansheng/article/details/123564350)  
+Cloudflare 推出的 ArgoTunnel，本意是保护 web 应用程序，连接服务器端口和 Cloudflare 节点。  
+他可以将本地服务发布到公网。只不过 frp 所需的服务器 IP 在 ArgoTunnel 中变为 Cloudflare 提供的节点。相比运营商公网 IP,Argo Tunnel 省去了跟运营商扯皮的时间，相比于 frp，则省去了服务器成本
+
+## 怎么做
+
+```shell
+npm init cloudflare my-app https://github.com/mrbbot/miniflare-typescript-esbuild-jest
+```
+
 ```shell
 git clone https://github.com/cloudflare/worker-template-postgres/
 cd worker-template-postgres
@@ -17,13 +30,6 @@ docker run -v ~/.cloudflared:/etc/cloudflared cloudflare/cloudflared:2021.11.0 c
       depends_on:
         - pgbouncer
 ```
-
-## Argo Tunnel
-
-[官方文档](!https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation/)  
-[参考网站](!https://blog.csdn.net/alex_yangchuansheng/article/details/123564350)  
-Cloudflare 推出的 ArgoTunnel，本意是保护 web 应用程序，连接服务器端口和 Cloudflare 节点。  
-他可以将本地服务发布到公网。只不过 frp 所需的服务器 IP 在 ArgoTunnel 中变为 Cloudflare 提供的节点。相比运营商公网 IP,Argo Tunnel 省去了跟运营商扯皮的时间，相比于 frp，则省去了服务器成本
 
 ### 准备：
 

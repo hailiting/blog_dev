@@ -908,5 +908,182 @@ console.timeEnd("sort");
 ### 获取 1-10000 之间所有的对称数（回文数）
 
 ```ts
-
+function findPalindromeNumbers1(max: number): number[] {
+  const res: number[] = [];
+  if (max <= 0) return res;
+  for (let i = 1; i <= max; i++) {
+    const s = i.toString();
+    if (s === s.split("").reverse().join("")) {
+      res.push(i);
+    }
+  }
+  return res;
+}
+console.info(findPalindromeNumbers1(200));
+function findPalindromeNumbers2(max) {
+  const res = [];
+  for (let i = 1; i <= max; i++) {
+    const item = i.toString();
+    const length = item.length;
+    let flag = true;
+    let start = 0;
+    let end = length - 1;
+    while (start < end) {
+      if (item[start] !== item[end]) {
+        flag = false;
+        break;
+      } else {
+        start++;
+        end--;
+      }
+    }
+    if (flag) res.push(i);
+  }
+  return res;
+}
+console.info(findPalindromeNumbers2(200));
+function findPalindromeNumbers3(max: number): number[] {
+  const res: number[] = [];
+  if (max <= 0) return res;
+  for (let i = 1; i <= max; i++) {
+    let n = i;
+    let rev = 0;
+    while (n > 0) {
+      rev = rev * 10 + (n % 10);
+      n = Math.floor(n / 10);
+    }
+    if (i === rev) res.push(i);
+  }
+  return res;
+}
+console.info(findPalindromeNumbers3(200));
 ```
+
+- 尽量不要转换数据结构，尤其数组这种有序的结构
+- 尽量不要用内置 api，如 reverse，不好识别复杂度
+- 数字操作快，其次是字符串
+
+### 高效的字符串前缀匹配
+
+- 有一个英文单词库（数组），里面有几十万个英语单词
+- 输入一个字符串，快速判断是否是某一个单词的前缀
+- 方法一：
+  - 防抖，节能
+  - 遍历单词库数组
+  - indexOf
+  - 复杂度`>O(n)`
+- 方法二：
+  - 树状结构 `O(m)` m 为单词的长度
+  - 哈希表 -> 逻辑结构，理论模型
+
+### 数字千分位格式化
+
+- 转换为数组，reverse，每 3 位拆分
+- 正则表达式
+- 字符串拆分
+
+```js
+function format1(n: number): string {
+  n = Math.floor(n);
+  const s = n.toString();
+  const arr = s.split("").reverse();
+  return arr.reduce((prev, val, index) => {
+    if (index % 3 === 0) {
+      if (prev) {
+        return val + "," + prev;
+      } else {
+        return val;
+      }
+    } else {
+      return val + prev;
+    }
+  }, "");
+}
+function format2(n: number): string {
+  n = Math.floor(n);
+  const s = n.toString();
+  const len = s.length;
+  let res = "";
+  for (let i = len - 1; i >= 0; i--) {
+    const j = len - i;
+    if (j % 3 === 0) {
+      if (i === 0) {
+        res = s[i] + res;
+      } else {
+        res = "," + s[i] + res;
+      }
+    } else {
+      res = s[i] + res;
+    }
+  }
+  return res;
+}
+const n = 1231231231312312;
+console.info(format2(n));
+```
+
+### 用 js 切换字母大小写
+
+计算机编码的基础
+
+- 正则
+- ASCII 编码
+  - `"abc".charCodeAt(0)`
+
+```js
+function switchLetterCase1(s: string): string {
+  let res = "";
+  const len = s.length;
+  if (len === 0) return "";
+  const reg1 = /[a-z]/;
+  const reg2 = /[A-Z]/;
+  for (let i = 0; i < len; i++) {
+    const c = s[i];
+    if (reg1.test(c)) {
+      res += c.toUpperCase();
+    } else if (reg2.test(c)) {
+      res += c.toLowerCase();
+    } else {
+      res += c;
+    }
+  }
+  return res;
+}
+
+const str = "adfADSdwewe";
+console.time("1");
+console.info(switchLetterCase1(str));
+console.timeEnd("1");
+
+function switchLetterCase2(s: string): string {
+  let res = "";
+  const len = s.length;
+  if (len === 0) return "";
+  for (let i = 0; i < len; i++) {
+    const c = s[i];
+    const cCode = c.charCodeAt(0);
+    if (cCode >= 65 && cCode <= 90) {
+      res += c.toLowerCase();
+    } else if (cCode >= 97 && cCode <= 122) {
+      res += c.toUpperCase();
+    } else {
+      res += c;
+    }
+  }
+  return res;
+}
+console.time("2");
+console.info(switchLetterCase2(str));
+console.timeEnd("2");
+```
+
+### 为啥`0.1+0.2 !== 0.3`
+
+二进制的问题
+小数存储二进制，没法精确解析二进制
+`mathjs`
+
+## 常见的数据结构：数组、栈、队列、链表、二叉树
+
+- 有序数据考虑二分
+- 双指针可以解决嵌套循环
