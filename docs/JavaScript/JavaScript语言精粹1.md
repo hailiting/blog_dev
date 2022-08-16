@@ -215,7 +215,7 @@ function isNumber(obj) {
 function fn() {
   this.i = 0;
   setInterval(
-    function() {
+    function () {
       console.log(this.i++);
     }.bind(this), // 闭包，保留this的环境
     500
@@ -228,6 +228,18 @@ fn();
 
 拥有词法作用域和 this 值
 
+- 什么时候不能使用箭头函数
+  - 箭头函数的缺点
+    - 没有 arguments
+    - 无法通过 apply call bind 改变 this
+  - 对象方法
+  - 原型方法
+  - 箭头函数无法当做构造函数
+  - 动态上下文中的回调函数
+  - Vue 生命周期和 method
+    - Vue 组件本质上是一个 js 对象
+    - React 组件（非 Hooks）它本质上是一个 es6 class
+
 ```js
 function fn() {
   this.i = 0;
@@ -239,6 +251,65 @@ function fn() {
   );
 }
 fn();
+```
+
+```js
+const btn1 = document.getElementById("btn1");
+btn1.addEventListener("click", () => {
+  // console.log(this === window);
+  this.innerHTML = "clicked";
+});
+
+const obj = {
+  name: "ss",
+  getName01: function () {
+    console.log(this.name);
+  },
+  getName02: () => {
+    console.log(this === window);
+    console.log(this.name); // undefined
+  },
+};
+// 原型
+obj.__proto__.getName = () => {
+  console.log(this === window);
+  return this.name; // undefined
+};
+console.log(obj.getName());
+console.log(obj.getName01());
+console.log(obj.getName02());
+
+// Vue生命周期和method
+{
+  data(){
+    return {name:"ss"}
+  },
+  methods: {
+    getName: ()=>{
+      // 报错 cannot read properties of undefinded (reading 'name')
+      return this.name
+    }
+  },
+  mounted: ()=>{
+    // 报错 cannot read properties of undefinded (reading 'name')
+    console.log("msg",this.name)
+  },
+  mounted(){
+    console.log("msg",this.name) // 正常
+  }
+}
+// class
+class Foo {
+  constructor(name,city){
+    this.name = name
+    this.city = city
+  }
+  getName = ()=>{
+    console.log(this.name+this.city)
+  }
+}
+const foo = new Foo("sa", "dd")
+foo.getName()
 ```
 
 ### 继承
@@ -259,7 +330,7 @@ function People(name, age) {
   this.name = name;
   this.age = age;
 }
-People.prototype.getName = function() {
+People.prototype.getName = function () {
   return this.name;
 };
 function English(name, age, language) {
@@ -268,7 +339,7 @@ function English(name, age, language) {
   this.language = language;
 }
 inherits(English, People);
-English.prototype.introduce = function() {
+English.prototype.introduce = function () {
   console.log(this.getName());
   console.log(this.language);
 };
@@ -331,9 +402,9 @@ var x = { a: 1 };
 
 ```js
 /// function(){}()  方法的声明
-(function() {})();
+(function () {})();
 // 与
-(function() {})(); // 原理不一样
+(function () {})(); // 原理不一样
 ```
 
 ## 高阶函数
@@ -345,7 +416,7 @@ var x = { a: 1 };
 #### 回调函数
 
 ```js
-[1, 2, 3, 4].forEach(function(item) {
+[1, 2, 3, 4].forEach(function (item) {
   console.log(item);
 });
 ```
@@ -361,7 +432,7 @@ var x = { a: 1 };
 ```js
 function makeCounter(init) {
   var init = init || 0;
-  return function() {
+  return function () {
     return ++init;
   };
 }
@@ -378,15 +449,15 @@ counter = null;
 ```js
 const doms = [0, 1, 2, 3, 4, 5];
 for (var i = 0; i < doms.length; i++) {
-  doms.eq(i).on("click", function(ev) {
+  doms.eq(i).on("click", function (ev) {
     console.log(i); // 因为i没被释放掉，没有被销毁，并且保存下来了
   });
 }
 
 for (var i = 0; i < doms.length; i++) {
   // 利用函数的特点  实参  把每一次的i值都保留下来
-  (function(i) {
-    doms.eq(i).on("click", function(ev) {
+  (function (i) {
+    doms.eq(i).on("click", function (ev) {
       console.log(i);
     });
   })(i);
@@ -399,11 +470,11 @@ for (var i = 0; i < doms.length; i++) {
 // 执行一次   之后就能确定用哪一个
 function eventBinderGenerator() {
   if (window.addEventListener) {
-    return function(element, type, handler) {
+    return function (element, type, handler) {
       element.addEventListener(type, hanlder, false);
     };
   } else {
-    return function(element, type, handler) {
+    return function (element, type, handler) {
       element.attachEvent("on" + type, handler.bind(element, window.event));
     };
   }
@@ -423,7 +494,7 @@ fun(element, type, handler);
 
 ```js
 function isType(type) {
-  return function(obj) {
+  return function (obj) {
     return Object.prototype.toString.call(obj) === "[object " + type + "]";
   };
 }
@@ -433,7 +504,7 @@ console.log(isNumber("d"));
 var isArray = isType("Array");
 
 function pipe(f, g) {
-  return function() {
+  return function () {
     return f.call(null, g.apply(null, arguments));
   };
 }
@@ -461,7 +532,7 @@ function factorial(n) {
 ## 反柯里化
 
 ```js
-Function.prototype.uncurry = function() {
+Function.prototype.uncurry = function () {
   return this.call.bind(this);
 };
 // push 通用化

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+  </head>
+  <body>
+    <p>part one</p>
+
+    <script>
+      new Promise((resolve) => {
+        // B
+        console.log(3);
+        resolve();
+      })
+        // H
+        .then(() => {
+          console.log(4);
+          // D
+          Promise.resolve().then(() => {
+            console.log(5);
+          });
+          // E
+          setTimeout(() => {
+            console.log(6);
+          }, 0);
+        })
+        // F
+        .then(() => {
+          console.log(7);
+        });
+      setTimeout(() => {
+        // A
+        console.log(1);
+        // C
+        Promise.resolve().then(() => {
+          console.log(2);
+        });
+      }, 0);
+
+      // G
+      console.log(8);
+    </script>
+  </body>
+</html>

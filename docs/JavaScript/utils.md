@@ -99,7 +99,7 @@ function isJson(str) {
 
 ## 保留小数点 n 位，并规避科学计数法
 
-```
+```js
 function digits(v, d = 0) {
   let a = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"];
   if (!v && v !== 0) {
@@ -136,9 +136,9 @@ function digits(v, d = 0) {
     return r;
   }
   let s = v;
-  if (`${s}`.indexOf('e') !== -1) {
+  if (`${s}`.indexOf("e") !== -1) {
     let m = s.toExponential().match(/\d(?:\.(\d*))?e([+-]\d+)/);
-    s = s.toFixed(Math.max(0, (m[1] || '').length - m[2]));
+    s = s.toFixed(Math.max(0, (m[1] || "").length - m[2]));
   }
   let c = `${s}`.split(".");
   if (!c[1]) {
