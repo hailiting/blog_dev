@@ -5,44 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+    <style>
+      #box {
+        width: 100px;
+        height: 200px;
+        border: 4px solid #333;
+      }
+    </style>
   </head>
   <body>
-    <p>part one</p>
-
+    <p id="box">part one</p>
+    <button id="btn1">btn1</button>
     <script>
-      new Promise((resolve) => {
-        // B
-        console.log(3);
-        resolve();
-      })
-        // H
-        .then(() => {
-          console.log(4);
-          // D
-          Promise.resolve().then(() => {
-            console.log(5);
-          });
-          // E
-          setTimeout(() => {
-            console.log(6);
-          }, 0);
-        })
-        // F
-        .then(() => {
-          console.log(7);
+      window.onload = () => {
+        console.info("start");
+        new Promise((resolve) => {
+          console.info("promise");
+          resolve();
+        }).then(() => {
+          console.info("promise.then");
         });
-      setTimeout(() => {
-        // A
-        console.log(1);
-        // C
-        Promise.resolve().then(() => {
-          console.log(2);
+        setTimeout(() => {
+          console.info("setTimeout");
         });
-      }, 0);
-
-      // G
-      console.log(8);
+        window.requestAnimationFrame(() => {
+          console.info("requestAnimationFrame");
+        });
+        window.requestIdleCallback(() => {
+          console.info("requestIdleCallback");
+        });
+        console.info("end");
+      };
     </script>
   </body>
 </html>
