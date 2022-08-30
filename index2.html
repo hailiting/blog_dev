@@ -5,26 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      #box {
-        width: 100px;
-        height: 200px;
-        border: 4px solid #333;
-      }
-    </style>
   </head>
   <body>
     <button id="btn1">发送消息</button>
-    <iframe id="iframe1" src="./index2.html"></iframe>
     <script>
-      const { port1 } = new MessageChannel();
-      port1.onmessage = function (event) {
-        console.log("收到来自port2的信息：", event.data);
+      const { port2 } = new MessageChannel();
+      port2.onmessage = function (event) {
+        console.log("收到来自port1的信息：", event.data);
       };
       const btn1 = document.getElementById("btn1");
       btn1.addEventListener("click", () => {
-        console.info("index clicked");
-        port1.postMessage("index ping");
+        console.info("child clicked");
+        port2.postMessage("child pong");
       });
     </script>
   </body>

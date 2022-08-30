@@ -1,4 +1,34 @@
-# React 优化\_ReactLoadable
+# React 优化
+
+- 修改 CSS 模拟`v-show`
+
+```js
+{
+  flag && <MyComponent />;
+}
+<MyComponent style={{ display: flag ? "block" : "none" }} />;
+```
+
+- 循环使用 key
+- 使用 Fragment 减少层级
+- JSX 中不要定义函数
+- 在构造函数中`.bind(this)`（使用箭头函数，不用 bind this）
+
+```js
+// bad
+<button onClick={()=>{/*...*/}}>点击</button>
+// good
+const clickHandler = useCallback(()=>{},[])
+// ...
+<button onClick={clickHandler}>点击</button>
+// ...
+```
+
+- 使用 shouldComponentUpdate 判断组件是否更新
+- React.PureComponent
+- 函数组件使用 React.memo
+
+## ReactLoadable
 
 > 一个动态导入加载组件的高阶组件，实现 code-splitting(代码分割)
 

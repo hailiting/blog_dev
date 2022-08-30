@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Websocket</title>
+  </head>
+  <body>
+    <p>Websocket</p>
+    <button id="btn-send">发送消息</button>
+    <script>
+      const ws = new WebSocket("ws://localhost:3000");
+      ws.onopen = () => {
+        console.info("opened");
+        ws.send("client opened");
+      };
+      ws.onmessage = (event) => {
+        console.info("收到了信息", event.data);
+      };
+      const btnSend = document.getElementById("btn-send");
+      btnSend.addEventListener("click", () => {
+        console.info("clicked");
+        ws.send("time: " + new Date().valueOf());
+      });
+    </script>
+  </body>
+</html>

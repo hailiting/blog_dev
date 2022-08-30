@@ -30,7 +30,7 @@
 
 ### created
 
-- 和 dom 没关系的，和 js 模型有关系的可以做了
+- 和 dom 没关系的，和 js 模型有关系的
 - Vue 实例初始化完成，完成响应式绑定
 - data method 都已经初始化完成，可调用
 - 尚未开始渲染模板
@@ -44,3 +44,93 @@
 
 - 完成 DOM 渲染
 - 组件创建完成
+
+### beforeUpdate
+
+- data 发生变化之后
+- 准备更新 DOM（尚未更新 DOM）
+
+### updated
+
+- data 发生变化，且 DOM 更新完成
+- 在 updated 中修改 data，可能会造成死循环
+
+### beforeUnmount
+
+- 组件进入销毁阶段（尚未销毁，可正常使用）
+- 可移除、解绑一些全局事件，自定义事件
+
+### unmounted
+
+- 组件被销毁了
+- 所有子组件也都被销毁了
+
+### keep-alive 组件
+
+- onActivated 缓存组件被激活
+- onDeactivated 缓存组件被隐藏
+
+```vue
+<!-- home -->
+<template>
+  <keep-alive>
+    <Child1 v-if="num === 1"></Child1>
+    <Child2 v-else></Child2>
+  </keep-alive>
+</template>
+<template>
+  <p>child2</p>
+</template>
+<script>
+export default {
+  name: "Child2",
+  created() {
+    // 只会created一次
+    console.log("child2 created");
+  },
+  activated() {
+    console.log("child2 activated");
+  },
+  deactivated() {
+    console.log("child2 deactivated");
+  },
+};
+</script>
+```
+
+## Vue 什么时候操作 DOM 比较合适
+
+- mounted 和 updated 都不能保证子组件全部挂载完成
+- 用`$nextTick`的时机来操作 DOM
+
+```js
+mounted(){
+  this.$nextTick(function(){
+    // 仅在整个视图都被渲染后才会运行的代码
+  })
+}
+```
+
+## ajax 应该在哪个生命周期
+
+- created 或 mounted
+  - 并行 串行
+
+## Vue3 Composition API 生命周期有何区别
+
+- 用 setup 代替了 beforeCreate 和 created
+- 使用 Hooks 函数的形式，如 mounted 改为`onMounted()`
+
+```js
+import { onUpdated, onMounted } from "vue";
+export default {
+  setup() {
+    onMounted(() => {
+      console.log("mounted");
+    });
+    onUpdated(() => {
+      console.log("updated");
+    });
+  },
+};
+```
