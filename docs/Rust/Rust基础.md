@@ -2092,3 +2092,17 @@ fn it_adds_two(){
 ## 高级特征
 
 ## 实战
+
+### `u32`转`Get<u32>`或`Get<Option<u32>>`
+
+```rs
+pub struct ConstU32<const T:u32>;
+impl<const T: u32> Get<u32> for ConstU32<T> {
+  fn get()-> u32{T}
+}
+impl<const T:u32> Get<Option<u32>> for ConstU32<T> {
+  fn get() ->Option<u32>{
+    Some<T>
+  }
+}
+```

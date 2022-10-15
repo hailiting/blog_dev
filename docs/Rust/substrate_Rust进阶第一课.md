@@ -151,6 +151,7 @@ pub mod pallet {
     }
   }
   // 删除存证
+	#[pallet::weight(0)]
   pub fn revoke_claim(origin:OriginFor<T>, claim:Vec<u8>)->DispatchResultWithPostInfo {
     let sender:<T as Config>::AccountId = ensure_signed(origin)?;
     let bounded_claim: BoundedVec<u8, <T as Config>::MaxClaimLength> = BoundedVec::<u8, T::MaxClaimLength>::try_from(claim.clone())
@@ -602,8 +603,9 @@ impl WeightToFeePolynomial for WeightToFee {
   - system `crates.parity.io/frame_system/index.html 文档`
     - lib.rs
       blockLen...
-
 ```
+
+rust 完全限定语法
 
 ## 作业：
 
