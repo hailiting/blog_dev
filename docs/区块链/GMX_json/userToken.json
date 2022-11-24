@@ -1,0 +1,14 @@
+{
+  "ETH": {
+    "tokenAddress": "",
+    "transactionsTimes": "BigInt",
+    "percent": "BigInt",
+    "accountFundsUsd": "BigInt"
+  },
+  "WETH": {
+    "tokenAddress": "",
+    "transactionsTimes": "BigInt",
+    "percent": "BigInt",
+    "accountFundsUsd": "BigInt"
+  }
+}
