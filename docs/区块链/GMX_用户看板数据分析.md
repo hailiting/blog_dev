@@ -64,9 +64,26 @@ AccumulatedPL1M # k线
 AccountFunds24H # k线
 AccountFunds1W # k线
 AccountFunds1M # k线
+
+TokenPrice # token price 的历史记录
 ```
 
 ```graphql
+type GMXDapp @entity {
+  liquidationUsd1H: BigInt! # uint256
+  liquidationUsd24H: BigInt! # uint256
+  userNumber: BigInt! # uint256
+  LSRatio: BigInt! # uint256
+  futuresPositionsUsd: BigInt! # uint256
+}
+<!-- ETH WETH BTC LINK UNI USDC USDT DAI FRAX -->
+type TokenPrice @entity {
+  id: Bytes!
+  tokenAddress: String!
+  price: BigInt!
+}
+
+
 type Account @entity {
   id: Bytes!
   address: String!
@@ -87,13 +104,6 @@ type Account @entity {
   accountFunds1M: [AccountFunds1M!]!
 }
 
-type GMXDapp @entity {
-  liquidationUsd1H: BigInt! # uint256
-  liquidationUsd24H: BigInt! # uint256
-  userNumber: BigInt! # uint256
-  LSRatio: BigInt! # uint256
-  futuresPositionsUsd: BigInt! # uint256
-}
 
 type AccountUser @entity {
   id: Bytes!
@@ -121,6 +131,7 @@ type UserToken @entity {
   transactionsTimes: BigInt!
   percent: BigInt!
   accountFundsUsd: BigInt!
+  tokenPrice: String!
 }
 
 type Yield24H @entity {
