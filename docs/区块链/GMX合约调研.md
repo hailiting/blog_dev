@@ -239,6 +239,7 @@ event CreateIncreaseOrder(
     address collateralToken,
     address indexToken,
     uint256 sizeDelta,
+
     bool isLong,
     uint256 triggerPrice,
     bool triggerAboveThreshold,
@@ -278,6 +279,7 @@ event UpdateIncreaseOrder(
     address indexToken,
     bool isLong,
     uint256 sizeDelta,
+
     uint256 triggerPrice,
     bool triggerAboveThreshold
 );

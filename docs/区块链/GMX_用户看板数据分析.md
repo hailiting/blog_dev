@@ -1,5 +1,11 @@
 # GMX\_用户看板数据分析
 
+- ARBITRUM AND OPTIMISTIC
+- 1. ETH WETH BTC LINK UNI USDC USDT DAI FRAX 历史价格
+- 2. ETH WETH BTC LINK UNI USDC USDT DAI FRAX 某个钱包地址的历史资产
+- 3. OrderBook 0x09f77e8a13de9a35a7231028187e9fd5db8a2acb Event
+- 4. PositionRouter 0xb87a436B93fFE9D75c5cFA7bAcFff96430b09868 Event
+
 ## ETH
 
 - 用户量
@@ -76,9 +82,36 @@ type TokenPrice @entity {
 }
 
 
+type User @entity {
+  id: ID!
+}
+
+type Token @entity {
+  id: ID!
+  symbol: String!
+  name: String!
+  totalSupply: BigInt
+}
+
+type Balance @entity {
+  "user address - token address "
+  id: ID!
+  user: User
+  token: Token
+  balance: BigInt!
+}
+
+type Trasnfer @entity {
+  id: ID!
+  from: User!
+  to: User!
+  value: BigInt
+}
+
+
 type Account @entity {
   id: Bytes!
-  address: String!
+  address: [User]!
   token: [UserToken!]!
   accountUser: AccountUser!
   increaseOrders: [IncreaseOrder!]!
@@ -101,7 +134,7 @@ type AccountUser @entity {
   id: Bytes!
   orderOwner: Account!
   account: String! # address
-  accountFundsPercent: BigInt!
+  accountFundsPercent: BigInt! # 收益率50%
   accountFundsUsd: BigInt!
   followNumber: BigInt!
   followGains: BigInt!
@@ -111,7 +144,9 @@ type AccountUser @entity {
   totalProceedsUsd: BigInt!
   totalTransactionsTimes: BigInt!
   totalBalanceUsd: BigInt! # uint256
+  profit: BigInt!
   profitTimes: BigInt!
+  losses: BigInt!
   lossesTimes: BigInt!
 }
 <!-- ETH WETH BTC LINK UNI USDC USDT DAI FRAX -->
