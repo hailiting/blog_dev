@@ -129,7 +129,7 @@ _listType(){
     }
     // 匿名函数 (){}
     list.forEach((e){
-      print(list.indexOf(i).toString());
+      print(list.indexOf(e).toString());
       print(e);
     });
 //    // list.removeXx, insert, sublist, indexOf 等
@@ -159,9 +159,9 @@ _mapType(){
     Map student = {'name':'小明', 'age': 18};
     print(student);
     Map ages = {};
-    student['classname'] ='1年(2)班';
-    student['bestfriend'] ='小红';
-    print(student);
+    ages['classname'] ='1年(2)班';
+    ages['bestfriend'] ='小红';
+    print(ages);
     // Map 遍历
     student.forEach((key,value){
       print('$key: $value');

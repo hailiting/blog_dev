@@ -64,7 +64,7 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin{
                     Text('State: '+animationState.toString(), textDirection: TextDirection.ltr),
                     Container(
                         height: animation.value,
-                        width: animation.valaue,
+                        width: animation.value,
                         child: FlutterLogo(),
                     ),
                 ],

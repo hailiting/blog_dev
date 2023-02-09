@@ -738,7 +738,6 @@ abstract class Study {
 /// mixins 是在多个类层次结构中重用代码的一种方式
 /// 要使用minxins， 在with关键字后跟一个或多个mixin的名字，有对号隔开，并且with要用在extends关键字之后
 /// mixins的特征：实现mixin,就创建一个继承Object类的子类，不声明任何构造方法，不调用super
-
 class Test extends Person with Study {
   Test(String name, int age): super(name, age);
   @override
@@ -747,3 +746,10 @@ class Test extends Person with Study {
   }
 }
 ```
+
+### 静态方法和实例方法的区别
+
+- 静态方法属于整个类所有，因此调用它不需要实例化，可以直接调用(类.静态方法())。实例方法必须先实例化，创建一个对象，才能进行调用(对象.实例方法())
+- 静态方法只能访问静态成员，不能访问实例成员；而实例方法可以访问静态成员和实例成员
+- 在程序运行期间，静态方法是一直存放在内存的，因此调用速度快，但却占用内存。实例方法是使用完成后的由回收机制自动进行回收，下次再使用必须再实例化
+- 一般来说，公共的函数、经常调用的可以写出静态方法，比如数据连接等（sqlhelper）
