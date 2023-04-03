@@ -76,7 +76,7 @@ didChangeDependencies, build, didUpdateWidget
 
 deactivate, dispose
 
-```
+```dart
 // stful + enter 快速搭建一个dart结构文件
 // 引入依赖  option+enter
 import 'package:flutter/material.dart';
@@ -157,7 +157,7 @@ class _WidgetLifecycleStateState extends State<WidgetLifecycleState> {
 
 ![flutter-app-lifecycle.png](./img/flutter-app-lifecycle.png)
 
-```
+```dart
 // 用WidgetsBindingObserver来获取Flutter应用维度的生命周期
 import 'package:flutter/material.dart';
 class AppLifeCycle extends StatefulWidget{

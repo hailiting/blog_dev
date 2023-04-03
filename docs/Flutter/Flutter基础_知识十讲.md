@@ -140,7 +140,82 @@ return MaterialApp(
 
 ##### BottomNavigationBar app 底部的导航栏
 
-##### RefreshIndicator 刷新的指示器
+##### RefreshIndicator 下拉刷新 Widget
+
+```dart
+import "package:flutter/material.dart";
+void main()=>runApp(MyApp());
+List<String> cityNames = [ '北京', '上海', '广州', '深圳', '杭州', '苏州', '成都', '武汉', '郑州', '洛阳', '厦门', '青岛', '拉萨' ];
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState()=>_MyAppState();
+}
+// 下拉刷新 上拉加载更多
+class _MyAppState extends State<MyApp> {
+  ScrollController _scrollContoller = ScrollController();
+  @override
+  void initState(){
+    _scrollContoller.addListener((){
+      if(_scrollContoller.position.pixels == _scrollContoller.position.maxScrollExtent){
+        _loadData();
+      }
+    });
+    super.initState();
+  }
+  @override
+  void dispose(){
+    _scrollContoller.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context){
+    final title = "xxx";
+    return MaterialApp(
+      title: title,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+        ),
+        body: RefreshIndicator(
+          onRefresh: _handleRefresh,
+          child: ListView(
+            controller: _scrollController,
+            children: _buildList(),
+          )
+        )
+      )
+    );
+  }
+  _loadData() async {
+    await Futute.delayed(Duration(milliseconds: 200));
+    // 复制数组
+    List<String> list = List<String>.from(cityNames);
+    list.addAll(cityNames);
+    cityNames = list;
+    setState((){});
+  }
+  Future<Null> _handleRefresh() async {
+    await Future.delayed(Duration(seconds: 2));
+    cityNames = cityNames.reversed.toList();
+    setState((){});
+    return null;
+  }
+  List<Widget> _buildList(){
+    return cityNames.map((city)=>_item(city)).toList();
+  }
+  Widget _item(String city){
+    return Container(
+      height: 80,
+      margin: EdgeInsets.only(bottom: 5),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(color: Colors.teal),
+      child: Text(
+        city,
+      )
+    );
+  }
+}
+```
 
 ##### Image 图片组件
 
@@ -213,6 +288,18 @@ class _StatefulGroupState extends State<StatefullGroup> {
                   TextField(
                     // 设置样式  装饰器
                     decoration: InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(color: Color.glue)
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(color: Color.block)
+                      ),
+                      border: UnderlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(color: Color.grey)
+                      ),
                       contentPadding: EdgeInsets.fromLTRB(5, 0, 0, 0),
                       hintText: '请输入',
                       hintStyle: TextStyle(fontSize: 15)
@@ -271,11 +358,16 @@ class _StatefulGroupState extends State<StatefullGroup> {
 - `Opacity`
 - `ClipOval`(裁剪为圆形)
 - `ClipRRect`
+  - ClipRRect 不能设置 z 轴和阴影
+  - PhysicalModel 能设置 z 轴和阴影
 - `PhysicalModal` (实体模型)
 - `Align` => `Center`
 - `Padding`
 - `SizedBox`: 约束布局大小
 - `FractionallySizedBox` （水平或垂直占满）
+  - Expanded: 等分组件，flex 来设置比例，父组件必须是 Flex, Row, Column
+  - FractionallySizedBox: 根据现有布局调整 child 大小，child 设置的大小无效
+  - FractionallySizedBox: 在同一方向不允许与其他 FractionallySizedBox 并列
 
 ```dart
 // flutter_layout_page.dart
@@ -424,6 +516,7 @@ void _navigateSecondPage(BuildContext context, page){
 }
 // 打开命名的路由
 Navigator.pushNamed(context, routeName);
+
 // Navigator.pop(context)  // 退出当前页面，返回上一级页面
 void _backCurrentPage(BuoldContext context){
     Navigator.pop(context);
@@ -475,6 +568,12 @@ appBar: AppBar(
 ## 如何检测用户手势以及处理点击事件
 
 ```dart
+String printString= '';
+_printMsg(String msg){
+  setState((){
+    printString += ' , $msg'
+  })
+}
 children: <Widget>[
     GestureDetector(
     onTap: ()=>_printMsg("点击"),
@@ -498,6 +597,29 @@ children: <Widget>[
     ),
     Text(printString)
 ],
+
+
+_doMove(DragUpdateDetails e){
+  setState((){
+    moveY += e.delta.dy;
+    moveX += e.delta.dx;
+  });
+}
+Positioned(
+  left: moveX,
+  top: moveY,
+  child: GestureDetector(
+    onPanUpdate: (e)=>_doMove(e),
+    child: Container(
+      width: 72,
+      height: 72,
+      decoration: BoxDecoration(
+        color: Colors.amber,
+        borderRadius: BorderRadius.circular(36),
+      ),
+    )
+  )
+)
 ```
 
 ## 如何导入和使用 Flutter 的资源文件
@@ -885,6 +1007,8 @@ buildTypes {
 ```
 
 ## 【实战】拍照 App 开发
+
+image_picker
 
 ### 1，新建 dart 文件`photo_app_page.dart`
 
