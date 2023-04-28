@@ -42,15 +42,24 @@ eg: 银行转账：一个账户少了钱然后另一个账户钱多了，这两�
 
 ## 实例：
 
-```
-// html
+```html
 <form id="form">
-  <p>项目名称：<input required name="name" type="text" autocomplete="off"></p>
-  <p>开始时间：<input required name="begin" type="date"></p>
-  <p>结束时间：<input required name="end" type="date"></p>
-  <p>参与人员：<input required name="person" type="text" autocomplete="off" placeholder="多人空格分开"></p>
-  <p>补充说明：<textarea rows="5" placeholder="非必填" name="remark"></textarea></p>
-  <p><input type="submit" value="确定创建"></p>
+  <p>项目名称：<input required name="name" type="text" autocomplete="off" /></p>
+  <p>开始时间：<input required name="begin" type="date" /></p>
+  <p>结束时间：<input required name="end" type="date" /></p>
+  <p>
+    参与人员：<input
+      required
+      name="person"
+      type="text"
+      autocomplete="off"
+      placeholder="多人空格分开"
+    />
+  </p>
+  <p>
+    补充说明：<textarea rows="5" placeholder="非必填" name="remark"></textarea>
+  </p>
+  <p><input type="submit" value="确定创建" /></p>
 </form>
 <div id="result" class="result">
   <table>
@@ -64,24 +73,21 @@ eg: 银行转账：一个账户少了钱然后另一个账户钱多了，这两�
         <th width="30">操作</th>
       </tr>
     </thead>
-    <tbody>
-    </tbody>
+    <tbody></tbody>
   </table>
-  <div id="status" class="status">
-    加载中...
-  </div>
+  <div id="status" class="status">加载中...</div>
 </div>
 <!-- 列表数据模板 -->
-  <script id="tplList" type="text/template">
-    <tr>
-      <td data-key="name" data-id="$id$" contenteditable="plaintext-only">$name$</td>
-      <td data-key="begin" data-id="$id$" contenteditable="plaintext-only">$begin$</td>
-      <td data-key="end" data-id="$id$" contenteditable="plaintext-only">$end$</td>
-      <td data-key="person" data-id="$id$" contenteditable="plaintext-only">$person$</td>
-      <td data-key="remark" data-id="$id$" contenteditable="plaintext-only">$remark$</td>
-      <td><a href="javascript:;" role="button" class="jsListDel" data-id="$id$">删除</a></td>
-    </tr>
-  </script>
+<script id="tplList" type="text/template">
+  <tr>
+    <td data-key="name" data-id="$id$" contenteditable="plaintext-only">$name$</td>
+    <td data-key="begin" data-id="$id$" contenteditable="plaintext-only">$begin$</td>
+    <td data-key="end" data-id="$id$" contenteditable="plaintext-only">$end$</td>
+    <td data-key="person" data-id="$id$" contenteditable="plaintext-only">$person$</td>
+    <td data-key="remark" data-id="$id$" contenteditable="plaintext-only">$remark$</td>
+    <td><a href="javascript:;" role="button" class="jsListDel" data-id="$id$">删除</a></td>
+  </tr>
+</script>
 <!-- js代码 -->
 <script>
   <script>
@@ -238,7 +244,7 @@ eg: 银行转账：一个账户少了钱然后另一个账户钱多了，这两�
       })
     })
       ()
-  </script>
+</script>
 ```
 
 ![IndexDB成品](./img/b.gif)
