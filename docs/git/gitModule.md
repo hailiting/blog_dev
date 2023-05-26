@@ -12,7 +12,7 @@ git submodule add -f -b metadao_merge git@gitlab.ambt.art:appdev/aplink/aplink-s
 
 git submodule add -f -b  main git@gitlab.ambt.art:appdev/aplink/app-common-flutter.git submodules/app-common-flutter
 
-git submodule add -f -b  main git@gitlab.ambt.art:james.deng/matrixsdk.git submodules/matrixsdk
+git submodule add -f -b  main git@gitlab.ambt.art:webdev/metadao/matrix-flutter-sdk.git submodules/matrix-flutter-sdk
 
 
 
@@ -32,9 +32,8 @@ git submodule add -f -b  main git@gitlab.ambt.art:james.deng/matrixsdk.git submo
 	path = submodules/app-common-flutter
 	url = git@gitlab.ambt.art:appdev/aplink/app-common-flutter.git
 	branch = main
-[submodule "submodules/matrixsdk"]
-	path = submodules/matrixsdk
-	url = git@gitlab.ambt.art:james.deng/matrixsdk.git
+[submodule "submodules/matrix-flutter-sdk"]
+	path = submodules/matrix-flutter-sdk
+	url = git@gitlab.ambt.art:webdev/metadao/matrix-flutter-sdk.git
 	branch = main
-
 ```

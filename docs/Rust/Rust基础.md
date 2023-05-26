@@ -647,7 +647,7 @@ fn main(){
 
 ## 枚举与模式匹配
 
-枚举（enumerations | enums)  
+枚举（enumerations | enums）  
 枚举也是一种数据类型，可以用来表示多个变体（同一类型的多种可能性）
 
 ### 定义枚举

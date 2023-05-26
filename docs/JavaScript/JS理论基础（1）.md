@@ -11,22 +11,22 @@ JavaScript 提供多个内建的对象，比如 String,Date,Array 等等
 
 #### 1，工厂模式
 
-```
-function createPerson(name,age,job){
+```js
+function createPerson(name, age, job) {
   var o = new Object();
   o.name = name;
   o.age = age;
   o.job = job;
-  o.sayName = function(){
+  o.sayName = function () {
     console.log(this);
     console.log(this.name);
-  }
+  };
   return o;
 }
-var person01 = createPerson("nasha",25,"doc")
+var person01 = createPerson("nasha", 25, "doc");
 person01.sayName();
-console.log(person01 instanceof creatPerson) // ERR
- //  this 指向的是 {o产生的对象 }
+console.log(person01 instanceof creatPerson); // ERR
+//  this 指向的是 {o产生的对象 }
 // nasha
 ```
 
@@ -34,21 +34,21 @@ console.log(person01 instanceof creatPerson) // ERR
 
 #### 2，构造函数模式
 
-```
-function Person(name,age,job){
+```js
+function Person(name, age, job) {
   this.name = name;
   this.age = age;
   this.job = job;
-  this.sayName = function(){
-    console.log(this) // Person
-    console.log(this.name) //bbb|| aaa
-  }
+  this.sayName = function () {
+    console.log(this); // Person
+    console.log(this.name); //bbb|| aaa
+  };
 }
-var person01 = new Person("aaa",20,"doc")
-var person02 = new Person("bbb",30,"teacher")
-console.log(person01 instanceof Person) // true
-console.log(person01 instanceof Object) // true
-console.log(person01.sayName())
+var person01 = new Person("aaa", 20, "doc");
+var person02 = new Person("bbb", 30, "teacher");
+console.log(person01 instanceof Person); // true
+console.log(person01 instanceof Object); // true
+console.log(person01.sayName());
 // Person{...}
 // aa
 ```
@@ -69,14 +69,14 @@ console.log(person01.sayName())
 1，每个方法都有在每个实例上重新创新一遍；
 2，person01 和 person02 都有一个 sayName()的方法，但两个方法不是同一个 Function 实例。即不同实例上同名函数是不相等的，创建两个完成相同任务的 function 是不必要的，而且还有 this 对象在，不需要执行代码前就把函数绑定在特定对象上，这样，上面的函数就可以写成
 
-```
-function Person(name,age,job){
+```js
+function Person(name, age, job) {
   this.name = name;
   this.age = age;
   this.job = job;
-  this.sayname= sayname;
+  this.sayname = sayname;
 }
-function sayname(){
+function sayname() {
   console.log(this);
   // do sth
 }
@@ -90,39 +90,39 @@ function sayname(){
 每创建一个对象都有 prototype 属性（null 除外），这个属性是一个指针，指向一个对象，而这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。
 使用原型对象的好处是可以让所有对象实例共享它所包含的属性和方法。
 
-```
-function Person() {};
+```js
+function Person() {}
 Person.prototype.name = "bigbang";
 Person.prototype.job = "dosth";
 Person.prototype.age = 25;
-Person.prototype.sayname = function() {
-    console.log(this.name);
-}
+Person.prototype.sayname = function () {
+  console.log(this.name);
+};
 var person01 = new Person();
 ```
 
 方法 isPrototypeOf()确定实例和原型之间的关联
 
-```
+```js
 console.log(Person.prototype.isPrototypeOf(person01)); // true
 ```
 
 Object.getPrototypeOf()返回的是[[prototype]]的值；
 
-```
-console.log(Object.getPrototypeOf(person01))
-console.log(Object.getPrototypeOf(person01) === Person.prototype) // true
+```js
+console.log(Object.getPrototypeOf(person01));
+console.log(Object.getPrototypeOf(person01) === Person.prototype); // true
 ```
 
 hasOwnProperty()方法可以检测一个属性是存在于一个实例中，还是存在原型中的。true 为属性存在于实例中。
 
-```
+```js
 console.log(person01.hasOwnProperty("name")); // false
 ```
 
 更常见的做法是用一个包含所有属性和方法的对象字面量来重写整个原型对象，并重设 constructor 属性
 
-```
+```js
 function Person(){}
 Person.prototype = {
   name:"...",
@@ -143,15 +143,15 @@ Object.defineProperty(Person.prototype,"constructor",{
 有两种方法使用 in 操作符：单独使用和 for-in 中循环使用。
 使用 for-in 循环，返回的是所有能够通过对象访问的，可枚举的属性。包括实例中的属性，也包括存在于属性中的属性。
 
-```
+```js
 var person = {
-  toString: function(){
-    return "My Object"
-  }
-}
-for(var prop in person){
-  if(prop == "toString"){
-    console.log('get it')
+  toString: function () {
+    return "My Object";
+  },
+};
+for (var prop in person) {
+  if (prop == "toString") {
+    console.log("get it");
   }
 }
 ```
@@ -164,7 +164,7 @@ for(var prop in person){
 
 ##### 构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。所以每个实例都会有自己的一份实例属性副本，但同时共享着对方法的引用，最大限度的节省了内存，同时支持向构造函数传递参数。
 
-```
+```js
 function Person(name,age,job){
   this.name = name;
   this.age = age;
@@ -182,15 +182,15 @@ var person01 = new Person(...)
 
 ### 5，动态原型模式
 
-```
-function Person(name,age,job){
+```js
+function Person(name, age, job) {
   this.name = name;
   this.age = age;
   this.job = job;
-  if(typeof this.sayName != "function"){
-    Person.prototype.sayName = function(){
-      console.log(this,this.name)
-    }
+  if (typeof this.sayName != "function") {
+    Person.prototype.sayName = function () {
+      console.log(this, this.name);
+    };
   }
 }
 ```

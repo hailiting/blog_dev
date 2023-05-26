@@ -1,5 +1,9 @@
 # forin 和 forof 的区别
 
+- for in 可枚举数据`enumerable: true`，例如：对象，数组，字符串
+  - for in 的原理是`Object.keys()`
+- for of 可迭代数据`arr[Symbol.iterator]() 里包含next()方法`，例如：数组，字符串，Map，Set
+
 ## 1. 遍历数组通常用 for 循环
 
 ES5 的话也可以使用 forEach, ES5 具有遍历数组功能的还有 map, filter, some, every, reduce, reduceRight 等，只不过他们的返回结果不太一样，但使用 forEach 遍历数组的话，使用 break 不能中断循环，使用 return 也不能返回到外层函数。
@@ -98,6 +102,7 @@ for (var key of Object.keys(myObject)) {
 ## 总结
 
 - for in 可枚举数据`enumerable: true`，例如：对象，数组，字符串
+  - for in 的原理是`Object.keys()`
 - for of 可迭代数据`arr[Symbol.iterator]() 里包含next()方法`，例如：数组，字符串，Map，Set
 
 - `for...of`适用遍历数/数组对象/字符串/map/set 等拥有迭代器对象的集合。但不能遍历对象，因为没有迭代器的对象。与 forEach()不同的是，它可以正确响应 break、continue 和 return 语句。
