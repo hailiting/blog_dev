@@ -1,0 +1,86 @@
+# React Native 入门
+
+- 3. 开发环境搭建
+  - 安装 node
+  - 安装 watchman
+  - 安装 VSCode
+  - 安装 AndroidStudio
+  - 安装 sdk platform 和 sdk tools
+  - 基于 AndroidStudio 创建安卓模拟器
+  - 以及针对 ml 平台创建安卓模拟器的解决方法
+  - 使用 cli 命令创建 ReactNativ 工程，并启动运行
+- 4. 前端知识
+  - CSS-flex 布局基础
+- 5. 原生知识
+  - 开发中常用的 adb 命令
+  - 了解移动端应用的 UI 结构
+  - RN 开发中经常会涉及的原生文件
+  - RN 组件和原生组件的对应关系
+  - 原生语言的选择：Android: Java/Kotlin, IOS： OC/Swift
+  - 版本发布与直流的应用场景
+  - 移动设置的版本兼容选择
+- 6. React 基础知识和工程结构
+  - 目录结构介绍
+  - 入口函数，export 和 import
+  - class 组件与函数式组件：RN 两大开发规范
+  - class 组件的生命周期和常规写法
+  - 函数式组件的优势和常用 hook
+  - JSX 语法和常见写法
+  - Style Flexbox 布局
+- 7. 18 个组件
+  - View: ui 构建的基石
+  - Text
+  - Image: 加载本地和网络图片
+  - ImageBackground: View 和 Image 的合体
+  - 唯一的输入组件：TextInput
+  - TouchableOpacity: 点击组件
+  - TouchableHighlight: 点击组件
+  - TouchableWithoutFeedback: 特殊场景下使用的点击组件
+  - Button: 方式使用的点击组件
+  - Pressable
+  - ScrollView: 基础滚动组件，列表渲染
+  - FlatList: 一个高性能的列表组件
+  - SectionList: 实现复杂的多分组列表
+  - RefreshControl: 下拉刷新
+  - Modal
+  - StatusBar: 状态栏适配
+  - Switch: 开关切换
+- 8. 10 个常用 api 精讲
+  - Alert/console: 开发周期的调试工具
+  - Dimensions/useWindowDimensions: 适配屏幕宽高
+  - 使用 Platform 类，获取平台属性
+  - 通过 StyleSheet 灵活构建组件的样式
+  - Linking
+  - PixelRatio
+  - BackHandler: 针对安卓返回键的适配
+  - PermissionAndroid: 原生动态权限
+  - LayoutAnimation: 简单动画
+- 9. RN 动画系统
+  - `Animated/Animated.Value`的构建方法
+  - `Animated/Animated.Value`创建平移、缩放、旋转、渐变
+  - 跟随动画问题
+- 11. TypeScript
+  - 联合类型
+- 12. Context 上下文的解耦
+- 13. 高阶组件 HOC
+  - 什么是高阶组件
+  - 高阶组件解决的应用场景，即解决的核心问题
+    - hack 组件的渲染函数
+    - hack 组件的生命周期
+- 14. memo 与性能优化
+  - 使用`React.memo`拦截渲染，提升组件性能
+  - 使用`useMemo`对局部组件进行缓存，提升页面渲染性能
+  - hermes 引擎的开启，提升启动速度、压缩包体积
+- 15. ref 转发，自定义组件
+  - ref 的应用场景，即解决的核心问题
+  - 和 ref 转发相关的 hook，函数式组件的公开 api 定义
+- 16. RN 桥接原生
+  - 使用原生桥实现 js 层调用原生方法
+  - 使用原生桥实现 js 层获取原生常量(同步获取)
+  - 使用原生桥接，创建一个原生组件，js 层调用渲染
+  - 使用原生桥接，创建一个原生容器组件，js 层调用并设置子组件
+  - 使用原生打包脚本配置，并在 package.json 中调用原生脚本
+- 17. 路由管理
+  - 集成`ReactNavigation`, 并构建常见的主页 Tab
+  - 路由跳转的两种方式: `navigation.push`和`navigation.navigate`
+  - 学习路由返回两种方式: `navigation.pop`和`navigation.goBack`

@@ -48,4 +48,121 @@
     - 用来让 CPU 寻址
 - 数据类型存在的意义
   - 提高数据存储运算的性能和适当节省内存空间
-  - 在计算机中，存储 1 和 9999，两个数据占据的内存大小是一样的
+  - 在计算机中，存储 1 和 9999，两个数据占据的内存大小是一样的，都是占用 4 个字节 `获取字节长度：sys.getsizeof(xxx)`
+
+```py
+import random
+
+score = 100
+while score > 0:
+    guess_num = random.randint(0, 20)  # 随机生成0-20的随机数
+    num = input("enter you guess num: ")
+    try:
+        num = int(num)
+    except Exception as ex:
+        print("请输入数字")
+        continue
+    if score > 0:
+        if num == guess_num:
+            print(f"----{score}")
+            break
+        else:
+            score -= 10
+            if num > guess_num:
+                print("大了")
+            else:
+                print("小了")
+if score == 0:
+    print("你没分了")
+
+# 排序
+alist = [12,1,2,41,12]
+for i in range(len(alist)-1):
+  if(alist[i] > alist[i+1]):
+    alist[i],alist[i+1] = alist[i+1],alist[i]
+
+print(alist)
+print(sorted(alist))
+```
+
+```py
+# 闭包
+def line_conf(a, b):
+  def line(x):
+    return a * b + x
+  return line
+def line_conf():
+  a = 1
+  b = 2
+  def line(x):
+    print(a * b + x)
+  return line
+def _line_(a, b):
+  def line_c(c):
+    def line(x):
+        print(a * b + x+c)
+    return line
+  return line_c
+```
+
+```py
+# 函数的参数
+a = 1
+bb = {}
+def func(b):
+  b=2
+  print("函数内部b:", b)
+func(a)
+print("函数外部a:", a)
+
+func(bb)
+print("函数外部bb:", bb)
+
+c = {}
+def func(b):
+    b.setdefault("jay", "sss")
+    print("函数内部b:", b)
+func(b = c)
+print("函数外部c:", c)
+
+
+# 因为Python函数体在被读入内存的时候，默认参数a指向的空列表
+def func(a=[]):
+  a.append("A")
+  return a
+
+print(func()) #['A']
+print(func()) #['A', 'A']
+print(func()) #['A', 'A', 'A']
+
+# 动态参数
+def func(*args):
+  print(args)
+
+func(1,2,3,4,"sdd")
+
+alst = [1,2,3]
+func(*alst)
+```
+
+```py
+result = lambda x:1 if x>0 else 0
+print(result(-1))
+```
+
+```py
+def sum_number(n):
+  sum = 0
+  if(n<0){
+    return sum
+  }
+  sum_number(sum+1)
+
+def sum_number(n):
+  if n==1:
+    return 1
+  return n + sum_number(n-1) # 每一次递归处理函数的规模比上一次少
+result = sum_number(5)
+
+
+```
