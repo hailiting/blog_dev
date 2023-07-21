@@ -76,6 +76,10 @@ didChangeDependencies, build, didUpdateWidget
 
 deactivate, dispose
 
+- deactivate: 在 StatefulWidget 组件从视图树中暂时被移除时被调用
+  - 切换页面或按下返回键，当前页面会被暂时移除视图树
+- dispose: 在组件被永久移除时被调用
+
 ```dart
 // stful + enter 快速搭建一个dart结构文件
 // 引入依赖  option+enter

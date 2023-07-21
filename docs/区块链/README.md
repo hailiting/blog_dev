@@ -22,3 +22,7 @@
 ## 钱包开发 metamask demo
 
 https://metamask.github.io/test-dapp/
+
+## 查看 gas 的网站
+
+https://explorer.bitquery.io/goerli/gas

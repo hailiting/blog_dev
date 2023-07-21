@@ -163,6 +163,4 @@ def sum_number(n):
     return 1
   return n + sum_number(n-1) # 每一次递归处理函数的规模比上一次少
 result = sum_number(5)
-
-
 ```

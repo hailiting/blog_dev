@@ -14,6 +14,7 @@
   - 创建一个证书
 - 启用混淆配置
   - `app/proguard-rules`
+  - `flutter build apk  --obfuscate --split-debug-info=./app` 代码混淆和拆分调试信息
 
 ```gradle
 release {
