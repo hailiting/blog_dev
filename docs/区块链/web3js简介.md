@@ -112,7 +112,7 @@ web3.eth.sendTransation({from:"0x123...", data: "0x2323..."})
 ## 应用二进制接口（ABI）
 
 - web3.js 通过以太坊智能合约的 json 接口（Application Binary Interface，json 的描述，ABI）创建一个 JavaScript 对象，用来在 js 代码中描述
-- 函数（functions)
+- 函数 functions
   - type: 函数类型，默认“function”，也可能是“constructor”
   - constant, payable, stateMutability: 函数的状态可变性
   - inputs, outputs: 函数输入，输出参数描述列表

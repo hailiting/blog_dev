@@ -512,7 +512,10 @@ contract E is C{
 函数的可见性可以指定为`external`, `public`, `internal`或`private`;
 对于状态变量，不能设置为`external`，默认是`internal`
 
-- `external`: 外部函数作为合约接口的一部分，意味着我们可以从其他合约和交易中调用。一个外部函数`f`不能从内部调用（即 f 不起作用，但`this.f()`可以）。当收到大量数据的时候，外部函数有时候会更有效率
+- `external`: 标识函数只能从合约外部调用，而不能从合约内部或其他合约中直接访问
+  - 只能从合约外部进行调用，无法从合约内部调用
+  - 无法在合约内部通过`this.functionName()`的方式来调用 external 函数
+  - 调用 external 函数需要使用合约地址或接口来进行调用
 - `public`: `public`函数是合约接口的一部分，可以在内部或通过消息调用。对于 `public` 状态变量，会自动生成一个 `getter` 函数
 - `internal`: 这些函数和状态变量只能是内部访问（即从当前合约内部或从它派生的合约访问），不使用`this`调用
 - `private`: `private`函数和状态变量仅在当前定义它们的合约中使用，并且不能被派生合约使用
@@ -715,7 +718,7 @@ function f(uint start,uint daysAfter) public {
 
 ## 使用汇编 Assembly 代码
 
-与 c/c++类似，solability 程序中，可以使用 EVM 汇编语言
+与 c/c++类似，solidity 程序中，可以使用 EVM 汇编语言
 
 ### 内联汇编
 

@@ -896,6 +896,8 @@ contract tm {
   - 修改器的作用是在函数执行前检查某种前置条件是否满足
   - 一个函数可以有多个修改器
   - 修改器的生效顺序与调用顺序一样
+- `abi.encodePacked`
+  - 用于将给定的参数编码为紧凑的字节序列
 
 ```sol
 abstract contract Employee {

@@ -1,0 +1,28 @@
+{
+  "name": "defi",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "deplay": "NETWORK=bscTestnet yarn zx v3-deploy.mjs",
+    "compile": "yarn workspaces run compile",
+    "test": "yarn workspaces run test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "zx": "^7.2.0",
+    "@typechain/hardhat": "^6.1.5",
+    "solidity-docgen": "^0.6.0-beta.35",
+    "find-config": "^1.0.0"
+  },
+  "workspaces": [
+    "projects/*",
+    "common"
+  ],
+  "volta": {
+    "node": "16.19.1"
+  }
+}

@@ -1,10 +1,37 @@
 # hardhat
 
+https://hardhat.org/hardhat-runner/docs/guides/project-setup
 集成开发环境
 
 - 开发环境：编译、单元测试、console
 - 本地测试网：Hardhat Network
 - Plugins: ...
+
+```sh
+npx hardhat clean # 删除缓存
+npx hardhat init
+npx hardhat test test/ERC20Token.test.ts
+# 部署代码
+npx hardhat run scripts/deploy.ts --network bsc-testnet
+# 查看初始函数的参数
+# ----
+# 验证代码
+npm i @nomiclabs/hardhat-etherscan --save-dev
+npx hardhat verify --network bsc-testnet  0x73B2C654e5050790B2BF9380d0C870Af25574777 xxx
+# 复杂的参数
+npx hardhat verify --network bsc-testnet --constructor-args arguments.ts 0x73B2C654e5050790B2BF9380d0C870Af25574777
+```
+
+```js
+// arguments.ts
+module.exports = [
+  50,
+  {
+    x: 10,
+    y: 10,
+  },
+];
+```
 
 ### hardhat 使用流程
 
@@ -32,6 +59,7 @@ yarn hardhat run ./scripts/deploy_greeter.ts
 yarn hardhat node
 # 部署到刚刚运行的测试链
 yarn hardhat run ./scripts/deploy_greeter.ts --network localhost
+
 ```
 
 ## 在线测试
