@@ -1,6 +1,6 @@
 # GMX_Graph
 
-```shell
+```bash
 # 1
 npm install -g @graphprotocol/graph-cli
 # 2 网站注册 获取

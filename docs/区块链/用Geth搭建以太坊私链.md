@@ -10,7 +10,7 @@ Geth 以太坊客户端
 
 #### git
 
-```shell
+```bash
 $ # sudo add-apt-repository ppa:git-core/ppa
 $ sudo apt-get update
 $ sudo apt-get install git
@@ -28,13 +28,13 @@ $ git checkout v1.10.2   # 切换到选定版本
 
 #### make
 
-```shell
+```bash
 $ sudo apt-get install make
 ```
 
 #### vim
 
-```shell
+```bash
 $ sudo apt-get install make
 ```
 
@@ -53,7 +53,7 @@ $ source ~/.profile
 
 ### 方法一
 
-```shell
+```bash
 $ sudo apt-get install software-properties-common
 $ sudo add-apt-repository -y ppa:ethereum/ethereum
 $ sudo apt-get update
@@ -64,13 +64,13 @@ $ sudo apt-get install ethereum
 
 #### 1. 克隆 github 仓库
 
-```shell
+```bash
 $ git clone https://github.com/ethereum/go-ethereum.git
 ```
 
 #### 2.
 
-```shell
+```bash
 $ cd go-ethereum
 $ make geth
 # linux err 2 系统会出错
@@ -93,14 +93,14 @@ $ ./build/bin/geth version # 查看当前版本
 `--datadir ./data` 数据的存储目录指定到 data 文件夹  
 安装好 Geth，现在可以尝试运行一下它，执行下面命令，geth 就会同步区块，并存储在当前目录下。这里的`--syncmode fast`参数表示我们会以"快速"模式同步区块。在这种模式下，我们只会下载每个区块头和区块体，但不会执行验证所有交易，直到所有区块同步完毕再去获取一个系统的当前状态。这样就节省了很多交易验证的时间。
 
-```shell
+```bash
 $ geth --datadir . --syncmode full | fast | light
 ```
 
 通常，在同步以太坊区块链时，客户端会一开始就下载并验证每个块和每个交易，也就是说从创世区块开始。毫无疑问，如果不加`--syncmode fast`参数，同步将花费很长时间并具有很高的资源要求（更多的 RAM，如果你没有快速存储，则需要更长时间）  
 如果我们想同步测试网络的区块，可以用下面命令
 
-```shell
+```bash
 $ geth --testnet --datadir .--syncmode fast
 ```
 
@@ -114,7 +114,7 @@ $ geth --testnet --datadir .--syncmode fast
 可以去官网查看最新配置，要不然会有坑
 `https://www.json.cn` 检测格式是否有问题
 
-```shell
+```bash
 # 项目存放目录结构
 ls # []
   Desktop
@@ -180,7 +180,7 @@ gedit genesis.json # 生成创世块
 
 要创建一条以它作为创世块的区块链，我们可以使用下面命令：
 
-```shell
+```bash
 # 生成创世区块
 $ geth --datadir ./myChain/ init genesis.json
 # myChain
@@ -195,15 +195,15 @@ $ geth --datadir ./myChain/ init genesis.json
 在当前目录下运行 geth，就会启动这条私链，注意要将 networked 设置为与创世块配置里 chinaId 一直。
 **下面是必须的，绑定 networkid，要不然不能保证 networkid 和 chainid 是一样的**
 
-```shell
+```bash
 geth --datadir ./myChain/ console
 ```
 
-```shell
+```bash
 $ geth --datadir ./myChain/ --networkid 523
 ```
 
-```shell
+```bash
 $ geth --datadir ./myChain/ --rpc --networkid 523 --nodiscover console 2>eth_output.log --allow-insecure-unlock
 ```
 
@@ -213,7 +213,7 @@ $ geth --datadir ./myChain/ --rpc --networkid 523 --nodiscover console 2>eth_out
 
 ### 启动控制台
 
-```shell
+```bash
 $ geth --datadir ./myChain/ --networkid 15     # 启动区块
 $ geth --datadir ./myChain/ --networkid 15 console     # 启动区块并进入控制台
 # 启动区块并进入控制台并将打印信息打印到 output.log文件里
@@ -264,7 +264,7 @@ $ sudo killall geth
 | -etherbase             | 矿工的账号（默认第一个账号）                                 |
 | -nodiscover            | 关闭自动链接                                                 |
 
-```shell
+```bash
 geth
   --datadir "./db"
   --rpc

@@ -61,7 +61,7 @@ karma 自动化 runner 集成
 PhantomJS 无刷新
 Phantomcss ui 测试
 
-```shell
+```bash
 $ npm install karma --save-dev
 # Install plugins that your project needs:
 $ npm install karma-jasmine karma-chrome-launcher jasmine-core --save-dev
@@ -370,13 +370,13 @@ function request() {
   return superagent(app.listen());
 }
 
-describe("后台接口测试", function() {
+describe("后台接口测试", function () {
   it("test接口测试", (done) => {
     request()
       .get("/test")
       .expect("Content-Type", /json/)
       .expect(200)
-      .end(function(err, response) {
+      .end(function (err, response) {
         console.log(response);
         if (response.data == "ok message") {
           done("ok");
@@ -398,11 +398,11 @@ npm i chai --save
 const axios = require("axios");
 const { expect } = require("chai");
 
-describe("后台接口测试", function() {
-  it("test接口测试", function(done) {
+describe("后台接口测试", function () {
+  it("test接口测试", function (done) {
     axios
       .get("http://localhost:3100/test")
-      .then(function(response) {
+      .then(function (response) {
         console.log(response.data.data);
         expect(response.status).to.equal(200);
         if (response.data.data == "ok message111") {
@@ -411,7 +411,7 @@ describe("后台接口测试", function() {
           done(new Error("数据不符合预期"));
         }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         done(error);
       });
   });
@@ -433,9 +433,7 @@ var expect = chai.expect;
 expect(foo).to.be.a("string");
 expect(foo).to.equal("bar");
 expect(foo).to.have.lengthOf(3);
-expect(tea)
-  .to.have.property("flavors")
-  .with.lengthOf(3);
+expect(tea).to.have.property("flavors").with.lengthOf(3);
 ```
 
 ```js

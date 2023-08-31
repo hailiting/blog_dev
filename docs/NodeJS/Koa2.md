@@ -54,7 +54,7 @@ app.use(
   })
 );
 
-app.use(function(ctx, next) {
+app.use(function (ctx, next) {
   return next().catch((err) => {
     if (err.status === 401) {
       ctx.status = 401;
@@ -160,7 +160,7 @@ app.listen(3000);
 ```javascript
 app.use(
   bodyParser({
-    detectJSON: function(ctx) {
+    detectJSON: function (ctx) {
       return /\.json$/i.test(ctx.path);
     },
   })
@@ -184,7 +184,7 @@ app.use(
 ```javascript
 app.use(
   bodyParser({
-    onerror: function(err, ctx) {
+    onerror: function (err, ctx) {
       ctx.throw("body parse error", 422);
     },
   })
@@ -380,7 +380,7 @@ declare namespace jwt {
 
 1. 依赖安装
 
-```shell
+```bash
 npm i log4js --save
 npm i ip --save
 ```

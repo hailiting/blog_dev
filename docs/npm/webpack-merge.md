@@ -9,7 +9,7 @@ merge({ a: [1], b: 5, c: 20 }, { a: [2], b: 10, d: 421 }); // {a: [1,2], b:10, c
 
 ## 在项目中的具体用法
 
-```shell
+```bash
 npm install webpack-merge --save-dev
 ```
 

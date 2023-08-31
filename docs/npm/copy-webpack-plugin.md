@@ -4,7 +4,7 @@
 
 ## 如何使用
 
-```shell
+```bash
 npm install --save-dev copy-webpack-plugin
 ```
 
@@ -21,7 +21,7 @@ new CopyWebpackPlugin([
 
 ## 常用配置
 
-```shell
+```bash
 from 定义要拷贝的源文件 from: __dirame + "/src/components",
 to 定义要拷贝到的目标文件  to: __dirname + "/dist",
 toType file或dir  可选，默认是文件

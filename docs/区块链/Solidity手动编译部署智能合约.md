@@ -4,7 +4,7 @@
 
 ### 编译合约
 
-```shell
+```bash
 > gedit Storage.sol
 > echo "var storageOutput = `solc --optimize --combine-json abi,bin,interface Storage.sol`" > storage.js
 > cat storage.js
@@ -18,7 +18,7 @@
 
 - 搭建私链并启动
 
-```shell
+```bash
 # 配置文件
 > gedit genesis.json
 # 初始化
@@ -31,7 +31,7 @@ geth --datadir "./db" --rpc --rpcaddr=0.0.0.0 --rpcport 8545 --rpccorsdomain "*"
 
 - 加载 js 文件
 
-```shell
+```bash
 # 加载js
 > loadScript("/home/eth/eth-1801/day11/storage.js")
 # js里的实例对象，storageOutput 查看信息
@@ -46,7 +46,7 @@ geth --datadir "./db" --rpc --rpcaddr=0.0.0.0 --rpcport 8545 --rpccorsdomain "*"
 
 - 部署合约
 
-```shell
+```bash
 # 创建账户
 > personal.newAccount("123456")
 > eth.getBalance(eth.accounts[0])

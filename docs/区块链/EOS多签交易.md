@@ -1,6 +1,6 @@
 # EOS 多签交易
 
-```shell
+```bash
 amcli push action -djs amax.token transfer ["user1","user2","1.00000000 AMAX",""] -puser1@owner
 ```
 

@@ -9,7 +9,7 @@ go1.14.4.darwin-amd64.pkg
 
 ## 2. 配置 go path
 
-```shell
+```bash
 go env
 ```
 

@@ -8,7 +8,7 @@ https://contracts-ui.substrate.io/
 
 https://docs.substrate.io/tutorials/smart-contracts/prepare-your-first-contract/
 
-```shell
+```bash
 rustup update
 rustup default
   - stable
@@ -39,7 +39,7 @@ cargo build --release
 - substrate-contracts-node
   v0.20.0 !1 ?1
 
-```shell
+```bash
 $ cargo contract new flipper
 # 生成一个erc20
 # $ cargo contract new erc20

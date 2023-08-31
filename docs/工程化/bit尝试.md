@@ -4,7 +4,7 @@
 
 ## 2. 下载 shell
 
-```shell
+```bash
 npm install bit-bin --global
 # or
 brew install bit
@@ -14,7 +14,7 @@ brew install bit
 
 ### 初始化项目
 
-```shell
+```bash
 cd project_directory
 bit init # 初始化bit项目
 bit login

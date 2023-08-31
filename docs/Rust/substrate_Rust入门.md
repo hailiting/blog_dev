@@ -208,7 +208,7 @@ fn main(){
 
 ### 常用命令
 
-```shell
+```bash
 # lib 创建一个新的名为restaurant的库
 cargo new project-name <--lib>
 cargo build <--release>

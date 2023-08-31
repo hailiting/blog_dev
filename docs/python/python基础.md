@@ -2,7 +2,7 @@
 
 ## 下载 MAC
 
-```shell
+```bash
 https://www.python.org/downloads/macos/
 ```
 
@@ -14,7 +14,7 @@ https://www.python.org/downloads/macos/
 
 - `which python3`
 
-```shell
+```bash
 # 1. 添加环境变量
 # .zshrc
 export PATH="/Library/Frameworks/Python.framework/Versions/3.8/bin:${PATH}"

@@ -44,13 +44,13 @@ cat id_rsa.pub
 
 ### 1. 打开终端，切换到系统的 ssh 目录
 
-```shell
+```bash
 cd ~/.ssh
 ```
 
 ### 2. 生成自己的 github 的 ssh key
 
-```shell
+```bash
 ssh-keygen -t rsa -C "自己的github账户" -f github_rsa
 
 ssh-keygen -t rsa -C "github_do@163.com" -f github_do
@@ -60,13 +60,13 @@ ssh-keygen -t rsa -C "github_do@163.com" -f github_do
 
 ### 4. github ssh 公钥获取
 
-```shell
+```bash
 cat ~/.ssh/id_rsa.pub
 ```
 
 ### 5. 生成公司 gitlab 的 ssh key
 
-```shell
+```bash
 ssh-keygen -t rsa -C "公司Gitlab账户" -f company_rsa
 ```
 
@@ -99,16 +99,17 @@ IdentityFile ~/.ssh/company_rsa
 
 ### 9. 测试是否成功
 
-```shell
+```bash
 # GitHub
 ssh -T git@github.com
 # GitLab
 ssh -T git@gitlab.com
+ssh-add -D
 ```
 
 ### 10. 切换不同的 ssh
 
-```shell
+```bash
 # 取消全局 用户名/邮箱设置 并进入项目文件夹单独设置
 git config -global -unset user.name
 git config -global -unset user.email

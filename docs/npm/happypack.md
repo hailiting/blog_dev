@@ -10,7 +10,7 @@ tips: HappyPack 对`file-loader`, `url-loader`支持的不太友好，所以不�
 
 ## 如何使用
 
-```shell
+```bash
 npm i happypack -D
 ```
 

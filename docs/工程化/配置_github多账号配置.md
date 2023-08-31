@@ -18,6 +18,8 @@ ssh-keygen -t rsa -f hailiting -C "hailiting@yeah.net"
 ssh-keygen -t rsa -f github_do -C "github_do@163.com"
 githubDo111
 
+ssh-keyscan -t rsa github.com >> ~/.ssh/hailiting
+
 ## 2. 生成公钥添加到 github 上，设置 ssh-key, new ssh
 
 ## 3. 编辑`~/.ssh/config`文件

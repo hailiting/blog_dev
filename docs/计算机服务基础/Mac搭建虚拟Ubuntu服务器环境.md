@@ -39,7 +39,7 @@ Base address: 内存地址
 
 ## ubuntu 常用命令
 
-```shell
+```bash
 # 查看ubuntu版本号
 lsb_release -a
 ```

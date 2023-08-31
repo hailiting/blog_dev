@@ -1,6 +1,6 @@
 # nodejs 源码学习
 
-```shell
+```bash
 git clone https://github.com/nodejs/node.git
 cd node
 ./configure && make
@@ -75,7 +75,7 @@ int Start(int argc, char** argv){
 
 - 1. 问题
 
-```shell
+```bash
 branch name: fix/gh-{num}
 commit message: "module name: description"
 test/parallel/test-*.js

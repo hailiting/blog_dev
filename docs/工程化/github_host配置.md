@@ -1,6 +1,6 @@
 # github_host 配置
 
-```shell
+```bash
 # /etc/hosts
 # GitHub Start
 192.30.255.112	gist.github.com

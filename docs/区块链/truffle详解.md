@@ -16,7 +16,7 @@
 
 ## 新建项目
 
-```shell
+```bash
 > truffle init
 ```
 
@@ -82,7 +82,7 @@ module.exports = function (deployer) {
 
 ## 验证
 
-```shell
+```bash
 > truffle run verify contractName --network shibuya
 > truffle run verify User --network  fantom_testnet
 ```

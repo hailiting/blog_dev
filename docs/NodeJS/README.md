@@ -29,7 +29,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash 
 `rollup-plugin-replace`
 
 ```javascript
-gulp.task("configclean", function() {
+gulp.task("configclean", function () {
   gulp.src("./src/nodeuii/**/*.js").pipe(
     rollup({
       output: {
@@ -65,7 +65,7 @@ gulp.task("default", _task);
 ```javascript
 // gulpfile.js
 const eslink = require("gulp-eslint");
-gulp.task("link", function() {
+gulp.task("link", function () {
   gulp
     .src("./src/nodeuil/**/*.js")
     .pipe(eslint())
@@ -79,7 +79,7 @@ if (precss.env.NODE_ENV === "link") {
 
 `.eslintrc.js` `.eslintignore`
 
-```shell
+```bash
 npm install gulp-eslint --save-dev
 ```
 

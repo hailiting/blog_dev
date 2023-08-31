@@ -6,7 +6,7 @@ shell 清除屏幕 `Control + L`
 
 ### 安装 solc
 
-```shell
+```bash
 $ npm i solc -g
 $ solcjs -V
 0.8.4+commit.c7e474f2.Emscripten.clang
@@ -25,7 +25,7 @@ $ solcjs -V
 
 - 将 web3 模块安装在项目中
 
-```shell
+```bash
 # 最新的 1.3.5
 $ npm install web3@0.20.1
 ```
@@ -120,7 +120,7 @@ web3.eth.sendTransation({from:"0x123...", data: "0x2323..."})
   - type: 类型，总是"event"
   - inputs: 输入对象列表，包括 name, type, indexed
 
-```shell
+```bash
 $ vi Coin.sol
 // SPDX-License-Identifier: SimPL-2.0
 pragma solidity >=0.7.0 <0.9.0;
@@ -289,10 +289,7 @@ batch.add(
   )
 );
 batch.add(
-  web3.eth
-    .contract(abi)
-    .at(address)
-    .balance.request(address, callback2)
+  web3.eth.contract(abi).at(address).balance.request(address, callback2)
 );
 batch.execute();
 ```
@@ -637,8 +634,7 @@ var result = web3.eth.call({
   // 向谁发出来的调用
   to: "0xc4abd0339eb8d57087278718986382264244252f",
   // 32位的字节 前8  函数的选择器
-  data:
-    "0xc6888fa1000000000000000000000000000000000000000000000000000 0000000000003",
+  data: "0xc6888fa1000000000000000000000000000000000000000000000000000 0000000000003",
 });
 console.log(result);
 ```
@@ -655,14 +651,14 @@ console.log(result);
 // 或者可以填入一个日志过滤
 var filter = web3.eth.filter("latest");
 // 监听日志变化
-filter.watch(function(error, result) {
+filter.watch(function (error, result) {
   if (!error) {
     console.log(result);
   }
 });
 filter.stopWatch();
 // 还可以用传入回调函数的方法，立即开始监听日志
-web3.eth.filter(options, function(error, result) {
+web3.eth.filter(options, function (error, result) {
   if (!error) {
     console.log(result);
   }
@@ -823,7 +819,7 @@ contractInstance.balances("0x9cab180d378005f9ecea4869e77cdde2bdb06ff5")
 var event = myContractInstance.MyEvent(
   { valueA: 23 },
   [, additionalFill],
-  function(error, result) {
+  function (error, result) {
     if (!error) console.log(result);
   }
 );

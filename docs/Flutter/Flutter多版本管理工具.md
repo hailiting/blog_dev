@@ -2,13 +2,13 @@
 
 - 添加 homebrew tap
 
-```shell
+```bash
 brew tap xinfeng-tech/fvm
 ```
 
 - 安装 fvm
 
-```shell
+```bash
 $ brew install fvm
 $ vim .bash_profile
 export PUB_HOSTED_URL=http://mirrors.cnnic.cn/dart-pub

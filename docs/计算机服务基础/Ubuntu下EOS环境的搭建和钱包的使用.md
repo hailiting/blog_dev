@@ -1,6 +1,6 @@
 # Ubuntu 下 EOS 环境的搭建和钱包的使用
 
-```shell
+```bash
 # 下载EOS源码
 git clone https://github.com/EOSIO/eos --recursive
 # 执行自动编译eos的脚步

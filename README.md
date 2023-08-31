@@ -53,7 +53,7 @@ https://www.aconvert.com/cn/image/png-to-svg/
 
 ##### 1. 升级本地 zsh 版本
 
-```
+```bash
 ## 1. 查看版本
 zsh --version
 brew info zsh
@@ -61,6 +61,13 @@ brew info zsh
 brew install zsh zsh-completions
 ## 3. 设置默认的bash工具是zsh
 chsh -s /bin/zsh
+
+# chsh: no changes made
+
+dscl . -read /Users/$USER/ UserShell
+exec su - $USER
+
+
 ## 4. 验证是否替换成功
 echo $SHELL
 zsh --version

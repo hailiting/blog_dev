@@ -8,7 +8,7 @@
 清华大学开源软件镜像
 `https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/`
 
-```shell
+```bash
 # 1、备份软件源配置文件
 cd /etc/apt/
 cp /etc/apt/sources.list /etc/apt/sources.list.back
@@ -35,7 +35,7 @@ apt-get update
 
 ## 2. 下载需要的依赖库
 
-```shell
+```bash
 # 安装所有需要的依赖包如下
 apt-get -y install make gcc g++ libdb-dev libdb++-dev aptitude
 aptitude install libboost-all-dev
@@ -48,7 +48,7 @@ apt -y  install qt4*
 ```
 
 <!--
-```shell
+```bash
 # 安装编译环境
 apt-get -y install gsettings-desktop-schemas
 apt-get -y install build-essential libtool autotools-dev automake  autoconf pkg-config
@@ -75,7 +75,7 @@ apt -y install libevent-dev libzmq5-dev doxygen libboost1.58-all-dev
 
 ## 2. 下载 bitCoin 源码
 
-```shell
+```bash
 # # 推送的文件会很大，需要最大git的临时缓存区
 # git config --global http.postBuffer 2000000000
 # 一般习惯在home下
@@ -86,7 +86,7 @@ cd bitcoin
 
 ## 3. 编译源代码
 
-```shell
+```bash
 # 在bitcoin目录下，创建db4目录，存放Berkeley DB 4.8
 mkdir /home/bitcoin/db4
 

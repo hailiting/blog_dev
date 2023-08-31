@@ -6,7 +6,7 @@ Li.Fi 是一种跨链桥接聚合协议，通过聚合桥接并将它们连接�
 
 `@lifi/sdk`允许访问 LiFiAPI, 它可以在不同的网桥和交易所找到最佳的跨链路由，然后通过 SDK 执行路由
 
-```shell
+```bash
 npm install --save @lifi/sdk
 or
 yarn add @lifi/sdk

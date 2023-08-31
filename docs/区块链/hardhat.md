@@ -35,7 +35,7 @@ module.exports = [
 
 ### hardhat 使用流程
 
-```shell
+```bash
 1. 安装
 mkdir hhproject && cd hhproject
 mkdir chain && cd chain
@@ -70,7 +70,7 @@ https://dashboard.tenderly.co/
 
 https://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.7+commit.e28d00a7.js
 
-```shell
+```bash
 # 部署合约
 yarn hardhat run scripts/deploy_classtoken.ts --network localhost
 ```

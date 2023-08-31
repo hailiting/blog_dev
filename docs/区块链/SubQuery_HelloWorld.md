@@ -18,7 +18,7 @@
 - 11. postgre 数据库
 - 12. `npm install @subql/query -g` 前端服务
 
-```shell
+```bash
 postgre
 # @subql/node 安装路径
 /usr/local/lib/node_modules/@subql/node/dist

@@ -259,7 +259,7 @@ construct_runtime!(
 )
 ```
 
-```shell
+```bash
 $ git log
 $ cargo build --release
 # 运行节点

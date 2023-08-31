@@ -2,7 +2,7 @@
 
 ## `create-react-app`
 
-```shell
+```bash
 npx create-react-app ts-with-react  --typescript
 ```
 

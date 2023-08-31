@@ -43,7 +43,7 @@ https://github.com/miketang84/oneblockplus_offchain_lesson/blob/cb33bc4a0f49a9a6
 - 利用`offchain worker`取出 DOT 当前对 USD 的价格，并把写到一个 Vec 的存储里，自己选一种方法提交回链上，并在代码注释为什么用这种方法提交回链上最好。只保留当前最近的 10 个价格，其他价格丢弃（就是 Vec 的长度长到 10 后，再插入一个值时，要先丢弃最早的那个值）
 - 获取当前 DOT 价格`https://api.coincap.io/v2/assets/polkadot`
 
-```shell
+```bash
 git clone --branch polkadot-v0.9.25 https://github.com/substrate-developer-hub/substrate-node-template
 
 cargo build --release

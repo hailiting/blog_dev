@@ -9,11 +9,11 @@ Cloudflare 推出的 ArgoTunnel，本意是保护 web 应用程序，连接服�
 
 ## 怎么做
 
-```shell
+```bash
 npm init cloudflare my-app https://github.com/mrbbot/miniflare-typescript-esbuild-jest
 ```
 
-```shell
+```bash
 git clone https://github.com/cloudflare/worker-template-postgres/
 cd worker-template-postgres
 # cloudflare 验证
@@ -38,7 +38,7 @@ docker run -v ~/.cloudflared:/etc/cloudflared cloudflare/cloudflared:2021.11.0 c
 
 ### 安装 Argo Tunnel Client
 
-```shell
+```bash
 # macOS 安装
 brew install cloudflare/cloudflare/cloudflared
 
@@ -63,14 +63,14 @@ curl -Lo `which cloudflared` https://github.com/cloudflare/cloudflared/releases/
 
 Argo Tunnel Client 需要使用者登录 Cloudflare 账号以进行授权
 
-```shell
+```bash
 # 登录后生成证书，放在 ~/.cloudflared/cert.pem
 cloudflared tunnel login
 ```
 
 ### 新建 Tunnel
 
-```shell
+```bash
 # cloudflared tunnel create [Tunnel 名称]
 # 创建生成配置 ~/.cloudflared/UUID.json
 cloudflared tunnel create test
@@ -102,7 +102,7 @@ ingress:
 
 ### 开启 Tunnel
 
-```shell
+```bash
 # 如果不指定文件路径，cloudflared会默认读取`~/.cloudflared/config.yml`
 cloudflared tunnel --config [配置文件路径] run [tunnel]
 
@@ -123,14 +123,14 @@ curl -L test.xxx.xx
 
 ### 配置为系统服务
 
-```shell
+```bash
 # cloudflared 会新建systemd文件
 cloudflared service install
 ```
 
 ### 开启服务
 
-```shell
+```bash
 systemctl start clouldflared.service
 systemctl status clouldflared.service
 ```

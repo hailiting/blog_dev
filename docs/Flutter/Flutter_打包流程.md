@@ -49,7 +49,7 @@ android.enableR8=true
 
 - 构建 release 包
 
-```shell
+```bash
 flutter build apk
 flutter build apk  --obfuscate --split-debug-info=./app
 ```

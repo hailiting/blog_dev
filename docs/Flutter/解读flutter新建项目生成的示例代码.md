@@ -110,7 +110,7 @@ import 'package:flutter_app/baseStyles.dart';
 
 1. 首先确定的是`material.dart`是 flutter 工具包里的一个文件
 
-```shell
+```bash
 # 这是我的地址  /Users/xxx/flutter/packages/flutter/lib/material.dart
 cd /Users/xxx/flutter/packages/flutter/lib/
 

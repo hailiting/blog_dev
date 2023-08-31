@@ -39,7 +39,7 @@ server {
 
 ### 安装
 
-```shell
+```bash
 > npm install -g pm2
 ```
 

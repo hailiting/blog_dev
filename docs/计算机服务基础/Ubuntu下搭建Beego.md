@@ -70,7 +70,7 @@ ubuntu ip: 192.168.56.102
 
 ### 1. 安装 go
 
-```shell
+```bash
 # 通过ssh 链接到Ubuntu
 ssh yourname@your_server_ip
 cd ~
@@ -90,7 +90,7 @@ sudo mv go /usr/local/
 
 ### 2. 设置 go 路径
 
-```shell
+```bash
 # 创建go工作目录
 mkdir /home/go_work
 mkdir /home/go_work/src
@@ -112,7 +112,7 @@ source ~/.profile
 
 ### 3. 测试您的安装
 
-```shell
+```bash
 go version
 # 为go工作区创建一个新的目录，Go将构建其文件
 
@@ -133,7 +133,7 @@ which hello
 
 ## 安装 beego
 
-```shell
+```bash
 cd /home/go_work/src/
 git clone https://github.com/open-falcon/mymon.git
 git clone https://github.com/MXi4oyu/golang.org.git
@@ -149,7 +149,7 @@ go get github.com/beego/bee
 
 ## 测试 beego 是否安装成功
 
-```shell
+```bash
 cd ~
 # 创建一个node项目
 bee new myapp
@@ -166,6 +166,6 @@ bee run
 
 ## 到虚拟机 启动 bitcoin-qt 客户端
 
-```shell
+```bash
 bitcoin-qt
 ```

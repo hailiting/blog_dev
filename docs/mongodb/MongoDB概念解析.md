@@ -37,7 +37,7 @@ MongoDB 的单个实例可以容纳多个独立的数据库，每一个都有自
 
 有啥数据库
 
-```Shell
+```bash
 MongoDB shell version: 3.0.6
 connectiong to: test
 > show dbs
