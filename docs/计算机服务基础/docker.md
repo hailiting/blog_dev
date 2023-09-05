@@ -1,10 +1,24 @@
+# docker
+
+```
+Client 客户端
+  - docker build 构建
+  - docker pull 拉取
+  - docker run 运行
+Docker Host 数组环境
+  - Docker daemon: Docker守护程序，监听Docker API请求并管理Docker对象，如图像，容器，网络和卷。守护程序还可以与其他守护程序通信以管理docker服务
+  - Containers: 运行的镜像，提供统一且一致的运行环境。默认情况下，容器与其他容器及其主机之间的隔离度相对较高。可以控制容器的网络，存储或其他底层子系统与其他容器或与主机的隔离程度
+  - Images: 创建容器的模板，里面会有一些基础的环境，如：`ubuntu/alpine`等
+Regitry
+```
+
 ## 安装 docker docker-compose
 
 ## [第三方库服务](!https://hub.docker.com)
 
 ### 设置 docker 镜像
 
-```
+```bash
 // 文件地址：/etc/docker/daemon.json
 // vi path， i 编辑， esc + !eq 保存
 {
@@ -21,7 +35,7 @@ docker pull mongo:4
 
 ### 运行 mongo
 
-```
+```bash
 // -d 在后台运行docker指令
 // -p 指定端口
 // docker run --name some-mongo -d mongo:tag
@@ -110,3 +124,18 @@ https://docs.docker.com/engine/reference/commandline/secret_create/
 
 - `printf "my super secret password" | docker secret create my_secret -`
 - `docker secret ls`
+
+## 运行步骤
+
+- docker run
+
+```bash
+# 运行一个ubuntu容器，以交互方式附加到本地命令行会话，然后运行 /bin/bash
+docker run -i -t ubuntu /bin/bash
+  1. 如果本地没有ubuntu镜像，Docker会将其从Hub仓库中下载 - docker pull ubuntu
+  2. Docker会创建一个新容器
+  3. Docker 将一个读写文件系统分配给容器，作为其最后一层。这允许运行中的容器在其本地文件系统中创建或修改文件和目录
+  4. Docker 创建了一个网络接口，默认没有指定任何网络选项时，将容器连接到默认网络，包括容器分配新网段的IP地址。默认情况下，容器可以使用主机的网络连接到外部网络
+  5. Docker 启动容器并执行`/bin/bash`。由于容器是交互式运行的，并已附加到终端(由于 -i 和 -t 标志)，可以在输出记录到终端时使用键盘提供输入
+  6. 当键入`exit`以终止`/bin/bash`命令时，容器将停止但不会被删除，可以重新启动(docker start) 或删除它 (docker rm)
+```

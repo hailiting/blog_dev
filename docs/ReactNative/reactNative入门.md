@@ -209,10 +209,16 @@ cd android && ENVFILE=../.env.development ./gradlew assembleDevRelease && cd ..
 ```sh
 npm i -g nrm
 nrm ls
-nrm add taobao https://registry.npm.taobao.org/
+nrm add taobao https://registry.npmmirror.com/
 nrm use taobao
 nrm test taobao
 # 默认源 https://registry.npmjs.org/
+
+npm i -g cnpm
+
+
+npm cnpm nrm yarn pnpm
+npm i -g yarn@1.22.19 pnpm@7.9.0
 ```
 
 ## 安卓连接设备及常用的 adb 命令

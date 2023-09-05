@@ -6,6 +6,21 @@
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
 ```
 
+### 如果出现 443
+
+github 的一些域名的 DNS 解析被污染了，导致 DNS 解析过程无法通过域名取得正确的 IP 地址
+
+- 1. 打开https://www.ipaddress.com/ 输入访问不了的域名，获取 DNS 域名 IP 地址
+- 2. 下载 switchhosts https://switchhosts.vercel.app/
+- 3. 根据查出的结果替换`199.232.68.133 raw.githubusercontent.com`
+
+```bash
+199.232.68.133 raw.githubusercontent.com
+199.232.68.133 user-images.githubusercontent.com
+199.232.68.133 avatars2.githubusercontent.com
+199.232.68.133 avatars1.githubusercontent.com
+```
+
 ## 配置 nvm 环境变量，终端键入`command -v nvm`回车， 如果输出`nvm`，代表已经安装成功
 
 ```js
@@ -17,6 +32,8 @@ export NVM_DIR="$HOME/.nvm"
 
 ```js
 nvm list
+// install uninstall  use
+// nvm ls-remote
 ```
 
 ## 安装指定版本 node
