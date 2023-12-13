@@ -18,11 +18,16 @@ npm install -g n
 n stable # 把当前系统的Node更新成最新“稳定版本”
 n lts # 长期支持版
 n latest # 新版本
-n 10.14.2 # 指定安装版本
+n 18.12.0 # 指定安装版本
 ```
 
 - 4. 查看升级后的 node 版本
 
 ```sh
 node -v
+```
+
+```sh
+nvm install 18.12.0
+nvm use 18.12.0
 ```

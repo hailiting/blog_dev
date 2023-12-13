@@ -25,3 +25,7 @@ Glide.with(context).load("https://example.com/image.jpg").into(imageView)
 ```java
 Coil.load(context, "https://example.com/image.jpg", imageView);
 ```
+
+```java
+ImageLoaderManager.getInstance().displayImage(url, image)
+```
