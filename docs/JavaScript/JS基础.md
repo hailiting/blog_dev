@@ -2,8 +2,15 @@
 
 ## javascript 基本数据类型
 
-值类型(基本类型): String,Number,Boolean,Null,Undefined,Symbol;
-引用数据类型: Object, Array, Function
+- 栈内存 FILO 先进后出
+  - 值类型(基本类型): String,Number,Boolean,Null,Undefined,Symbol;
+    - Symbol 是基本数据类型是因为 Symbol 没有 constructor 构造函数，不能通过`new Symbol()`获得实例
+- 堆内存
+  - 引用数据类型: Object, Array, Function Date RegExp Map Set 等
+
+### 类型判断
+
+type instanceof `Object.prototype.toString.call`
 
 ```js
 typeof null; // object
@@ -13,7 +20,7 @@ typeof ""; // string
 typeof true; // boolean
 typeof []; // object
 typeof Symbol; // function
-typeof function() {}; // function
+typeof function () {}; // function
 typeof isNaN; // function
 Array.isArray(); // false
 var arr = [];
@@ -48,18 +55,18 @@ shift();
 
 ```js
 // 普通方法
-btn.onclick = function() {
+btn.onclick = function () {
   alert(1); // 不执行
 };
-btn.onclick = function() {
+btn.onclick = function () {
   alert(2); // 执行
 };
 
 // W3C标准事件绑定
-btn.addEventListener("click", function() {
+btn.addEventListener("click", function () {
   alert(3); // 执行
 });
-btn.addEventListener("click", function() {
+btn.addEventListener("click", function () {
   alert(4); // 执行
 });
 ```
@@ -73,7 +80,7 @@ btn.addEventListener("click", function() {
 1，基本应用：用另一个对象替换当前对象，B.apply(A, arguments)=>对 A 对象应用到 B 对象上的方法
 
 ```js
-var a = function() {
+var a = function () {
   console.log(this.dog);
 };
 var b = {};
@@ -85,7 +92,7 @@ a.call(b); // abc
 2，区别
 
 ```js
-var a = function() {
+var a = function () {
   console.log(arguments);
 };
 var b = {};
@@ -100,13 +107,13 @@ a.apply(b, c); // [1,2,3]
 ```js
 function Dog() {
   this.name = "dog";
-  this.showName = function() {
+  this.showName = function () {
     console.log("这是一条" + this.name + "!");
   };
 }
 function Cat() {
   this.name = "cat";
-  this.showName = function() {
+  this.showName = function () {
     console.log(this.name + " eat fish");
   };
   // Dog.apply(this)

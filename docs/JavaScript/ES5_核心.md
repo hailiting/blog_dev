@@ -231,3 +231,45 @@ var index = {
 };
 index.methods();
 ```
+
+### 块级函数
+
+ES6 块级函数允许在块级作用域中声明函数，并且该函数只在该块级作用域内可见
+
+```js
+{
+  console.log(foo());
+  function foo() {
+    return "bar";
+  }
+}
+console.log(foo());
+```
+
+### LHS 和 RHS
+
+- LHS(Left-Hand Side) 和 RHS(Right-Hand Side) 主要在编译原理和作用域理论中使用，用于解释变量的赋值和访问操作，广泛应用于编程语言和编译器的设计中
+- 对于未声明的变量会产生不同的影响
+  - LHS 引用会创建一个全局变量
+  - RHS 引用会导致 ReferenceError
+
+```js
+function foo() {
+  console.log(x); // RHS 查询一个变量，如果变量不存在，就会报错 ReferenceError
+  // 非严格模式下，LSH 找到变量的容器，并将新的值分配给该变量
+  x = 10;
+}
+```
+
+## 常见的 JS 语法错误类型
+
+- 引用不存在: ReferenceError
+- 类型错误: TypeError
+- 语法错误: SyntaxError
+- 数值越界: RangeError
+- URI 解析错误: URIError
+- eval 执行错误: EvalError
+
+## try catch 的 catch 和 with 中定义变量
+
+- try catch 的 catch 和 with 有自己的词法作用域，如果通过 var 定义变量，会直接影响 try-catch 与 with 语句所在的词法作用域

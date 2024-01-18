@@ -319,37 +319,27 @@ foo.getName()
 - 对象属性
 - 对象方法
 
+prototype(parent) constract (child)
+
 ```js
 // es5
-function inherits(child, parent) {
-  const _proto = Object.create(parent.prototype);
-  _proto.constructor = child.prototype.constructor;
-  child.prototype = _proto;
+function inherit(P, C) {
+  C.prototype.constructor = C;
+  C.prototype = Object.create(P.prototype);
 }
-function People(name, age) {
-  this.name = name;
-  this.age = age;
+function Parent(a) {
+  this.a = a;
 }
-People.prototype.getName = function () {
-  return this.name;
+Parent.prototype.AAA = function () {
+  console.log("AAA");
+  return this.a;
 };
-function English(name, age, language) {
-  // 借用构造函数
-  People.call(this, name, age);
-  this.language = language;
+function Child(a, b) {
+  Parent.call(this, a);
 }
-inherits(English, People);
-English.prototype.introduce = function () {
-  console.log(this.getName());
-  console.log(this.language);
-};
-const a = new English("aaa", 23, "English");
-console.log(a);
-console.log(People.prototype);
-const b = new People("ddd", 253);
-a.introduce();
-b.introduce(); // err
-
+inherits(Parent, Child);
+const a = new Child("aaa", "bbb");
+console.log(a.AAA());
 /// es6   语法糖
 class People {
   constructor(name, age) {

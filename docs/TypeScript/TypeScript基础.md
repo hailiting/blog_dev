@@ -45,12 +45,25 @@ let unusable: void = undefined;
 // null undefined 只能付自身的值
 let u: undefined = undefined;
 let n: null = null;
+
+const aaa: (string | number)[] = ["ass", 111];
 ```
 
 ### 任意值
 
+- void -> 没有类型
+- never -> 永远不存在的值或类型
+- unknown -> 未知类型
+
 ```javascript
 let anyTing: any = "hello" || 888 || true || null || undefined;
+
+let c: unknown;
+if (typeof c === "number") {
+  c.toFixed(2);
+} else if (typeof c === "object" && c instanceof Array) {
+  c.join("_");
+}
 ```
 
 ### 联合类型
@@ -80,6 +93,21 @@ let user: [string, number] = ["adf", 12];
   tips: 鸭子类型：一种类型推断风格。当生成一个鸭子时，一定会有叫，走等鸭子属性，如果没有就会报错。
 
 ```javascript
+// 定义函数类型
+interface Func {
+  (num1: number, num2: number): number;
+}
+const addFunc: Func = (arg1, arg2) => arg1+arg2
+// 定义数组类型
+interface Role {
+  [id: number]: string
+}
+const role: Role = ["addd", "Assd"]
+console.log(role.length) // error 不具备原型类的方法
+const role02: Role = {
+  0: "addd",
+  1: "Assd"
+}
 interface IPerson {
   readonly id: number; // 只读刷新
   name: string;
@@ -116,6 +144,7 @@ let tom:Person = {
 interface Person{
     name: string;
     age?: number;
+    // 索引签名
     [propName: string]: any;
 }
 let tom: Person = {
@@ -134,9 +163,21 @@ let tom: Person={
     name: 'tom',
     gender: 'namlwe',
 }
+内容兼容
 ```
 
-### `function`
+### function
+
+- 语法不一样
+- 上下文绑定不一样，箭头函数不会创建自己的 this，只会继承 this
+- function 适合用作对象的方法定义，因为 function 有 this 值，而箭头函数没有
+
+```js
+// function 声明
+function add() {}
+// 箭头函数
+const add = () => {};
+```
 
 ```ts
 // 函数声明
@@ -146,12 +187,48 @@ function add01(x: number, y: number, z?: number): number {
 console.log(add01(3, 4));
 
 // 函数表达式
-const add02 = function(x: number, y: number, z?: number): number {
+const add02 = function (x: number, y: number, z?: number): number {
   return z ? x + y + z : x + y;
 };
 // 此时的add02有它自己的数据类型
 // const add03: string = add02; // type err
 const add03: (x: number, y: number, z?: number) => number = add02;
+```
+
+重载，只能用 function 定义，不能用箭头函数
+
+```ts
+function attr(name: string): string;
+function attr(age: number): number;
+function attr(nameorage: string | number): string | number {
+  if (nameorage && typeof nameorage === "string") {
+    console.log("姓名" + nameorage);
+  } else {
+    console.log("年龄" + nameorage);
+  }
+  return nameorage;
+}
+attr(111);
+attr("sdass");
+```
+
+### Symbol 类型
+
+- Symbol 不能被`for_in`遍历到，也不会被`Object.keys()`,`Object.getOwnPropertyNames()`,`Json.stringify()`获取到
+- 可以用 `Object.getOwnPropertySymbols`方法获取到对象的所有 symbol 类型的属性名
+- `Reflect.ownKeys` 获取所有属性名
+
+```ts
+const t1 = Symbol("name");
+const t2 = Symbol("name");
+t1 !== t2;
+
+const obj = {
+  [t1]: "xxxs",
+  age: 12,
+};
+console.log(Object.getOwnPropertySymbol(obj)); // [Symbol(name)]
+console.log(Reflect.ownKeys(obj)); // ["age", Symbol(name)]
 ```
 
 ### 类型推论
@@ -170,28 +247,15 @@ function aa(s: string, ...rest: string[]) {
 }
 ```
 
-### 重载
-
-```ts
-function attr(name: string): string;
-function attr(age: number): number;
-function attr(nameorage: string | number): string | number {
-  if (nameorage && typeof nameorage === "string") {
-    console.log("姓名" + nameorage);
-  } else {
-    console.log("年龄" + nameorage);
-  }
-  return nameorage;
-}
-attr(111);
-attr("sdass");
-```
-
 ## 类 class
 
 - 类（Class）: 定义了一切事物的抽象特点
 - 对象（Object）: 类的实例
 - 面向对象（OOP）三大特性 : 封装， 继承， 多态
+
+- 类的定义（修饰符）与继承 extends
+- 构造函数的使用 new 时会自动执行
+- 类类型接口、接口的继承类
 
 ```ts
 // 封装
@@ -237,6 +301,8 @@ xiaobao.name = "xiaobao02";
 class Cat extends Animal {
   constructor(props) {
     super(props);
+    console.log(111, this.run());
+    console.log(222, super.run());
   }
   run(): string {
     return `miao~, ` + super.run();
@@ -270,7 +336,12 @@ alert(h.tell());
 
 ### interface implements 抽象类的属性和方法
 
-接口的检查不针对名称，只针对类型
+- 类与类之间用 extends
+- 类与接口之间用 implements
+  接口的检查不针对名称，只针对类型
+- 接口继承类
+  - 接口可以继承类
+  - 接口会继承 private 和 protected 修饰成员，但这个接口只可被这个类或它的子类实现
 
 ```ts
 // 用interface抽象属性类和方法
@@ -356,14 +427,14 @@ document.body.appendChild(div);
 var obj = new Time.Test(div);
 var button = document.createElement("button");
 button.innerHTML = "start";
-button.onclick = function() {
+button.onclick = function () {
   obj.start();
 };
 document.body.appendChild(button);
 
 var button2 = document.createElement("button");
 button2.innerHTML = "stop";
-button2.onclick = function() {
+button2.onclick = function () {
   obj.stop();
 };
 document.body.appendChild(button2);
@@ -376,7 +447,7 @@ document.body.appendChild(button2);
 ```javascript
 enum Days {Sun, Mon, Tue, Wed, Thu, Fri, Sat};
 
-console.log(Days["Sun"] === 0); // true
+console.log(Days["Sun"] === 0); // true  enum 的索引值是可以修改的
 console.log(Days[2] === "Tue"); // true
 
 
@@ -388,6 +459,9 @@ var Days;
     Days[Days["Tue"] = 3] = "Tue";
     ...
 })(Days || (Days = {}))
+enum Days1 {Sun =100, Mon, Tue, Wed, Thu, Fri, Sat};
+console.log(Days1[Sun])  // 100
+console.log(Days1[Mon])  // 101
 ```
 
 用例
@@ -398,6 +472,7 @@ enum apiList {
     'getSubscriptionSynthesize' = 'getSubscriptionSynthesize',
 }
 export type MyApi = {[key in apiList]:()=any};
+// as 类型断言
 const myApi: MyApi = {} as MyApi;
 Object.keys(apiList).forEach((api)=>{
     myApi[api] = async ()=>{
@@ -418,6 +493,12 @@ const value = "up";
 if (value === Direction.up) {
   console.log("go up!")
 }
+```
+
+## tuple 元祖 固定类型 长度数组
+
+```ts
+const a: [string, numble, boolean] = ["ad", 123, false];
 ```
 
 ## 泛型 Generics
@@ -523,7 +604,7 @@ class HelloNumber<T> {
 }
 var myHelloNumber = new HelloNumber<string>();
 myHelloNumber.Ten = "Hello";
-myHelloNumber.add = function(x, y) {
+myHelloNumber.add = function (x, y) {
   return a + b;
 };
 ```
@@ -643,7 +724,7 @@ identity("sss");
 // 元数据 + 注入
 import "reflect-metadata";
 function inject(serviceIdentifier) {
-  return function(target, targetKey, index) {
+  return function (target, targetKey, index) {
     // Reflect 是一个内置对象，它提供拦截JavaScript操作的方法，与proxy相似
     Reflect.defineMetadata(serviceIdentifier, "xxxx", target);
   };
@@ -679,13 +760,21 @@ class APP {}
 // 装饰器执行顺序 -> 符合   f(g())
 function f() {
   console.log("f(): evaluated");
-  return function(target, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (
+    target,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
     console.log("f(): called");
   };
 }
 function g() {
   console.log("g(): evaluated");
-  return function(target, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (
+    target,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
     console.log("g(): called");
   };
 }
@@ -704,7 +793,7 @@ class C {
 // 这是一个装饰器工厂
 function color(value: string) {
   // 这是装饰器
-  return function(target) {
+  return function (target) {
     // do something with target and value
   };
 }
@@ -713,13 +802,13 @@ function color(value: string) {
 ```ts
 // 参数修饰符
 function configurable(value: boolean) {
-  return function(target: any, propertyKey: string) {
+  return function (target: any, propertyKey: string) {
     console.log("target: ", target);
     console.log("属性", value);
   };
 }
 function require(value: boolean) {
-  return function(target: any, propertyKey: string, index: number) {
+  return function (target: any, propertyKey: string, index: number) {
     console.log("参数", value);
   };
 }
@@ -776,4 +865,41 @@ function applyMixins(derivedCtor: any, baseCtors: any[]): void {
 }
 let smartObj = new SmartObject();
 setTimeout(() => smartObj.interact(), 1000);
+```
+
+## declare 关键字
+
+- 声明外部依赖
+
+```js
+declare const jQuery: (selector: string) => any;
+```
+
+- 类型声明，例如 声明全局类型、声明模块的类型等
+
+```js
+declare global {
+  interface MyGlobalInterface {
+    //
+  }
+}
+declare module "my-module" {
+  interface MyModuleInterface {
+    //
+  }
+}
+```
+
+## 生成声明文件
+
+- 使用 tsc 中的 `--declaration` 或者配置 compilerOptions
+- npm 工具：dts-gen 创建类型文件
+
+```json
+// npx tsc
+"compilerOptions": {
+  "declaration": true, // 生成 *.d.ts
+  "outDir": "./dist",
+}
+// rootDir 根目录
 ```

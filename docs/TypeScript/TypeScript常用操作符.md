@@ -110,7 +110,7 @@ type Person = {
 type PersonWithoutAge = Omit<Person, "age">;
 // 等同于 {
 //   name: string,
-//   age: number,
+//   gender: string,
 // }
 ```
 

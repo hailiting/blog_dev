@@ -2,7 +2,7 @@
 node_modules/
 dist/
 /zg文档
-**/**/2048零知识证明项目研究.md
+**/**/2048零知识证明项目研究/**
 /docs/.vuepress/dist/
 npm-debug.log*
 yarn-debug.log*
