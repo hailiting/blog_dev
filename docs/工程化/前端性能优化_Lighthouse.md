@@ -84,11 +84,11 @@ transform: translateZ(0);
 ```
 
 2. TTFB 时间过长
-   2.1 清楚本地不必要的 cookie
+   2.1 清除本地不必要的 cookie
 
 - 页面加载去除不必要的 cookie
-  ![清楚前](./img/contract_network01.png)
-  ![清楚后](./img/contract_network02.png)
+  ![清除前](./img/contract_network01.png)
+  ![清除后](./img/contract_network02.png)
   2.2 服务器到用户之间的网络不好
 - 用`dns-prefetch`解析页面
 

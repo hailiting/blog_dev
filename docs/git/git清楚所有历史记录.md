@@ -1,4 +1,7 @@
-# git 清楚所有历史记录
+# git 清除所有历史记录
+
+清除所有历史记录
+删除所有历史记录
 
 1. 进入仓库，拉一个分支比如名为 `latest_branch`
 
@@ -14,32 +17,43 @@ git add -A
 git commit -am "initial commit"
 ```
 
-3. 删除 master 分支
+3. 删除 main 分支
 
 ```sh
-git branch -D master
+git branch -D main
 ```
 
-4. 更改当前分支为 master 分支
+4. 更改当前分支为 main 分支
 
 ```sh
-git branch -m master
+git branch -m main
 ```
 
 5. 将本地所有更改 push 到远程仓库
 
 ```sh
-git push -f origin master
+git push -f origin main
 ```
 
-6. 关联本地 master 到远程 master
+6. 关联本地 main 到远程 main
 
 ```sh
-git branch --set-upstream-to=origin/master
+git branch --set-upstream-to=origin/main
 ```
 
 7. 删除所有 tag
 
 ```sh
  git tag -l | xargs git tag -d
+```
+
+```
+git checkout --orphan latest_branch
+git add -A
+git commit -am "initial commit"
+git branch -D master
+git branch -m master
+git push -f origin master
+git branch --set-upstream-to=origin/master
+git tag -l | xargs git tag -d
 ```
