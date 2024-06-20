@@ -1,4 +1,6 @@
-# BlockScout 浏览器搭建
+# BlockScout 浏览器搭建@
+
+#
 
 ## 1. 准备
 
@@ -257,6 +259,7 @@ sudo dscl . -create /Users/postgres NFSHomeDirectory /Users/postgres # 创建家
 
 # 设置密码（这里假设为 "your_password"）
 sudo dscl . -passwd /Users/postgres postgres
+sudo dscl . -passwd /Users/admin 1234
 
 # 创建名为 postgres 的组（如果尚未存在）
 # sudo dseditgroup -o create -g staff postgres
@@ -366,18 +369,109 @@ mix do ecto.drop, ecto.create, ecto.migrate
 安装 Node.js 依赖
 
 ```shell
-cd apps/block_scout_web/assets
-npm install && node_modules/webpack/bin/webpack.js --mode production
+
+# 获取和编译依赖
+# mix deps.get
+# mix deps.compile
+brew services start postgresql@15 &&
+cd apps/block_scout_web/assets &&
+npm install && node_modules/webpack/bin/webpack.js --mode production &&
 # 建立用于部署静态资产，执行命令
-cd ..
-mix phx.digest
+cd .. &&
+mix phx.digest &&
 
 # 启用 HTTPS
-cd apps/block_scout_web/
-mix phx.gen.cert blockscout blockscout.local
+mix phx.gen.cert blockscout blockscout.local &&
 # Start
-cd ../..
+cd ../.. &&
 mix phx.server
+```
+
+```shell
+cd apps/block_scout_web/assets &&
+npm install && npm run deploy  &&
+# npm install && node_modules/webpack/bin/webpack.js --mode production &&
+# 建立用于部署静态资产，执行命令
+cd .. &&
+mix phx.digest &&
+
+# 启用 HTTPS
+mix phx.gen.cert blockscout blockscout.local &&
+# Start
+cd ../.. &&
+mix phx.server
+```
+
+```shell
+# shell.sh
+# 设置Mac环境，确保HOMEBREW已安装
+if ! command -v brew &> /dev/null; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/main/install.sh)"
+fi
+
+# 安装必要的依赖包
+# brew install elixir erlang gmp openssl libtool automake inotify-tools autoconf python3 jq curl node npm
+
+# 设置环境变量
+export MIX_ENV=prod
+export CACHE_EXCHANGE_RATES_PERIOD=$CACHE_EXCHANGE_RATES_PERIOD
+export API_V1_READ_METHODS_DISABLED=$API_V1_READ_METHODS_DISABLED
+export DISABLE_WEBAPP=$DISABLE_WEBAPP
+export API_V1_WRITE_METHODS_DISABLED=$API_V1_WRITE_METHODS_DISABLED
+export CACHE_TOTAL_GAS_USAGE_COUNTER_ENABLED=$CACHE_TOTAL_GAS_USAGE_COUNTER_ENABLED
+export ADMIN_PANEL_ENABLED=$ADMIN_PANEL_ENABLED
+export CACHE_ADDRESS_WITH_BALANCES_UPDATE_INTERVAL=$CACHE_ADDRESS_WITH_BALANCES_UPDATE_INTERVAL
+export SESSION_COOKIE_DOMAIN=$SESSION_COOKIE_DOMAIN
+export MIXPANEL_TOKEN=$MIXPANEL_TOKEN
+export MIXPANEL_URL=$MIXPANEL_URL
+export AMPLITUDE_API_KEY=$AMPLITUDE_API_KEY
+export AMPLITUDE_URL=$AMPLITUDE_URL
+export CHAIN_TYPE=$CHAIN_TYPE
+export BRIDGED_TOKENS_ENABLED=$BRIDGED_TOKENS_ENABLED
+
+# 创建并进入工作目录
+mkdir -p /Users/admin/Desktop/blockscout/app
+cd /Users/admin/Desktop/blockscout/app
+
+
+# 将项目文件拷贝到本地构建目录
+cp -R /Users/admin/Desktop/blockscout/blockscout/* .
+
+# 安装Elixir Hex和Rebar
+mix local.hex --force
+mix local.rebar --force
+
+# 获取和编译依赖
+mix deps.get
+mix deps.compile
+
+
+# 安装并构建前端资源
+cd /Users/admin/Desktop/blockscout/app/apps/block_scout_web/assets/
+npm install
+npm run deploy
+cd /Users/admin/Desktop/blockscout/app/apps/explorer
+npm install
+
+
+
+cd /Users/admin/Desktop/blockscout/app
+# 编译并执行Phoenix digest
+mix compile
+mix phx.digest
+
+
+# 在本地构建Release（请注意，这与Docker中的分阶段构建不同）
+# Mac上可能不需要构建到/opt/release目录下，而是直接在项目根目录下构建
+mix release --env=prod
+
+# # 假设你已经在某个地方构建好了release并想要复制到另一个目录
+# # /Users/admin/Desktop/blockscout/blockscout
+# cp -R /path/to/builder/output/blockscout /path/to/local/release
+# cp -R /path/to/builder/apps/explorer/node_modules /path/to/local/node_modules
+# cp /path/to/builder/config/config_helper.exs /path/to/local/config/config_helper.exs
+# cp /path/to/builder/config/config_helper.exs /path/to/local/releases/${RELEASE_VERSION}/config_helper.exs
 ```
 
 最后打开浏览器做测试
@@ -433,80 +527,12 @@ elixir hello.exs
 
 ## 最终的环境变量
 
+浏览器配置
+https://docs.blockscout.com/for-developers/information-and-settings/env-variables#misc-ui-management
+前端配置
+https://docs.blockscout.com/for-developers/information-and-settings/env-variables/frontend-common-envs
+
 ```.zshrc
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="robbyrussell"
-ZSH_THEME="amuse"
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -572,12 +598,16 @@ export ETHEREUM_JSONRPC_VARIANT=geth
 export ETHEREUM_JSONRPC_HTTP_URL="http://localhost:8545"
 export ETHEREUM_JSONRPC_WS_URL="ws://localhost:8545"
 export ETHEREUM_JSONRPC_TRACE_URL="http://localhost:8545"
-export SUBNETWORK= "MAINNET"
 export PORT=4000
+export LOGO="/images/zytron_logo.svg"
+
+export SUBNETWORK= "Zytron"
 export NETWORK="testnet"
 export NETWORK_ICON="_test_network_icon.html"
-export LOGO="/images/zytron_logo.svg"
 export COIN="Test Coin"
+
+
+docker-compose up --build
 
 
 # erlang
@@ -590,3 +620,37 @@ export LDFLAGS="-L/usr/local/Cellar/erlang/26.2.2/lib"
 # elixir
 export PATH="/usr/local/Cellar/elixir/1.16.2/bin:$PATH"
 ```
+
+远程
+
+```sh
+ ssh -i ~/.ssh/creator-generic-keys.pem ubuntu@34.217.13.183
+scp -i ~/.ssh/creator-generic-keys.pem -r ubuntu@34.217.13.183:/opt/blockscout /Users/admin/Desktop/blockscout/ddd
+```
+
+```old
+NEXT_PUBLIC_API_HOST=blockscout-zytron-testnet.zypher.game
+NEXT_PUBLIC_API_PROTOCOL=http
+NEXT_PUBLIC_STATS_API_HOST=http://blockscout-zytron-testnet.zypher.game:8080
+NEXT_PUBLIC_NETWORK_NAME=zytron testnet
+NEXT_PUBLIC_NETWORK_SHORT_NAME=zytron testnet
+NEXT_PUBLIC_NETWORK_ID=80085
+NEXT_PUBLIC_NETWORK_CURRENCY_NAME=Ether
+NEXT_PUBLIC_NETWORK_CURRENCY_SYMBOL=ETH
+NEXT_PUBLIC_NETWORK_CURRENCY_DECIMALS=18
+NEXT_PUBLIC_API_BASE_PATH=/
+NEXT_PUBLIC_APP_HOST=blockscout-zytron-testnet.zypher.game
+NEXT_PUBLIC_APP_PROTOCOL=http
+NEXT_PUBLIC_HOMEPAGE_CHARTS=['daily_txs']
+NEXT_PUBLIC_VISUALIZE_API_HOST=http://blockscout-zytron-testnet.zypher.game:8081
+NEXT_PUBLIC_IS_TESTNET=true
+NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL=ws
+NEXT_PUBLIC_API_SPEC_URL=https://raw.githubusercontent.com/blockscout/blockscout-api-v2-swagger/main/swagger.yaml
+```
+
+推 docker
+git clone https://github.com/Blockscout836/frontend.git
+cd frontend
+docker build -t ghcr.io/blockscout836/frontend:my-version .
+echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
+docker push ghcr.io/blockscout836/frontend:my-version

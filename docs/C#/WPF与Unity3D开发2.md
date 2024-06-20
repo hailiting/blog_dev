@@ -13,6 +13,14 @@ https://learn.microsoft.com/zh-cn/dotnet/core/tutorials/with-visual-studio-code?
 - dotnet run
 ```
 
+```sh
+# 创建类库
+dotnet new classlib -n libraryName
+# 添加引用
+dotnet add CHello.csproj reference ../CCar/car/car.csproj
+
+```
+
 ## System
 
 ### Console

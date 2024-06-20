@@ -8,7 +8,13 @@ git config --global --unset user.email
 ```
 
 ## 1. 不同账号生成不同密钥
+<!-- ubuntu -->
+eval "$(ssh-agent -s)"
+ssh-add -l
+ssh-add /home/ubuntu/.ssh/github_do
+git pull && cd docker-compose/ && sudo docker-compose up 
 
+ssh-add -D && ssh-add -K ~/.ssh/github_do
 ```
 ssh-keygen -t rsa -f github_do -C "github_do@163.com"
 ssh-keygen -t rsa -f github2 -C "xxx@163.com"
@@ -18,7 +24,7 @@ ssh-keygen -t rsa -f hailiting -C "hailiting@yeah.net"
 ssh-keygen -t rsa -f github_do -C "github_do@163.com"
 githubDo111
 
-ssh-keyscan -t rsa github.com >> ~/.ssh/hailiting
+ssh-keyscan -t rsa github.com >> ~/.ssh/github_do
 
 ## 2. 生成公钥添加到 github 上，设置 ssh-key, new ssh
 
@@ -64,6 +70,8 @@ ssh-add -D
 # 最后可以通过下面命令，查看key的设置
 ssh-add -l
 ```
+
+ssh-add -D && ssh-add -K ~/.ssh/github_do
 
 ## 5. git remote set-url origin account1:github 账号/xxx.git
 
