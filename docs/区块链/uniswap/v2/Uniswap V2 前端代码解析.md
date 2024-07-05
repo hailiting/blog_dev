@@ -1,0 +1,120 @@
+# Uniswap V2 前端代码解析
+
+- 过桥贷款
+  - 降低融资成本
+
+## 主要技术栈
+
+- React
+  - react
+  - react-dom
+  - react-router-dom
+  - redux
+    - react-redux
+    - @reduxjs/toolkit
+    - redux-localstorage-simple
+  - create-react-app
+    - react-scripts
+- Web3
+  - ethers
+  - typechain
+    - abi.json -> contract types
+  - @web3-react
+    - @web3-react/core
+    - @web3-react/fortmatic-connector
+    - @web3-react/injected-connector
+    - @web3-react/portis-connector
+- @uniswap
+  - @uniswap/default-token-list
+  - @uniswap/governance
+  - @uniswap/liquidity-staker
+    - 从 Synthetix fork 下来的
+    - Synthetix 允许用户创建和交易各种合成资产
+  - @uniswap/merkle-distributor
+    - 用 Merkle 树的根 hash 来分配代币余额
+  - @uniswap/token-lists
+  - @uniswap/sdk-core
+  - @uniswap/v2-core
+  - @uniswap/v2-periphery
+- Cache
+  - 管理缓存依赖
+  - workbox
+    - workbox-core
+    - workbox-expiration
+    - workbox-precaching
+    - workbox-routing
+- Test
+  - start-server-and-test
+  - cypress
+- tools
+  - cross-env
+  - serve
+  - client check
+    - qs
+    - react-device-detect
+  - Ajv
+    - JSON 验证器
+  - cids
+    - 在分布式信息系统（如 IPFS）中引用内容的一种格式
+  - lodash.flatmap
+    - 创建展开的阵列
+  - luxon
+    - 使用日期和时间
+  - Bytes
+    - 多重编码器
+    - 多重散列
+  - analysis
+    - google-analytics
+- Animation
+  - react-spring
+    - 弹簧物理轨迹动画库
+  - use-count-up
+  - react-confetti
+    - 纸片飘花效果
+- styled
+  - styled-components
+  - styled-system
+  - @styled-system/css
+    - 编写具有响应的样式对象
+  - polished
+    - 书写风格
+- UI components
+  - rebass
+    - 使用样式化系统构建 React 基于 UI 组件
+  - @popperjs/core
+    - 定位工具提示和弹窗窗口
+  - @reach/dialog
+    - 可访问的对话框或模式窗口
+  - @reach/portal
+    - 创建 DOM 节点并将其附加到 document.body 的末尾，并呈现将树反应到其中
+- Icon & Fonts
+  - react-feather
+    - icon
+  - inter-ui
+    - font
+- Data & Chart
+  - react-window
+    - 高效地呈现大列表和表格
+  - Lightweight Charts
+- internationalization
+  - i18next
+  - i18next-browser-languagedetector
+  - i18next-xhr-backend
+  - react-i18next
+- UI envets
+  - react-virtualized-auto-sizer
+    - 自动调整单个宽度和高度
+  - react-popper
+    - 在 React 应用中心创建和管理需要精确位置的用户界面组件
+  - @react-hook/window-scroll
+    - 用于监听浏览器窗口的滚动事件并提供当前滚动位置的信息
+  - copy-to-clipboard
+- Colors
+  - @emotion/core
+    - 用 js 的方法写 css
+  - wcag-contrast
+    - 分析网站的色彩对比度是否易于用户使用
+  - node-vibrant
+    - 从图片中提取颜色数据
+  - react-markdown
+  - @storybook

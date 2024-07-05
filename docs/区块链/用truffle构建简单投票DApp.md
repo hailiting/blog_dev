@@ -268,6 +268,7 @@ contract Voting {
                 return i;
             }
         }
+        // uint256(-1) uint256的最大值
         return uint256(-1);
     }
 

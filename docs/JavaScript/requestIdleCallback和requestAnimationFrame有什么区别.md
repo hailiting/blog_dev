@@ -1,6 +1,6 @@
 # requestIdleCallback 和 requestAnimationFrame 有什么区别
 
-- rAF 浏览器用于定时循环操作的一个接口，主要用途是按帧对网页进行重绘
+- 浏览器用于定时循环操作的一个接口，主要用途是按帧对网页进行重绘
 
 ## requestIdleCallback
 

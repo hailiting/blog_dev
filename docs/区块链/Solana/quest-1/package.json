@@ -1,0 +1,35 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run6": "ts-node -r tsconfig-paths/register ./scripts/6.createNFTs.ts",
+    "run4": "ts-node -r tsconfig-paths/register ./scripts/4.mintTokens.ts",
+    "run3": "ts-node -r tsconfig-paths/register ./scripts/3.createTokenWithMetadata.ts",
+    "run2": "ts-node -r tsconfig-paths/register ./scripts/2.complexTransaction.ts",
+    "run1": "ts-node -r tsconfig-paths/register ./scripts/1.simpleTransaction.ts",
+    "run3111": "ts-node -r tsconfig-paths/register --esm ./lib/vars.ts",
+    "run211": "node ./scripts/test.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@metaplex-foundation/js": "^0.19.3",
+    "@metaplex-foundation/mpl-token-metadata": "^2.11.1",
+    "@project-serum/anchor": "^0.26.0",
+    "@solana/spl-token": "^0.3.7",
+    "@solana/web3.js": "^1.73.3",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/node-fetch": "^2.6.11",
+    "eslint": "^8.35.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.1.2",
+    "typescript": "^5.4.3"
+  }
+}
