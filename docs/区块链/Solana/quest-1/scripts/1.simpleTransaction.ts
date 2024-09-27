@@ -9,9 +9,10 @@ import {
 } from "@solana/web3.js";
 
 (async () => {
-  const res = await connection.getBlockHeight();
-  console.log({ res });
-  // console.log("Payer address: ", payer.publicKey.toBase58());
+  // const res = await connection.getBlockHeight();
+  // console.log({ res });
+  console.log("Payer address: ", payer.publicKey.toBase58());
+  console.log("Payer address: key", payer.secretKey);
   // let currentBalance = await connection.getBalance(payer.publicKey);
   // console.log("1 Current balance of 'payer' (in lamports): ", currentBalance);
   // if (currentBalance <= LAMPORTS_PER_SOL) {

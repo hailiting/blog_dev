@@ -275,3 +275,13 @@ Solana 有两种类型
 ### PDA Solana 上的特殊账户或地址类型
 
 允许程序为特定用途签名交易
+
+## 转账
+
+```bash
+solana transfer <destination-account-public-key> 10 --from <source-account-public-key>
+solana transfer FKup5YT1ZHWZbUmWVRQtdEDF3GLzmJd72BxmK1sVrfkc 1 --from 6YQj1Z3mKeFMN7Xnx4azjnmDvLJuEp13XssToL6wu7an
+
+solana transfer FKup5YT1ZHWZbUmWVRQtdEDF3GLzmJd72BxmK1sVrfkc 0.7 --from /Users/admin/.config/solana/id.json  --allow-unfunded-recipient
+
+```

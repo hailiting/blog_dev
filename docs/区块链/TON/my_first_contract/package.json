@@ -1,0 +1,27 @@
+{
+  "name": "my_first_contract",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile": "ts-node ./scripts/compile.ts",
+    "test": "yarn jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@swc/core": "^1.6.13",
+    "@ton-community/func-js": "^0.7.0",
+    "@ton-community/sandbox": "^0.11.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.10",
+    "jest": "^29.7.0",
+    "ton": "^13.9.0",
+    "ton-core": "^0.53.0",
+    "ton-crypto": "^3.2.0",
+    "ts-jest": "^29.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  }
+}
