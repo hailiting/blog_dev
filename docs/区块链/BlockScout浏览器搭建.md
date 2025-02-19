@@ -654,3 +654,8 @@ cd frontend
 docker build -t ghcr.io/blockscout836/frontend:my-version .
 echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
 docker push ghcr.io/blockscout836/frontend:my-version
+
+```sh
+docker pull node:20.11.0-alpine
+docker build -t ghcr.io/zypher-game/zytron-website-frontend:dev2 .
+```
