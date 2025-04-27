@@ -10,6 +10,7 @@
 
 ## 水龙头
 
+- https://faucet.solana.com/
 - https://solfaucet.com/
 - https://www.helius.dev/
 - https://www.quicknode.com

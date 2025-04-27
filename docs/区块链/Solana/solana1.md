@@ -197,6 +197,9 @@ solana airdrop 1 6YQj1Z3mKeFMN7Xnx4azjnmDvLJuEp13XssToL6wu7an -u devnet
 solana balance
 # solana-keygen new -o /Users/admin/.config/solana/id.json
 solana address
+
+
+solana-keygen new --force --outfile ~/.config/solana/new_wallet.json
 ```
 
 ## `solana-test-validator`
