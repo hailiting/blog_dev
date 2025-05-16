@@ -1,0 +1,257 @@
+# flutter 区块链钱包
+## 支持的链
+
+### 1. UTXO 模型链
+- Bitcoin (BTC) - 比特币
+    - 特点: 最安全、最去中心化
+        - 区块时间: 10分钟
+        - 区块大小: 1MB
+        - 全网算力: >400 EH/s
+    - 共识算法: Proof of Work (PoW)
+- Litecoin (LTC) - 莱特币
+    - 特点: 更快的区块确认
+        - 区块时间: 2.5分钟
+        - 区块大小: 1MB
+        - 总供应量: 8400万
+    - 共识算法: Proof of Work (PoW)
+- Bitcoin Cash (BCH) - 比特币现金
+    - 特点: 更大的区块、更低的手续费
+        - 区块时间: 10分钟
+        - 区块大小: 32MB
+        - 交易费: <$0.01
+    - 共识算法: Proof of Work (PoW)
+- Bitcoin SV (BSV) - 比特币SV
+    - 特点: 超大区块、企业级应用
+        - 区块时间: 10分钟
+        - 区块大小: 2GB
+        - 交易费: <$0.001
+    - 共识算法: Proof of Work (PoW)
+- Dogecoin (DOGE) - 狗狗币
+    - 特点: 社区驱动、快速交易
+        - 区块时间: 1分钟
+        - 年通胀率: 5%
+        - 总供应量: 无限
+    - 共识算法: Proof of Work (PoW)
+- 隐私链
+    - Monero (XMR) - 门罗币
+        - 特点: 完全匿名交易
+            - 区块时间: 2分钟
+            - 动态区块大小
+            - 环签名大小: 11
+        - 共识算法: Proof of Work (PoW)
+    - Zcash (ZEC) - 大零币
+        - 特点: 可选隐私保护
+            - 区块时间: 75秒
+            - 总供应量: 2100万
+            - 隐私交易占比: ~20%
+        - 共识算法: Proof of Work (PoW)
+    - Dash (DASH) - 达世币
+        - 特点: 即时发送、主节点网络
+            - 区块时间: 2.5分钟
+            - 主节点数量: ~5000
+            - 即时发送确认: 1-2秒
+        - 共识算法: Proof of Work (PoW) + Masternodes
+    - Grin (GRIN) - 古灵币
+        - 特点: 轻量级隐私保护
+            - 区块时间: 1分钟
+            - 年通胀率: 固定
+            - 交易大小: ~2KB
+        - 共识算法: Proof of Work (PoW)
+
+### 2. EVM 兼容链
+- Ethereum (ETH) - 以太坊
+    - 特点: 智能合约平台、DeFi中心
+        - TPS: 15-30
+        - Gas限制: 30M
+        - 验证者数量: >80万
+    - 共识算法: Proof of Stake (PoS) [之前是 Proof of Work (PoW)]
+- Binance Smart Chain (BNB) - 币安智能链
+    - 特点: 低手续费、高性能
+        - TPS: 300+
+        - 区块时间: 3秒
+        - 交易费: <$0.1
+    - 共识算法: Proof of Staked Authority (PoSA)
+- Avalanche (AVAX) - 雪崩协议
+    - 特点: 高吞吐量、快速确认
+        - TPS: 4500+
+        - 确认时间: <1秒
+        - 子网数量: 100+
+    - 共识算法: Avalanche Consensus Protocol
+- Polygon (MATIC) - 多边形
+    - 特点: 以太坊扩容方案
+        - TPS: 7000+
+        - 交易费: <$0.01
+        - 日交易量: 300万+
+    - 共识算法: Proof of Stake (PoS)
+- Huobi Eco Chain (HT) - 火币生态链
+    - 特点: 亚洲市场主导
+        - TPS: 500+
+        - 区块时间: 3秒
+        - 验证者: 21个
+    - 共识算法: Proof of Authority (PoA)
+- Arbitrum (ARB) - 仲裁链
+    - 特点: 低成本、兼容性高
+        - TPS: 4000+
+        - 交易费: 降低90%
+        - TVL: $20亿+
+    - 共识算法: Optimistic Rollup
+- Optimism (OP) - 乐观链
+    - 特点: 快速、低成本
+        - TPS: 2000+
+        - 交易费: 降低90%
+        - 确认时间: 12分钟
+    - 共识算法: Optimistic Rollup
+- Base (BASE) - 基础链
+    - 特点: Coinbase支持、低成本
+        - TPS: 1000+
+        - 交易费: <$0.01
+        - 用户数: 100万+
+    - 共识算法: Optimistic Rollup
+- Linea (ETH) - 线性链
+    - 特点: 零知识证明、高隐私
+        - TPS: 1000+
+        - 交易费: 降低80%
+        - 证明时间: <1秒
+    - 共识算法: zkRollup
+- zkSync (ETH) - 零知识同步
+    - 特点: 高安全性、低成本
+        - TPS: 2000+
+        - 交易费: 降低90%
+        - 证明大小: 10KB
+    - 共识算法: zkRollup
+- Scroll (ETH) - 滚动链
+    - 特点: 完全兼容以太坊
+        - TPS: 1000+
+        - 交易费: 降低80%
+        - 证明时间: <1秒
+    - 共识算法: zkRollup
+- Fantom (FTM) - 幻影链
+    - 特点: 高性能、低延迟
+        - TPS: 4000+
+        - 确认时间: 1秒
+        - 交易费: <$0.001
+    - 共识算法: Proof of Stake (PoS)
+- Celo (CELO) - 赛洛链
+    - 特点: 移动优先、普惠金融
+        - TPS: 1000+
+        - 交易费: <$0.001
+        - 手机用户: 1000万+
+    - 共识算法: Proof of Stake (PoS)
+
+### 3. 账户模型链
+- Solana (SOL) - 索拉纳
+    - 特点: 超高TPS、低手续费
+        - TPS: 65000+
+        - 交易费: <$0.001
+        - 确认时间: 400ms
+    - 共识算法: Proof of History (PoH) + Proof of Stake (PoS)
+- TON (TON) - 开放网络
+    - 特点: 分片技术、高扩展性
+        - TPS: 100000+
+        - 分片数: 2^32
+        - 交易费: <$0.01
+    - 共识算法: Byzantine Fault Tolerant (BFT) + Proof of Stake (PoS)
+- EOS (EOS) - 柚子
+    - 特点: 高性能、资源模型
+        - TPS: 4000+
+        - 区块时间: 0.5秒
+        - 验证者: 21个
+    - 共识算法: Delegated Proof of Stake (DPoS)
+- TRON (TRX) - 波场
+    - 特点: 高吞吐量、娱乐生态
+        - TPS: 2000+
+        - 交易费: 0.1 TRX
+        - 日交易量: 500万+
+    - 共识算法: Delegated Proof of Stake (DPoS)
+- Tezos (XTZ) - 特所思
+    - 特点: 链上治理、形式化验证
+        - TPS: 40+
+        - 区块时间: 30秒
+        - 验证者: 400+
+    - 共识算法: Liquid Proof of Stake (LPoS)
+- Ripple (XRP) - 瑞波币
+    - 特点: 跨境支付、机构级
+        - TPS: 1500+
+        - 确认时间: 3-5秒
+        - 交易费: 0.00001 XRP
+    - 瑞波协议共识算法: XRP Ledger Consensus Protocol
+- Cardano (ADA) - 卡尔达诺
+    - 特点: 科研驱动、分层架构
+        - TPS: 250+
+        - 区块时间: 20秒
+        - 质押率: 70%+
+    - 共识算法: Ouroboros Proof of Stake (PoS)
+- Near Protocol (NEAR) - 近协议
+    - 特点: 分片技术、用户友好
+        - TPS: 100000+
+        - 分片数: 动态
+        - 交易费: <$0.01
+    - 共识算法: Nightshade (分片 PoS)
+- Algorand (ALGO) - 阿尔戈兰德
+    - 特点: 纯PoS、高安全性
+        - TPS: 6000+
+        - 区块时间: 3.3秒
+        - 确认时间: 4秒
+    - 共识算法: Pure Proof of Stake (PPoS)
+- Stellar (XLM) - 恒星币
+    - 特点: 跨境支付、锚定资产
+        - TPS: 1000+
+        - 确认时间: 3-5秒
+        - 交易费: 0.00001 XLM
+    - 共识算法: Stellar Consensus Protocol (SCP)
+- Hedera (HBAR) - 海德拉
+    - 特点: 企业级、理事会治理
+        - TPS: 10000+
+        - 确认时间: 3-5秒
+        - 交易费: $0.0001
+    - 共识算法: Hashgraph Consensus
+- Aptos (APT) - 阿普托斯
+    - 特点: Move语言、高吞吐量
+        - TPS: 100000+
+        - 区块时间: 0.5秒
+        - 交易费: <$0.001
+    - 共识算法: Byzantine Fault Tolerant (BFT)
+- Sui (SUI) - 隋
+    - 特点: 对象模型、并行处理
+        - TPS: 100000+
+        - 区块时间: 0.5秒
+        - 交易费: <$0.001
+    - 共识算法: Byzantine Fault Tolerant (BFT)
+
+### 4. 跨链生态
+- Polkadot (DOT) - 波卡
+    - 特点: 异构多链、共享安全
+        - 平行链数: 100+
+        - 验证者: 1000+
+        - 跨链消息: <1分钟
+    - 共识算法: Nominated Proof of Stake (NPoS)
+- Cosmos (ATOM) - 宇宙
+    - 特点: 主权链、互操作性
+        - 应用链: 50+
+        - 验证者: 150+
+        - 跨链交易: <10秒
+    - 共识算法: Tendermint BFT
+- THORChain (RUNE) - 雷神链
+    - 特点: 跨链DEX、无包装资产
+        - 支持链: 10+
+        - 流动性池: 50+
+        - 交易量: $1亿/天
+    - 共识算法: Tendermint BFT
+- LayerZero (ZRO) - 零层
+    - 特点: 全链互操作性
+        - 支持链: 30+
+        - 消息量: 100万/天
+        - 交易量: $5亿/天
+    - 跨链消息协议
+- Wormhole (W) - 虫洞
+    - 特点: 多链桥接、高安全性
+        - 支持链: 20+
+        - 交易量: $10亿/天
+        - 验证者: 19个
+    - 跨链桥协议
+- Axelar (AXL) - 阿克塞尔
+    - 特点: 通用跨链网关
+        - 支持链: 15+
+        - 验证者: 50+
+        - 跨链交易: <1分钟
+    - 跨链通信协议
