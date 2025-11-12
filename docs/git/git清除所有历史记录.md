@@ -51,9 +51,9 @@ git branch --set-upstream-to=origin/main
 git checkout --orphan latest_branch
 git add -A
 git commit -am "initial commit"
-git branch -D master
-git branch -m master
-git push -f origin master
-git branch --set-upstream-to=origin/master
+git branch -D main
+git branch -m main
+git push -f origin main
+git branch --set-upstream-to=origin/main
 git tag -l | xargs git tag -d
 ```
