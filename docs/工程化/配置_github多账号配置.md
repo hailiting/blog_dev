@@ -16,6 +16,7 @@ git pull && cd docker-compose/ && sudo docker-compose up
 
 ssh-add -D && ssh-add -K ~/.ssh/github_do
 ```
+ssh-keygen -t rsa -f scout -C "scout@gmail.com"
 ssh-keygen -t rsa -f github_do -C "github_do@163.com"
 ssh-keygen -t rsa -f github2 -C "xxx@163.com"
 ```

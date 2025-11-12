@@ -1,0 +1,222 @@
+:root {
+  --primary-color: #9945ff;
+  --secondary-color: #14f195;
+  --bg-dark: #1a1b23;
+  --bg-card: #242530;
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --border-color: #3a3b47;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #1a1b23 0%, #2d2e3a 100%);
+  min-height: 100vh;
+}
+
+.sign-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.card {
+  background: var(--bg-card);
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+}
+
+h1 {
+  color: var(--text-primary);
+  font-size: 32px;
+  margin-bottom: 16px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.description {
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 32px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.wallet-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.wallet-info {
+  background: var(--bg-dark);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color);
+}
+
+.wallet-address {
+  color: var(--text-primary);
+  font-size: 14px;
+  word-break: break-all;
+}
+
+.wallet-address code {
+  background: rgba(153, 69, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--secondary-color);
+  font-size: 13px;
+}
+
+.sign-button {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #7929ff 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 24px;
+}
+
+.sign-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(153, 69, 255, 0.4);
+}
+
+.sign-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.result-section {
+  margin-top: 24px;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-item {
+  background: var(--bg-dark);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.result-item h3 {
+  color: var(--text-primary);
+  font-size: 16px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.result-content {
+  background: rgba(20, 241, 149, 0.05);
+  border: 1px solid rgba(20, 241, 149, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  color: var(--secondary-color);
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  word-break: break-all;
+  line-height: 1.6;
+}
+
+.result-content.signature {
+  font-size: 12px;
+}
+
+.success-message {
+  text-align: center;
+  color: var(--secondary-color);
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 16px;
+}
+
+/* Wallet Adapter 样式覆盖 */
+.wallet-adapter-button {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #7929ff 100%) !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.wallet-adapter-button:hover:not([disabled]) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(153, 69, 255, 0.4) !important;
+}
+
+.wallet-adapter-modal-wrapper {
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.wallet-adapter-modal {
+  background: var(--bg-card) !important;
+  border-radius: 24px !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+.wallet-adapter-modal-title {
+  color: var(--text-primary) !important;
+}
+
+.wallet-adapter-modal-list {
+  background: var(--bg-dark) !important;
+  border-radius: 12px !important;
+}
+
+.wallet-adapter-button-trigger {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #7929ff 100%) !important;
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 24px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+}
+
