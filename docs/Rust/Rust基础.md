@@ -38,18 +38,33 @@ fn main(){
 
 ## rust 基础
 
-Rust 代码中的函数和变量名使用`snake case`蛇形命名法。在 snake case 中，所有字母都是小写并使用下划线分割单词。
+Rust 代码中的函数和变量名使用`sna ke case`蛇形命名法。在 snake case 中，所有字母都是小写并使用下划线分割单词。
 
 ### 通用编程概念
 
 - 变量
-  - 可变性
+  - 可变性 | 不可变
+    变量遮蔽
   - 常量
+    - 声明的时候必须标注类型
   - 隐藏
 - 数据类型
+  - 标量类型 Scalar 表示一个单一的值
+    - Integer 整数，Floating Point 浮点，Boolean 布尔，Character 字符
+  - 复合类型 Compound 可以将多个值组合在一个类型
+    - 元组 Tuple
+    - 数组 Array
 - 函数
+  - 表达式 有返回值
+  - 语句
 - 注释
 - 控制流
+  - if
+  - loop
+  - while
+  - for
+    - for 元素 in 集合
+    - Range 让 for 循环执行特定次数
 
 ```rs
 const MAX_POINT: u32 = 1000000;
@@ -73,8 +88,8 @@ fn main() {
 
 #### 数据类型
 
-数据类型有两个子集： 标量（scalar）和 复合（compound）。  
-Rust 是静态类型语言，也就是说在编译时就必须知道所有变量的类型。  
+数据类型有两个子集： 标量（scalar）和 复合（compound）。
+Rust 是静态类型语言，也就是说在编译时就必须知道所有变量的类型。
 当多种类型均有可能时，使用 parse 将 String 转换为数字时，必须增加类型注释
 **四种基本标量类型：整形(u- | i-)、浮点型(f32|64)、布尔类型(bool)和字符类型(char 32 位)**
 **两个原生的复合类型：元组(tuple)和数组(array)**
@@ -121,6 +136,9 @@ fn show(arr:[u32; 5]){
     for i in &arr{
         println!("{}", i);
     }
+    for number in (1..4).rev(){
+      println!("{number}!");
+    }
 }
 ```
 
@@ -144,6 +162,47 @@ fn main() {
   );
 }
 ```
+
+- 在堆上分配内存
+
+Box 内存释放原则:
+如果一个变量拥有一个 box,当 Rust 释放该变量的 frame 时，Rust 会释放该 box 的堆内存（heap）
+移动堆（heap）数据原则:
+如果变量 x 将堆（heap）数据的所有权移动给另一个变量 y，那么在移动后，x 不能再使用。
+
+```rs
+let a = Box::new([0, 1_000_000]);
+let b=a;
+```
+
+使用 Box 的集合
+Vec String HashMap
+
+```rs
+fn main(){
+  let first = String::from("aa");
+  let full = add_suffix(first);
+  // println!("{full}");
+  // println!("{full} {first}"); first: Value used after being moved
+}
+fn add_suffix(mut name: String) -> String {
+  name.push_str(" Jr.");
+  name
+}
+```
+
+##### 整形字面值
+
+- 十进制 Decimal
+  - 98_222
+- 十六进行 Hex
+  - 0xff
+- 八进制 Octal
+  - 0o77
+- 二进制 Binary
+  - 0b1111_0000
+- 字节 Byte(u8 only)
+  - b'A'
 
 #### 函数
 
@@ -265,6 +324,8 @@ fn main(){
 
 #### for 循环
 
+iter 遍历器
+
 ```rs
 fn main(){
   let a = [1,2,3,4,5];
@@ -285,6 +346,7 @@ fn main(){
 rust 通过所有权机制来管理内存，编译器在编译就会根据所有权规则对内存的使用进行检查
 
 - 概念与规则
+  - 变量存在于 Stack 中 stack frame
 - 所有权转移
 - Copy & Clone
 - 函数与所有权
@@ -293,7 +355,7 @@ rust 通过所有权机制来管理内存，编译器在编译就会根据所有
 
 ### 栈（Stack）和堆（Heap）
 
-栈和堆都是代码在运行时可供使用的内存，但是他们的结构不同。  
+栈和堆都是代码在运行时可供使用的内存，但是他们的结构不同。
 **栈以放入值的顺序存储值，并以相反的顺序取出值，这也被称作后进先出**。增加数据叫做**进栈**push onto the stack，而移动数据叫做出栈 popping off the stack。
 **栈中所有数据都必须占用已知且固定的大小**。在编译时大小未知或大小可变的数据
 
@@ -647,7 +709,7 @@ fn main(){
 
 ## 枚举与模式匹配
 
-枚举（enumerations | enums）  
+枚举（enumerations | enums）
 枚举也是一种数据类型，可以用来表示多个变体（同一类型的多种可能性）
 
 ### 定义枚举
@@ -823,6 +885,11 @@ if let Some(3) = some_u8_value {
 
 ### 包和 crete
 
+- crate
+  - crate 是组织和共享代码的基本构建块
+    - binary crate: 可执行的，需要 main 函数
+    - library crate: 没 main 函数，无法执行。定义一些功能，可共享使用
+
 ```sh
 $ cargo new my-project
 $ ls my-project
@@ -830,9 +897,25 @@ $ ls my-project
 
 ### 定义模块来控制作用域和私有性
 
+- Module(模块)
+  - 将代码组织成更小、更易管理的单元方法
+  - `mod garden` 使用 mod 声明
+  - 可有子模块
+  - 路径 path
+  - pablic vs private
+  - 引用 use
+
 ```sh
 # 创建一个新的名为restaurant的库
 $ cargo new --lib restaurant
+```
+
+```rs
+mod 的引入方式
+mod models;
+1. inline -> mod xxx {}
+2. models.rs -> 同级目录下
+3. models/mod.rs ->
 ```
 
 ```rs
@@ -1067,6 +1150,11 @@ pub mod hosting {
 
 ### vector
 
+- 在单一数据结构，存储多个值
+- 在内存中连续存储（相邻）
+- 元素必须是同类型
+- `Vec<T>` 来自标准库
+
 #### 新建
 
 ```rs
@@ -1246,9 +1334,11 @@ for c in "नमस्ते".bytes() {
 
 ```rs
 use std::collections::HashMap; // 因为不常用，所以没有被 prelude 自动引用
-let mut scores = HashMap::new(); // 用new新建一个HashMap
-scores.insert(String::from("Blue"), 10); // 使用insert增加元素
-scores.insert(String::from("Yellow"), 50);
+fn main(){
+  let mut scores = HashMap::new(); // 用new新建一个HashMap
+  scores.insert(String::from("Blue"), 10); // 使用insert增加元素
+  scores.insert(String::from("Yellow"), 50);
+}
 ```
 
 用队伍列表和分数列表创建 Hash map
@@ -1260,6 +1350,13 @@ let initial_scores = vec![10, 50];
 // zip 创建一个元组 vector
 // <_, _> 是必要的，因为Rust能够根据vector 中数据的类型推断出 HashMap所
 let scores: HashMap<_,_> = teams.iter().zip(initial_scores.iter()).collect();
+```
+
+```rs
+fn main(){
+  let vec = vec![("key1", "value1"), ("key2", "value2")];
+  let map:HashMap<&str, &str> = vec.into_iter().collect();
+}
 ```
 
 哈希 map 和所有权
@@ -1279,7 +1376,7 @@ map.insert(field_name, field_value);
 use std::collections::HashMap;
 let mut scores = HashMap::new();
 scores.insert(String::from("Blue"), 10);
-scores.insert(String::from("Yellow"), 50);
+scores.insert(String::from("Yell ow"), 50);
 
 let team_name = String::from("Blue");
 let score = scores.get(&team_name);
@@ -1354,6 +1451,9 @@ fn main(){
   panic!("crash and burn");
 }
 ```
+
+设置 `SET RUST_BACKTRACE=1`
+Backtrace - 到达某个点之前所有函数的列表
 
 ### Result 和可恢复错误
 
@@ -2084,6 +2184,20 @@ fn it_adds_two(){
 ## 迭代器已闭包
 
 ## 智能指针
+
+Rc
+
+```rs
+use std::rc::Rc;
+fn main(){
+  let value = return_a_string();
+  println!("{}", value);
+}
+fn return_a_string() -> Rc<String> {
+  let s = Rc::new(String::from("hello world"));
+  Rc::clone(&s)
+}
+```
 
 ## 线程
 

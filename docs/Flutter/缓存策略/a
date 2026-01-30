@@ -1,0 +1,53 @@
+你的问题包含两个部分，我来分别清晰解答：一、Flutter 中 extended_image 的图片缓存机制（重点）extended_image 是 Flutter 社区非常流行的图片加载库（基于官方 Image 封装），它本身不直接管理磁盘缓存，而是依赖底层的网络图片缓存库——通常是 cached_network_image 或 flutter_cache_manager。✅ 1. 缓存分两层：
+缓存类型    存储位置    特点    
+内存缓存（Memory Cache）    手机 RAM（运行内存）    快速访问，App 退出后清空    
+磁盘缓存（Disk Cache）    手机内部存储（ROM）    持久保存，App 重启后仍存在    
+✅ 2. 图片到底存在手机哪里？（路径示例）
+缓存文件实际存储在 App 的私有沙盒目录中，不同平台路径不同：📱 Android：/data/user/0/你的包名/cache/libCachedImageData/
+
+•普通用户无法直接访问（需 root）
+•卸载 App 时自动清除
+🍏 iOS：/Library/Caches/libCachedImageData/
+
+•同样属于 App 沙盒，系统可自动清理（当存储空间不足时）
+💡 你可以通过代码获取缓存目录：
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
+final dir = await DefaultCacheManager().getTempPath();
+print(dir); // 输出缓存路径
+✅ 3. 如何自定义缓存行为？extended_image 支持传入 cacheManager 参数：ExtendedImage.network(
+  'https://example.com/image.jpg',
+  cacheManager: DefaultCacheManager(
+    Config(
+      'custom_cache_key',
+      stalePeriod: const Duration(days: 7), // 7天过期
+      maxNrOfCacheObjects: 100,             // 最多缓存100张
+    ),
+  ),
+)
+你也可以完全替换缓存策略，比如用 dio_http_cache 或自己实现。✅ 4. 缓存会占用“256G”中的空间吗？会！但属于“应用数据”部分。
+•手机标称的 256G 是指 内部存储总容量（ROM）
+•系统、App 安装包、缓存、照片、视频等都从这 256G 中分配
+•extended_image 的磁盘缓存就存在这里，计入“应用存储”或“其他”
+📊 举例：
+ 你用 extended_image 加载了 100 张高清图（每张 2MB）→ 缓存约占用 200MB 的 256G 总存储空间。
+二、手机的 “16G 和 256G” 是什么意思？（结合上文）这是两个完全不同的概念：
+术语    实际含义    影响什么    
+16G（通常指 RAM）    运行内存    （如 16GB RAM）    决定能同时开多少 App、是否卡顿    
+256G（指 ROM）    机身存储    （如 256GB 存储）    决定能装多少 App、存多少照片/视频    
+✅ 在 Flutter 开发中：
+•RAM（16G）：影响 App 运行时的内存缓存大小（图片解码后放这里）
+•ROM（256G）：影响磁盘缓存能存多少图片
+
+✅ 总结
+问题    答案    
+extended_image     图片缓存在哪？    内存（RAM） + 磁盘（ROM 的 App 私有目录）    
+会占用手机 256G 空间吗？    会！属于应用缓存数据    
+16G 和 256G 区别？    16G = 运行内存（RAM），256G = 机身存储（ROM）    
+能清理缓存吗？    可以：    - 用户：设置 → 应用 → 清除缓存    - 开发者：调用     DefaultCacheManager().emptyCache()    
+🔧 附加建议（开发者向）：
+1. 监控缓存大小：避免无限增长导致被系统杀掉
+2. 设置合理过期时间：如 stalePeriod: 3 days
+3. 敏感图片不要缓存：用 cacheKey 控制或禁用缓存
+4. 测试低存储场景：模拟 256G 快满时的行为
+如果你需要 完整代码示例 或 如何实现自定义缓存路径，欢迎继续问！🖼️📱
