@@ -121,7 +121,7 @@ contract Car {
 
 ### truffle 和 ganache 与 testrpc
 
-truffle 和 testrpc 是配套的以太坊开发测试框架，truffle 可以快速编译和部署，testrpc 可以快速生成测试账号  
+truffle 和 testrpc 是配套的以太坊开发测试框架，truffle 可以快速编译和部署，testrpc 可以快速生成测试账号
 ganache 是 testrpc 的升级版（有 UI 界面）
 
 ```bash
@@ -140,12 +140,8 @@ ganache 是 testrpc 的升级版（有 UI 界面）
   - 1. `///` 文档注释
   - 2. 值类型与引用类型
     - 值传递：就是拷贝，不会对原数据造成影响（两份都在内存空间）
-      - 整形
-      - 布尔
-      - 地址
-      - 枚举
-      - 函数
-      - 定长字节数组（byte）
+      - 布尔, 整形, 定长字节数组（byte）, 枚举, 函数类型, 地址类型, 自定义类型
+      - 十六进制常量、有理数和整型常量、字符串常量、地址常量
     - 引用传递：会对原数据的值产生影响 共用内存
       - 不定长度字节数组
       - 字符串
@@ -153,6 +149,13 @@ ganache 是 testrpc 的升级版（有 UI 界面）
       - 结构体
   - 3. 整形
     - a) 分有符号与无符号
+      - int/uint u表示无符号, uint8, uint16, ... uint256
+        - 从 solidity 0.6.0 开始，可以通过 Type(T).min 和 Type(T).max 获得整形的最小值与最大值
+      - 支持运算符
+        - 比较运算 <=, <, ==, !=, >=, >
+        - 位运算 &, |, ^(异或)，~(位取反)
+        - 算术运算 +, -, -(负), \*, /, %(取余数), \*\*(幂)
+        - 移位 << 左移位, >> 右移位
     - b) 步长为 8，在使用整形过程中，如果在已知的确定了数据大小的上限的情况下，尽量使用与其最靠近的步长
     - c) solidity 不支持 8 进制
     - d) 整形的上溢和下溢（以太坊底层使用四个 64 位整数串联成 256 位，因为所占位数写死了，所以在超过范围之后依然会发生溢出）
@@ -165,11 +168,19 @@ ganache 是 testrpc 的升级版（有 UI 界面）
       - 逻辑
   - 5. 地址类型
     - a) 代表以太坊地址，大小 20 个字节，160 位，所有地址都可以用 uint160 进行编码
-    - b）支持运算符：比较运算（像 ABCD 字符串比较）
-    - c) 地址类型拥有自己的成员
-      - 属性
-        - 获取地址余额
-      - 转账
+    - b) 支持运算符：比较运算（像 ABCD 字符串比较）
+    - c) 账户
+      - 外部账户EOA与合约账户在EVM层面是等效的，都是有：nonce 交易序号，balance 余额, storageRoot 状态, codeHash 代码
+      - 转账 payable 表示可支付地址，可调用 transfer 和 send
+      - 成员函数
+        - `<address>.balance(uint256)` 返回地址的余额
+        - `<address payable>.transfer(uint256 amount)` 向地址发送eth,失败时抛出异常 gas: 2300
+        - `<address payable>.send(uint256 amount) returns (bool)` 向地址发送以太币，失败时返回false gas: 2300
+      - 合约类型
+        - 创建合约可使用New关键字
+        - 每个合约都是一个类型，可声明一个合约类型
+          - 如：Counter c: 则可使用`c.count()`调用函数
+        - 合约类型可以显式转换为address类型，从而可以使用地址类型的成员函数
   - 6. 定长字节数组
     - a) 表现形式: bytes
     - b) 定长字节数组从 bytes1 开始到 bytes32
@@ -185,11 +196,53 @@ ganache 是 testrpc 的升级版（有 UI 界面）
       - 通过 bytes 转换可获取字符串指定下标元素值
       - 可通过 bytes 转换改变字符串中指定下标的元素值
     - 字符串与数组相互转换
+  - 9. 枚举类型
+    - 枚举成员从0编号，不能多于256个成员【本质上是 uint8】
 - 变量
 - 函数
 - 表达式
 - 控制语句
 - 循环
+
+### 整形溢出
+
+```ts
+pragma solidity ^0.5.0;
+// pragma solidity ^0.8.0;
+contract testOverflow {
+  function add1() public pure returns (uint8){
+    uint8 x = 128;
+    uint8 y = x*2;
+    return y;
+  }
+  function add2() public pure returns (uint8){
+    uint8 i = 240;
+    uint8 j = 16;
+    uint8 k = i+j;
+  }
+}
+
+```
+
+### address tranfer
+
+transfer send 每次gas固定，超出会有问题
+
+```ts
+pragma solidity ^0.6.0;
+contract testAddr {
+  constructor() public payable{}
+  function testTrasfer(address payable x) public {
+    address myAddress = address(this);
+    if(x.balance < 10 && myAddress.balance>=10){
+      x.transfer(1 ether);
+    }
+  }
+  function getBalance() public view returns (uint) {
+    return address(this).balance;
+  }
+}
+```
 
 ## 值类型
 
@@ -428,8 +481,15 @@ contract ENUMS {
 
 ## 引用类型
 
+- 引用类型太大，不同位置，不同gas费用，需要有一个属性(memory, storage, calldata) 来标识数据的存储位置
+  - memory 内存：生命周期只存在于函数调用期间 【函数内的变量 memory】
+  - storage 存储：状态变量保存的位置，gas开销最大 【默认变量是starge】
+  - transient 瞬态存储：类似状态变量，但写入的值仅在一个交易内有效（仅支持值类型）
+  - calldata 调用数据：用于函数参数不可变存储区域
+
 ### 结构体
 
+- struct 声明
 - a) 结构体也是 solidity 中的自定义数据类型，在其中包含基本类型和复杂类型
 - b) 初始化方式
   - i 根据成员名称进行初始化
@@ -513,6 +573,16 @@ contract Struct {
     - 定长数组不可修改
     - 不定长数组 length 可以修改，如果当前元素数量小于 length,多余的用 0 来补，通过大于 length，则斩断
   - 2. 不定长数组拥有 push 方法，通过 push 方法可以附加新的元素到数组末尾，返回值是新的长度
+- 操作数组的函数 gas 应该是可控的，不能不可控 【for循环的开销很大】
+- 多维数组 `uint[][] groups`
+- bytes: 字节数组类型，还有定长字节数组 bytes1, bytes2, ... bytes32
+  - 写入的字符，会转为字节
+  - 使用`.concat`拼接
+- string 也是数组类型，但没有长度和下标（没有 char）,使用`.concat`拼接
+- 数组切片，仅支持calldata, 主要用于bytes
+  - `x[0:2]` `x[:2]`取前两个元素
+  - `x[4:]` 取第四个到末尾
+- 数组访问器：生成带有参数的getter函数【访问器】
 
 ```sol
 // SPDX-License-Identifier: GPL-3.0
@@ -563,6 +633,22 @@ contract ConstArray {
 }
 ```
 
+删除元素的优化: 把最后一个元素挪动到要删除的元素那，在删除最后一位元素，减少gas消耗
+
+```sol
+function remove(uint index) public {
+  uint len = numbers.length;
+  if(index==len-1){
+    numbers.pop();
+    break;
+  } else {
+    numbers[index] = numbers[len-1];
+    numbers.pop();
+    break;
+  }
+}
+```
+
 #### 二维数组
 
 - 数组元素仍然是一个数组
@@ -607,12 +693,17 @@ contract TArray {
 ### 映射
 
 - a) 字典、键值对的映射关系存储结构
-  - `mapping(_keytype=>_keyvalue)`
+  - `mapping(_keytype=>_keyvalue)` 例如 `mapping(address=>uint) public balances`
 - b) 映射本身、动态数组、合约、枚举、结构体都不能作为映射的键值，映射的值可以是任意类型
 - c) 在 solidity 中映射没有长度，没有键集合（列表），值集合（列表）这样的概念
 - d) delete 映射中的 key 值，不是删除，而是重置为初始值
 - e) mapping 不支持遍历
 - f) **自定义 mapping 遍历**
+- 如果访问不存在的键，返回的是默认值 所有的数据，默认值是全0，bool 0 false
+- 限制
+  - 只能作为状态变量 storage
+  - KeyType 不能是数组 (String 和 bytes是例外)
+  - 映射没有长度的概念，没有key的集合或value的集合
 
 ```sol
 // SPDX-License-Identifier: GPL-3.0
@@ -721,7 +812,6 @@ contract XTrans {
 ### 控制语句
 
 - 循环控制
-
   - i. for
   - ii. continue, break
   - iii. while 前判断
@@ -802,10 +892,13 @@ contract IF {
     - gasprice gas 的价格
   - now 当前时间（timestamp 一样）
   - block 成员
-    - number 区块号
+    - `block.number(uint)` 当前区块号
+    - `block.timestamp(uint)` 自 Unix epoch 起始当前区块以秒计的时间戳
+    - `msg.sender (address)` 消息发送者（当前调用）
+    - `msg.value (uint)` 随消息发送的wei的数量
+    - `tx.origin (address paybale)` 交易发送者
     - difficulty 当前区块难度
     - coinbase 矿工地址
-    - timestamp 时间戳
     - gaslimit() 当前区块的 gaslimit
     - blockhash(num) 指定区块的 hash 值，只支持最近的 256 块
     - ...
@@ -852,8 +945,7 @@ contract tm {
       - c) 不能访问 block, tx, msg 的大多数成员（可以访问`msg.sing`, `msg.data`）
       - d) 不能调用任何没有被标记为 pure 的函数
 - 特殊函数类型
-
-  - i. 回退函数
+  - 回调函数(不可主动调用)
     - 在每个合约中最多有一个不带任何参数不带 function 关键字的 fallback 和 receive 函数
       - receive 必须是 payable 的，里面的语句只有在通过外部地址往合约转账的时候执行
       - fallback 可以是 payable 也可以不是 payable,如果不是 payable，且交易里带有转账信息，交易会被 revert
@@ -863,21 +955,24 @@ contract tm {
       - b) 给合约发送 ether 时调用，如果没有，则会触发异常
       - c) 如果回调函数要接收 ether,则必须是 payable 的
   - ii. 自毁函数：
-
     - 摧毁当前合约，如果合约中还有以太，则会将以太币转移给另一个地址
     - 如果有人转账给已摧毁的合约，以太币消失，无法赎回
-
   - iii. 常函数 【0.5.+】被移除
-
-  - vi. 访问器（getter）
+  - getter: 所有public 状态变量自动创建getter函数
     - 所有 public 变量都会自动追加 getter 函数
     - 访问函数具有外部可见性，内部调用，可直接当成一个变量，如果外部访问，比如通过 this, 则必须通过函数的方式
-  - v. 函数可见性与权限
-    - 分类
-      - 1. 内部函数 internal, 只能在当前合约内部调用，比如：当前合约的代码块，内部的库函数，继承的合约中
-      - 2. 外部函数 external
-      - 3. 私有函数 private
-      - 4. 公有函数 public
+  - `constructor`构造函数 初始化逻辑
+- 函数可见性与权限
+  - 分类
+    - 1. 内部及继承函数 internal, 只能在当前合约内部调用，比如：当前合约的代码块，内部的库函数，继承的合约中
+    - 2. 外部访问 external
+    - 3. 私有函数 private
+    - 4. 公有函数 public
+- 状态可变性【可多个】
+  - view 只读 不需要手续费
+  - pure 不读取状态，也不写入，仅计算
+  - payable 表示可以接受以太币 `msg.value`获取
+  - 自定义修改器 modifier
 
 - 0.6+版本引入了`abstract`, `virtual`, `override`几个关键字，对合约的继承更好的支持
 - 其它内置函数
@@ -898,6 +993,13 @@ contract tm {
   - 修改器的生效顺序与调用顺序一样
 - `abi.encodePacked`
   - 用于将给定的参数编码为紧凑的字节序列
+- 全局变量及函数
+  - 区块与交易属性
+  - 错误处理
+  - 数学及密码学函数
+  - 类型信息 type(C).creationCode / type(T).min
+  - ABI 编码及解码函数
+  - 地址及合约
 
 ```sol
 abstract contract Employee {
