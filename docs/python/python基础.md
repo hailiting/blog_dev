@@ -21,13 +21,42 @@ export PATH="/Library/Frameworks/Python.framework/Versions/3.8/bin:${PATH}"
 alias python="/Library/Frameworks/Python.framework/Versions/3.8/bin/python3"
 alias pip="/Library/Frameworks/Python.framework/Versions/3.8/bin/pip3"
 # 2. python (原来叫python)
+# 别名  .zshrc
+alias python=python3
+alias py=python3
+alias pip3="python3 -m pip"
+alias pip="python -m pip"
 ```
+
+```sh
+# 安装
+pip install notebook
+# 启动
+jupyter notebook
+```
+
+notebook -> Jupyter Notebook的Python包
+
+- 电脑上会有一个交互式的笔记本编程环境，常用于数据分析、科学计算、机器学习和教学演示
 
 ## PyCharm 编辑器
 
 - 格式化 `option+shift+Enter`
 
 ## 基本数据类型
+
+- int
+- float
+- str
+- bool
+- list `[1,2,3]`
+- tuple `(1,2,3)` 元组 是不可变的
+- dict `{"a": 1}`
+  - 用 dict 构造的话，主键不能用 int,float等
+- set `{1, 2, 3}` 去重
+  - **set的排序是不稳定的**
+  - set 底层是hash表，元素放在哪个槽位取决于`hash(x)`以及冲突处理过程
+- NoneType `None`
 
 ### 常量
 
@@ -555,6 +584,14 @@ def func(*args):
 
 func(*stu_lst)
 
+```
+
+```py
+des = {
+  '002': ["zzz",[1,2,3,4,5]]
+}
+def get_latest_price(fund_code):
+  return fund_db[fund_code][1][-1]
 ```
 
 ## python 内置函数
