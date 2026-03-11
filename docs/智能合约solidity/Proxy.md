@@ -8,16 +8,14 @@
   - `_DATA`: 0x 初始化参数
 - 4. 把 TransparentUpgradeableProxy 地址给 A.sol 的 `At Address` **这个合约地址是公开的地址**
 - 5. 修改逻辑合约
-
   - 5.1 部署新的逻辑合约 B.sol
   - 5.2 `ProxyAdmin/upgrade`
-
     - proxy: 逻辑代理合约地址
     - implementation: 新的逻辑合约地址
 
 代理合约
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 
 pragma solidity ^0.8.0;
@@ -47,7 +45,7 @@ contract Logic is Initializable, OwnableUpgradeable {
 
 A.sol
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 contract ERC20 {
@@ -59,7 +57,7 @@ contract ERC20 {
 
 B.sol
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 contract ERC20 {

@@ -246,7 +246,7 @@ contract testAddr {
 
 ## 值类型
 
-```sol
+```solidity
 pragma solidity ^0.4.18;
 /** @title the basic of solidity */
 /// the description
@@ -348,7 +348,7 @@ contract stringWithBytes {
 - a) 特点：以关键字 hex 开头
   - i. `hex"00112233"`
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -399,7 +399,7 @@ contract HexLi {
   - constant 链上不会为这个变量分配存储空间
   - immutable 在部署时确定变量的值（在构造函数中赋值一次，之后不可在改变，变量的值会被追加到运行时的字节码中，因此它会比使用状态变量更便宜）
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -449,7 +449,7 @@ contract DataLocal {
 - a) 特点：用户的自定义类型，枚举可以显示的与整形进行转换，显示的转换会在运行时检测数值范围，如果范围不匹配会引发异常。枚举类型至少要有一个成员
 - b) 默认从 0 开始
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -496,7 +496,7 @@ contract ENUMS {
   - ii 根据成员顺序进行初始化
 - c) 在 solidity 中不能直接返回结构体，只能返回成员
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -584,7 +584,7 @@ contract Struct {
   - `x[4:]` 取第四个到末尾
 - 数组访问器：生成带有参数的getter函数【访问器】
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -635,7 +635,7 @@ contract ConstArray {
 
 删除元素的优化: 把最后一个元素挪动到要删除的元素那，在删除最后一位元素，减少gas消耗
 
-```sol
+```solidity
 function remove(uint index) public {
   uint len = numbers.length;
   if(index==len-1){
@@ -656,7 +656,7 @@ function remove(uint index) public {
   - `Uint[3][5]x`：代表 5 行 3 列
   - `Uint[][5]x`: 代表 x 是一个有 5 行，每一行的列是一个动态数组
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -705,7 +705,7 @@ contract TArray {
   - KeyType 不能是数组 (String 和 bytes是例外)
   - 映射没有长度的概念，没有key的集合或value的集合
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -746,7 +746,7 @@ contract Map {
     - 如果由一个大类型(uint32)转换为小类型(uint16)，高位会被斩断
   - ii. 从 address 到 address payable 的必须显示转换
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -821,7 +821,7 @@ contract XTrans {
   - i. if-else
   - ii. 三目运算符
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -903,7 +903,7 @@ contract IF {
     - blockhash(num) 指定区块的 hash 值，只支持最近的 256 块
     - ...
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -962,6 +962,11 @@ contract tm {
     - 所有 public 变量都会自动追加 getter 函数
     - 访问函数具有外部可见性，内部调用，可直接当成一个变量，如果外部访问，比如通过 this, 则必须通过函数的方式
   - `constructor`构造函数 初始化逻辑
+    - 构造函数仅`在部署的时候执行一次`，链上的字节码没有构造函数，而是执行构造函数之后的结果
+    - 字节码
+      - 编译产生的字节码
+      - 部署合约，发送交易字节码(创建字节码)
+      - 链上字节码(运行时字节码)
 - 函数可见性与权限
   - 分类
     - 1. 内部及继承函数 internal, 只能在当前合约内部调用，比如：当前合约的代码块，内部的库函数，继承的合约中
@@ -972,7 +977,7 @@ contract tm {
   - view 只读 不需要手续费
   - pure 不读取状态，也不写入，仅计算
   - payable 表示可以接受以太币 `msg.value`获取
-  - 自定义修改器 modifier
+  - 自定义修改器 modifier (python 的装饰器)
 
 - 0.6+版本引入了`abstract`, `virtual`, `override`几个关键字，对合约的继承更好的支持
 - 其它内置函数
@@ -1001,7 +1006,7 @@ contract tm {
   - ABI 编码及解码函数
   - 地址及合约
 
-```sol
+```solidity
 abstract contract Employee {
   function getSalary() public virtual;
 }
@@ -1011,7 +1016,7 @@ contract Manager is Employee {
 }
 ```
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -1035,7 +1040,7 @@ contract FunctionType {
 }
 ```
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -1088,7 +1093,7 @@ contract ExecuteFallback {
 }
 ```
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -1117,7 +1122,7 @@ contract D {
 }
 ```
 
-```sol
+```solidity
 // 加密
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
@@ -1137,8 +1142,8 @@ contract Hash {
 }
 ```
 
-```sol
-contract Modifier {
+```solidity
+contract ModifierDemo {
     address public owner = msg.sender;
     modifier onlyOwner() {
         require(msg.sender == owner);
@@ -1161,7 +1166,7 @@ contract Modifier {
 
 ```
 
-```sol
+```solidity
 // 自毁函数
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
@@ -1195,7 +1200,7 @@ contract SelfDestructContract {
 }
 ```
 
-```sol
+```solidity
 // 函数可见性权限
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
@@ -1249,7 +1254,7 @@ contract Child is Chmod {
 
 - a)
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -1333,7 +1338,7 @@ contract child is  Mother,Father {
 - 1. 抽象合约是一个包含了没有函数体的函数，也可能包含一些正常函数，只要合约里有一个抽象函数，他就是抽象函数。不能够通过编译，可以被继承
 - 2. 抽象类似于多态，子合约通过继承完成同名函数的不同实现
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -1376,7 +1381,7 @@ contract Square is AbstractContract {
 - f) `using for *(附着库)`
   - 声明方式：`using A for B` 将 A 中定义的所有函数都附着在任意类型 B 上，类型 B 的实例可调用 A 中的所有方法
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -1393,7 +1398,7 @@ contract Call {
 }
 ```
 
-```sol
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -1707,5 +1712,4 @@ contract User {
         IterableMapping.remove(data, key);
     }
 }
-
 ```

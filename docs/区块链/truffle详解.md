@@ -38,7 +38,7 @@
   - i. 脚本以数字开头 `数字_活跃名称_migration.js`
   - ii. `truffle migrate`: 执行所有位置 migration 目录中的迁移脚本，如果没有新的迁移脚本导入，使用`truffle migrate`不会在执行操作, 如果想要再次部署，使用`truffle migrate --reset`
 
-```sol
+```solidity
 > yarn add @truffle/hdwallet-provider
 > truffle migrate --network shibuya
 ```
@@ -46,7 +46,7 @@
 ```js
 // artifacts.require  告诉truffle和哪个合约交互
 // 返回一个合约抽象，require可以是合约名称，也可以是合约文件，但最后是合约名称
-const Storage = artifacts.require("Storage");
+const Storage = artifacts.require('Storage');
 
 // module.exports 被导出的函数会接收 deployer 作为第一个参数
 module.exports = function (deployer) {
@@ -67,8 +67,8 @@ module.exports = function (deployer) {
 ```js
 // 部署多个合约
 // 把一个库连接到合约
-var Mapping = artifacts.require("IterableMapping");
-var User = artifacts.require("User");
+var Mapping = artifacts.require('IterableMapping');
+var User = artifacts.require('User');
 module.exports = function (deployer) {
   deployer.deploy(Mapping);
   deployer.link(Mapping, User); // 链接已经发布好的库

@@ -75,7 +75,7 @@ https://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=solj
 yarn hardhat run scripts/deploy_classtoken.ts --network localhost
 ```
 
-```sol
+```solidity
 // 版本一
 contract Greeter {
   string private greeting;

@@ -15,7 +15,7 @@
 - 分布式网络 Distributed Network
 - 加密算法 Cryptography
 
-```sol
+```solidity
 // 区块结构体
 struct Block {
   uint256 blockNumber; // 区块编号
