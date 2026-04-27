@@ -14,6 +14,11 @@
 - 1、Address 类型：由于以太坊的底层是基于账户的，所以拥有 address 类型，主要作用是定位合约，账户类型，合约代码等
 - 2、Payable 关键字：通过 payable 可以让以太坊在语言层面支持支付
 - 3、可见性：除去传统语言所支持的`public`,`private`,`solidity`，还支持`external`,`internal`
+  - private
+    - EVM的private只是Solidity的编译时检查，不是运行保护，可以用`provider.getStorageAt(contract, privateVar槽位)`直接读取
+    - 所有存储数据在链上都是公开的
+    - 真正敏感的数据应该加密或放到链下
+    - 使用private是为了：代码组织和封装，防止其他合约直接访问，清晰的接口设计，不是真正的数据隐私
 - 4、变量分类：solidity 分为状态变量和内存变量，其中状态变量永久存在（保存在合约的存储空间中）
 - 5、最大的不同，异常机制，在 solidity 中，一旦出现异常，所有执行都会被回滚，主要是为了保证合约执行的原子性
 - 6、solidity 是静态类型语言，在编译时就需要明确指定变量的类型
@@ -33,8 +38,30 @@ Solidity 的语法接近于 JavaScript，是一种面向对象的语言。但作
 Solidity 源代码要成为可以运行在以太坊上的智能合约需要经历如下的 步骤:
 
 - 1. 用 Solidity 编写的智能合约源代码需要先使用编译器编译为字节码 (Bytecode)，编译过程中会同时产生智能合约的二进制接口规范 (Application Binary Interface，简称为 ABI);
+  - 函数选择器：对函数签名计算 Keccak-256 哈希，取前4个字节
+  - 参数编码
+    - 查看硬编码：`https://chaintool.tech/calldata`
+    - `https://www.4byte.direct ory/`
 - 2. 通过交易(Transaction)的方式将字节码部署到以太坊网络，每次 成功部署都会产生一个新的智能合约账户;
 - 3. 使用 Javascript 编写的 DApp 通常通过 web3.js + ABI 去调用智能合约中的函数来实现数据的读取和修改。
+
+**底层函数 call**
+
+- `<address>.call(bytes memory) returns (bool, bytes memory)`
+
+```solidity
+// good 不需要 c 的interface
+bool public suc;
+function lowCallCount(address c) public {
+  bytes memory methodData = abi.encodeWithSignature("count()"); // 字节
+  (bool success, bytes memory data) = c.call(methodData);
+  suc = success;
+}
+// bad
+function callCount(Counter c) public {
+  c.count();
+}
+```
 
 ### abi 字段解释
 
@@ -181,6 +208,17 @@ ganache 是 testrpc 的升级版（有 UI 界面）
         - 每个合约都是一个类型，可声明一个合约类型
           - 如：Counter c: 则可使用`c.count()`调用函数
         - 合约类型可以显式转换为address类型，从而可以使用地址类型的成员函数
+        - 底层调用
+          - 类似的底层函数有： `call` `delegatecall` `staticcall`
+            - 可带eth不同: call 可带eth, delegatecall 和 staticcal 只能是0
+            - 执行环境不同: call, staticcall 在被调用合约的上下文中执行，delegatecall 在调用者合约的上下文中执行
+            - 可修改状态: call, delegatecall 能修改， staticcall 不能修改
+            - msg.sender: call, delegatecall 调用者， delegatecall 原始调用者
+
+          - 底层调用失败不会冒泡异常 revert, 而是用返回值表示
+          - call() 切换上下文
+          - delegatecall() 保持上下文
+
   - 6. 定长字节数组
     - a) 表现形式: bytes
     - b) 定长字节数组从 bytes1 开始到 bytes32
@@ -198,6 +236,7 @@ ganache 是 testrpc 的升级版（有 UI 界面）
     - 字符串与数组相互转换
   - 9. 枚举类型
     - 枚举成员从0编号，不能多于256个成员【本质上是 uint8】
+
 - 变量
 - 函数
 - 表达式
@@ -926,6 +965,10 @@ contract tm {
     - 内部调用（不会拷贝到内存里）
       - 采用 evm 跳转调用，能够直接使用上下文中的数据，不用拷贝数据，所以在数据传递的时候非常高效
       - 对合约内的函数，引入的库函数和从父合约中继承的函数都可以进行内部调用
+      - 继承
+        - 使用关键字 is
+        - 继承时，链上实际只有一个合约被创建，基类合约的代码会被编译进派生合约
+        - 派生合约可以访问基类合约内的所有非私有(private)成员，因此内部(internal)函数和状态变量在派生合约里是可以直接使用的
     - 外部调用（会拷贝到内存里）
       - 采用外部交易调用，使用 external，对于一个外部调用，所有的函数参数必须要拷贝到内存中
 - 函数定义类型
@@ -977,9 +1020,13 @@ contract tm {
   - view 只读 不需要手续费
   - pure 不读取状态，也不写入，仅计算
   - payable 表示可以接受以太币 `msg.value`获取
-  - 自定义修改器 modifier (python 的装饰器)
+  - 自定义修改器 modifier (python 的装饰器), 语法糖，字节码会增多
 
 - 0.6+版本引入了`abstract`, `virtual`, `override`几个关键字，对合约的继承更好的支持
+  - abstract 不能被部署，可包含没有实现的纯虚函数
+  - super 调用父合约函数
+  - virtual 表示函数可以被重写
+  - override 表示重写了父合约函数
 - 其它内置函数
   - 加密函数
     - solidity 中的加密实际上调用的是以太坊中的加密函数
@@ -1005,6 +1052,12 @@ contract tm {
   - 类型信息 type(C).creationCode / type(T).min
   - ABI 编码及解码函数
   - 地址及合约
+- 接口
+  - 类型声明（函数的抽象），广泛用于合约之间的调用
+  - 无任何实现的函数
+  - 不能继承自其他接口
+  - 没有构造方法
+  - 没有状态变量
 
 ```solidity
 abstract contract Employee {
@@ -1024,7 +1077,7 @@ contract FunctionType {
     uint256 public x = 100;
 
     function modifyx() public returns (uint256) {
-        // 改变了状态，不能用 view 或 pure
+        // 改 变了状态，不能用 view 或 pure
         x = 50;
         g();
         return x;
@@ -1153,7 +1206,13 @@ contract ModifierDemo {
         require(address(msg.sender).balance >= 10000000, "balance error");
         _;
     }
-
+    modifier over22(uint age) {
+      require(age>=22, "too small age");
+      _;
+    }
+    function over22Private(uint age) private {
+      require(age>=22, "too small age");
+    }
     function getbalance() public view balances returns (uint256) {
         return address(msg.sender).balance;
     }
@@ -1161,6 +1220,12 @@ contract ModifierDemo {
     function modifierOwner(address addr) public onlyOwner returns (address) {
         owner = addr;
         return owner;
+    }
+    // 多个 modifier 累加
+    function marry(uint age) public over22(age) onlyOwner {
+    }
+    function marryV2(uint age) public over22(age)  {
+      over22Private()
     }
 }
 
@@ -1205,7 +1270,7 @@ contract SelfDestructContract {
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
-// 函数可见性权限
+// 函数可见性权限 基类合约
 contract Chmod {
     function internalFn() internal pure returns (string memory) {
         return "internal fn";
@@ -1238,7 +1303,7 @@ contract externalCall {
         return cm.externalFunc();
     }
 }
-
+// 派生合约
 contract Child is Chmod {
     function callInternal() public pure returns (string memory) {
         return internalFn();
@@ -1374,12 +1439,20 @@ contract Square is AbstractContract {
 ### 库
 
 - a) 关键字：library
+  - abstract 抽象合约是另一个代码复用方式
+  - 如果库函数都是internal的，库代码会嵌入到合约
+  - 如果库函数有 external 或 public, 库需要单独部署，并在部署合约时进行链接，使用委托调用
+  - 没有状态变量
+  - 不能给库发送ether
+  - 语法糖: 给类型扩展功能: using lib for type; 如: using SafeMath for uint
 - b) 在 solidity 中，库也是一种合约，没有存储，不会存储以太币
 - c) 没有 payable，也没有 fallback 函数
 - d) 无状态变量，不能继承或被继承，不能销毁一个库
 - e) gas 依赖于合约的规模。可以把库想象成使用其合约的父合约，使用父合约切分共同代码不会节省 gas，因为在 solidity 中，继承通过复制代码工作的。库可以用于给数据类型添加成员函数
 - f) `using for *(附着库)`
   - 声明方式：`using A for B` 将 A 中定义的所有函数都附着在任意类型 B 上，类型 B 的实例可调用 A 中的所有方法
+- 优秀代码库：OpenZeppelin Solady
+  - Solady gas 优化
 
 ```solidity
 // SPDX-License-Identifier: GPL-3.0
@@ -1393,9 +1466,15 @@ library Math {
 
 contract Call {
     function getSum(uint256 x, uint256 y) public pure returns (uint256) {
-        return Math.add(x, y);
+        return Math.add(x, y); // 相当于 delegatecall
     }
 }
+```
+
+```toml
+// foundry.toml
+[profile.default]
+  libraries. = "src/libraries/MyLibrary.solMyLibrary:0x..."
 ```
 
 ```solidity
@@ -1522,10 +1601,25 @@ contract UseSet {
 ### 事件
 
 - a) 事件是使用 EVM 的日志内置的工具，关键字`event`
+  - 事件中使用 indexed 修饰，表示对这个字段建立索引（也称为Topic）,方便外部对该字段过滤查找
+  - 关键字 emit 触发事件
 - b) 为什么要有事件
   - 在真实的环境中，发送交易调用智能合约的过程
     - 交易发送-> 打包->执行交易，在发送交易之后，不会马上执行结果，只会立刻返回一个交易的 hash
 - c) 事件可以继承，在合约内部不能直接访问
+
+```json
+// solidity -> event Deposit(address indexed _from, uint _value);
+logs: [{
+  "from": "xxx",
+  "topic": "xxx",
+  "event": "Deposit",
+  "args": {
+    "0": "0x",
+    "1": "1",
+  }
+}]
+```
 
 ### 文件：import
 
@@ -1538,6 +1632,12 @@ contract UseSet {
 - `require(condition, msg);`:自行判断，如果不满足条件，也会产生异常,返回未使用的 gas，一般来说，尽可能的只使用`require`
 - `assert`: 断言，如果产生异常，返回剩余未使用的 gas，回滚状态
 - `revert`: 终止执行，消耗所有 gas，回滚所有状态
+- `Error` 定义错误，`revert Error()`
+- `try/catch`: 捕获合约中外部调用的异常
+  - 即便是不存在的函数调用也可以捕获
+  - 例外：
+    - 无法捕获不存在的合约调用（对一个不存在的合约调用，evm不执行）
+    - `out of gas`错误不是程序异常，错误不能捕获
 - 在智能合约开发中，如果要对异常进行处理
   - 尽早抛出异常
   - 在函数中，针对异常的发生组织代码顺序
@@ -1545,7 +1645,12 @@ contract UseSet {
     - 修改合约状态
     - 和其他合约进行交互
 
-```js
+```solidity
+error NotOwer();
+if(msg.sender != owner) revert NotOwer(); // 会返回四个字节，最小程度的节省gas 0.7 或 0.8版本
+```
+
+```solidity
 // throw
 contract EX {
     mapping(string => uint256) nameToBalance;
@@ -1566,9 +1671,52 @@ contract EX {
 }
 ```
 
+```solidity
+// try catch
+pragma solidity ^0.8.0;
+contract Foo {
+  error nonZero();
+  function myFunc(uint x) pure public returns (uint) {
+    if(x == 0){
+      revert nonZero();
+    }
+    return x+1;
+  }
+}
+```
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+interface IFoo {
+    function myFunc(uint256 x) external pure returns (uint256);
+}
+contract TryCatch {
+  IFoo public immutable foo;
+  string public errorStr;
+  bytes public errorBytes;
+  constructor(address fo){
+    foo = IFoo(fo);
+  }
+  function tryCatchExternalCall(uint256 _i) public returns (uint256) {
+    try foo.myFunc(_i) returns (uint256 result){
+        errorStr="";
+        errorBytes =hex"00";
+        return result;
+    } catch Error(string memory reason) {
+      errorStr = reason;
+       return 0;
+    } catch (bytes memory reason) {
+      errorBytes = reason;
+       return 0;
+    }
+  }
+}
+```
+
 ### 实现 solidity 中 map 的遍历
 
-```js
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
@@ -1713,3 +1861,29 @@ contract User {
     }
 }
 ```
+
+## Solidity 应用
+
+- Token
+  - erc20
+  - erc777 erc20的升级版，引入hooks机制，如无需用户再手动调用approve
+  - erc2612 无gas代币，基于erc20的扩展，实现eip712签名，允许用户再离线签名授权转账，无需支付gas,接收方拿到签名后去链上执行并付gas
+- NFT
+  - erc721
+  - erc1155
+  - sbt
+
+- EIP Ethereum Imporovement Proposal 以太坊改进提案
+  - Core 共识
+    - EIP1559 修改手续费
+    - EIP3675 POW升级到POS
+    - EIP4844 Blob 数据 放lay2压缩后的数据
+  - ERC 应用标准
+    - erc20
+    - erc721
+    - erc1155
+    - erc165
+    - erc1167 最小代理部署
+    - erc1967 升级代理
+  - Network 网络
+  - Interface RPC

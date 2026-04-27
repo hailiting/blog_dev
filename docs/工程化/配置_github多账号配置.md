@@ -12,16 +12,17 @@ git config --global --unset user.email
 eval "$(ssh-agent -s)"
 ssh-add -l
 ssh-add /home/ubuntu/.ssh/github_do
-git pull && cd docker-compose/ && sudo docker-compose up 
+git pull && cd docker-compose/ && sudo docker-compose up
 
 ssh-add -D && ssh-add -K ~/.ssh/github_do
 ```
 ssh-keygen -t rsa -f scout -C "scout@gmail.com"
 ssh-keygen -t rsa -f github_do -C "github_do@163.com"
 ssh-keygen -t rsa -f github2 -C "xxx@163.com"
+ssh-keygen -t rsa -f github2 -C "gitlabKimi@gmail.com"
 ```
 
-ssh-keygen -t rsa -f hailiting -C "hailiting@yeah.net"  
+ssh-keygen -t rsa -f hailiting -C "hailiting@yeah.net"
 ssh-keygen -t rsa -f github_do -C "github_do@163.com"
 githubDo111
 
