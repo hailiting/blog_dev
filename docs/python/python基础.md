@@ -951,3 +951,18 @@ lst = [1,2,3,4,5,6,7]
 r = map(lambda x:x**2, lst)
 print(list(r))
 ```
+### with 语法
+`_AsyncGeneratorContextManager`
+`asynccontextmanager` -> `async with`
+~~~py
+from contextlib import contextmanager
+# contextmanager 将生成器函数转换为上下文管理器
+@contextmanager
+def go(num1, num2):
+  print("go!")
+  # yield 后面的值 (num1, num2, num1+num2)会被赋值给 as 后面的变量
+  yield num1, num2, num1+num2
+# 使用上下文变量
+with go(1, 2) as n:
+  print(n)
+~~~

@@ -95,7 +95,14 @@ mycomp/
   "java.semanticHighlighting.enabled": false,
   "java.configuration.checkProjectSettingsExclusions": false,
   "java.requirements.JDK11Warning": false,
-  "explorer.confirmDragAndDrop": false
+  "explorer.confirmDragAndDrop": false,
+  "editor.quickSuggestions": {
+  "other": false,
+  "comments": false,
+  "strings": false
+},
+"editor.suggestOnTriggerCharacters": false,
+"python.languageServer": "None"
 }
 ```
 
@@ -312,7 +319,7 @@ npm install --save-dev @testing-library/react
 "@testing-library/user-event": "^7.1.2",
 ```
 
-` __tests__``.test.``.spec. `  
+` __tests__``.test.``.spec. `
 `flex`布局，
 
 #### 理想状态

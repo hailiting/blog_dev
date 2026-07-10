@@ -74,6 +74,8 @@ solana balance --url devnet
 solana airdrop 2 6iNoDCSgcnfuEkwmE6vXhn1UfG3U15eAwnUu1pWib4p5 --url devnet
 ```
 
+## 通过solana命令行创建 Token 和 NFT
+
 创建一个 Token
 
 ```sh
@@ -98,3 +100,40 @@ spl-token burn addressxx amountxx --url devnet
 ```sh
 spl-token transfer TokenAddressxxx 120 receiverAddressxxx --url devnet --allow-unfunded-recipient --fund-recipient
 ```
+
+```sh
+solana-test-validator
+
+spl-token create-token
+
+solana-keygen grind --starts-with tiny:1
+  tinyxxxx.json
+spl-token create-token tinyxxxx.json
+
+spl-token create-account tinyxxxx
+  ccdddcccddd
+spl-token mint tinyxxxx 99
+
+spl
+```
+
+### NFT
+
+- NFT 是一个特殊的Token,他们使用同一个程序，decimals为0，每次mint一个
+  - SPL-Token 没有Token信息，Metaplex Token Metadate 程序是社区标准
+- 通过mint地址作为Metaplex Token Metadata程序的seeds生成一个Token的 Metadata Account 来存放元数据
+
+```sh
+spl-token create-token --enable-metadata --decimals 0 --program-2022
+spl-token initialize-metadata <mint_account> <YOUR_TOKEN_NAME>
+<YOUR_TOKEN_SYMBOL> <YOUR_TOKEN_URI>
+spl-token create-account <mint account>
+spl-token mint <mint account> 1
+```
+
+### 2022
+
+新建一个 metadate
+`spl-token create-token --enable-metadata --transfer-hook --program-2022`
+初始化 metadate
+`spl-token initialize-metadata <token_address> <your_token_name> <your_token_symbol> <your_token_uri>`

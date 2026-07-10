@@ -1,0 +1,45 @@
+# EVM存储
+- 如何写优秀的合约
+  - 何为优秀：更少Gas，更安全，用户体验好（如更少的交互次数、更容易获取链上数据的变化）
+  - 更少gas消耗：
+    - **理解EVM的运行、存储布局**
+    - 合理的数据设计、链上链下数据的平衡
+
+## 以太坊的数据结构
+- Block（区块）
+  - Header（区块头，固定字段，用于轻节点校验）
+    - parentHash（父区块哈希，形成链）
+    - ommersHash（叔块列表哈希，PoW 时代奖励同高度竞争块）
+    - beneficiary（矿工/验证者收款地址，即 coinbase）
+    - stateRoot（世界状态树根）
+      - World State trie（全局账户状态 MPT）
+        - Account State（单个账户）
+          - nonce（已发交易数；合约账户为已创建合约数）
+          - balance（余额，单位 wei）
+          - storageRoot（该账户合约存储树根，EOA 为空树）
+            - Account Storage trie（合约 slot → value 的 MPT）
+          - codeHash（合约字节码 keccak256，EOA 为固定空值哈希）
+    - receiptsRoot（交易收据树根）
+      - Receipts tries（每笔交易的执行结果：状态、gas、日志等）
+    - transactionRoot（交易树根）
+      - Transactions tries（本块交易列表的 MPT）
+        - nonce（发送方交易序号）
+        - gasPrice（gas 单价，EIP-1559 后含 baseFee + priorityFee）
+        - gasLimit（本笔交易 gas 上限）
+        - to（接收地址，合约创建时为 null）
+        - value（转账金额）
+        - v,r,s（ECDSA 签名）
+        - data（调用 calldata 或部署 bytecode）
+        - init（合约创建时的初始化代码，已并入 data）
+    - logsBloom（日志布隆过滤器，便于按 topic 快速检索事件）
+    - difficulty（PoW 挖矿难度；PoS 后恒为 0）
+    - number（区块高度）
+    - gasLimit（本块允许消耗的 gas 上限）
+    - gasUsed（本块实际消耗的 gas）
+    - timestamp（出块 Unix 时间戳）
+    - extraData（矿工/验证者自定义字段，长度受限）
+    - mixHash（PoW 混合哈希；PoS 后含义变更/废弃）
+    - nonce（区块 PoW 随机数；PoS 后废弃）
+  - Body（区块体，完整数据）
+    - List of Transactions（交易列表，与 transactionRoot 对应）
+    - List of Ommers（叔块列表，PoS 后不再使用）

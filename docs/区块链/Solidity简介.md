@@ -65,14 +65,26 @@ function callCount(Counter c) public {
 
 ### abi 字段解释
 
-- type: 方法类型：主要包括 function, constructor, fallback， 默认情况下代表 function
-- constant: 布尔值，如果是 true 指明方法，不会修改合约内部的状态变量
-- name: 方法名
-- inputs: 方法参数，数组，数组中每一个对象都是针对一个参数的说明
-  - name: 参数名称
-  - type: 参数类型
-- outputs: 和 inputs 一样
-- payable: 布尔值，调用 evm 底层，表示方法可接收以太币
+- ABI是一个JSON对象数组，每一个json对象用来描述函数、事件、错误
+- JSON对象
+  - type: 方法类型：主要包括 function, event, error, constructor, fallback， 默认情况下代表 function
+  - constant: 布尔值，如果是 true 指明方法，不会修改合约内部的状态变量
+  - name: 函数名称、事件名称
+  - inputs/outputs: 方法参数，数组，数组中每一个对象都是针对一个参数的说明
+    - name: 参数名称
+    - type: 参数类型
+    - indexed: 事件索引字段（字段是event topic, 则为true）
+    - components: 供元组(tuple) 类型使用 (ABI里只有预定义类型)
+  - stateMutability: 为下列值之一：
+    - pure view nonpayable 和 payable
+    - payable: 布尔值，调用 evm 底层，表示方法可接收以太币
+- ABI 编解码工具
+  - Foundry: cast abi-encode / cast decode-calldata
+  - Solidity: abi.decode/abi.encode
+  - viem / ethers.js
+  - https://chaintool.tech/calldata
+  - https://openchain.xyz/
+  - ABI 数据库:https://www.4byte.directory/
 
 ## Solidity 编译器
 

@@ -125,3 +125,24 @@ white background --v 5
 
 AI
 https://dco-generator.vercel.app
+
+
+
+尺寸：970cm*220cm 使用场景：蓝图工场・ AI-native加速器的入户形象 风格：采用模块化几何设计，突出未来科技感，色彩可以丰富些。抽象二元平衡曲线（借鉴太极阴阳图元素，不能有具体的太极图案），线条要简练。 要表达的意境：整体世界由物理世界与数字世界平衡共生形成。左侧代表物理世界，左侧正中间是代表了公司体系/资源聚合（包含众仓科技、融加企管/Finplus.glob、华业国际/huaye.org、学神科技/migicsoft.com、顺链科技/slconsole.com）的大图，左侧散落宇宙里的星球展现可以用抽象边框替代，边框内放置项目logo，暂定放入的代表项目数量10~20个。太极图交感的两个位置,左侧放置slconsole的logo，图标下面显示名称;右侧放置云仓的icon，图标下面显示名称。右侧代表数字世界，右侧正中间的大图代表了Second Life(开放游戏世界)，大图要体现1.所有知名区块链logo，2.跨链桥，3，世界地图4.agent，5.对接预言机；周围散落宇宙里的星球展现可以用抽象边框替代，边框内放置项目logo，暂定放入的代表项目数量10~20个。风格：简洁，浅色背景（如极浅灰、米白、冷灰白，整体高明度）  提示词
+
+Ultra-wide entrance mural for an AI-native accelerator hub, 970cm by 220cm layout feel, modular geometric design, futuristic tech, clean minimalist composition, soft light high-key background: pale cool grey, off-white, or warm ivory, airy and bright, NOT a dark canvas, NOT night sky, rich but controlled accent colors (electric blue, cyan, magenta, subtle gold) only on key modules, abstract dual-world balance: a single sleek flowing S-curve as the only dividing gesture between two halves, inspired by cosmic balance and duality but NOT a yin-yang or taiji symbol, crisp flat vector illustration, high contrast between modules and background, thin precise lines, no ornamental clutter,
+
+LEFT HALF — physical world: darker modular geometric masses (charcoal, deep navy) as shapes only, floating on the light background, center features one large aggregated “corporate ecosystem” hub: interlocking blocks, supply-chain nodes, abstract monogram placeholders suggesting enterprise groups (no readable real trademarks), around it 10–20 small floating abstract frames (hexagons, rounded squares, star-like badges) each containing a simple generic placeholder icon for a partner project logo,
+
+RIGHT HALF — digital world: bright light ground with vivid digital accents on modules, center features one large “open metaverse / second life” style network map: abstract famous blockchain glyph placeholders as simple geometric marks, cross-chain bridge motifs as linked arcs, faint world map wireframe, tiny autonomous agent silhouettes, oracle connection rays to outer nodes, all stylized and non-literal, around it 10–20 small floating abstract frames with generic placeholder project marks,
+
+TWO CRITICAL FOCAL NODES on the balance curve: (1) on the physical side, a clean white rounded badge area with a minimal fictive “SLConsole” wordmark and tiny subtitle space below, (2) on the digital side, a clean black rounded badge area with a minimal fictive “Cloud Warehouse” pictogram and subtitle space below, both readable as logo slots, not photoreal,
+
+Style: editorial tech poster, Swiss layout, generous whitespace, cosmic harmony, future industry + open digital universe coexisting, --ar 97:22 --s 280 --v 6.2 --no taiji, yin-yang symbol, bagua, black background, night sky, heavy vignette
+
+
+
+
+生成一个主视觉的KV。中心由一个丝带状形状组成的时尚抽象设计，丝带的两端从左上和右下汇入中心，整体呈现“S”形。色带以凉爽，柔和的色调渐变，主要是蓝色，紫色，白色，产生一种科技和活力的感觉。丝带捕捉并反射光，使它们具有光泽，柔软的外观。丝带局部显示出彩虹般的光折射，产生棱镜效果。背景是高级的浅紫灰色，增强了对比度，使立方体更加突出。该图像具有现代，未来派的美感，让人联想到数字艺术和CGI。营造出深度感和现实感。整体风格干净而精确，专注于几何形状和光线相互作用。视角从底部大仰视，艺术品可能是使用先进的数字软件创建的，具有很高的精度和对细节的关注。
+
+A stunning main visual KV, epic low-angle view from below. A single, sleek, flowing ribbon forms a dynamic 3D S-curve shape, converging from the top-left and bottom-right into the center. The ribbon has a glossy, soft appearance that captures and reflects light, with localized rainbow light refraction creating a prism effect. Cool, gentle gradient in shades of blue, lavender, and white. Advanced shallow violet-grey background enhances contrast and depth. Modern, futuristic digital art style, evoking CGI and 3D rendering, with a sense of luxury technology and vibrant energy. Clean, precise, and geometric, focusing on the interaction of light and form. --ar 3:2 --style raw --v 6.2

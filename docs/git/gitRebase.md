@@ -70,3 +70,73 @@ git rebase --abort
 ## 总结
 
 Git rebase 是一个强大的工具，可以帮助我们维护更清晰的提交历史。正确使用 rebase 可以提高代码管理的效率，但需要谨慎使用，特别是在团队协作的环境中。
+
+
+
+可以，标准 Git 流程就是下面这套。
+
+## 1. 切到你的开发分支
+```bash
+git checkout develop/kimi02
+```
+
+## 2. 拉取远端最新信息
+```bash
+git fetch origin
+```
+
+## 3. 把你的开发分支 rebase 到最新 `main`
+```bash
+git rebase origin/main
+```
+
+如果有冲突：
+
+```bash
+# 解决冲突后
+git add .
+git rebase --continue
+```
+
+如果想放弃这次 rebase：
+
+```bash
+git rebase --abort
+```
+
+## 4. 把开发分支推到远端
+如果你刚刚做了 rebase，一般要强推，但建议用更安全的方式：
+
+```bash
+git push --force-with-lease origin develop/kimi02
+```
+
+## 5. 去平台上提 PR
+- 源分支：`develop/kimi02`
+- 目标分支：`main`
+
+然后审核通过后合并到 `main`。
+
+---
+
+## 最常用的完整命令串
+```bash
+git checkout develop/kimi02
+git fetch origin
+git rebase origin/main
+git push --force-with-lease origin develop/kimi02
+```
+
+---
+
+## 如果你是本地直接合到 main
+```bash
+git checkout main
+git pull origin main
+git merge develop/kimi02
+git push origin main
+```
+
+但正式项目里通常更推荐 **rebase + PR** 这条流程。
+
+如果你要，我也可以继续给你写一份“遇到冲突时怎么一步一步处理”的流程。

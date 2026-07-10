@@ -50,6 +50,8 @@ forge init --template https://github.com/foundry-rs/forge-template hello_foundry
 - 编译使用`forge build`
   - 在 out 目录下生成abi、字节码及编译相关信息
   - `forge inspect`以用来查看合约编译产物和元信息
+    - `forge inspect StorageCompact storageLayout --pretty`
+      - 查看项目中名为 StorageCompact的智能合约的 EVM 存储布局（Storage Layout）
 - 合约测试
   - 编写测试用例
     - 1. 测试文件默认用`t.sol`结尾，也可 `CounterTest.sol`

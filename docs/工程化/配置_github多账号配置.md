@@ -20,6 +20,9 @@ ssh-keygen -t rsa -f scout -C "scout@gmail.com"
 ssh-keygen -t rsa -f github_do -C "github_do@163.com"
 ssh-keygen -t rsa -f github2 -C "xxx@163.com"
 ssh-keygen -t rsa -f github2 -C "gitlabKimi@gmail.com"
+
+
+ssh-keygen -t rsa -f blockscout836 -C "blockscout836@gmail.com"
 ```
 
 ssh-keygen -t rsa -f hailiting -C "hailiting@yeah.net"
