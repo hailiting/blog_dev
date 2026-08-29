@@ -169,7 +169,7 @@
     "postcss-safe-parser": "4.0.1",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
-    "react-dev-utils": "^10.2.1",
+    "react-dev-utils": "^11.0.4",
     "react-docgen-typescript-loader": "^3.7.2",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
